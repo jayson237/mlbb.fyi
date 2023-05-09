@@ -1,3 +1,3 @@
 # mlbb.fyi
 
-Welcome to mlbb.fyi's repo!
+welcome to mlbb.fyi's repo!
