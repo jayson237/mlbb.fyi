@@ -1,5 +1,14 @@
 # ![mlbb fyi](https://github.com/jayson237/mlbb.fyi/assets/110618399/4eda4b73-56f7-4646-ba60-781be33230ee)
 
+<img align="left" alt="TypeScript" width="30px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-plain.svg" />
+<img align="left" alt="React" width="30px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" />
+<img align="left" alt="NodeJS" width="30px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" />
+<img align="left" alt="Tailwind" width="30px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" />
+<img align="left" alt="MongoDB" width="30px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-plain-wordmark.svg" />
+<br />
+
+# 
+
 Mobile Legends: Bang Bang has become a huge hit in South East Asia, with millions of players jumping in to compete every single day. It's a game that's known for its fast-paced action, strategic gameplay, and eye-catching graphics. And, if you're into competitive gaming, you're in luck, because Mobile Legends has a thriving Esports scene, with tons of tournaments and events happening all the time. But, let's be real here, playing Mobile Legends isn't always easy. There's a ton of information out there that can help you get better at the game, like how tochoose the best heroes, what builds to use, and what strategies work best. The problem is, a lot of this info is scattered all over the place, and it can be tough to know which sources are trustworthy.
 
 That's where having a one-stop place for Mobile Legends information comes in handy. A website that's dedicated to providing up-to-date, accurate, and reliable info about the game can be a real lifesaver. You don't have to waste time scouring the internet for the latest updates and tips - you can just go to one place and get everything you need.
