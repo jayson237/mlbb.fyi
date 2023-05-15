@@ -15,10 +15,10 @@ That's where having a one-stop place for Mobile Legends information comes in han
 
 Having a go-to resource for Mobile Legends can make the game more fun and enjoyable, too. When you know what you're doing, you can compete more effectively, and that can lead to some seriously satisfying wins. So, if you're a Mobile Legends fan who wants to take your game to the next level, mlbb.fyi should be on top of your list!
 
-## Our Aim
+## Our Aim 🚀
 To develop an information and community-focused website that caters to the huge number of Mobile Legends followers. The website will offer the utmost convenience to gamers by providing access to other players through the community, the best builds, strategies, gameplay tips, and trivia for every current hero based on the most recent META, and on top of that, creating a visually appealing and user-friendly platform that serves as a central hub for the Mobile Legends community.
 
-## Our Vision
+## Our Vision ✨
 At mlbb.fyi, we have a big dream: to create a welcoming and supportive community of Mobile Legends: Bang Bang players, who are all passionate about this thrilling and competitive game. We believe that everyone deserves access to reliable and up-to-date information about the game, whether they're newbies or seasoned players. Our aim is to provide a one-stop place for all Mobile Legends information, where players can find helpful tips, tricks, and strategies to help them take their game to the next level.
 
 But, for us, it's not just about winning and providing information. We want to foster a sense of belonging among our members, where everyone feels welcome, regardless of their level of experience or skill. We believe that we're all in this together, and we're committed to supporting each other along the way.
