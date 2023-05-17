@@ -17,12 +17,13 @@ module.exports = {
     },
     extend: {
       colors: {
-        pgreen: "#B9DA3B",
-        sgreen: "#D6FC44",
         bgblack: "#151515",
         pblack: "#232323",
         sblack: "#2C2C2C",
-        pwhite: "#FAFAFA"
+        pwhite: "#FAFAFA",
+        softGray: "#E9EEF2",
+        softBlue: "#74BDE0",
+        darkBlue: "#1A3344"
       },
       fontFamily: {
         heading: ["var(--font-heading)", ...fontFamily.sans],

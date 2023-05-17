@@ -14,7 +14,7 @@
     margin: 4px;
   }
   ::-webkit-scrollbar-track {
-    background: transparent;
+    background: transparent; 
     padding: 0 4px;
   }
   ::-webkit-scrollbar-thumb {
@@ -23,5 +23,9 @@
   }
   ::-webkit-scrollbar-thumb:hover {
     background-color: #555;
+  }
+
+  .gradBlack {
+    background: linear-gradient(146.55deg, #232323 32.29%, rgba(35, 35, 35, 0) 100%);
   }
 }

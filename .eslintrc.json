@@ -1,0 +1,23 @@
+{
+  "extends": ["next/core-web-vitals", "plugin:tailwindcss/recommended"],
+  "overrides": [
+    {
+      "files": ["./app/*.{js,ts,jsx,tsx}", "./components/*.{js,ts,jsx,tsx}"],
+      "parser": "@typescript-eslint/parser"
+    }
+  ],
+  "plugins": ["tailwindcss"],
+  "settings": {
+    "tailwindcss": {
+      "callees": ["cn"]
+    }
+  },
+  "rules": {
+    "tailwindcss/no-custom-classname": [
+      "error",
+      {
+        "whitelist": ["((bg|text)\\-).*"]
+      }
+    ]
+  }
+}

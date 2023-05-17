@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/shared/button";
 
 export default async function Home() {
   return (
