@@ -1,4 +1,5 @@
 import { Button } from "@/components/shared/button";
+import Link from "next/link";
 
 export default async function Home() {
   return (
@@ -13,7 +14,9 @@ export default async function Home() {
             <br className="hidden md:block" /> with a community of expert
             players.
           </p>
-          <Button className="mt-8">Get Started</Button>
+          <Link href="/auth/signin">
+            <Button className="mt-8">Get Started</Button>
+          </Link>
         </div>
       </main>
     </>

@@ -17,7 +17,7 @@ export default async function Signin() {
           Signin
         </h1>
         <p className="pt-3 text-[16px] md:text-[20px]">
-          You must enter you email before using our service.
+          Please enter your email before proceeding
         </p>
       </div>
       <LoginForm csrfToken={csrfToken} />
