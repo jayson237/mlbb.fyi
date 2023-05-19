@@ -14,7 +14,7 @@ export default async function Signin() {
     <main className="mt-24 h-screen">
       <div className="text-center">
         <h1 className="text-[44px] font-bold leading-10 tracking-tight md:text-[64px] md:leading-[60px]">
-          Signin
+          Sign in
         </h1>
         <p className="pt-3 text-[16px] md:text-[20px]">
           Please enter your email before proceeding
