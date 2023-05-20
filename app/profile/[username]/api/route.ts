@@ -1,35 +1,37 @@
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prismadb"
+import prisma from "@/lib/prismadb";
 
 export async function GET(request: Request) {
   try {
-    const getUrl = request.url.split("profile/")[1]
-    const id = getUrl.split("/api")[0]
+    const getUrl = request.url.split("profile/")[1];
+    const id = getUrl.split("/api")[0];
     console.log(id);
-    if (!id) return NextResponse.json(
-      {
-        msg: "ID Required",
-      },
-      { status: 400 }
-    );
-    
+    if (!id)
+      return NextResponse.json(
+        {
+          msg: "ID Required",
+        },
+        { status: 400 }
+      );
+
     const findID = await prisma.mlbbaccs.findFirst({
       where: {
         accId: id,
-      }
-    })
-    if (!findID) return NextResponse.json(
-      {
-        msg: "MLBB ID's not found",
       },
-      { status: 400 }
-    );
+    });
+    if (!findID)
+      return NextResponse.json(
+        {
+          msg: "MLBB ID's not found",
+        },
+        { status: 400 }
+      );
 
     const emailAcc = await prisma.user.findFirst({
       where: {
         id: findID.userId,
-      }
-    })
+      },
+    });
 
     return NextResponse.json(
       {
@@ -40,7 +42,7 @@ export async function GET(request: Request) {
   } catch (error) {
     return NextResponse.json(
       {
-        msg: "err",
+        msg: "Error",
       },
       { status: 400 }
     );

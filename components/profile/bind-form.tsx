@@ -49,9 +49,9 @@ const BindForm: React.FC<BindFormProps> = ({ currentUser }) => {
         const res = await bind.json();
         console.log(res);
         if (bind.status != 200) {
-          toast(bodyToast(res?.message), { ...toastStyle });
+          toast(bodyToast(res?.message));
         } else {
-          toast(bodyToast(res?.message), { ...toastStyle });
+          toast(bodyToast(res?.message));
         }
       }}
       className="mx-auto mt-8 flex max-w-md flex-col gap-y-2"
@@ -95,10 +95,10 @@ const BindForm: React.FC<BindFormProps> = ({ currentUser }) => {
             const res = await sendCode.json();
             console.log(res);
             if (sendCode.status != 200) {
-              toast(bodyToast(res?.message), { ...toastStyle });
+              toast(bodyToast(res?.message));
               setLoadingSend(false);
             } else {
-              toast(bodyToast(res?.message), { ...toastStyle });
+              toast(bodyToast(res?.message));
               setLoadingSend(false);
             }
           }}

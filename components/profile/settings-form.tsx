@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { toast } from "sonner"
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 import { SafeUser } from "@/types";
@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
 
 interface ISettingsForm {
   currentUser?: SafeUser | null;
-  mlbbAcc?: mlbbaccs;
+  mlbbAcc?: mlbbaccs | null;
 }
 
 const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
@@ -70,7 +70,7 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
           });
           if (!set.ok) {
             setLoading(false);
-            toast.error("Error update profile");
+            toast.error("Error updating profile");
           } else {
             setLoading(false);
             toast.success("Successfully updated profile");
@@ -100,9 +100,6 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
         </div>
         <div className="space-y-1">
           <Label htmlFor="username">Username</Label>
-          <span className="float-right text-[12px] text-gray-300">
-            Max 20 characters
-          </span>
           <Input
             type="text"
             placeholder="Username"
@@ -111,7 +108,13 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
             name="username"
             maxLength={20}
             required
+            pattern="[a-z0-9]{4,}"
+            className="peer"
           />
+          <p className="invisible absolute text-sm text-red-500 peer-invalid:visible peer-invalid:static peer-invalid:mt-2">
+            Please provide a minimum of 4 characters without any uppercase and
+            special characters
+          </p>
         </div>
 
         <Button className="mt-1 rounded-full" variant="gradiantNavy">

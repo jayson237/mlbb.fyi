@@ -11,12 +11,12 @@ export async function GET(request: Request) {
 
     // const findAndUpdate = await prisma?.user.update({
     //   where: {
-    //     email: "raymond.rtju@gmail.com",
+    //     email: "jaysonng3@gmail.com",
     //   },
     //   data: {
     //     mlbbaccs: {
     //       connect: {
-    //         accId: "171689343",
+    //         accId: "164463862",
     //       },
     //     },
     //   },

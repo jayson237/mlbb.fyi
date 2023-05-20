@@ -65,11 +65,25 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+    const upt = await fetch(
+      `${process.env.BE_API_URL}/data/sync?accId=${accId}`,
+      {
+        method: "GET",
+      }
+    );
+    if (upt.ok) {
+      return NextResponse.json(
+        {
+          message: bind.data.message,
+        },
+        { status: 200 }
+      );
+    }
     return NextResponse.json(
       {
-        message: bind.data.message,
+        message: "Successfully bound but failed to sync data with your profile",
       },
-      { status: 200 }
+      { status: 400 }
     );
   } catch (error) {
     return NextResponse.json({}, { status: 400 });

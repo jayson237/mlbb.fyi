@@ -5,11 +5,11 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   const currentUser = await getCurrentUser();
 
-  const { username } = await req.json();
+  const { username }: { username: string } = await req.json();
 
   const findUsername = await prisma.user.findFirst({
     where: {
-      username,
+      username: username.toLowerCase(),
     },
   });
   if (findUsername)
@@ -27,13 +27,13 @@ export async function POST(req: Request) {
       email: currentUser?.email,
     },
     data: {
-      username: username,
+      username: username.toLowerCase(),
     },
   });
   if (!set)
     return NextResponse.json(
       {
-        message: "Error set Username",
+        message: "Error setting username",
       },
       {
         status: 400,
@@ -42,7 +42,7 @@ export async function POST(req: Request) {
 
   return NextResponse.json(
     {
-      message: "Successfully set Username",
+      message: "Successfully set username",
     },
     {
       status: 200,

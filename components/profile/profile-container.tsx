@@ -16,36 +16,33 @@ export type MatchPLayedProps = {
 };
 
 interface MainAppProps {
-  // currentUser: SafeUser | null;
-  mlbbAcc?: mlbbaccs | null | undefined;
-  matchPlayed?: any[];
-  winRate?: {
+  matchPlayed?: {
+    mode: string;
     total: number;
+    data: {
+      id: string;
+      total: number;
+      win: number;
+      name: string;
+      _id: string;
+    }[];
+  }[];
+  ownedHero?: {
+    total: number;
+    data: {
+      hero: string;
+      id: number;
+      _id: string;
+    }[];
   };
-  ownedHero?: any;
-  err?: boolean;
-  mlbbBind?: boolean;
   username: string;
 }
 
 const MainApp: React.FC<MainAppProps> = ({
-  mlbbAcc,
   matchPlayed,
   username,
-  winRate,
   ownedHero,
-  err,
-  mlbbBind,
 }) => {
-  useEffect(() => {
-    if (err) {
-      toast.error("Failed to fetch data");
-      return () => {
-        toast.error("Failed to fetch data");
-      };
-    }
-  }, [err]);
-
   return (
     <>
       <div className="flex flex-col gap-5 md:flex-row">
@@ -96,14 +93,14 @@ const MainApp: React.FC<MainAppProps> = ({
             <div className="flex w-full max-w-lg flex-col gap-y-5 md:w-fit">
               <div className="flex w-full flex-row gap-x-5 md:w-fit">
                 <GradiantCard className="w-full md:w-60 md:max-w-[240px]">
-                  <h1 className="font-bold tracking-[-3%]">Hero Owned</h1>
+                  <h1 className="font-bold tracking-[-3%]">Heroes Owned</h1>
                   <Info />
                   <p className="mt-9 text-right text-3xl font-bold">
-                    {ownedHero.total}
+                    {ownedHero?.total}
                   </p>
                 </GradiantCard>
                 <GradiantCard className="w-full md:w-60 md:max-w-[240px]">
-                  <h1 className="font-bold tracking-[-3%]">Match Played</h1>
+                  <h1 className="font-bold tracking-[-3%]">Matches Played</h1>
                   <Info />
                   <p className="mt-9 text-right text-3xl font-bold">
                     {matchPlayed && matchPlayed[0].total + matchPlayed[1].total}
@@ -113,21 +110,17 @@ const MainApp: React.FC<MainAppProps> = ({
 
               <div className="w-full">
                 <GradiantCard className="">
-                  <h1 className="font-bold tracking-[-3%]">Match Insight</h1>
+                  <h1 className="font-bold tracking-[-3%]">Match Insights</h1>
                   <Info />
                   <div className="mt-4 flex gap-x-5">
                     <GradiantCard>
-                      <h2 className="font-bold tracking-[-3%]">
-                        Ranked Matches
-                      </h2>
+                      <h2 className="font-bold tracking-[-3%]">Ranked</h2>
                       <p className="mt-9 text-right text-3xl font-bold">
-                        {matchPlayed && matchPlayed[1].total}
+                        {matchPlayed && matchPlayed[1]?.total}
                       </p>
                     </GradiantCard>
                     <GradiantCard>
-                      <h2 className="font-bold tracking-[-3%]">
-                        Classic Matches
-                      </h2>
+                      <h2 className="font-bold tracking-[-3%]">Classic</h2>
                       <p className="mt-9 text-right text-3xl font-bold">
                         {matchPlayed && matchPlayed[0].total}
                       </p>
@@ -140,7 +133,7 @@ const MainApp: React.FC<MainAppProps> = ({
             <div className="flex w-full max-w-lg flex-col gap-5">
               <GradiantCard>
                 <h1 className="mb-4 font-bold tracking-[-3%]">
-                  Classic Top 5 Played
+                  Classic Favourites
                 </h1>
                 {matchPlayed &&
                   matchPlayed[0].data.map((data: any, i: number) => {
@@ -165,7 +158,7 @@ const MainApp: React.FC<MainAppProps> = ({
               </GradiantCard>
               <GradiantCard>
                 <h1 className="mb-4 font-bold tracking-[-3%]">
-                  Ranked Top 5 Played
+                  Ranked Favourites
                 </h1>
                 {matchPlayed &&
                   matchPlayed[1].data.map((data: any, i: number) => {

@@ -38,7 +38,7 @@ export default function LoginForm({ csrfToken }: { csrfToken?: string }) {
             .then((res) => {
               console.log(res);
               if (res?.ok) {
-                toast.success("Kindly check login link in your inbox");
+                toast.success("Kindly check your inbox for the login link");
               }
               setLoading(false);
             })
