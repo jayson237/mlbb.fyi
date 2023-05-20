@@ -39,7 +39,7 @@ const BindForm: React.FC<BindFormProps> = ({ currentUser }) => {
     <form
       onSubmit={async (e) => {
         e.preventDefault();
-        const bind = await fetch("/api/bind", {
+        const bind = await fetch("/profile/settings/api/bind", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

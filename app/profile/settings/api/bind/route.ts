@@ -1,6 +1,36 @@
 import { NextResponse } from "next/server";
 
+import getMlbbAcc from "@/lib/actions/getMlbbAcc";
 import { bindAcc } from "@/lib/utils";
+
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const email = searchParams.get("email");
+
+  if (!email)
+    return NextResponse.json(
+      {},
+      {
+        status: 400,
+      }
+    );
+  try {
+    const mlbbAcc = await getMlbbAcc(email);
+
+    return NextResponse.json(
+      {
+        email,
+        accId: mlbbAcc?.accId,
+        nickname: mlbbAcc?.nickname,
+      },
+      {
+        status: 200,
+      }
+    );
+  } catch (error) {
+    return NextResponse.json({}, { status: 400 });
+  }
+}
 
 export async function POST(request: Request) {
   try {

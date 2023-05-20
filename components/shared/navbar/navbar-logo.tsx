@@ -10,7 +10,7 @@ const NavLogo = () => {
         onClick={() => {
           router.push("/");
         }}
-        className="cursor-pointer font-heading text-[28px]"
+        className="cursor-pointer font-heading text-[24px]"
       >
         mlbb.fyi
       </a>

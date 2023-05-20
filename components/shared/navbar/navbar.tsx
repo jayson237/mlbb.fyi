@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React from "react";
 
@@ -15,11 +15,11 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
   return (
     <nav
       className={cn(
-        "fixed inset-x-0 top-0 z-30 block bg-bgblack/80 py-3 backdrop-blur-sm xl:mx-auto",
+        "fixed inset-x-0 top-0 z-30 block bg-transparent py-3 backdrop-blur-sm xl:mx-auto",
         "w-full px-4"
       )}
     >
-      <div className="mx-auto max-w-[1440px]">
+      <div className="mx-auto max-w-[1280px] px-4">
         <div className="flex items-center justify-between">
           <NavLogo />
           <NavMenu currentUser={currentUser} />

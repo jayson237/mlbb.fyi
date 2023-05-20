@@ -4,20 +4,18 @@ import { VariantProps, cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all focus:outline-none focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 disabled:opacity-50 disabled:pointer-events-none data-[state=open]:bg-slate-100",
+  "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all focus:outline-none focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 disabled:opacity-50 disabled:pointer-events-none data-[state=open]:bg-slate-100 duration-300",
   {
     variants: {
       variant: {
-        default:
-          "bg-pblack text-white hover:bg-sblack duration-300 dark:bg-slate-50 dark:text-slate-900",
-        destructive:
-          "bg-red-500 text-white hover:bg-red-600 dark:hover:bg-red-600",
+        default: "bg-pblack text-white hover:bg-sblack duration-300",
+        destructive: "bg-red-500 text-white hover:bg-red-600",
         outline: "bg-transparent border border-slate-200 hover:bg-slate-800",
-        subtle:
-          "bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-100",
-        ghost:
-          "bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-100 dark:hover:text-slate-100 data-[state=open]:bg-transparent dark:data-[state=open]:bg-transparent",
-        link: "bg-transparent dark:bg-transparent underline-offset-4 hover:underline text-slate-900 dark:text-slate-100 hover:bg-transparent dark:hover:bg-transparent",
+        subtle: "bg-slate-100 text-slate-900 hover:bg-slate-200",
+        gradiantNavy:
+          "bg-gradient-to-tl from-navy-600 to-navy-400 hover:shadow-navy-600/70 hover:shadow-lg hover:opacity-95",
+        gradiantNavySec:
+          "bg-transparent border-navy-600 border-2 shadow-navy-600/70 hover:shadow-navy-600/70 hover:shadow-lg hover:opacity-85 shadow-inner hover:bg-gradient-to-tl hover:from-navy-600 hover:to-navy-400",
       },
       size: {
         default: "h-10 py-2 px-4",

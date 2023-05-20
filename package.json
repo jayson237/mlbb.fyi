@@ -12,10 +12,11 @@
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.5",
-    "@prisma/client": "^4.12.0",
+    "@prisma/client": "^4.14.1",
     "@radix-ui/react-label": "^2.0.1",
     "@radix-ui/react-progress": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.3",
+    "@radix-ui/react-tooltip": "^1.0.5",
     "@types/node": "18.15.11",
     "@types/react": "18.0.32",
     "@types/react-dom": "18.0.11",
@@ -52,13 +53,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/raymondtju/mlbb.git"
+    "url": "git+https://github.com/jayson237/mlbb.fyi.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/raymondtju/mlbb/issues"
+    "url": "https://github.com/jayson237/mlbb.fyi/issues"
   },
-  "homepage": "https://github.com/raymondtju/mlbb#readme"
+  "homepage": "https://github.com/jayson237/mlbb.fyi#readme"
 }

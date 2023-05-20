@@ -23,6 +23,12 @@ const nextConfig = {
         port: "",
         pathname: "/web/madmin/**",
       },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        port: "",
+        pathname: "/a/**",
+      },
     ],
   },
 };

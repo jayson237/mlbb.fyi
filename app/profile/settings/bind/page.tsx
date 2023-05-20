@@ -1,9 +1,12 @@
 import getCurrentUser from "@/lib/actions/getCurrentUser";
-import SyncForm from "@/components/profile/bind/bind-form";
+import SyncForm from "@/components/profile/bind-form";
+import getMlbbAcc from "@/lib/actions/getMlbbAcc";
 
 export default async function AppBind() {
   const currentUser = await getCurrentUser();
-  console.log(currentUser);
+  const mlbbAcc = await getMlbbAcc(currentUser?.email);
+
+  if (mlbbAcc) return null;
   return (
     <div className="mt-24">
       <div className="text-center">

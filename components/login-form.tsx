@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { signIn } from "next-auth/react";
@@ -8,10 +8,21 @@ import LoadingDots from "./shared/icons/loading-dots";
 import { Button } from "./shared/button";
 import { Input } from "./shared/input";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 
 export default function LoginForm({ csrfToken }: { csrfToken?: string }) {
+  const params = useSearchParams();
+
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (params?.get("error") === "OAuthAccountNotLinked") {
+      toast.error(
+        "Your email has been registered with a different sign-in method"
+      );
+    }
+  }, [params]);
 
   return (
     <div className="mx-auto mt-14 max-w-md">
@@ -32,7 +43,7 @@ export default function LoginForm({ csrfToken }: { csrfToken?: string }) {
               setLoading(false);
             })
             .catch((err) => {
-              toast.error("something went wrong");
+              toast.error("Something went wrong");
               setLoading(false);
             });
         }}
@@ -66,7 +77,7 @@ export default function LoginForm({ csrfToken }: { csrfToken?: string }) {
           className="w-full"
           onClick={() => {
             signIn("google", {
-              callbackUrl: "/",
+              callbackUrl: "/profile/settings",
             });
           }}
         >
@@ -83,7 +94,7 @@ export default function LoginForm({ csrfToken }: { csrfToken?: string }) {
           className="w-full"
           onClick={() => {
             signIn("discord", {
-              callbackUrl: "/",
+              callbackUrl: "/profile/settings",
             });
           }}
         >

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import { LogInIcon, LogOutIcon } from "lucide-react";
+import { LogInIcon, LogOutIcon, Settings } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { SafeUser } from "@/types";
@@ -28,11 +28,6 @@ const MenuList = [
     href: "/explore",
   },
   {
-    name: "Github",
-    active: false,
-    href: "/github",
-  },
-  {
     name: "Profile",
     active: false,
     href: "/profile",
@@ -42,10 +37,11 @@ const MenuList = [
 const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const active = pathname?.split("/")[1];
-  console.log("currentUser", currentUser);
 
   const [collapse, setCollapse] = useState(false);
+
+  const active = pathname?.split("/")[1];
+
   return (
     <>
       <div
@@ -74,41 +70,60 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
             collapse ? "flex flex-col gap-y-4 p-4 font-semibold" : "hidden"
           )}
         >
-          {MenuList.map((menu) => (
-            <Link href={menu.href} key={menu.name} prefetch={false}>
-              <li
-                className={cn(
-                  "cursor-pointer",
-                  active === menu.name.toLowerCase() &&
-                    "underline decoration-softBlue underline-offset-4"
-                )}
+          {currentUser?.username &&
+            MenuList.map((menu) => (
+              <Link
+                href={
+                  menu.href === "/profile"
+                    ? `/profile/${currentUser?.username}`
+                    : menu.href
+                }
+                key={menu.name}
+                prefetch={false}
               >
-                {menu.name}
-              </li>
-            </Link>
-          ))}
+                <li
+                  className={cn(
+                    "cursor-pointer font-medium hover:scale-95 hover:transition-all hover:duration-300",
+                    active === menu.name.toLowerCase() &&
+                      "underline decoration-navy-300 decoration-2 underline-offset-4"
+                  )}
+                >
+                  {menu.name}
+                </li>
+              </Link>
+            ))}
           {!currentUser ? (
             <li>
               <Button
                 onClick={() => {
                   router.push("/auth/signin");
                 }}
-                className="h-8 w-8 rounded-full bg-softGray p-2"
+                className="h-8 w-8 rounded-full p-2"
+                variant="gradiantNavy"
               >
-                <LogInIcon className="translate-x-[-0.5px] stroke-2 font-black text-black" />
+                <LogInIcon className="stroke-[3] text-softGray" />
               </Button>
             </li>
           ) : (
-            <li>
+            <li className="flex gap-2">
+              <Button
+                onClick={() => {
+                  router.push("/profile/settings");
+                }}
+                className="group h-8 w-8 rounded-full p-2"
+                variant="gradiantNavy"
+              >
+                <Settings className="stroke-[3] text-softGray group-hover:rotate-180 group-hover:transition-all group-hover:duration-500" />
+              </Button>
               <Button
                 onClick={() => {
                   signOut({ callbackUrl: "/" });
                 }}
-                className="h-8 w-8 rounded-full bg-softGray p-2"
+                className="h-8 w-8 rounded-full p-2"
+                variant="gradiantNavy"
               >
-                <LogOutIcon className="translate-x-[-0.5px] font-bold text-black" />
+                <LogOutIcon className="stroke-[3] text-softGray" />
               </Button>
-              {currentUser.email}
             </li>
           )}
         </ul>
