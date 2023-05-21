@@ -35,10 +35,10 @@ export default async function Home() {
     <>
       <main className="mt-36">
         <div className="mx-auto flex max-w-xl flex-col justify-center text-center">
-          <h1 className="md:text-[64px] md:leading-[60px] font-heading text-[44px] font-bold leading-10">
+          <h1 className="font-heading text-[44px] font-bold leading-10 md:text-[64px] md:leading-[60px]">
             Elevate Your Mobile <br className="hidden md:block" /> Legends Game
           </h1>
-          <p className="md:text-[18px] pt-3 text-[14px] leading-tight text-gray-100">
+          <p className="pt-3 text-[14px] leading-tight text-gray-100 md:text-[18px]">
             Access hero stats, optimal builds, and connect{" "}
             <br className="hidden md:block" /> with a community of expert
             players.
@@ -50,6 +50,17 @@ export default async function Home() {
           >
             <Link href="/auth/signin">Get Started</Link>
           </Button>
+
+          <div className="flex flex-col items-center justify-center pt-[250px]">
+            <div className="flex items-end justify-center">
+              <h1 className="text-center text-[12px] text-neutral-500">
+                mlbb.fyi was made as part of 2023 Orbital project, and is not
+                endorsed by Moonton or Mobile Legends: Bang Bang. mlbb.fyi does
+                not reflect the views or opinions of Moonton or anyone
+                officially involved in producing or managing Mobile Legends.
+              </h1>
+            </div>
+          </div>
         </div>
       </main>
     </>
