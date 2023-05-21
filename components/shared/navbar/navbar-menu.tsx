@@ -78,14 +78,17 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
                     ? `/profile/${currentUser?.username}`
                     : menu.href
                 }
+                onClick={() => {
+                  setCollapse(false);
+                }}
                 key={menu.name}
                 prefetch={false}
               >
                 <li
                   className={cn(
-                    "cursor-pointer font-medium hover:scale-95 hover:transition-all hover:duration-300",
+                    "cursor-pointer font-medium hover:text-gray-300 hover:transition-all hover:duration-300",
                     active === menu.name.toLowerCase() &&
-                      "underline decoration-navy-300 decoration-2 underline-offset-4"
+                      "underline decoration-navy-400 decoration-2 underline-offset-4"
                   )}
                 >
                   {menu.name}

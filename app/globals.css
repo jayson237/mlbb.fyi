@@ -14,7 +14,7 @@
     margin: 4px;
   }
   ::-webkit-scrollbar-track {
-    background: transparent; 
+    background: transparent;
     padding: 0 4px;
   }
   ::-webkit-scrollbar-thumb {
@@ -26,6 +26,18 @@
   }
 
   .gradBlack {
-    background: linear-gradient(146.55deg, #232323 32.29%, rgba(35, 35, 35, 0) 100%);
+    background: linear-gradient(
+      146.55deg,
+      #232323 32.29%,
+      rgba(35, 35, 35, 0) 100%
+    );
+  }
+
+  .mask:after {
+    mask: linear-gradient(rgb(255 255 255) 0 0) content-box,
+      linear-gradient(rgb(255 255 255) 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
   }
 }

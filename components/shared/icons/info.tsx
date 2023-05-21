@@ -9,7 +9,7 @@ import {
 const Info = () => {
   return (
     <>
-      <InfoIcon className="absolute right-6 top-6 h-4 w-4 cursor-pointer stroke-[3] text-softGray" />
+      <InfoIcon className="absolute right-4 top-4 h-3.5 w-3.5 cursor-pointer stroke-[3] text-softGray md:right-5 md:top-5" />
       {/* <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>

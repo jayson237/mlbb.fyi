@@ -5,7 +5,7 @@ import { Progress } from "../shared/progress";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import Image from "next/image";
-import GradiantCard from "../shared/gradiant-card";
+import { GradiantCard } from "../shared/gradiant-card";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../shared/tabs";
 import Info from "../shared/icons/info";
@@ -53,8 +53,8 @@ const MainApp: React.FC<MainAppProps> = ({
             <Image
               src={"/nana.jpg"}
               alt=""
-              width={225}
-              height={225}
+              width={203}
+              height={203}
               className="mx-auto rounded-full"
             />
             <h1 className="mt-3 text-center font-heading text-xl">
@@ -88,40 +88,41 @@ const MainApp: React.FC<MainAppProps> = ({
           </TabsList>
           <TabsContent
             value="statistics"
-            className="flex flex-col gap-5 xl:flex-row"
+            className="flex flex-col gap-4 xl:flex-row"
           >
-            <div className="flex w-full max-w-lg flex-col gap-y-5 md:w-fit">
-              <div className="flex w-full flex-row gap-x-5 md:w-fit">
-                <GradiantCard className="w-full md:w-60 md:max-w-[240px]">
-                  <h1 className="font-bold tracking-[-3%]">Heroes Owned</h1>
-                  <Info />
-                  <p className="mt-9 text-right text-3xl font-bold">
+            <div className="flex w-full max-w-lg flex-col gap-y-4 md:w-fit">
+              <div className="flex w-full flex-row gap-x-4 md:w-fit">
+                <GradiantCard
+                  className="md:max-w-[240px] w-full md:w-60"
+                  title="Heroes Owned"
+                >
+                  {/* <Info /> */}
+                  <p className="mt-8 text-right text-xl/[16px] font-semibold sm:mt-7 md:mt-12 md:text-2xl lg:text-3xl">
                     {ownedHero?.total}
                   </p>
                 </GradiantCard>
-                <GradiantCard className="w-full md:w-60 md:max-w-[240px]">
-                  <h1 className="font-bold tracking-[-3%]">Matches Played</h1>
-                  <Info />
-                  <p className="mt-9 text-right text-3xl font-bold">
+                <GradiantCard
+                  className="md:max-w-[240px] w-full md:w-60"
+                  title="Matches Played"
+                >
+                  {/* <Info /> */}
+                  <p className="mt-8 text-right text-xl/[16px] font-semibold sm:mt-7 md:mt-12 md:text-2xl lg:text-3xl">
                     {matchPlayed && matchPlayed[0].total + matchPlayed[1].total}
                   </p>
                 </GradiantCard>
               </div>
 
               <div className="w-full">
-                <GradiantCard className="">
-                  <h1 className="font-bold tracking-[-3%]">Match Insights</h1>
-                  <Info />
-                  <div className="mt-4 flex gap-x-5">
-                    <GradiantCard>
-                      <h2 className="font-bold tracking-[-3%]">Ranked</h2>
-                      <p className="mt-9 text-right text-3xl font-bold">
+                <GradiantCard className="" title="Match Insights">
+                  {/* <Info /> */}
+                  <div className="mt-4 flex gap-x-4">
+                    <GradiantCard title="Ranked">
+                      <p className="mt-8 text-right text-xl/[16px] font-semibold sm:mt-7 md:mt-12 md:text-2xl lg:text-3xl">
                         {matchPlayed && matchPlayed[1]?.total}
                       </p>
                     </GradiantCard>
-                    <GradiantCard>
-                      <h2 className="font-bold tracking-[-3%]">Classic</h2>
-                      <p className="mt-9 text-right text-3xl font-bold">
+                    <GradiantCard title="Classic">
+                      <p className="mt-8 text-right text-xl/[16px] font-semibold sm:mt-7 md:mt-12 md:text-2xl lg:text-3xl">
                         {matchPlayed && matchPlayed[0].total}
                       </p>
                     </GradiantCard>
@@ -130,18 +131,15 @@ const MainApp: React.FC<MainAppProps> = ({
               </div>
             </div>
 
-            <div className="flex w-full max-w-lg flex-col gap-5">
-              <GradiantCard>
-                <h1 className="mb-4 font-bold tracking-[-3%]">
-                  Classic Favourites
-                </h1>
+            <div className="flex w-full max-w-lg flex-col gap-4">
+              <GradiantCard title="Classic Favourites">
                 {matchPlayed &&
                   matchPlayed[0].data.map((data: any, i: number) => {
                     return (
-                      <div key={i}>
+                      <div key={i} className="mt-3">
                         <div className="flex justify-between">
                           <p className="text-sm">
-                            {data.name} - {data.total}x
+                            {data.name} - {data.total}
                           </p>
                           <p className="text-sm">
                             {((data.win * 100) / data.total).toFixed(2)}%
@@ -156,14 +154,11 @@ const MainApp: React.FC<MainAppProps> = ({
                     );
                   })}
               </GradiantCard>
-              <GradiantCard>
-                <h1 className="mb-4 font-bold tracking-[-3%]">
-                  Ranked Favourites
-                </h1>
+              <GradiantCard title="Ranked Favourites">
                 {matchPlayed &&
                   matchPlayed[1].data.map((data: any, i: number) => {
                     return (
-                      <div key={i}>
+                      <div key={i} className="mt-3">
                         <div className="flex justify-between">
                           <p className="text-sm">
                             {data.name} - {data.total}x
@@ -184,7 +179,9 @@ const MainApp: React.FC<MainAppProps> = ({
             </div>
           </TabsContent>
 
-          <TabsContent value="posts">User Posts</TabsContent>
+          <TabsContent value="posts">
+            <p className="pl-2">User Posts</p>
+          </TabsContent>
         </Tabs>
       </div>
     </>

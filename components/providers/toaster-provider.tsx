@@ -3,7 +3,11 @@
 import { Toaster } from "sonner";
 
 const ToasterProvider = () => {
-  return <Toaster position="top-center" />;
+  return (
+    <div className="relative z-[100]">
+      <Toaster position="top-center" />
+    </div>
+  );
 };
 
 export default ToasterProvider;

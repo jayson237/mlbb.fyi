@@ -6,6 +6,7 @@ import { SafeUser } from "@/types";
 import LoadingDots from "@/components/shared/icons/loading-dots";
 import { Input } from "@/components/shared/input";
 import { Button } from "@/components/shared/button";
+import { useRouter } from "next/navigation";
 
 const bodyToast = (msg: string) => <div className="">{msg}</div>;
 
@@ -21,6 +22,7 @@ interface BindFormProps {
 }
 
 const BindForm: React.FC<BindFormProps> = ({ currentUser }) => {
+  const router = useRouter();
   const [form, setForm] = useState({
     accId: null,
     accServer: null,
@@ -47,11 +49,11 @@ const BindForm: React.FC<BindFormProps> = ({ currentUser }) => {
           body: JSON.stringify({ ...form, email: currentUser?.email }),
         });
         const res = await bind.json();
-        console.log(res);
         if (bind.status != 200) {
           toast(bodyToast(res?.message));
         } else {
           toast(bodyToast(res?.message));
+          router.push("/profile");
         }
       }}
       className="mx-auto mt-8 flex max-w-md flex-col gap-y-2"
@@ -93,7 +95,6 @@ const BindForm: React.FC<BindFormProps> = ({ currentUser }) => {
               body: JSON.stringify(form),
             });
             const res = await sendCode.json();
-            console.log(res);
             if (sendCode.status != 200) {
               toast(bodyToast(res?.message));
               setLoadingSend(false);

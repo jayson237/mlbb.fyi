@@ -1,19 +1,13 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const NavLogo = () => {
-  const router = useRouter();
   return (
     <>
-      <a
-        onClick={() => {
-          router.push("/");
-        }}
-        className="cursor-pointer font-heading text-[24px]"
-      >
+      <Link href="/" className="cursor-pointer font-heading text-[24px]">
         mlbb.fyi
-      </a>
+      </Link>
     </>
   );
 };
