@@ -70,12 +70,17 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
             collapse ? "flex flex-col gap-y-4 p-4 font-semibold" : "hidden"
           )}
         >
-          {currentUser?.username &&
-            MenuList.map((menu) => (
+          {MenuList.map((menu) => {
+            if (menu.name === "Profile" && !currentUser) {
+              return null;
+            }
+            return (
               <Link
                 href={
                   menu.href === "/profile"
-                    ? `/profile/${currentUser?.username}`
+                    ? currentUser?.username
+                      ? `/profile/${currentUser?.username}`
+                      : "/profile"
                     : menu.href
                 }
                 onClick={() => {
@@ -94,7 +99,9 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
                   {menu.name}
                 </li>
               </Link>
-            ))}
+            );
+          })}
+
           {!currentUser ? (
             <li>
               <Button

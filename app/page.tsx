@@ -23,7 +23,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "MLBB fyi - Elevate Your Mobile Legends Game",
+    title: "mlbb.fyi - Elevate Your Mobile Legends Game",
     description:
       "Access hero stats, optimal builds, and connect with a community of expert players.",
     images: ["/og.jpg"],

@@ -2,7 +2,9 @@ import getMlbbAcc from "@/lib/actions/getMlbbAcc";
 import getWinRate from "@/lib/actions/getWinRate";
 import prisma from "@/lib/prismadb";
 
-import MainApp from "@/components/profile/profile-container";
+import ProfileContainer from "@/components/profile/profile-container";
+import getCurrentUser from "@/lib/actions/getCurrentUser";
+import { NextResponse } from "next/server";
 
 async function acc(username: string) {
   try {
@@ -34,17 +36,30 @@ async function getDataAcc(accId: string) {
 const ProfilePage = async ({ params }: { params: { username: string } }) => {
   const { username } = params;
 
-  const accId = await acc(username);
-  if (!accId) return null;
+  const user = await getCurrentUser();
+  if (!user?.username) {
+    NextResponse.redirect(
+      new URL(`${process.env.NEXT_PUBLIC_BASE_URL}/profile/settings`)
+    );
+  }
 
-  const dataAcc = await getDataAcc(accId);
+  let accId = await acc(username);
+  let dataAcc;
+  if (!accId) {
+    accId = null;
+  } else {
+
+    dataAcc = await getDataAcc(accId);
+  }
+
 
   return (
     <div className="overflow-hidden">
-      <MainApp
+      <ProfileContainer
         matchPlayed={dataAcc?.matchPlayed}
         ownedHero={dataAcc?.heroOwned}
         username={username}
+        accId={accId}
         // winRate={winRate}
       />
     </div>

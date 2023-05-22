@@ -3,9 +3,12 @@ import prisma from "@/lib/prismadb";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
+  console.log(1);
   const currentUser = await getCurrentUser();
+  console.log(currentUser?.name);
 
   const { username }: { username: string } = await req.json();
+  console.log("username", username);
 
   const findUsername = await prisma.user.findFirst({
     where: {

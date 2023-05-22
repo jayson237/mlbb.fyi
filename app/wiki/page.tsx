@@ -1,16 +1,13 @@
-import { Button } from "@/components/shared/button";
-import { Checkbox } from "@/components/shared/checkbox";
-import { Label } from "@/components/shared/label";
+import React from "react";
+
+import prisma from "@/lib/prismadb";
+import { heros } from "@prisma/client";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/components/shared/tabs";
-import { heros } from "@prisma/client";
-import Image from "next/image";
-import React from "react";
-import prisma from "@/lib/prismadb";
 
 async function getHero() {
   return await prisma.heros.findMany({});

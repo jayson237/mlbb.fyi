@@ -25,6 +25,8 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
   const [username, setUsername] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
+  console.log(currentUser);
+
   return (
     <div className="mx-auto max-w-md">
       <div className="mb-8 flex justify-center">
@@ -68,9 +70,10 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
               username: username,
             }),
           });
+          const msg = await set.json();
           if (!set.ok) {
             setLoading(false);
-            toast.error("Error updating profile");
+            toast.error(msg.message);
           } else {
             setLoading(false);
             toast.success("Successfully updated profile");

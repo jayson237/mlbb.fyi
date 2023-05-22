@@ -36,17 +36,54 @@ interface MainAppProps {
     }[];
   };
   username: string;
+  accId?: string | null;
 }
 
 const MainApp: React.FC<MainAppProps> = ({
   matchPlayed,
   username,
   ownedHero,
+  accId,
 }) => {
+  if (username) {
+    return (
+      <div className="flex gap-5 text-softGray">
+        {/* Profile Head */}
+        <GradiantCard className="mx-auto h-fit w-[18rem] max-w-full md:mx-0">
+          <Image
+            src={"/nana.jpg"}
+            alt=""
+            width={203}
+            height={203}
+            className="mx-auto rounded-full"
+          />
+          <h1 className="mt-3 text-center font-heading text-xl">{username}</h1>
+          <Button
+            className="mx-auto mt-2 flex h-fit w-fit justify-center rounded-2xl px-10 py-1"
+            variant="gradiantNavySec"
+          >
+            Follow
+          </Button>
+
+          <div className="mt-4 flex flex-row justify-between px-8 font-heading">
+            <div className="flex flex-col text-center">
+              <p className="text-xl">123</p>
+              <p className="text-[14px]">FOLLOWING</p>
+            </div>
+            <div className="flex flex-col text-center">
+              <p className="text-xl">1000</p>
+              <p className="text-[14px]">FOLLOWERS</p>
+            </div>
+          </div>
+        </GradiantCard>
+      </div>
+    );
+  }
   return (
     <>
       <div className="flex flex-col gap-5 md:flex-row">
         {/* Left */}
+
         <div className="flex gap-5 text-softGray">
           {/* Profile Head */}
           <GradiantCard className="mx-auto h-fit w-[18rem] max-w-full md:mx-0">
@@ -93,7 +130,7 @@ const MainApp: React.FC<MainAppProps> = ({
             <div className="flex w-full max-w-lg flex-col gap-y-4 md:w-fit">
               <div className="flex w-full flex-row gap-x-4 md:w-fit">
                 <GradiantCard
-                  className="md:max-w-[240px] w-full md:w-60"
+                  className="w-full md:w-60 md:max-w-[240px]"
                   title="Heroes Owned"
                 >
                   {/* <Info /> */}
@@ -102,7 +139,7 @@ const MainApp: React.FC<MainAppProps> = ({
                   </p>
                 </GradiantCard>
                 <GradiantCard
-                  className="md:max-w-[240px] w-full md:w-60"
+                  className="w-full md:w-60 md:max-w-[240px]"
                   title="Matches Played"
                 >
                   {/* <Info /> */}
