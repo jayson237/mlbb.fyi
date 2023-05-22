@@ -2,7 +2,7 @@
 
 import { mlbbaccs } from "@prisma/client";
 import { Progress } from "../shared/progress";
-import { CircularProgressbar } from "react-circular-progressbar";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import Image from "next/image";
@@ -38,6 +38,10 @@ interface MainAppProps {
   };
   username: string;
   accId?: string | null;
+  winRate?: {
+    totalClassic: number | 0;
+    totalRanked: number | 0;
+  } | null;
 }
 
 const MainApp: React.FC<MainAppProps> = ({
@@ -45,6 +49,7 @@ const MainApp: React.FC<MainAppProps> = ({
   username,
   ownedHero,
   accId,
+  winRate,
 }) => {
   if (username && !accId) {
     return (
@@ -173,21 +178,55 @@ const MainApp: React.FC<MainAppProps> = ({
               </div>
 
               <div className="w-full">
-                <GradiantCard className="" title="Match Insights">
-                  {/* <Info /> */}
-                  <div className="mt-4 flex gap-x-4">
-                    <GradiantCard title="Ranked">
-                      <p className="mt-8 text-right text-xl/[16px] font-semibold sm:mt-7 md:mt-12 md:text-2xl lg:text-3xl">
-                        {matchPlayed && matchPlayed[1]?.total}
-                      </p>
-                    </GradiantCard>
-                    <GradiantCard title="Classic">
-                      <p className="mt-8 text-right text-xl/[16px] font-semibold sm:mt-7 md:mt-12 md:text-2xl lg:text-3xl">
-                        {matchPlayed && matchPlayed[0].total}
-                      </p>
-                    </GradiantCard>
-                  </div>
-                </GradiantCard>
+                {/* <GradiantCard className="" title="Match Insights"> */}
+                {/* <Info /> */}
+                <div className="mt-0.5 flex gap-x-4">
+                  <GradiantCard title="Ranked Matches">
+                    <p className="my-16 text-right text-xl/[16px] font-semibold sm:mt-7 md:mt-12 md:text-2xl lg:text-3xl">
+                      {matchPlayed && matchPlayed[1]?.total}
+                    </p>
+                    <div className="relative">
+                      <CircularProgressbar
+                        value={
+                          ((winRate?.totalRanked ?? 0) * 100) /
+                          ((matchPlayed && matchPlayed[1]?.total) ?? 1)
+                        }
+                        styles={buildStyles({
+                          textColor: "#FFFF",
+                          trailColor: `#232323`,
+                          pathColor: `#74E092`,
+                        })}
+                      />
+                      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl font-semibold text-white">{`${(
+                        ((winRate?.totalRanked ?? 0) * 100) /
+                        ((matchPlayed && matchPlayed[1]?.total) ?? 1)
+                      ).toFixed(2)}%`}</div>
+                    </div>
+                  </GradiantCard>
+                  <GradiantCard title="Classic Matches">
+                    <p className="my-16 text-right text-xl/[16px] font-semibold sm:mt-7 md:mt-12 md:text-2xl lg:text-3xl">
+                      {matchPlayed && matchPlayed[0].total}
+                    </p>
+                    <div className="relative">
+                      <CircularProgressbar
+                        value={
+                          ((winRate?.totalClassic ?? 0) * 100) /
+                          ((matchPlayed && matchPlayed[0]?.total) ?? 1)
+                        }
+                        styles={buildStyles({
+                          textColor: "#FFFF",
+                          trailColor: `#232323`,
+                          pathColor: `#74E092`,
+                        })}
+                      />
+                      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl font-semibold text-white">{`${(
+                        ((winRate?.totalClassic ?? 0) * 100) /
+                        ((matchPlayed && matchPlayed[0]?.total) ?? 1)
+                      ).toFixed(2)}%`}</div>
+                    </div>
+                  </GradiantCard>
+                </div>
+                {/* </GradiantCard> */}
               </div>
             </div>
 

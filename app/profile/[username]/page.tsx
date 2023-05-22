@@ -45,13 +45,13 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
 
   let accId = await acc(username);
   let dataAcc;
+  let winRate;
   if (!accId) {
     accId = null;
   } else {
-
     dataAcc = await getDataAcc(accId);
+    winRate = await getWinRate(accId);
   }
-
 
   return (
     <div className="overflow-hidden">
@@ -60,7 +60,7 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
         ownedHero={dataAcc?.heroOwned}
         username={username}
         accId={accId}
-        // winRate={winRate}
+        winRate={winRate}
       />
     </div>
   );
