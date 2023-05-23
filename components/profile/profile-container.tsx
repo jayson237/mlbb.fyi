@@ -70,36 +70,39 @@ const MainApp: React.FC<MainAppProps> = ({
   //     </>
   //   );
   // }
-  return (
-    <>
-      <div className="flex flex-col gap-5 md:flex-row">
-        {/* Left */}
+  if (username) {
+    return (
+      <>
+        <div className="flex flex-col gap-5 md:flex-row">
+          {/* Left */}
 
-        <div className="flex gap-5 text-softGray">
-          {/* Profile Head */}
-          <ProfileBio username={username} />
+          <div className="flex gap-5 text-softGray">
+            {/* Profile Head */}
+            <ProfileBio username={username} />
+          </div>
+
+          {/* Right */}
+          <Tabs defaultValue="statistics" className="w-full">
+            <TabsList>
+              <TabsTrigger value="statistics">Statistics</TabsTrigger>
+              <TabsTrigger value="posts">Posts</TabsTrigger>
+            </TabsList>
+            <TabsContent
+              value="statistics"
+              className="flex w-full flex-col gap-4 xl:flex-row"
+            >
+              <Statistics
+                matchPlayed={matchPlayed}
+                winRate={winRate}
+                ownedHero={ownedHero}
+              />
+            </TabsContent>
+          </Tabs>
         </div>
-
-        {/* Right */}
-        <Tabs defaultValue="statistics" className="w-full">
-          <TabsList>
-            <TabsTrigger value="statistics">Statistics</TabsTrigger>
-            <TabsTrigger value="posts">Posts</TabsTrigger>
-          </TabsList>
-          <TabsContent
-            value="statistics"
-            className="flex w-full flex-col gap-4 xl:flex-row"
-          >
-            <Statistics
-              matchPlayed={matchPlayed}
-              winRate={winRate}
-              ownedHero={ownedHero}
-            />
-          </TabsContent>
-        </Tabs>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
+  return null;
 };
 
 export default MainApp;
