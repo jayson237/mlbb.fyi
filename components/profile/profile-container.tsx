@@ -1,18 +1,11 @@
 "use client";
 
-import { mlbbaccs } from "@prisma/client";
-import { Progress } from "../shared/progress";
-import { useEffect } from "react";
-import { toast } from "sonner";
-import Image from "next/image";
-import { GradiantCard } from "../shared/gradiant-card";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-
+import getCurrentUser from "@/lib/actions/getCurrentUser";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../shared/tabs";
-import Info from "../shared/icons/info";
-import { Button } from "../shared/button";
+
 import ProfileBio from "./bio";
 import Statistics from "./statistics";
+import { SafeUser } from "@/types";
 
 export type MatchPLayedProps = {
   total: number;
@@ -44,6 +37,7 @@ interface MainAppProps {
     totalClassic: number | 0;
     totalRanked: number | 0;
   } | null;
+  currentUser?: SafeUser | null;
 }
 
 const MainApp: React.FC<MainAppProps> = ({
@@ -52,8 +46,11 @@ const MainApp: React.FC<MainAppProps> = ({
   ownedHero,
   accId,
   winRate,
+  currentUser,
 }) => {
+  console.log(currentUser?.username);
   if (username && !accId) {
+    const isOwnProfile = currentUser?.username === username;
     return (
       <>
         <div className="flex flex-col gap-5 md:flex-row">
@@ -71,8 +68,9 @@ const MainApp: React.FC<MainAppProps> = ({
             >
               <div className="flex w-full flex-col gap-4">
                 <p className="pl-1">
-                  This user&apos;s Mobile Legends account hasn&apos;t been
-                  linked yet
+                  {isOwnProfile
+                    ? "To check out your stats, please link your account on the settings page"
+                    : "This user's Mobile Legends account hasn't been linked yet"}
                 </p>
                 <Statistics
                   matchPlayed={matchPlayed}

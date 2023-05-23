@@ -45,7 +45,7 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
 
   let accId = await acc(username);
   let dataAcc;
-  let winRate;
+  let winRate: { totalClassic: number; totalRanked: number } | null = null;
   if (!accId) {
     accId = null;
   } else {
@@ -61,6 +61,7 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
         username={username}
         accId={accId}
         winRate={winRate}
+        currentUser={user}
       />
     </div>
   );

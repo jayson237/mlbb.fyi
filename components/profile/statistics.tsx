@@ -60,18 +60,18 @@ const Statistics: React.FC<StatisticsProps> = ({
         <div className="w-full">
           <div className="mt-0.5 flex gap-x-4">
             <MatchInsights
-              title="Ranked Matches"
-              matchPlayed={matchPlayed}
-              winRate={winRate}
-              matchType={1}
-              totalType="ranked"
-            />
-            <MatchInsights
               title="Classic Matches"
               matchPlayed={matchPlayed}
               winRate={winRate}
               matchType={0}
               totalType="classic"
+            />
+            <MatchInsights
+              title="Ranked Matches"
+              matchPlayed={matchPlayed}
+              winRate={winRate}
+              matchType={1}
+              totalType="ranked"
             />
           </div>
         </div>
