@@ -1,11 +1,10 @@
+"use client";
+
 import React from "react";
-import { GradiantCard } from "../shared/gradiant-card";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import { Progress } from "../shared/progress";
-import MatchInsights from "./match-insights";
-import { match } from "assert";
-import Favourites from "./fav";
-import InfoCard from "./player-info";
+
+import InfoCard from "./profile-stats/player-info";
+import MatchInsights from "./profile-stats/match-insights";
+import Favourites from "./profile-stats/fav";
 
 interface StatisticsProps {
   matchPlayed: {
@@ -37,6 +36,11 @@ const Statistics: React.FC<StatisticsProps> = ({
   ownedHero,
   winRate,
 }) => {
+  const totalMatchPlayed =
+    ((matchPlayed && matchPlayed[0]?.total) || 0) +
+    ((matchPlayed && matchPlayed[1]?.total) || 0);
+  const heroes = (ownedHero && ownedHero?.total) || 0;
+
   return (
     <div className="flex w-full flex-col gap-4 xl:flex-row">
       <div className="flex w-full max-w-lg flex-col gap-y-4 md:w-fit">
@@ -44,12 +48,12 @@ const Statistics: React.FC<StatisticsProps> = ({
           <InfoCard
             className="w-full md:w-60 md:max-w-[240px]"
             title="Heroes Owned"
-            value={ownedHero?.total}
+            value={heroes}
           />
           <InfoCard
             className="w-full md:w-60 md:max-w-[240px]"
             title="Match Played"
-            value={matchPlayed[0]?.total + matchPlayed[1]?.total}
+            value={totalMatchPlayed}
           />
         </div>
 
@@ -80,7 +84,7 @@ const Statistics: React.FC<StatisticsProps> = ({
           matchType={0}
         />
         <Favourites
-          title="Classic Favourites"
+          title="Ranked Favourites"
           matchPlayed={matchPlayed}
           matchType={1}
         />

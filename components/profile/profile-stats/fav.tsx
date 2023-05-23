@@ -1,5 +1,7 @@
-import { GradiantCard } from "../shared/gradiant-card";
-import { Progress } from "../shared/progress";
+"use client";
+
+import { GradiantCard } from "../../shared/gradiant-card";
+import { Progress } from "../../shared/progress";
 
 interface FavouritesProps {
   title: string;
@@ -21,7 +23,7 @@ const Favourites: React.FC<FavouritesProps> = ({
   matchPlayed,
   matchType,
 }) => {
-  const data = matchPlayed[matchType]?.data;
+  const data = (matchPlayed && matchPlayed[matchType]?.data) || [];
   return (
     <GradiantCard title={title}>
       {data.map((item, i) => (
