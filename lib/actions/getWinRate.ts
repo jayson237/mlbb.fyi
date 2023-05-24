@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default async function getWinRate(accId: number) {
+export default async function getWinRate(accId: string) {
   try {
     const fetch = await axios.get(
       `${process.env.BE_API_URL}/hero/winrate?accId=${accId}`

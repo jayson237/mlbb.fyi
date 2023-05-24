@@ -13,11 +13,11 @@ export default async function Signin() {
   return (
     <main className="mt-24 h-screen">
       <div className="text-center">
-        <h1 className="md:text-[64px] md:leading-[60px] text-[44px] font-bold leading-10 tracking-tight">
+        <h1 className="text-[44px] font-bold leading-10 tracking-tight md:text-[64px] md:leading-[60px]">
           Sign in
         </h1>
-        <p className="md:text-[20px] pt-3 text-[16px]">
-          Please enter your email before proceeding
+        <p className="pt-4 text-[16px] md:text-[16px]">
+          Join the community and dominate the battlefield!
         </p>
       </div>
       <LoginForm csrfToken={csrfToken} />

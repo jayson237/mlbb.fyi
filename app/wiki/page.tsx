@@ -19,8 +19,8 @@ async function WikiPage() {
   return (
     <main>
       <h1 className="ml-0 max-w-4xl font-heading text-4xl leading-10 md:ml-3">
-        Welcome to mlbb.fyi wiki, your latest and greatest Mobile Legends
-        Information in one place
+        mlbb.fyi wiki, your latest and greatest Mobile Legends information in
+        one place
       </h1>
 
       <Tabs defaultValue="heroes" className="mt-4 w-full">
@@ -38,6 +38,10 @@ async function WikiPage() {
         <TabsContent value="statistics" className=""></TabsContent>
         <TabsContent value="draft-pick" className=""></TabsContent>
       </Tabs>
+      <p className="mt-4 md:ml-3">
+        We are currently in the process of implementing the wiki feature, and we
+        appreciate your understanding and patience. Thank you.
+      </p>
     </main>
   );
 }

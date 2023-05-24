@@ -9,9 +9,6 @@ async function SettingsPage() {
 
   return (
     <main>
-      <h1 className="text-center font-heading text-3xl font-bold">
-        Profile Settings
-      </h1>
       <SettingsForm currentUser={currentUser} mlbbAcc={mlbbAcc} />
     </main>
   );

@@ -46,9 +46,9 @@ export default async function Home() {
 
           <Button
             className="mx-auto mt-4 w-fit rounded-full"
-            variant="gradiantNavy"
+            variant="gradiantNavySec"
           >
-            <Link href="/auth/signin">Get Started</Link>
+            <Link href="/explore">Get Started</Link>
           </Button>
 
           <div className="flex flex-col items-center justify-center pt-[250px]">
