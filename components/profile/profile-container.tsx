@@ -49,6 +49,7 @@ const MainApp: React.FC<MainAppProps> = ({
   currentUser,
 }) => {
   console.log(currentUser?.username);
+  console.log(username);
   if (username && !accId) {
     const isOwnProfile = currentUser?.username === username;
     return (
@@ -83,36 +84,42 @@ const MainApp: React.FC<MainAppProps> = ({
         </div>
       </>
     );
+  } else if (username && accId) {
+    return (
+      <>
+        <div className="flex flex-col gap-5 md:flex-row">
+          {/* Left */}
+
+          <div className="flex gap-5 text-softGray">
+            {/* Profile Head */}
+            <ProfileBio username={username} />
+          </div>
+
+          {/* Right */}
+          <Tabs defaultValue="statistics" className="w-full">
+            <TabsList>
+              <TabsTrigger value="statistics">Statistics</TabsTrigger>
+              <TabsTrigger value="posts">Posts</TabsTrigger>
+            </TabsList>
+            <TabsContent
+              value="statistics"
+              className="flex w-full flex-col gap-4 xl:flex-row"
+            >
+              <Statistics
+                matchPlayed={matchPlayed}
+                winRate={winRate}
+                ownedHero={ownedHero}
+              />
+            </TabsContent>
+          </Tabs>
+        </div>
+      </>
+    );
   }
   return (
-    <>
-      <div className="flex flex-col gap-5 md:flex-row">
-        {/* Left */}
-
-        <div className="flex gap-5 text-softGray">
-          {/* Profile Head */}
-          <ProfileBio username={username} />
-        </div>
-
-        {/* Right */}
-        <Tabs defaultValue="statistics" className="w-full">
-          <TabsList>
-            <TabsTrigger value="statistics">Statistics</TabsTrigger>
-            <TabsTrigger value="posts">Posts</TabsTrigger>
-          </TabsList>
-          <TabsContent
-            value="statistics"
-            className="flex w-full flex-col gap-4 xl:flex-row"
-          >
-            <Statistics
-              matchPlayed={matchPlayed}
-              winRate={winRate}
-              ownedHero={ownedHero}
-            />
-          </TabsContent>
-        </Tabs>
-      </div>
-    </>
+    <div className="flex h-screen items-center justify-center">
+      <p className="mb-48 text-2xl md:ml-3">Profile does not exist</p>
+    </div>
   );
 };
 

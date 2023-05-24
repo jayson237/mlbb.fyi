@@ -109,10 +109,13 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
                   router.push("/auth/signin");
                   setCollapse(!collapse);
                 }}
-                className="h-8 w-8 rounded-full p-2"
+                className="flex h-6 w-20 rounded-xl p-2"
                 variant="gradiantNavy"
               >
-                <LogInIcon className="stroke-[3] text-softGray" />
+                <span className="text-[16px] font-semibold text-softGray">
+                  Sign In
+                </span>
+                {/* <LogInIcon className="stroke-[3] text-softGray" /> */}
               </Button>
             </li>
           ) : (

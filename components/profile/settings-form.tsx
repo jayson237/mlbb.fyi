@@ -13,6 +13,7 @@ import LoadingDots from "../shared/icons/loading-dots";
 import { CheckCircle, XCircle } from "lucide-react";
 import { mlbbaccs } from "@prisma/client";
 import { cn } from "@/lib/utils";
+import { useSearchParams } from "next/navigation";
 
 interface ISettingsForm {
   currentUser?: SafeUser | null;
@@ -20,13 +21,17 @@ interface ISettingsForm {
 }
 
 const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
+  const params = useSearchParams();
   const router = useRouter();
 
   const [username, setUsername] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   console.log(currentUser);
-
+  if (currentUser?.username && params?.get("ref") === "signin") {
+    router.push("/explore");
+    return null;
+  }
   return (
     <div className="mx-auto max-w-md">
       <div className="mb-8 flex justify-center">
@@ -77,7 +82,7 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
           } else {
             setLoading(false);
             toast.success("Successfully updated profile");
-            router.push("/explore");
+            router.push(`/profile/${username}`);
           }
         }}
       >
