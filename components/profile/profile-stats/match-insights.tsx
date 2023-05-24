@@ -44,6 +44,7 @@ const MatchInsights: React.FC<MatchInsightsProps> = ({
         <CircularProgressbar
           value={winRatePercentage}
           styles={buildStyles({
+            strokeLinecap: "round",
             textColor: "#FFFF",
             trailColor: `#232323`,
             pathColor: `#74E092`,

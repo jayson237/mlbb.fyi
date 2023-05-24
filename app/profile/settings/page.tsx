@@ -9,7 +9,6 @@ async function SettingsPage() {
 
   return (
     <main>
-     
       <SettingsForm currentUser={currentUser} mlbbAcc={mlbbAcc} />
     </main>
   );
