@@ -8,6 +8,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/shared/tabs";
+import HeroesContainer from "@/components/wiki/heroes/heroes-container";
 
 async function getHero() {
   return await prisma.heros.findMany({});
@@ -34,7 +35,9 @@ async function WikiPage() {
         <TabsContent
           value="heroes"
           className="flex w-full flex-col gap-5 md:flex-row"
-        ></TabsContent>
+        >
+          <HeroesContainer heros={heros} />
+        </TabsContent>
         <TabsContent value="statistics" className=""></TabsContent>
         <TabsContent value="draft-pick" className=""></TabsContent>
       </Tabs>

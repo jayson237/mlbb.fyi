@@ -27,8 +27,8 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
   const [username, setUsername] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
+  console.log(currentUser);
   if (currentUser?.username && params?.get("ref") === "signin") {
-    console.log("router push");
     router.push("/explore");
     return null;
   }

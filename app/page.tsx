@@ -4,11 +4,11 @@ import Link from "next/link";
 export const metadata = {
   title: "mlbb.fyi - Elevate Your Mobile Legends Game",
   description:
-    "Access hero stats, optimal builds, and connect with a community of expert players",
+    "Access hero stats, optimal builds, and connect with a community of expert players.",
   openGraph: {
     title: "mlbb.fyi - Elevate Your Mobile Legends Game",
     description:
-      "Access hero stats, optimal builds, and connect with a community of expert players",
+      "Access hero stats, optimal builds, and connect with a community of expert players.",
     url: "https://mlbb.fyi",
     siteName: "Next.js",
     images: [
@@ -25,7 +25,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "mlbb.fyi - Elevate Your Mobile Legends Game",
     description:
-      "Access hero stats, optimal builds, and connect with a community of expert players",
+      "Access hero stats, optimal builds, and connect with a community of expert players.",
     images: ["/og.jpg"],
   },
 };
