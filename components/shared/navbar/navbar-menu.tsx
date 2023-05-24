@@ -123,6 +123,7 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
               <Button
                 onClick={() => {
                   router.push("/profile/settings");
+                  setCollapse(!collapse);
                 }}
                 className="group h-8 w-8 rounded-full p-2"
                 variant="gradiantNavy"
