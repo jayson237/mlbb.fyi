@@ -14,7 +14,7 @@ export default async function AppBind() {
           Bind
         </h1>
         <p className="pt-3 text-[16px] md:text-[20px]">
-          Sync your Mobile Legends account
+          Bind your Mobile Legends account
         </p>
         <SyncForm currentUser={currentUser} />
       </div>

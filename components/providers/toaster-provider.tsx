@@ -5,7 +5,7 @@ import { Toaster } from "sonner";
 const ToasterProvider = () => {
   return (
     <div className="relative z-[100]">
-      <Toaster position="top-center" />
+      <Toaster position="top-center" duration={5000} />
     </div>
   );
 };
