@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 const Page = async () => {
   return (
     <div>
-      <h1>Profile not set</h1>
+      <h1>Profile</h1>
     </div>
   );
 };
