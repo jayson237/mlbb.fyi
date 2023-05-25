@@ -28,25 +28,20 @@ type HerosDetailsSkill {
   tips        String
 }
 
-model heros {
+model Hero {
   id      String       @id @default(auto()) @map("_id") @db.ObjectId
   v       Int          @map("__v")
-  details HerosDetails
+  //details HerosDetails
   heroId  Int @unique
   img     String
   name    String @unique
 }
 
-model mlbbaccs {
+model MlbbAcc {
   id        String @id @default(auto()) @map("_id") @db.ObjectId
-  v         Int    @map("__v")
-  accId     String    @unique
-  accJWT    String  
-  accLevel  String
-  accServer String  
-  accToken  String
-  nickname  String
-  accAvatar String
+  accId     String?   @unique
+  accServer String?  
+  nickname  String?
   userId    String   @db.ObjectId
 
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -82,7 +77,7 @@ model User {
   updatedAt     DateTime    @updatedAt
 
   accounts      Account[]
-  mlbbaccs      mlbbaccs[]
+  mlbbaccs      MlbbAcc[]
   sessions      Session[]
 }
 

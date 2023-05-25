@@ -14,7 +14,7 @@ export async function GET(request: Request) {
         { status: 400 }
       );
 
-    const findID = await prisma.mlbbaccs.findFirst({
+    const findID = await prisma.mlbbAcc.findFirst({
       where: {
         accId: id,
       },

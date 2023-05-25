@@ -40,7 +40,6 @@ export async function POST(request: Request) {
     }
 
     const bind = await bindAcc({ accServer, accId, code });
-    console.log(bind);
 
     const findAndUpdate = await prisma?.user.update({
       where: {
@@ -57,14 +56,19 @@ export async function POST(request: Request) {
 
     console.log(findAndUpdate);
 
-    if (bind.status !== 200) {
+    if (!bind.data) {
       return NextResponse.json(
         {
-          message: bind.data.message,
+          message: bind.message,
         },
         { status: 400 }
       );
     }
+    // const save = await prisma?.mlbbAcc.create({
+    //   data: {
+    //     accId: bind.data.id
+    //   }
+    // })
     const upt = await fetch(
       `${process.env.BE_API_URL}/data/sync?accId=${accId}`,
       {
@@ -74,7 +78,7 @@ export async function POST(request: Request) {
     if (upt.ok) {
       return NextResponse.json(
         {
-          message: bind.data.message,
+          message: bind.message,
         },
         { status: 200 }
       );

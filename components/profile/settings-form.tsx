@@ -11,13 +11,13 @@ import { Button } from "../shared/button";
 import { Label } from "../shared/label";
 import LoadingDots from "../shared/icons/loading-dots";
 import { CheckCircle, XCircle } from "lucide-react";
-import { mlbbaccs } from "@prisma/client";
+import { MlbbAcc } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 
 interface ISettingsForm {
   currentUser?: SafeUser | null;
-  mlbbAcc?: mlbbaccs | null;
+  mlbbAcc?: MlbbAcc | null;
 }
 
 const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {

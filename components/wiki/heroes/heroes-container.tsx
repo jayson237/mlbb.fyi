@@ -2,26 +2,26 @@
 
 import { Fragment, useEffect, useState } from "react";
 
-import { heros } from "@prisma/client";
+import { Hero } from "@prisma/client";
 import useHeroFilter from "@/lib/state/useHeroFilter";
 import HeroesFilter from "./heroes-filter";
 import HeroCard from "./hero-card";
 
 interface IHeroesContainer {
-  heros: heros[];
+  heros: Hero[];
 }
 
 const HeroesContainer = ({ heros }: IHeroesContainer) => {
   const heroFilter = useHeroFilter();
-  const [hero, setHero] = useState<heros[]>();
+  const [hero, setHero] = useState<Hero[]>();
 
   useEffect(() => {
     console.log(heroFilter.type);
     if (heroFilter.type.length > 0) {
-      const filtered: heros[] = [];
+      const filtered: Hero[] = [];
       heroFilter.type.map((item, i) => {
         heros.filter((hero) => {
-          if (hero.details.heroType === heroFilter.type[i]) filtered.push(hero);
+          // if (hero.details.heroType === heroFilter.type[i]) filtered.push(hero);
         });
       });
       setHero(filtered);

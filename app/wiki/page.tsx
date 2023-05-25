@@ -1,7 +1,7 @@
 import React from "react";
 
 import prisma from "@/lib/prismadb";
-import { heros } from "@prisma/client";
+import { Hero } from "@prisma/client";
 import {
   Tabs,
   TabsContent,
@@ -11,11 +11,15 @@ import {
 import HeroesContainer from "@/components/wiki/heroes/heroes-container";
 
 async function getHero() {
-  return await prisma.heros.findMany({});
+  try {
+    return await prisma.hero.findMany({});
+  } catch {
+    return null;
+  }
 }
 
 async function WikiPage() {
-  const heros: heros[] = await getHero();
+  const heros: Hero[] | null = await getHero();
 
   return (
     <main>
@@ -36,11 +40,15 @@ async function WikiPage() {
           value="heroes"
           className="flex w-full flex-col gap-5 md:flex-row"
         >
-          <HeroesContainer heros={heros} />
+          {/* <HeroesContainer heros={heros} /> */}
         </TabsContent>
         <TabsContent value="statistics" className=""></TabsContent>
         <TabsContent value="draft-pick" className=""></TabsContent>
       </Tabs>
+      <p className="mt-4 md:ml-3">
+        We are currently in the process of implementing the wiki section, and we
+        appreciate your understanding and patience. Thank you.
+      </p>
     </main>
   );
 }

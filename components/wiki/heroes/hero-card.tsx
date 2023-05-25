@@ -1,7 +1,7 @@
-import { heros } from "@prisma/client";
+import { Hero } from "@prisma/client";
 import { GradiantCard } from "@/components/shared/gradiant-card";
 
-const HeroCard = ({ hero }: { hero: heros }) => {
+const HeroCard = ({ hero }: { hero: Hero }) => {
   return (
     <GradiantCard className="w-fit p-1.5">
       <div

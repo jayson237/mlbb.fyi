@@ -7,7 +7,7 @@ type PayloadType = {
 };
 
 export async function sendVerificationCode(payload: PayloadType) {
-  const response = await axios.post(`${process.env.BE_API_URL}/auth/sendCode`, {
+  const response = await axios.post(`${process.env.BE_API_URL}/mlbbacc/vc`, {
     id: payload.accId,
     server: payload.accServer,
   });
@@ -15,12 +15,22 @@ export async function sendVerificationCode(payload: PayloadType) {
 }
 
 export async function bindAcc(payload: PayloadType) {
-  const response = await axios.post(`${process.env.BE_API_URL}/mlbbacc/sync`, {
+  const response = await axios.post<{
+    message: string;
+    data: {
+      id: string;
+      server: string;
+      nickname: string;
+    };
+  }>(`${process.env.BE_API_URL}/mlbbacc/sync`, {
     id: payload.accId,
     server: payload.accServer,
     code: payload.code,
   });
-  return response;
+  return {
+    message: response.data.message,
+    data: response.data.data,
+  };
 }
 
 import { ClassValue, clsx } from "clsx";
