@@ -70,7 +70,7 @@ const MainApp: React.FC<MainAppProps> = ({
               <div className="flex w-full flex-col gap-4">
                 <p className="pl-1">
                   {isOwnProfile
-                    ? "To check out your stats, please link your account on the settings page"
+                    ? "To check out your stats, please sync your Mobile Legends account on the settings page"
                     : "This user's Mobile Legends account hasn't been linked yet"}
                 </p>
                 <Statistics

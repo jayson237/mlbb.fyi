@@ -26,14 +26,14 @@ export async function POST(request: Request) {
     }
     return NextResponse.json(
       {
-        message: sendCode.data.message,
+        message: "Kindly check your Mobile Legends inbox for the code",
       },
       { status: 200 }
     );
   } catch (error) {
     return NextResponse.json(
       {
-        message: "Error",
+        message: "An error occured",
       },
       { status: 400 }
     );

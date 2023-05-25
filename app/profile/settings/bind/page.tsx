@@ -11,10 +11,10 @@ export default async function AppBind() {
     <div className="mt-24">
       <div className="text-center">
         <h1 className="text-[44px] font-bold leading-10 tracking-tight md:text-[64px] md:leading-[60px]">
-          Sync
+          Bind
         </h1>
         <p className="pt-3 text-[16px] md:text-[20px]">
-          Sync your MLBB profile
+          Sync your Mobile Legends account
         </p>
         <SyncForm currentUser={currentUser} />
       </div>

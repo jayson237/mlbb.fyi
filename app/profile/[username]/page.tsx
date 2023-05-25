@@ -67,7 +67,7 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
     accId = null;
   } else {
     dataAcc = await getDataAcc(accId);
-    winRate = await getWinRate(accId);
+    // winRate = await getWinRate(accId);
   }
 
   return (

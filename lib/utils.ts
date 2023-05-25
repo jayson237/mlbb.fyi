@@ -15,21 +15,43 @@ export async function sendVerificationCode(payload: PayloadType) {
 }
 
 export async function bindAcc(payload: PayloadType) {
-  const response = await axios.post<{
+  const res = await fetch(`${process.env.BE_API_URL}/mlbbacc/sync`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: payload.accId,
+      server: payload.accServer,
+      code: payload.code,
+    }),
+  });
+  const response: {
     message: string;
     data: {
       id: string;
       server: string;
       nickname: string;
     };
-  }>(`${process.env.BE_API_URL}/mlbbacc/sync`, {
-    id: payload.accId,
-    server: payload.accServer,
-    code: payload.code,
-  });
+  } = await res.json();
+  console.log(response);
+
+  // const response = await axios.post<{
+  //   message: string;
+  //   data: {
+  //     id: string;
+  //     server: string;
+  //     nickname: string;
+  //   };
+  // }>(`${process.env.BE_API_URL}/mlbbacc/sync`, {
+  //   id: payload.accId,
+  //   server: payload.accServer,
+  //   code: payload.code,
+  // });
+
   return {
-    message: response.data.message,
-    data: response.data.data,
+    message: response.message,
+    data: response.data,
   };
 }
 

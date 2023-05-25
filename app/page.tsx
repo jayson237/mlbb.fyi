@@ -51,7 +51,7 @@ export default async function Home() {
             <Link href="/explore">Get Started</Link>
           </Button>
 
-          <div className="flex flex-col items-center justify-center pt-[250px]">
+          <div className="flex flex-col items-center justify-center pt-[200px]">
             <div className="flex items-end justify-center">
               <h1 className="text-center text-[12px] text-neutral-500">
                 mlbb.fyi was made as part of 2023 Orbital project, and is not
