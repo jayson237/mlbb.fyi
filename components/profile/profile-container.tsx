@@ -1,6 +1,5 @@
 "use client";
 
-import getCurrentUser from "@/lib/actions/getCurrentUser";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../shared/tabs";
 
 import ProfileBio from "./bio";
@@ -48,8 +47,8 @@ const MainApp: React.FC<MainAppProps> = ({
   winRate,
   currentUser,
 }) => {
-  console.log(currentUser?.username);
-  console.log(username);
+  // console.log(currentUser?.username);
+  // console.log(username);
   if (username && !accId) {
     const isOwnProfile = currentUser?.username === username;
     return (
@@ -68,7 +67,7 @@ const MainApp: React.FC<MainAppProps> = ({
               className="flex w-full flex-col gap-4 xl:flex-row"
             >
               <div className="flex w-full flex-col gap-4">
-                <p className="pl-1">
+                <p className="pl-1 text-sm">
                   {isOwnProfile
                     ? "To check out your stats, please bind your Mobile Legends account on the settings page"
                     : "This user's Mobile Legends account hasn't been linked yet"}
@@ -77,6 +76,7 @@ const MainApp: React.FC<MainAppProps> = ({
                   matchPlayed={matchPlayed}
                   winRate={winRate}
                   ownedHero={ownedHero}
+                  isBound={false}
                 />
               </div>
             </TabsContent>
@@ -109,6 +109,7 @@ const MainApp: React.FC<MainAppProps> = ({
                 matchPlayed={matchPlayed}
                 winRate={winRate}
                 ownedHero={ownedHero}
+                isBound={true}
               />
             </TabsContent>
           </Tabs>

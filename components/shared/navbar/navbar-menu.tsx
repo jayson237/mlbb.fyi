@@ -93,7 +93,7 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
                   className={cn(
                     "cursor-pointer font-medium hover:text-navy-300 hover:transition-all hover:duration-300",
                     active === menu.name.toLowerCase() &&
-                      "underline decoration-navy-300 decoration-2 underline-offset-4"
+                      "underline:ease-in-out underline decoration-navy-300 decoration-2 underline-offset-4"
                   )}
                 >
                   {menu.name}

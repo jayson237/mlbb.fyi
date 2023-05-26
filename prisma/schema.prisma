@@ -42,9 +42,9 @@ model MlbbAcc {
   accId     String?   @unique
   accServer String?  
   nickname  String?
-  userId    String   @db.ObjectId
+  userId    String?   @db.ObjectId
 
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Account {

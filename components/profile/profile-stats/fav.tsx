@@ -25,14 +25,14 @@ const Favourites: React.FC<FavouritesProps> = ({
 }) => {
   const data = (matchPlayed && matchPlayed[matchType]?.data) || [];
   return (
-    <GradiantCard title={title}>
+    <GradiantCard title={title} className="md:h-[233px]">
       {data.map((item, i) => (
-        <div key={i} className="mt-3">
+        <div key={i} className="mt-2">
           <div className="flex justify-between">
-            <p className="text-sm">
+            <p className="text-[12px]">
               {item.name} - {item.total}
             </p>
-            <p className="text-sm">
+            <p className="text-[12px]">
               {((item.win * 100) / item.total).toFixed(2)}%
             </p>
           </div>

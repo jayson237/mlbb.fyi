@@ -9,12 +9,12 @@ export default function ProfileBio({ username }: { username: string }) {
   return (
     <>
       {/* Profile Head */}
-      <GradiantCard className="mx-auto h-fit w-[18rem] max-w-full md:mx-0">
+      <GradiantCard className="mx-auto h-fit w-[15rem] max-w-full md:mx-0">
         <Image
           src={"/nana.jpg"}
           alt=""
-          width={203}
-          height={203}
+          width={150}
+          height={150}
           className="mx-auto rounded-full"
         />
         <h1 className="mt-3 text-center font-heading text-xl">{username}</h1>
@@ -25,7 +25,7 @@ export default function ProfileBio({ username }: { username: string }) {
           Follow
         </Button>
 
-        <div className="mt-4 flex flex-row justify-between px-8 font-heading">
+        <div className="mt-4 flex flex-row justify-between px-3 font-heading">
           <div className="flex flex-col text-center">
             <p className="text-xl">123</p>
             <p className="text-[14px]">FOLLOWING</p>

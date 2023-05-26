@@ -20,7 +20,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
         // "dark:bg-primary/30 dark:border-zinc-100 dark:text-zinc-100"
       )}
     >
-      <div className="mx-auto flex max-w-[1280px] items-center justify-between">
+      <div className="mx-auto flex max-w-[1080px] items-center justify-between">
         <NavLogo />
         <NavMenu currentUser={currentUser} />
       </div>

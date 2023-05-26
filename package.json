@@ -6,6 +6,7 @@
     "dev": "next dev -p 3010",
     "build": "next build",
     "start": "next start",
+    "start-loc": "next start -p 3010",
     "lint": "eslint ./components ./app ./lib .",
     "lint:debug": "eslint ./app --debug",
     "lint:fix": "eslint . --fix"

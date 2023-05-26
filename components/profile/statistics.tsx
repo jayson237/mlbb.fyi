@@ -29,12 +29,14 @@ interface StatisticsProps {
     totalClassic: number | 0;
     totalRanked: number | 0;
   } | null;
+  isBound: boolean;
 }
 
 const Statistics: React.FC<StatisticsProps> = ({
   matchPlayed,
   ownedHero,
   winRate,
+  isBound,
 }) => {
   const totalMatchPlayed =
     ((matchPlayed && matchPlayed[0]?.total) || 0) +
@@ -46,12 +48,12 @@ const Statistics: React.FC<StatisticsProps> = ({
       <div className="flex w-full max-w-lg flex-col gap-y-4 md:w-fit">
         <div className="flex w-full flex-row gap-x-4 md:w-fit">
           <InfoCard
-            className="w-full md:w-60 md:max-w-[240px]"
+            className="w-full md:w-60 md:max-w-[200px]"
             title="Heroes Owned"
             value={heroes}
           />
           <InfoCard
-            className="w-full md:w-60 md:max-w-[240px]"
+            className="w-full md:w-60 md:max-w-[200px]"
             title="Match Played"
             value={totalMatchPlayed}
           />
@@ -65,6 +67,7 @@ const Statistics: React.FC<StatisticsProps> = ({
               winRate={winRate}
               matchType={0}
               totalType="classic"
+              isBound={isBound}
             />
             <MatchInsights
               title="Ranked Matches"
@@ -72,12 +75,13 @@ const Statistics: React.FC<StatisticsProps> = ({
               winRate={winRate}
               matchType={1}
               totalType="ranked"
+              isBound={isBound}
             />
           </div>
         </div>
       </div>
 
-      <div className="flex w-full max-w-lg flex-col gap-4">
+      <div className="flex max-h-2 w-full max-w-lg flex-col gap-4">
         <Favourites
           title="Classic Favourites"
           matchPlayed={matchPlayed}

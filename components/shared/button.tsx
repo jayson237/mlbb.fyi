@@ -13,7 +13,7 @@ const buttonVariants = cva(
         outline: "bg-transparent border border-slate-200 hover:bg-slate-800",
         subtle: "bg-slate-100 text-slate-900 hover:bg-slate-200",
         gradiantNavy:
-          "bg-gradient-to-tl from-navy-600 to-navy-400 hover:shadow-navy-600/70 hover:shadow-lg hover:opacity-95",
+          "bg-gradient-to-tl from-navy-600 to-navy-400 hover:shadow-navy-300/30 hover:shadow-lg hover:opacity-95",
         gradiantNavySec:
           "bg-transparent border-navy-600 border-2 shadow-navy-600/70 hover:shadow-navy-600/70 hover:shadow-lg hover:opacity-85 shadow-inner hover:bg-gradient-to-tl hover:from-navy-600 hover:to-navy-400",
       },

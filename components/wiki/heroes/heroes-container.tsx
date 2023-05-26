@@ -16,7 +16,7 @@ const HeroesContainer = ({ heros }: IHeroesContainer) => {
   const [hero, setHero] = useState<Hero[]>();
 
   useEffect(() => {
-    console.log(heroFilter.type);
+    //console.log(heroFilter.type);
     if (heroFilter.type.length > 0) {
       const filtered: Hero[] = [];
       heroFilter.type.map((item, i) => {

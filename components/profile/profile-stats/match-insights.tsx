@@ -21,6 +21,7 @@ interface MatchInsightsProps {
   } | null;
   matchType: number;
   totalType: "classic" | "ranked";
+  isBound: boolean;
 }
 
 const MatchInsights: React.FC<MatchInsightsProps> = ({
@@ -29,6 +30,7 @@ const MatchInsights: React.FC<MatchInsightsProps> = ({
   winRate,
   matchType,
   totalType,
+  isBound,
 }) => {
   const total = (matchPlayed && matchPlayed[matchType].total) || 0;
   const winRates =
@@ -36,8 +38,12 @@ const MatchInsights: React.FC<MatchInsightsProps> = ({
   const winRatePercentage = ((winRates ?? 0) * 100) / (total ?? 1) || 0;
 
   return (
-    <GradiantCard title={title}>
-      <p className="my-16 text-right text-xl/[16px] font-semibold sm:mt-7 md:mt-12 md:text-2xl lg:text-3xl">
+    <GradiantCard title={title} className="h-fit">
+      <p
+        className={`${
+          isBound ? "my-16" : "my-[1.8rem]"
+        } text-right text-xl/[16px] font-semibold sm:mt-7 md:mt-12 md:text-2xl lg:text-3xl`}
+      >
         {total}
       </p>
       <div className="relative">
