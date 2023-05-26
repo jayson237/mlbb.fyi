@@ -33,12 +33,12 @@ export default function LoginForm({ csrfToken }: { csrfToken?: string }) {
           await signIn("email", {
             email,
             redirect: false,
-            callbackUrl: "/",
+            callbackUrl: "/profile/settings?ref=signin",
           })
             .then((res) => {
-              console.log(res);
+              //console.log(res);
               if (res?.ok) {
-                toast.success("Kindly check login link in your inbox");
+                toast.success("Kindly check your inbox for the login link");
               }
               setLoading(false);
             })
@@ -77,7 +77,7 @@ export default function LoginForm({ csrfToken }: { csrfToken?: string }) {
           className="w-full"
           onClick={() => {
             signIn("google", {
-              callbackUrl: "/profile/settings",
+              callbackUrl: "/profile/settings?ref=signin",
             });
           }}
         >
@@ -94,7 +94,7 @@ export default function LoginForm({ csrfToken }: { csrfToken?: string }) {
           className="w-full"
           onClick={() => {
             signIn("discord", {
-              callbackUrl: "/profile/settings",
+              callbackUrl: "/profile/settings?ref=signin",
             });
           }}
         >

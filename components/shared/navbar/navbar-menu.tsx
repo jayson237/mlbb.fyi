@@ -70,38 +70,52 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
             collapse ? "flex flex-col gap-y-4 p-4 font-semibold" : "hidden"
           )}
         >
-          {currentUser?.username &&
-            MenuList.map((menu) => (
+          {MenuList.map((menu) => {
+            if (menu.name === "Profile" && !currentUser) {
+              return null;
+            }
+            return (
               <Link
                 href={
                   menu.href === "/profile"
-                    ? `/profile/${currentUser?.username}`
+                    ? currentUser?.username
+                      ? `/profile/${currentUser?.username}`
+                      : "/profile"
                     : menu.href
                 }
+                onClick={() => {
+                  setCollapse(false);
+                }}
                 key={menu.name}
                 prefetch={false}
               >
                 <li
                   className={cn(
-                    "cursor-pointer font-medium hover:scale-95 hover:transition-all hover:duration-300",
+                    "cursor-pointer font-medium hover:text-navy-300 hover:transition-all hover:duration-300",
                     active === menu.name.toLowerCase() &&
-                      "underline decoration-navy-300 decoration-2 underline-offset-4"
+                      "underline:ease-in-out underline decoration-navy-300 decoration-2 underline-offset-4"
                   )}
                 >
                   {menu.name}
                 </li>
               </Link>
-            ))}
+            );
+          })}
+
           {!currentUser ? (
             <li>
               <Button
                 onClick={() => {
                   router.push("/auth/signin");
+                  setCollapse(!collapse);
                 }}
-                className="h-8 w-8 rounded-full p-2"
+                className="flex h-6 w-[72px] rounded-xl p-2"
                 variant="gradiantNavy"
               >
-                <LogInIcon className="stroke-[3] text-softGray" />
+                <span className="stroke-[3] text-[16px] text-softGray">
+                  Sign In
+                </span>
+                {/* <LogInIcon className="stroke-[3] text-softGray" /> */}
               </Button>
             </li>
           ) : (
@@ -109,6 +123,7 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
               <Button
                 onClick={() => {
                   router.push("/profile/settings");
+                  setCollapse(!collapse);
                 }}
                 className="group h-8 w-8 rounded-full p-2"
                 variant="gradiantNavy"

@@ -8,7 +8,7 @@ export default async function getMlbbAcc(email?: string) {
       },
     });
 
-    const findMlbbAcc = await prisma.mlbbaccs.findFirst({
+    const findMlbbAcc = await prisma.mlbbAcc.findFirst({
       where: {
         userId: findUser?.id,
       },

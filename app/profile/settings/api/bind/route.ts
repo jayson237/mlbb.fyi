@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import getMlbbAcc from "@/lib/actions/getMlbbAcc";
 import { bindAcc } from "@/lib/utils";
+import prisma from "@/lib/prismadb";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -9,7 +10,7 @@ export async function GET(req: Request) {
 
   if (!email)
     return NextResponse.json(
-      {},
+      { message: "Please sign in first" },
       {
         status: 400,
       }
@@ -28,7 +29,10 @@ export async function GET(req: Request) {
       }
     );
   } catch (error) {
-    return NextResponse.json({}, { status: 400 });
+    return NextResponse.json(
+      { message: "An error has occured" },
+      { status: 400 }
+    );
   }
 }
 
@@ -36,42 +40,81 @@ export async function POST(request: Request) {
   try {
     const { accServer, accId, code, email } = await request.json();
     if (!accServer || !accId || !code) {
-      return NextResponse.json({}, { status: 400 });
-    }
-
-    const bind = await bindAcc({ accServer, accId, code });
-    console.log(bind);
-
-    const findAndUpdate = await prisma?.user.update({
-      where: {
-        email: email,
-      },
-      data: {
-        mlbbaccs: {
-          connect: {
-            accId: accId,
-          },
-        },
-      },
-    });
-
-    console.log(findAndUpdate);
-
-    if (bind.status !== 200) {
       return NextResponse.json(
         {
-          message: bind.data.message,
+          message: "Please ensure that all the necessary fields are completed",
         },
         { status: 400 }
       );
     }
+
+    const bind = await bindAcc({ accId, accServer, code });
+    // console.log("bind.data.id", bind.data.id);
+    // console.log("bind.data.server", bind.data.server);
+    // console.log("bind.data.nickname", bind.data.nickname);
+    const create = await prisma?.mlbbAcc.create({
+      data: {
+        accId: bind.data.id,
+        accServer: bind?.data?.server,
+        nickname: bind?.data?.nickname,
+      },
+    });
+    // console.log(create);
+
+    const update = await prisma?.user.update({
+      where: {
+        email,
+      },
+      data: {
+        mlbbaccs: {
+          connect: {
+            accId,
+          },
+        },
+      },
+    });
+    // console.log(update);
+
+    if (!bind.data) {
+      return NextResponse.json(
+        {
+          message: bind.message,
+        },
+        { status: 400 }
+      );
+    }
+    // const save = await prisma?.mlbbAcc.create({
+    //   data: {
+    //     accId: bind.data.id
+    //   }
+    // })
+    const upt = await fetch(
+      `${process.env.BE_API_URL}/data/sync?accId=${accId}`,
+      {
+        method: "GET",
+      }
+    );
+    if (upt.ok) {
+      return NextResponse.json(
+        {
+          message: bind.message,
+        },
+        { status: 200 }
+      );
+    }
     return NextResponse.json(
       {
-        message: bind.data.message,
+        message: "Successfully bound but failed to sync your data to profile",
       },
-      { status: 200 }
+      { status: 400 }
     );
   } catch (error) {
-    return NextResponse.json({}, { status: 400 });
+    return NextResponse.json(
+      {
+        message: "Error, your account might have been bound before",
+        stack: error,
+      },
+      { status: 400 }
+    );
   }
 }

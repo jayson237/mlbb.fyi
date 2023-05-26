@@ -2,12 +2,12 @@ import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   try {
-    const find = await prisma?.mlbbaccs.findFirst({
+    const find = await prisma?.mlbbAcc.findFirst({
       where: {
         userId: "642e7c810f3e7647f4ba3596",
       },
     });
-    console.log(find);
+    // console.log(find);
 
     // const findAndUpdate = await prisma?.user.update({
     //   where: {
@@ -26,7 +26,7 @@ export async function GET(request: Request) {
   } catch (error) {
     return NextResponse.json(
       {
-        msg: "err",
+        msg: "An error occured",
       },
       { status: 400 }
     );

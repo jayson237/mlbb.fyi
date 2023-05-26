@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { heros } from "@prisma/client";
+import { Hero } from "@prisma/client";
 import Image from "next/image";
 
 interface HeroesProps {
-  heroes: heros[];
+  heroes: Hero[];
 }
 
 const HeroList: React.FC<HeroesProps> = ({ heroes }) => {

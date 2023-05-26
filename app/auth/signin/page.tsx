@@ -16,8 +16,8 @@ export default async function Signin() {
         <h1 className="text-[44px] font-bold leading-10 tracking-tight md:text-[64px] md:leading-[60px]">
           Sign in
         </h1>
-        <p className="pt-3 text-[16px] md:text-[20px]">
-          Please enter your email before proceeding
+        <p className="pt-4 text-[16px] md:text-[16px]">
+          Join the community and dominate the battlefield!
         </p>
       </div>
       <LoginForm csrfToken={csrfToken} />
