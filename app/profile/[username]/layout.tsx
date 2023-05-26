@@ -11,10 +11,7 @@ export default async function AppLayout({
 }: {
   children: React.ReactNode;
 }) {
-  
   return (
-    <main className="max-w-[1280px] overflow-hidden xl:mx-auto">
-      {children}
-    </main>
+    <main className="max-w-[1280px] xl:mx-auto">{children}</main>
   );
 }

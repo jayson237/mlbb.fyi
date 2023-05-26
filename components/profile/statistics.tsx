@@ -8,7 +8,9 @@ import Favourites from "./profile-stats/fav";
 
 interface StatisticsProps {
   matchPlayed: {
+    mode: string;
     total: number;
+    winrate: number;
     data: {
       id: string;
       total: number;
@@ -25,17 +27,12 @@ interface StatisticsProps {
       _id: string;
     }[];
   };
-  winRate: {
-    totalClassic: number | 0;
-    totalRanked: number | 0;
-  } | null;
   isBound: boolean;
 }
 
 const Statistics: React.FC<StatisticsProps> = ({
   matchPlayed,
   ownedHero,
-  winRate,
   isBound,
 }) => {
   const totalMatchPlayed =
@@ -48,12 +45,12 @@ const Statistics: React.FC<StatisticsProps> = ({
       <div className="flex w-full max-w-lg flex-col gap-y-4 md:w-fit">
         <div className="flex w-full flex-row gap-x-4 md:w-fit">
           <InfoCard
-            className="md:max-w-[200px] w-full md:w-60"
+            className="w-full md:w-60 md:max-w-[200px]"
             title="Heroes Owned"
             value={heroes}
           />
           <InfoCard
-            className="md:max-w-[200px] w-full md:w-60"
+            className="w-full md:w-60 md:max-w-[200px]"
             title="Match Played"
             value={totalMatchPlayed}
           />
@@ -64,17 +61,13 @@ const Statistics: React.FC<StatisticsProps> = ({
             <MatchInsights
               title="Classic Matches"
               matchPlayed={matchPlayed}
-              winRate={winRate}
               matchType={0}
-              totalType="classic"
               isBound={isBound}
             />
             <MatchInsights
               title="Ranked Matches"
               matchPlayed={matchPlayed}
-              winRate={winRate}
               matchType={1}
-              totalType="ranked"
               isBound={isBound}
             />
           </div>

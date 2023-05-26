@@ -1,12 +1,15 @@
 "use client";
 
 import { GradiantCard } from "@/components/shared/gradiant-card";
+import { match } from "assert";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 
 interface MatchInsightsProps {
   title: string;
   matchPlayed: {
+    mode: string;
     total: number;
+    winrate: number;
     data: {
       id: string;
       total: number;
@@ -15,40 +18,31 @@ interface MatchInsightsProps {
       _id: string;
     }[];
   }[];
-  winRate: {
-    totalClassic: number | 0;
-    totalRanked: number | 0;
-  } | null;
   matchType: number;
-  totalType: "classic" | "ranked";
   isBound: boolean;
 }
 
 const MatchInsights: React.FC<MatchInsightsProps> = ({
   title,
   matchPlayed,
-  winRate,
   matchType,
-  totalType,
   isBound,
 }) => {
-  const total = (matchPlayed && matchPlayed[matchType].total) || 0;
-  const winRates =
-    totalType === "classic" ? winRate?.totalClassic : winRate?.totalRanked;
-  const winRatePercentage = ((winRates ?? 0) * 100) / (total ?? 1) || 0;
+  const totalMatches = (matchPlayed && matchPlayed[matchType]?.total) || 0;
+  const winRates = (matchPlayed && matchPlayed[matchType]?.winrate * 100) || 0;
 
   return (
-    <GradiantCard title={title} className="h-fit">
+    <GradiantCard title={title}>
       <p
         className={`${
           isBound ? "my-16" : "my-[1.8rem]"
         } text-right text-xl/[16px] font-semibold sm:mt-7 md:mt-12 md:text-2xl lg:text-3xl`}
       >
-        {total}
+        {totalMatches}
       </p>
       <div className="relative">
         <CircularProgressbar
-          value={winRatePercentage}
+          value={winRates}
           styles={buildStyles({
             strokeLinecap: "round",
             textColor: "#FFFF",
@@ -56,8 +50,8 @@ const MatchInsights: React.FC<MatchInsightsProps> = ({
             pathColor: `#74E092`,
           })}
         />
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl font-semibold text-white">
-          {`${winRatePercentage.toFixed(2)}%`}
+        <div className="md: absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white sm:text-xl md:text-2xl">
+          {`${winRates.toFixed(2)}%`}
         </div>
       </div>
     </GradiantCard>

@@ -1,6 +1,8 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../shared/tabs";
+import { Button } from "../shared/button";
+import Link from "next/link";
 
 import ProfileBio from "./bio";
 import Statistics from "./statistics";
@@ -14,6 +16,7 @@ interface MainAppProps {
   matchPlayed: {
     mode: string;
     total: number;
+    winrate: number;
     data: {
       id: string;
       total: number;
@@ -32,10 +35,6 @@ interface MainAppProps {
   };
   username: string;
   accId?: string | null;
-  winRate: {
-    totalClassic: number | 0;
-    totalRanked: number | 0;
-  } | null;
   currentUser?: SafeUser | null;
 }
 
@@ -44,7 +43,6 @@ const MainApp: React.FC<MainAppProps> = ({
   username,
   ownedHero,
   accId,
-  winRate,
   currentUser,
 }) => {
   // console.log(currentUser?.username);
@@ -53,28 +51,38 @@ const MainApp: React.FC<MainAppProps> = ({
     const isOwnProfile = currentUser?.username === username;
     return (
       <>
-        <div className="flex flex-col gap-5 md:flex-row">
+        <div className="flex flex-1 flex-col gap-5 md:flex-row">
           <div className="flex gap-5 text-softGray">
             <ProfileBio username={username} />
           </div>
           <Tabs defaultValue="statistics" className="w-full">
-            <TabsList>
-              <TabsTrigger value="statistics">Statistics</TabsTrigger>
-              <TabsTrigger value="posts">Posts</TabsTrigger>
-            </TabsList>
+            <div className="flex items-center justify-between">
+              <TabsList>
+                <TabsTrigger value="statistics">Statistics</TabsTrigger>
+                <TabsTrigger value="posts">Posts</TabsTrigger>
+              </TabsList>
+              {isOwnProfile && (
+                <Button
+                  className="rounded-full px-4 py-2"
+                  variant="gradiantNavySec"
+                >
+                  <Link href="/profile/settings/bind">Bind account</Link>
+                </Button>
+              )}
+            </div>
             <TabsContent
               value="statistics"
               className="flex w-full flex-col gap-4 xl:flex-row"
             >
               <div className="flex w-full flex-col gap-4">
-                <p className="pl-1 text-sm">
-                  {isOwnProfile
-                    ? "To check out your stats, please bind your Mobile Legends account on the settings page"
-                    : "This user's Mobile Legends account hasn't been linked yet"}
-                </p>
+                {!isOwnProfile && (
+                  <p className="pl-1 text-sm">
+                    This user&apos;s Mobile Legends account hasn&apos;t been
+                    bound yet
+                  </p>
+                )}
                 <Statistics
                   matchPlayed={matchPlayed}
-                  winRate={winRate}
                   ownedHero={ownedHero}
                   isBound={false}
                 />
@@ -103,11 +111,10 @@ const MainApp: React.FC<MainAppProps> = ({
             </TabsList>
             <TabsContent
               value="statistics"
-              className="flex w-full flex-col gap-4 xl:flex-row"
+              className="flex h-fit w-full flex-col gap-4 xl:flex-row"
             >
               <Statistics
                 matchPlayed={matchPlayed}
-                winRate={winRate}
                 ownedHero={ownedHero}
                 isBound={true}
               />

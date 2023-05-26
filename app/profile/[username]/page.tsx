@@ -1,5 +1,4 @@
 import getMlbbAcc from "@/lib/actions/getMlbbAcc";
-import getWinRate from "@/lib/actions/getWinRate";
 import prisma from "@/lib/prismadb";
 
 import ProfileContainer from "@/components/profile/profile-container";
@@ -67,20 +66,18 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
     accId = null;
   } else {
     dataAcc = await getDataAcc(accId);
-    // winRate = await getWinRate(accId);
   }
 
   return (
-    <div className="overflow-hidden">
+    <>
       <ProfileContainer
         matchPlayed={dataAcc?.matchPlayed}
         ownedHero={dataAcc?.heroOwned}
         username={username}
         accId={accId}
-        winRate={winRate}
         currentUser={user}
       />
-    </div>
+    </>
   );
 };
 

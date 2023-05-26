@@ -27,11 +27,11 @@ export default async function RootLayout({
       lang="en"
       className={`${inter.className} ${fontHeading.variable} text-softGray`}
     >
-      <body>
+      <body className="relative mx-auto bg-bgblack pt-24 text-pwhite after:fixed after:inset-x-0 after:top-[-1350px] after:z-[-1] after:mx-auto after:h-[1440px] after:w-[1880px] after:rounded-full after:bg-navy-600 after:blur-[150px]">
         <ToasterProvider />
         <Navbar currentUser={currentUser} />
-        <div className="relative mx-auto min-h-screen overflow-hidden bg-bgblack text-pwhite blur-none after:absolute after:inset-x-0 after:top-[-1350px] after:z-[-1] after:mx-auto after:h-[1440px] after:w-[1880px] after:rounded-full after:bg-navy-600 after:blur-[150px]">
-          <div className="relative mx-auto mt-24 max-w-[1080px] px-4">
+        <div className="">
+          <div className="relative mx-auto max-w-[1080px] px-4 ">
             {children}
           </div>
         </div>

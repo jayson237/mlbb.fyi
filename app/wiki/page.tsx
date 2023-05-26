@@ -29,13 +29,15 @@ async function WikiPage() {
       </h1>
 
       <Tabs defaultValue="heroes" className="mt-4 w-full">
-        <TabsList>
-          <TabsTrigger value="heroes">Heroes</TabsTrigger>
-          <TabsTrigger value="statistics">Statistics</TabsTrigger>
-          <TabsTrigger value="draft-pick">Draft Pick</TabsTrigger>
-          <TabsTrigger value="patch">Patch</TabsTrigger>
-          <TabsTrigger value="meta">META</TabsTrigger>
-        </TabsList>
+        <div className="no-scrollbar h-[52px] overflow-x-scroll">
+          <TabsList className="flex shrink-0 space-x-4">
+            <TabsTrigger value="heroes">Heroes</TabsTrigger>
+            <TabsTrigger value="statistics">Statistics</TabsTrigger>
+            <TabsTrigger value="draft-pick">Draft Pick</TabsTrigger>
+            <TabsTrigger value="patch">Patch</TabsTrigger>
+            <TabsTrigger value="meta">META</TabsTrigger>
+          </TabsList>
+        </div>
         <TabsContent
           value="heroes"
           className="flex w-full flex-col gap-5 md:flex-row"
@@ -45,6 +47,7 @@ async function WikiPage() {
         <TabsContent value="statistics" className=""></TabsContent>
         <TabsContent value="draft-pick" className=""></TabsContent>
       </Tabs>
+
       <p className="mt-4 md:ml-3">
         We are currently in the process of implementing the wiki section, and we
         appreciate your understanding and patience. Thank you.
