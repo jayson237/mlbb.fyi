@@ -46,7 +46,7 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
             }}
             disabled={mlbbAcc ? true : false}
           >
-            MLBB Account
+            Mobile Legends Account
             {mlbbAcc ? (
               <>
                 <span>{`: ${mlbbAcc.accId}(${mlbbAcc.nickname})`}</span>

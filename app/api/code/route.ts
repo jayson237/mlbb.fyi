@@ -5,7 +5,7 @@ import { sendVerificationCode } from "@/lib/utils";
 export async function POST(request: Request) {
   try {
     const { accServer, accId } = await request.json();
-    if (!accServer || !accId || accServer.length !== 4 || accId.length > 9) {
+    if (!accServer || !accId || accServer.length !== 4 || accId.length > 10) {
       return NextResponse.json(
         {
           message: "Invalid ID or Server",
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     }
     return NextResponse.json(
       {
-        message: "Kindly check your Mobile Legends inbox for the code",
+        message: "Kindly check your in-game Mobile Legends inbox for the code",
       },
       { status: 200 }
     );
