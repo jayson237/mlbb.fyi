@@ -49,9 +49,9 @@ export async function POST(request: Request) {
     }
 
     const bind = await bindAcc({ accId, accServer, code });
-    // console.log("bind.data.id", bind.data.id);
-    // console.log("bind.data.server", bind.data.server);
-    // console.log("bind.data.nickname", bind.data.nickname);
+    console.log("bind.data.id", bind.data.id);
+    console.log("bind.data.server", bind.data.server);
+    console.log("bind.data.nickname", bind.data.nickname);
     const create = await prisma?.mlbbAcc.create({
       data: {
         accId: bind.data.id,
@@ -59,7 +59,7 @@ export async function POST(request: Request) {
         nickname: bind?.data?.nickname,
       },
     });
-    // console.log(create);
+    console.log(create);
 
     const update = await prisma?.user.update({
       where: {
@@ -73,7 +73,7 @@ export async function POST(request: Request) {
         },
       },
     });
-    // console.log(update);
+    console.log(update);
 
     if (!bind.data) {
       return NextResponse.json(
@@ -83,11 +83,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    // const save = await prisma?.mlbbAcc.create({
-    //   data: {
-    //     accId: bind.data.id
-    //   }
-    // })
+
     const upt = await fetch(
       `${process.env.BE_API_URL}/data/sync?accId=${accId}`,
       {
