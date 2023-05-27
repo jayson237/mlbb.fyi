@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Input } from "../shared/input";
 import { SafeUser } from "@/types";
 import { Button } from "../shared/button";
+import { useSearchParams } from "next/navigation";
 import LoadingDots from "../shared/icons/loading-dots";
 
 const bodyToast = (msg: string) => <div className="">{msg}</div>;
@@ -20,13 +21,19 @@ interface CodeFormProps {
   currentUser?: SafeUser | null;
 }
 const CodeForm: React.FC<CodeFormProps> = ({ currentUser }) => {
-  const router = useRouter();
-  const { accId, accServer } = router.query;
+  const params = useSearchParams();
+  // const router = useRouter();
+
+  const accId = params?.getAll("id")[0];
+  const accServer = params?.getAll("id")[1];
+  console.log(params?.getAll);
+
   const [form, setForm] = useState({
     accId: accId ? accId : null,
     accServer: accServer ? accServer : null,
     code: null,
   });
+
   const [loadingSend, setLoadingSend] = useState(false);
 
   const handleChangeForm = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,10 +42,21 @@ const CodeForm: React.FC<CodeFormProps> = ({ currentUser }) => {
       [e.target.name]: e.target.value,
     });
   };
+
+  if (!params?.getAll("id")) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <p className="mb-48 text-2xl md:ml-3">
+          Please navigate back to the previous page...
+        </p>
+      </div>
+    );
+  }
   return (
     <form
       onSubmit={async (e) => {
         e.preventDefault();
+        setLoadingSend(true);
         const bind = await fetch("/profile/settings/api/bind", {
           method: "POST",
           headers: {
@@ -49,9 +67,11 @@ const CodeForm: React.FC<CodeFormProps> = ({ currentUser }) => {
         const res = await bind.json();
         if (bind.status != 200) {
           toast(bodyToast(res?.message));
+          setLoadingSend(false);
         } else {
           toast(bodyToast(res?.message));
-          router.push("/profile");
+          setLoadingSend(false);
+          // router.push(`/profile/${currentUser?.username}`);
         }
       }}
       className="mx-auto mt-8 flex max-w-md flex-col gap-y-2"

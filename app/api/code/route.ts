@@ -13,7 +13,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    console.log(1);
+
     const sendCode = await sendVerificationCode({ accServer, accId });
 
     if (sendCode.status !== 200) {

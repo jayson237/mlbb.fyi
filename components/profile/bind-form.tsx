@@ -26,6 +26,7 @@ const BindForm: React.FC<BindFormProps> = ({ currentUser }) => {
   const [form, setForm] = useState({
     accId: null,
     accServer: null,
+    code: null,
   });
   const [loadingSend, setLoadingSend] = useState(false);
 
@@ -55,7 +56,9 @@ const BindForm: React.FC<BindFormProps> = ({ currentUser }) => {
         } else {
           toast(bodyToast(res?.message));
           setLoadingSend(false);
-          router.push("/profile/settings/bind/verify");
+          router.push(
+            `/profile/settings/bind/verify?id=${form.accId}&id=${form.accServer}`
+          );
         }
       }}
       className="mx-auto mt-8 flex max-w-md flex-col gap-y-2"
