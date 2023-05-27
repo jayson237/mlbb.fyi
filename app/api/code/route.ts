@@ -5,7 +5,7 @@ import { sendVerificationCode } from "@/lib/utils";
 export async function POST(request: Request) {
   try {
     const { accServer, accId } = await request.json();
-    if (!accServer || !accId || accServer.length !== 4 || accId.length > 10) {
+    if (!accServer || !accId || accServer.length >= 6 || accId.length >= 10) {
       return NextResponse.json(
         {
           message: "Invalid ID or Server",
