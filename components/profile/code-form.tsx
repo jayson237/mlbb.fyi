@@ -1,15 +1,14 @@
 "use client";
 
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Input } from "../shared/input";
 import { SafeUser } from "@/types";
-import LoadingDots from "@/components/shared/icons/loading-dots";
-import { Input } from "@/components/shared/input";
-import { Button } from "@/components/shared/button";
-import { useRouter } from "next/navigation";
+import { Button } from "../shared/button";
+import LoadingDots from "../shared/icons/loading-dots";
 
 const bodyToast = (msg: string) => <div className="">{msg}</div>;
-
 const toastStyle = {
   style: {
     backgroundColor: `background-color: rgb(137 111 242 / var(--tw-bg-opacity))`,
@@ -17,15 +16,16 @@ const toastStyle = {
   },
 };
 
-interface BindFormProps {
+interface CodeFormProps {
   currentUser?: SafeUser | null;
 }
-
-const BindForm: React.FC<BindFormProps> = ({ currentUser }) => {
+const CodeForm: React.FC<CodeFormProps> = ({ currentUser }) => {
   const router = useRouter();
+  const { accId, accServer } = router.query;
   const [form, setForm] = useState({
-    accId: null,
-    accServer: null,
+    accId: accId ? accId : null,
+    accServer: accServer ? accServer : null,
+    code: null,
   });
   const [loadingSend, setLoadingSend] = useState(false);
 
@@ -35,27 +35,23 @@ const BindForm: React.FC<BindFormProps> = ({ currentUser }) => {
       [e.target.name]: e.target.value,
     });
   };
-
   return (
     <form
       onSubmit={async (e) => {
         e.preventDefault();
-        setLoadingSend(true);
-        const sendCode = await fetch("/api/code", {
+        const bind = await fetch("/profile/settings/api/bind", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(form),
+          body: JSON.stringify({ ...form, email: currentUser?.email }),
         });
-        const res = await sendCode.json();
-        if (sendCode.status != 200) {
+        const res = await bind.json();
+        if (bind.status != 200) {
           toast(bodyToast(res?.message));
-          setLoadingSend(false);
         } else {
           toast(bodyToast(res?.message));
-          setLoadingSend(false);
-          router.push("/profile/settings/bind/verify");
+          router.push("/profile");
         }
       }}
       className="mx-auto mt-8 flex max-w-md flex-col gap-y-2"
@@ -63,22 +59,15 @@ const BindForm: React.FC<BindFormProps> = ({ currentUser }) => {
       <Input
         type="number"
         onChange={handleChangeForm}
-        name="accId"
-        placeholder="ID"
-        required
-      />
-      <Input
-        type="number"
-        onChange={handleChangeForm}
-        name="accServer"
-        placeholder="(Server)"
+        placeholder="Code"
+        name="code"
         required
       />
       <Button className="mt-4" type="submit" disabled={loadingSend}>
-        {loadingSend ? <LoadingDots color="#fafafa" /> : "Send Code"}
+        {loadingSend ? <LoadingDots color="#fafafa" /> : "Bind"}
       </Button>
     </form>
   );
 };
 
-export default BindForm;
+export default CodeForm;

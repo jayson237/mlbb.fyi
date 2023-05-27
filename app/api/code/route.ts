@@ -33,7 +33,7 @@ export async function POST(request: Request) {
   } catch (error) {
     return NextResponse.json(
       {
-        message: "An error occured",
+        message: "An error occured, please try again later",
       },
       { status: 400 }
     );

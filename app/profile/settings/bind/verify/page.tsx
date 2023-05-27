@@ -1,11 +1,10 @@
 import getCurrentUser from "@/lib/actions/getCurrentUser";
-import BindForm from "@/components/profile/bind-form";
 import getMlbbAcc from "@/lib/actions/getMlbbAcc";
+import CodeForm from "@/components/profile/code-form";
 
-export default async function AppBind() {
+export default async function AppBindVerify() {
   const currentUser = await getCurrentUser();
   const mlbbAcc = await getMlbbAcc(currentUser?.email);
-
   if (mlbbAcc) {
     return (
       <div className="flex h-screen items-center justify-center">
@@ -20,7 +19,7 @@ export default async function AppBind() {
           Bind
         </h1>
         <p className="pt-3 text-[16px] md:text-[20px]">
-          Securely bind your Mobile Legends account
+          Kindly check your Mobile Legends inbox
         </p>
         <div className="flex flex-col items-center justify-center">
           <div className="flex items-end justify-center">
@@ -30,7 +29,7 @@ export default async function AppBind() {
             </h1>
           </div>
         </div>
-        <BindForm currentUser={currentUser} />
+        <CodeForm currentUser={currentUser} />
       </div>
     </div>
   );
