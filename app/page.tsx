@@ -33,12 +33,12 @@ export const metadata = {
 export default async function Home() {
   return (
     <>
-      <main className="mt-36">
+      <main className="mt-24">
         <div className="mx-auto flex max-w-xl flex-col justify-center text-center">
-          <h1 className="font-heading text-[44px] font-bold leading-10 md:text-[64px] md:leading-[60px]">
+          <h1 className="md:text-[64px] md:leading-[60px] font-heading text-[44px] font-bold leading-10">
             Elevate Your Mobile <br className="hidden md:block" /> Legends Game
           </h1>
-          <p className="pt-3 text-[14px] leading-tight text-gray-100 md:text-[18px]">
+          <p className="md:text-[18px] pt-3 text-[14px] leading-tight text-gray-100">
             Access hero stats, optimal builds, and connect{" "}
             <br className="hidden md:block" /> with a community of expert
             players.

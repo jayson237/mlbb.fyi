@@ -5,7 +5,7 @@ import { sendVerificationCode } from "@/lib/utils";
 export async function POST(request: Request) {
   try {
     const { accServer, accId } = await request.json();
-    if (!accServer || !accId || accServer.length !== 4 || accId.length > 9) {
+    if (!accServer || !accId || accServer.length > 6 || accId.length > 10) {
       return NextResponse.json(
         {
           message: "Invalid ID or Server",
@@ -13,7 +13,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-
+    console.log(1);
     const sendCode = await sendVerificationCode({ accServer, accId });
 
     if (sendCode.status !== 200) {

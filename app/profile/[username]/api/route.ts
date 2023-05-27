@@ -22,7 +22,7 @@ export async function GET(request: Request) {
     if (!findID)
       return NextResponse.json(
         {
-          msg: "MLBB ID's not found",
+          msg: "Mobile Legends ID's not found",
         },
         { status: 400 }
       );
