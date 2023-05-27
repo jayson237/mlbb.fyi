@@ -13,7 +13,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    console.log(1);
+
     const sendCode = await sendVerificationCode({ accServer, accId });
 
     if (sendCode.status !== 200) {
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
   } catch (error) {
     return NextResponse.json(
       {
-        message: "An error occured",
+        message: "An error occured, please try again later",
       },
       { status: 400 }
     );

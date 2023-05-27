@@ -42,7 +42,7 @@ export async function GET(request: Request) {
   } catch (error) {
     return NextResponse.json(
       {
-        msg: "An error occured",
+        msg: "An error occured, please try again later",
       },
       { status: 400 }
     );

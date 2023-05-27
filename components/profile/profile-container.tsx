@@ -75,7 +75,7 @@ const MainApp: React.FC<MainAppProps> = ({
             >
               <div className="flex w-full flex-col gap-4">
                 {!isOwnProfile && (
-                  <p className="pl-1 text-sm">
+                  <p className="pl-2 text-sm">
                     This user&apos;s Mobile Legends account hasn&apos;t been
                     bound yet
                   </p>
