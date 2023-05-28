@@ -1,17 +1,11 @@
 import getCurrentUser from "@/lib/actions/getCurrentUser";
-import BindForm from "@/components/profile/bind-form";
+import SyncForm from "@/components/profile/bind-form";
 import getMlbbAcc from "@/lib/actions/getMlbbAcc";
 
 export default async function AppBind() {
   const currentUser = await getCurrentUser();
   const mlbbAcc = await getMlbbAcc(currentUser?.email);
-  if (mlbbAcc) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <p className="mb-48 text-2xl md:ml-3">You have bound your account...</p>
-      </div>
-    );
-  }
+  if (mlbbAcc) return null;
 
   return (
     <div className="mt-24">
@@ -29,7 +23,7 @@ export default async function AppBind() {
             </h1>
           </div>
         </div>
-        <BindForm currentUser={currentUser} />
+        <SyncForm currentUser={currentUser} />
       </div>
     </div>
   );

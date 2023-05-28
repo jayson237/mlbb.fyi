@@ -48,7 +48,7 @@ const CodeForm: React.FC<CodeFormProps> = ({ currentUser }) => {
       onSubmit={async (e) => {
         e.preventDefault();
         setLoadingSend(true);
-        const bind = await fetch("/profile/settings/api/bind", {
+        const bind = await fetch("/profile/stg/api/bind", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

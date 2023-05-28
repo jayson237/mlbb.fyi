@@ -42,7 +42,7 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
           <Button
             className="h-fit w-fit gap-2 rounded-full py-1"
             onClick={() => {
-              router.push("/profile/settings/bind");
+              router.push("/profile/stg/bind");
             }}
             disabled={mlbbAcc ? true : false}
           >
@@ -73,7 +73,7 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
           onSubmit={async (e) => {
             e.preventDefault();
             setLoading(true);
-            const set = await fetch("/profile/settings/api/username", {
+            const set = await fetch("/profile/stg/api/username", {
               method: "POST",
               body: JSON.stringify({
                 username: username,

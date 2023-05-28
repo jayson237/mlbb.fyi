@@ -63,7 +63,7 @@ const MainApp: React.FC<MainAppProps> = ({
               </TabsList>
               {isOwnProfile && (
                 <Button className="rounded-full px-4" variant="gradiantNavySec">
-                  <Link href="/profile/settings/bind" className="text-[10px]">
+                  <Link href="/profile/stg/bind" className="text-[10px]">
                     Bind account
                   </Link>
                 </Button>
