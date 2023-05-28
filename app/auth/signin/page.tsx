@@ -8,7 +8,7 @@ export default async function Signin() {
   const currentUser = await getCurrentUser();
 
   if (currentUser) {
-    return <Redirect />;
+    return <Redirect redirectTo="explore" />;
   }
   return (
     <main className="mt-24 h-screen">

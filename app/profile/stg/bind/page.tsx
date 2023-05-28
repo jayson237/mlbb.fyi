@@ -1,11 +1,16 @@
 import getCurrentUser from "@/lib/actions/getCurrentUser";
 import SyncForm from "@/components/profile/bind-form";
 import getMlbbAcc from "@/lib/actions/getMlbbAcc";
+import Redirect from "@/components/Redirect";
 
 export default async function AppBind() {
   const currentUser = await getCurrentUser();
   const mlbbAcc = await getMlbbAcc(currentUser?.email);
-  if (mlbbAcc) return null;
+  if (mlbbAcc)
+    return <Redirect redirectTo="profile" currentUser={currentUser} />;
+  else if (!currentUser) {
+    return <Redirect redirectTo="explore" />;
+  }
 
   return (
     <div className="mt-24">
