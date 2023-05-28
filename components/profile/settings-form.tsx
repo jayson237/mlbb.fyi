@@ -49,7 +49,7 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
             Mobile Legends Account
             {mlbbAcc ? (
               <>
-                <span>{`: ${mlbbAcc.accId}(${mlbbAcc.nickname})`}</span>
+                <span>{`: ${mlbbAcc.accId} (${mlbbAcc.nickname})`}</span>
                 <CheckCircle
                   className={cn(
                     "h-4 w-4",
