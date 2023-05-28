@@ -5,13 +5,7 @@ import CodeForm from "@/components/profile/code-form";
 export default async function AppBindVerify() {
   const currentUser = await getCurrentUser();
   const mlbbAcc = await getMlbbAcc(currentUser?.email);
-  if (mlbbAcc) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <p className="mb-48 text-2xl md:ml-3">You have bound your account...</p>
-      </div>
-    );
-  }
+  if (mlbbAcc) return null;
 
   return (
     <div className="mt-24">
