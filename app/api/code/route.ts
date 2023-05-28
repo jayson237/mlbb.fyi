@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     }
     return NextResponse.json(
       {
-        message: "Kindly check your Mobile Legends inbox for the code",
+        message: "The code has been sent to your inbox",
       },
       { status: 200 }
     );

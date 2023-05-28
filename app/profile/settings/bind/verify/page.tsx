@@ -12,6 +12,7 @@ export default async function AppBindVerify() {
       </div>
     );
   }
+
   return (
     <div className="mt-24">
       <div className="text-center">

@@ -19,6 +19,13 @@ export default async function Signin() {
         <p className="pt-4 text-[16px] md:text-[16px]">
           Join the community and dominate the battlefield!
         </p>
+        <div className="flex flex-col items-center justify-center">
+          <div className="flex items-end justify-center">
+            <h1 className="w-fit text-center text-[12px] text-neutral-500">
+              Please check both your inbox and spam folders for the login link
+            </h1>
+          </div>
+        </div>
       </div>
       <LoginForm csrfToken={csrfToken} />
     </main>

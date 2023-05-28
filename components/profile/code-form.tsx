@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Input } from "../shared/input";
@@ -22,7 +22,7 @@ interface CodeFormProps {
 }
 const CodeForm: React.FC<CodeFormProps> = ({ currentUser }) => {
   const params = useSearchParams();
-  // const router = useRouter();
+  const router = useRouter();
 
   const accId = params?.getAll("id")[0];
   const accServer = params?.getAll("id")[1];
@@ -43,15 +43,6 @@ const CodeForm: React.FC<CodeFormProps> = ({ currentUser }) => {
     });
   };
 
-  if (!params?.getAll("id")) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <p className="mb-48 text-2xl md:ml-3">
-          Please navigate back to the previous page...
-        </p>
-      </div>
-    );
-  }
   return (
     <form
       onSubmit={async (e) => {
@@ -71,7 +62,7 @@ const CodeForm: React.FC<CodeFormProps> = ({ currentUser }) => {
         } else {
           toast(bodyToast(res?.message));
           setLoadingSend(false);
-          // router.push(`/profile/${currentUser?.username}`);
+          router.push(`/profile/${currentUser?.username}`);
         }
       }}
       className="mx-auto mt-8 flex max-w-md flex-col gap-y-2"

@@ -5,7 +5,6 @@ import getMlbbAcc from "@/lib/actions/getMlbbAcc";
 export default async function AppBind() {
   const currentUser = await getCurrentUser();
   const mlbbAcc = await getMlbbAcc(currentUser?.email);
-
   if (mlbbAcc) {
     return (
       <div className="flex h-screen items-center justify-center">
@@ -13,6 +12,7 @@ export default async function AppBind() {
       </div>
     );
   }
+
   return (
     <div className="mt-24">
       <div className="text-center">

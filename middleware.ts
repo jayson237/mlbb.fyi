@@ -12,7 +12,7 @@ export async function middleware(request: NextRequest) {
     });
 
     if (!token) {
-      return NextResponse.redirect(new URL("/wiki", request.url));
+      return NextResponse.redirect(new URL("/explore", request.url));
     }
 
     const get = await fetch(
@@ -56,6 +56,7 @@ export async function middleware(request: NextRequest) {
     if (data.accId)
       return NextResponse.redirect(new URL("/profile/settings", request.url));
   }
+
   return NextResponse.next();
 }
 
