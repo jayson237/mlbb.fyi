@@ -59,7 +59,7 @@ export async function POST(request: Request) {
         nickname: bind?.data?.nickname,
       },
     });
-    // console.log(create);
+    console.log(create);
 
     const update = await prisma?.user.update({
       where: {
@@ -73,7 +73,7 @@ export async function POST(request: Request) {
         },
       },
     });
-    // console.log(update);
+    console.log(update);
 
     if (!bind.data) {
       return NextResponse.json(
@@ -108,7 +108,7 @@ export async function POST(request: Request) {
   } catch (error) {
     return NextResponse.json(
       {
-        message: "An error occured, please try again",
+        message: "An error occured, please try again later",
         stack: error,
       },
       { status: 400 }

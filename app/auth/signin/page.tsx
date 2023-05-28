@@ -8,8 +8,9 @@ export default async function Signin() {
   const currentUser = await getCurrentUser();
 
   if (currentUser) {
-    return <Redirect redirectTo="explore" />;
+    return <Redirect />;
   }
+
   return (
     <main className="mt-24 h-screen">
       <div className="text-center">
@@ -19,13 +20,6 @@ export default async function Signin() {
         <p className="pt-3 text-[16px] md:text-[16px]">
           Join the community and dominate the battlefield!
         </p>
-        <div className="flex flex-col items-center justify-center">
-          <div className="flex items-end justify-center">
-            <h1 className="w-fit text-center text-[12px] text-neutral-500">
-              Please check both your inbox and spam folders for the login link
-            </h1>
-          </div>
-        </div>
         <LoginForm csrfToken={csrfToken} />
       </div>
     </main>

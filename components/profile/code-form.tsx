@@ -8,6 +8,7 @@ import { SafeUser } from "@/types";
 import { Button } from "../shared/button";
 import { useSearchParams } from "next/navigation";
 import LoadingDots from "../shared/icons/loading-dots";
+import Link from "next/link";
 
 const bodyToast = (msg: string) => <div className="">{msg}</div>;
 const toastStyle = {
@@ -44,10 +45,18 @@ const CodeForm: React.FC<CodeFormProps> = ({ currentUser }) => {
   };
   if (!params?.getAll || !accId || !accServer) {
     return (
-      <div className="flex h-screen items-center justify-center">
-        <p className="mb-[400px] text-2xl md:ml-3">
-          Please navigate back to the previous page...
-        </p>
+      <div className="mt-40">
+        <div className="mx-auto flex max-w-xl flex-col justify-center text-center">
+          <p className="pt-3 text-[16px] md:text-[20px]">
+            Please navigate back to the previous page...
+          </p>
+          <Button
+            className="mx-auto mt-4 w-fit rounded-full"
+            variant="gradiantNavySec"
+          >
+            <Link href="/profile/stg/bind">Back</Link>
+          </Button>
+        </div>
       </div>
     );
   }
