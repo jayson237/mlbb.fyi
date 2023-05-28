@@ -85,7 +85,9 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
               toast.error(msg.message);
             } else {
               setLoading(false);
-              toast.success("Successfully updated profile");
+              toast.success(
+                "Successfully updated profile, kindly wait for half a minute before making any more updates"
+              );
               router.push(`/profile/${username}`);
             }
           }}
