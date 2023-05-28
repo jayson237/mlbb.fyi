@@ -16,7 +16,7 @@ export default async function Signin() {
         <h1 className="text-[44px] font-bold leading-10 tracking-tight md:text-[64px] md:leading-[60px]">
           Sign in
         </h1>
-        <p className="pt-4 text-[16px] md:text-[16px]">
+        <p className="pt-3 text-[16px] md:text-[16px]">
           Join the community and dominate the battlefield!
         </p>
         <div className="flex flex-col items-center justify-center">
@@ -26,8 +26,8 @@ export default async function Signin() {
             </h1>
           </div>
         </div>
+        <LoginForm csrfToken={csrfToken} />
       </div>
-      <LoginForm csrfToken={csrfToken} />
     </main>
   );
 }

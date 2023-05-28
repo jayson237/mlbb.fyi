@@ -19,14 +19,13 @@ export default async function AppBind() {
         <h1 className="text-[44px] font-bold leading-10 tracking-tight md:text-[64px] md:leading-[60px]">
           Bind
         </h1>
-        <p className="pt-3 text-[16px] md:text-[20px]">
+        <p className="pt-3 text-[16px] md:text-[16px]">
           Securely bind your Mobile Legends account
         </p>
         <div className="flex flex-col items-center justify-center">
           <div className="flex items-end justify-center">
             <h1 className="w-fit text-center text-[12px] text-neutral-500">
-              Please make sure that you have never used this account to bind
-              with us
+              Please ensure that you have never bind this account with us
             </h1>
           </div>
         </div>
