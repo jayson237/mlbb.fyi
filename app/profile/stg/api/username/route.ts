@@ -44,7 +44,8 @@ export async function POST(req: Request) {
 
   return NextResponse.json(
     {
-      message: "Successfully set username",
+      message:
+        "Successfully set username, kindly wait before making more username updates",
     },
     {
       status: 200,

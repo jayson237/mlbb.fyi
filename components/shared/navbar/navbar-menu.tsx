@@ -122,7 +122,7 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
             <li className="flex gap-2">
               <Button
                 onClick={() => {
-                  router.push("/profile/settings");
+                  router.push("/profile/stg");
                   setCollapse(!collapse);
                 }}
                 className="group h-8 w-8 rounded-full p-2"

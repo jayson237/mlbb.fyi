@@ -62,8 +62,11 @@ const MainApp: React.FC<MainAppProps> = ({
                 <TabsTrigger value="posts">Posts</TabsTrigger>
               </TabsList>
               {isOwnProfile && (
-                <Button className="rounded-full px-4" variant="gradiantNavySec">
-                  <Link href="/profile/settings/bind" className="text-[10px]">
+                <Button
+                  className="rounded-full px-4 py-2"
+                  variant="gradiantNavySec"
+                >
+                  <Link href="/profile/stg/bind" className="text-[12px]">
                     Bind account
                   </Link>
                 </Button>

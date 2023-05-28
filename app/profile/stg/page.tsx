@@ -6,6 +6,7 @@ async function SettingsPage() {
   const currentUser = await getCurrentUser();
   const mlbbAcc = await getMlbbAcc(currentUser?.email || "");
   // if (!mlbbAcc) mlbbAcc = null;
+  // console.log(currentUser?.username);
 
   return (
     <main>

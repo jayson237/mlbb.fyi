@@ -55,7 +55,7 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
   const user = await getCurrentUser();
   if (!user?.username) {
     NextResponse.redirect(
-      new URL(`${process.env.NEXT_PUBLIC_BASE_URL}/profile/settings`)
+      new URL(`${process.env.NEXT_PUBLIC_BASE_URL}/profile/stg`)
     );
   }
 
