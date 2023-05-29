@@ -12,8 +12,8 @@ async function acc(username: string) {
         username,
       },
     });
-    const mlbbAcc = await getMlbbAcc(get?.email);
-    return mlbbAcc?.accId;
+    const mlbbAcc = await getMlbbAcc(get?.email || "");
+    return mlbbAcc;
   } catch (error) {
     return null;
   }
@@ -27,7 +27,16 @@ async function getUsername(username: string) {
   });
 }
 
-async function getDataAcc(accId: string) {
+async function getDesc(username: string) {
+  try {
+    const user = await getUsername(username);
+    return user?.desc || null;
+  } catch (error) {
+    return null;
+  }
+}
+
+async function getDataAcc(accId: string | null) {
   try {
     const get = await fetch(`${process.env.BE_API_URL}/data?accId=${accId}`, {
       method: "GET",
@@ -43,6 +52,7 @@ async function getDataAcc(accId: string) {
 const ProfilePage = async ({ params }: { params: { username: string } }) => {
   const { username } = params;
   const existingUser = await getUsername(username);
+  const userDesc = await getDesc(username);
 
   if (!existingUser) {
     return (
@@ -59,26 +69,23 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
     );
   }
 
-  let accId = await acc(username);
-  let mlbbAcc;
+  let account = await acc(username);
   let dataAcc;
-  let winRate: { totalClassic: number; totalRanked: number } | null = null;
-  if (!accId) {
-    accId = null;
+  if (!account) {
+    account = null;
   } else {
-    dataAcc = await getDataAcc(accId);
-    mlbbAcc = await getMlbbAcc(user?.email);
+    dataAcc = await getDataAcc(account.accId);
   }
 
   return (
     <>
       <ProfileContainer
-        matchPlayed={dataAcc?.matchPlayed}
-        ownedHero={dataAcc?.heroOwned}
-        username={username}
-        accId={accId}
         currentUser={user}
-        mlbbAcc={mlbbAcc}
+        viewMatchPlayed={dataAcc?.matchPlayed}
+        viewOwnedHero={dataAcc?.heroOwned}
+        userDesc={userDesc}
+        isUser={username}
+        isBoundUser={account}
       />
     </>
   );

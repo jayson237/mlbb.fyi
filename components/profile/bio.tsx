@@ -5,13 +5,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../shared/tabs";
 import Image from "next/image";
 import { Button } from "../shared/button";
 import { MlbbAcc } from "@prisma/client";
+import { SafeUser } from "@/types";
 
 export default function ProfileBio({
   username,
   mlbbAcc,
+  userDesc,
 }: {
   username: string;
   mlbbAcc?: MlbbAcc | null;
+  userDesc?: string | null;
 }) {
   return (
     <div className="flex-col">
@@ -44,10 +47,11 @@ export default function ProfileBio({
         </div>
       </GradiantCard>
 
-      <GradiantCard className="mx-auto mt-5 h-fit w-[15rem] max-w-full font-semibold md:mx-0">
+      <GradiantCard className="mx-auto mt-5 h-fit w-[15rem] max-w-full font-medium md:mx-0">
         <div className="flex flex-col">
           <p>ID: {mlbbAcc ? mlbbAcc.accId : "-"}</p>
           <p>IGN: {mlbbAcc ? mlbbAcc.nickname : "-"}</p>
+          <p className="mt-2 font-light">{userDesc}</p>
         </div>
       </GradiantCard>
     </div>
