@@ -105,7 +105,12 @@ const CodeForm: React.FC<CodeFormProps> = ({ currentUser }) => {
           name="code"
           required
         />
-        <Button className="mt-4" type="submit" disabled={loadingSend}>
+        <Button
+          className="mt-4"
+          type="submit"
+          disabled={loadingSend}
+          variant="gradiantNavy"
+        >
           {loadingSend ? <LoadingDots color="#fafafa" /> : "Bind"}
         </Button>
       </form>

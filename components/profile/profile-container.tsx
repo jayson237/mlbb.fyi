@@ -2,11 +2,16 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../shared/tabs";
 import { Button } from "../shared/button";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 import ProfileBio from "./bio";
 import Statistics from "./statistics";
 import { SafeUser } from "@/types";
+import { RefreshCcw } from "lucide-react";
+import { GradiantCard } from "../shared/gradiant-card";
+import { RefreshCcwIcon } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 
 export type MatchPLayedProps = {
   total: number;
@@ -45,10 +50,10 @@ const MainApp: React.FC<MainAppProps> = ({
   accId,
   currentUser,
 }) => {
+  const isOwnProfile = currentUser?.username === username;
   // console.log(currentUser?.username);
   // console.log(username);
   if (username && !accId) {
-    const isOwnProfile = currentUser?.username === username;
     return (
       <>
         <div className="flex flex-1 flex-col gap-5 md:flex-row">
@@ -63,7 +68,7 @@ const MainApp: React.FC<MainAppProps> = ({
               </TabsList>
               {isOwnProfile && (
                 <Button
-                  className="rounded-full px-4 py-2"
+                  className="h-8 rounded-full px-4 py-2"
                   variant="gradiantNavySec"
                 >
                   <Link href="/profile/stg/bind" className="text-[12px]">
@@ -107,10 +112,12 @@ const MainApp: React.FC<MainAppProps> = ({
 
           {/* Right */}
           <Tabs defaultValue="statistics" className="w-full">
-            <TabsList>
-              <TabsTrigger value="statistics">Statistics</TabsTrigger>
-              <TabsTrigger value="posts">Posts</TabsTrigger>
-            </TabsList>
+            <div className="flex items-center justify-between">
+              <TabsList>
+                <TabsTrigger value="statistics">Statistics</TabsTrigger>
+                <TabsTrigger value="posts">Posts</TabsTrigger>
+              </TabsList>
+            </div>
             <TabsContent
               value="statistics"
               className="flex h-fit w-full flex-col gap-4 xl:flex-row"

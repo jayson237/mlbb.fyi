@@ -77,7 +77,12 @@ const BindForm: React.FC<BindFormProps> = ({ currentUser }) => {
         placeholder="(Server)"
         required
       />
-      <Button className="mt-4" type="submit" disabled={loadingSend}>
+      <Button
+        className="mt-4"
+        type="submit"
+        disabled={loadingSend}
+        variant="gradiantNavy"
+      >
         {loadingSend ? <LoadingDots color="#fafafa" /> : "Send Code"}
       </Button>
     </form>
