@@ -60,12 +60,14 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
   }
 
   let accId = await acc(username);
+  let mlbbAcc;
   let dataAcc;
   let winRate: { totalClassic: number; totalRanked: number } | null = null;
   if (!accId) {
     accId = null;
   } else {
     dataAcc = await getDataAcc(accId);
+    mlbbAcc = await getMlbbAcc(user?.email);
   }
 
   return (
@@ -76,6 +78,7 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
         username={username}
         accId={accId}
         currentUser={user}
+        mlbbAcc={mlbbAcc}
       />
     </>
   );

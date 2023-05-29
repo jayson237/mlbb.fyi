@@ -109,7 +109,7 @@ export default function LoginForm({ csrfToken }: { csrfToken?: string }) {
         >
           <Image
             className="mr-1"
-            src={"/discord.svg"}
+            src={"/discord2.svg"}
             alt="Discord"
             width="20"
             height="20"

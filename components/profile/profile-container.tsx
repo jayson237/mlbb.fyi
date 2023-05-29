@@ -12,6 +12,7 @@ import { RefreshCcw } from "lucide-react";
 import { GradiantCard } from "../shared/gradiant-card";
 import { RefreshCcwIcon } from "lucide-react";
 import { RefreshCw } from "lucide-react";
+import { MlbbAcc } from "@prisma/client";
 
 export type MatchPLayedProps = {
   total: number;
@@ -41,6 +42,7 @@ interface MainAppProps {
   username: string;
   accId?: string | null;
   currentUser?: SafeUser | null;
+  mlbbAcc?: MlbbAcc | null;
 }
 
 const MainApp: React.FC<MainAppProps> = ({
@@ -49,6 +51,7 @@ const MainApp: React.FC<MainAppProps> = ({
   ownedHero,
   accId,
   currentUser,
+  mlbbAcc,
 }) => {
   const isOwnProfile = currentUser?.username === username;
   // console.log(currentUser?.username);
@@ -107,7 +110,7 @@ const MainApp: React.FC<MainAppProps> = ({
 
           <div className="flex gap-5 text-softGray">
             {/* Profile Head */}
-            <ProfileBio username={username} />
+            <ProfileBio username={username} mlbbAcc={mlbbAcc} />
           </div>
 
           {/* Right */}

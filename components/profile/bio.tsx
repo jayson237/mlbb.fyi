@@ -4,10 +4,17 @@ import { GradiantCard } from "../shared/gradiant-card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../shared/tabs";
 import Image from "next/image";
 import { Button } from "../shared/button";
+import { MlbbAcc } from "@prisma/client";
 
-export default function ProfileBio({ username }: { username: string }) {
+export default function ProfileBio({
+  username,
+  mlbbAcc,
+}: {
+  username: string;
+  mlbbAcc?: MlbbAcc | null;
+}) {
   return (
-    <>
+    <div className="flex-col">
       {/* Profile Head */}
       <GradiantCard className="mx-auto h-fit w-[15rem] max-w-full md:mx-0">
         <Image
@@ -36,6 +43,13 @@ export default function ProfileBio({ username }: { username: string }) {
           </div>
         </div>
       </GradiantCard>
-    </>
+
+      <GradiantCard className="mx-auto mt-5 h-fit w-[15rem] max-w-full font-semibold md:mx-0">
+        <div className="flex flex-col">
+          <p>ID: {mlbbAcc ? mlbbAcc.accId : "-"}</p>
+          <p>IGN: {mlbbAcc ? mlbbAcc.nickname : "-"}</p>
+        </div>
+      </GradiantCard>
+    </div>
   );
 }
