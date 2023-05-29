@@ -5,6 +5,7 @@ import React from "react";
 import InfoCard from "./profile-stats/player-info";
 import MatchInsights from "./profile-stats/match-insights";
 import Favourites from "./profile-stats/fav";
+import Image from "next/image";
 
 interface StatisticsProps {
   matchPlayed: {
@@ -89,7 +90,7 @@ const Statistics: React.FC<StatisticsProps> = ({
         />
         {!isBound && (
           <>
-            <p className="mb-8 px-2 text-justify text-[12px] text-neutral-500">
+            <p className="mb-4 px-2 text-justify text-[12px] text-neutral-500">
               mlbb.fyi, an offspring of the audacious 2023 Orbital project,
               emerges as an independent entity, untethered from the endorsement
               of Moonton or Mobile Legends: Bang Bang. Its existence stands
@@ -99,6 +100,13 @@ const Statistics: React.FC<StatisticsProps> = ({
               align with the sanctioned views or opinions of Moonton or those
               involved in the creation and management of Mobile Legends.
             </p>
+            <Image
+              className="mx-auto mb-16"
+              src={"/mlbb.fyi.svg"}
+              alt="mlbb.fyi"
+              width="300"
+              height="105"
+            />
           </>
         )}
       </div>

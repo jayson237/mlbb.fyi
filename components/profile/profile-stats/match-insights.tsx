@@ -35,7 +35,7 @@ const MatchInsights: React.FC<MatchInsightsProps> = ({
     <GradiantCard title={title}>
       <p
         className={`${
-          isBound ? "my-16" : "my-[63px]"
+          isBound ? "my-16" : "my-[1.8rem]"
         } text-right text-xl/[16px] font-semibold sm:mt-7 md:mt-12 md:text-2xl lg:text-3xl`}
       >
         {totalMatches}
