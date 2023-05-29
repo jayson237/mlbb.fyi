@@ -10,9 +10,11 @@ import { SafeUser } from "@/types";
 export default function ProfileBio({
   username,
   mlbbAcc,
+  userDesc,
 }: {
   username: string;
   mlbbAcc?: MlbbAcc | null;
+  userDesc?: string | null;
 }) {
   return (
     <div className="flex-col">
@@ -49,7 +51,7 @@ export default function ProfileBio({
         <div className="flex flex-col">
           <p>ID: {mlbbAcc ? mlbbAcc.accId : "-"}</p>
           <p>IGN: {mlbbAcc ? mlbbAcc.nickname : "-"}</p>
-          <p className="mt-2 font-light">{}</p>
+          <p className="mt-2 font-light">{userDesc}</p>
         </div>
       </GradiantCard>
     </div>

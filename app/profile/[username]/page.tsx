@@ -27,6 +27,15 @@ async function getUsername(username: string) {
   });
 }
 
+async function getDesc(username: string) {
+  try {
+    const user = await getUsername(username);
+    return user?.desc || null;
+  } catch (error) {
+    return null;
+  }
+}
+
 async function getDataAcc(accId: string | null) {
   try {
     const get = await fetch(`${process.env.BE_API_URL}/data?accId=${accId}`, {
@@ -43,6 +52,7 @@ async function getDataAcc(accId: string | null) {
 const ProfilePage = async ({ params }: { params: { username: string } }) => {
   const { username } = params;
   const existingUser = await getUsername(username);
+  const userDesc = await getDesc(username);
 
   if (!existingUser) {
     return (
@@ -73,6 +83,7 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
         currentUser={user}
         viewMatchPlayed={dataAcc?.matchPlayed}
         viewOwnedHero={dataAcc?.heroOwned}
+        userDesc={userDesc}
         isUser={username}
         isBoundUser={account}
       />

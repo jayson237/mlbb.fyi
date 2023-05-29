@@ -36,7 +36,7 @@ interface MainAppProps {
       _id: string;
     }[];
   };
-  viewAccId?: string | null;
+  userDesc: string | null;
   isUser: string;
   isBoundUser?: MlbbAcc | null;
 }
@@ -45,7 +45,7 @@ const MainApp: React.FC<MainAppProps> = ({
   currentUser,
   viewMatchPlayed,
   viewOwnedHero,
-  viewAccId,
+  userDesc,
   isUser,
   isBoundUser,
 }) => {
@@ -57,7 +57,7 @@ const MainApp: React.FC<MainAppProps> = ({
       <>
         <div className="flex flex-1 flex-col gap-5 md:flex-row">
           <div className="flex gap-5 text-softGray">
-            <ProfileBio username={isUser} />
+            <ProfileBio username={isUser} userDesc={userDesc} />
           </div>
           <Tabs defaultValue="statistics" className="w-full">
             <div className="flex items-center justify-between">
@@ -106,7 +106,11 @@ const MainApp: React.FC<MainAppProps> = ({
 
           <div className="flex gap-5 text-softGray">
             {/* Profile Head */}
-            <ProfileBio username={isUser} mlbbAcc={isBoundUser} />
+            <ProfileBio
+              username={isUser}
+              mlbbAcc={isBoundUser}
+              userDesc={userDesc}
+            />
           </div>
 
           {/* Right */}
