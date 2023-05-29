@@ -61,7 +61,7 @@ const MainApp: React.FC<MainAppProps> = ({
       <>
         <div className="flex flex-1 flex-col gap-5 md:flex-row">
           <div className="flex gap-5 text-softGray">
-            <ProfileBio username={username} />
+            <ProfileBio username={username} currentUser={currentUser} />
           </div>
           <Tabs defaultValue="statistics" className="w-full">
             <div className="flex items-center justify-between">
@@ -110,7 +110,11 @@ const MainApp: React.FC<MainAppProps> = ({
 
           <div className="flex gap-5 text-softGray">
             {/* Profile Head */}
-            <ProfileBio username={username} mlbbAcc={mlbbAcc} />
+            <ProfileBio
+              username={username}
+              mlbbAcc={mlbbAcc}
+              currentUser={currentUser}
+            />
           </div>
 
           {/* Right */}

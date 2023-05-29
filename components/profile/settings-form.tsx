@@ -24,8 +24,15 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
   const params = useSearchParams();
   const router = useRouter();
 
-  const [username, setUsername] = useState<string>("");
+  const [username, setUsername] = useState<string>(currentUser?.username || "");
+  const [description, setDescription] = useState<string>(
+    currentUser?.desc || ""
+  );
   const [loading, setLoading] = useState<boolean>(false);
+  const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
+  const [characterCount, setCharacterCount] = useState<number>(
+    currentUser?.desc ? currentUser.desc.length : 0
+  );
 
   //console.log(currentUser);
   if (currentUser?.username && params?.get("ref") === "signin") {
@@ -73,11 +80,14 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
           onSubmit={async (e) => {
             e.preventDefault();
             setLoading(true);
+            const fields = {
+              username: username,
+              description: description,
+            };
+
             const set = await fetch("/profile/stg/api/username", {
               method: "POST",
-              body: JSON.stringify({
-                username: username,
-              }),
+              body: JSON.stringify(fields),
             });
             const msg = await set.json();
             if (!set.ok) {
@@ -86,7 +96,7 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
             } else {
               setLoading(false);
               toast.success(
-                "Successfully updated profile, kindly wait for half a minute before making any more updates"
+                "Successfully updated profile, kindly wait before making any more updates"
               );
               router.push(`/profile/${username}`);
             }
@@ -131,7 +141,30 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
             </p>
           </div>
 
-          <Button className="mt-1 rounded-full" variant="gradiantNavy">
+          <div className="space-y-1">
+            <Label htmlFor="description">Description</Label>
+            <Input
+              type="desc"
+              placeholder="Description"
+              onChange={(e) => {
+                const inputValue = e.target.value;
+                setDescription(inputValue);
+                setCharacterCount(inputValue.length);
+              }}
+              onFocus={() => setIsInputFocused(true)}
+              onBlur={() => setIsInputFocused(false)}
+              defaultValue={currentUser?.desc || ""}
+              name="description"
+              maxLength={50}
+            />
+            {isInputFocused && (
+              <p className="text-[10px] text-neutral-500">
+                {characterCount} / {50} characters
+              </p>
+            )}
+          </div>
+
+          <Button className="mb-8 mt-1 rounded-full" variant="gradiantNavy">
             {loading ? (
               <>
                 <LoadingDots color="#FAFAFA" />

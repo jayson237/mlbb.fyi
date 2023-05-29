@@ -6,7 +6,8 @@ export async function POST(req: Request) {
   const currentUser = await getCurrentUser();
   //console.log(currentUser?.name);
 
-  const { username }: { username: string } = await req.json();
+  const { username, description }: { username: string; description: string } =
+    await req.json();
   //console.log("username", username);
 
   const findUsername = await prisma.user.findFirst({
@@ -14,7 +15,8 @@ export async function POST(req: Request) {
       username: username.toLowerCase(),
     },
   });
-  if (findUsername)
+
+  if (findUsername && description === currentUser?.desc)
     return NextResponse.json(
       {
         message: "Username already exists",
@@ -30,8 +32,10 @@ export async function POST(req: Request) {
     },
     data: {
       username: username.toLowerCase(),
+      desc: description,
     },
   });
+
   if (!set)
     return NextResponse.json(
       {
@@ -44,8 +48,7 @@ export async function POST(req: Request) {
 
   return NextResponse.json(
     {
-      message:
-        "Successfully set username, kindly wait before making more username updates",
+      message: "Successful, kindly wait before making more updates",
     },
     {
       status: 200,

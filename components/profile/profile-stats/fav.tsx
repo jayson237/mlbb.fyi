@@ -16,6 +16,7 @@ interface FavouritesProps {
     }[];
   }[];
   matchType: number;
+  isBound: boolean;
 }
 
 const Favourites: React.FC<FavouritesProps> = ({
@@ -25,7 +26,7 @@ const Favourites: React.FC<FavouritesProps> = ({
 }) => {
   const data = (matchPlayed && matchPlayed[matchType]?.data) || [];
   return (
-    <GradiantCard title={title} className="md:h-[233px]">
+    <GradiantCard title={title} className="md:h-[234px]">
       {data.map((item, i) => (
         <div key={i} className="mt-2">
           <div className="flex justify-between">
