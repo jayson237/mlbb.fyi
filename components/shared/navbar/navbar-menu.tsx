@@ -59,7 +59,7 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
         className={cn(
           "md:static md:flex md:h-auto md:bg-transparent",
           collapse
-            ? "fixed inset-0 top-[54px] z-10 h-screen bg-bgblack/70"
+            ? "fixed inset-0 top-[54px] z-10 h-screen bg-bgblack/80"
             : "hidden"
         )}
       >
