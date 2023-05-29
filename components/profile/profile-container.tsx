@@ -56,7 +56,7 @@ const MainApp: React.FC<MainAppProps> = ({
     return (
       <>
         <div className="flex flex-1 flex-col gap-5 md:flex-row">
-          <div className="flex gap-5 text-softGray">
+          <div className="mx-auto flex gap-5 text-softGray">
             <ProfileBio username={isUser} userDesc={userDesc} />
           </div>
           <Tabs defaultValue="statistics" className="w-full">
@@ -104,7 +104,7 @@ const MainApp: React.FC<MainAppProps> = ({
         <div className="flex flex-col gap-5 md:flex-row">
           {/* Left */}
 
-          <div className="flex gap-5 text-softGray">
+          <div className="mx-auto flex gap-5 text-softGray">
             {/* Profile Head */}
             <ProfileBio
               username={isUser}
