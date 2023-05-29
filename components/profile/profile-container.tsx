@@ -15,7 +15,8 @@ export type MatchPLayedProps = {
 };
 
 interface MainAppProps {
-  matchPlayed: {
+  currentUser?: SafeUser | null;
+  viewMatchPlayed: {
     mode: string;
     total: number;
     winrate: number;
@@ -27,7 +28,7 @@ interface MainAppProps {
       _id: string;
     }[];
   }[];
-  ownedHero: {
+  viewOwnedHero: {
     total: number;
     data: {
       hero: string;
@@ -35,33 +36,28 @@ interface MainAppProps {
       _id: string;
     }[];
   };
-  username: string;
-  accId?: string | null;
-  currentUser?: SafeUser | null;
-  mlbbAcc?: MlbbAcc | null;
+  viewAccId?: string | null;
+  isUser: string;
+  isBoundUser?: MlbbAcc | null;
 }
 
 const MainApp: React.FC<MainAppProps> = ({
-  matchPlayed,
-  username,
-  ownedHero,
-  accId,
   currentUser,
-  mlbbAcc,
+  viewMatchPlayed,
+  viewOwnedHero,
+  viewAccId,
+  isUser,
+  isBoundUser,
 }) => {
-  const isOwnProfile = currentUser?.username === username;
+  const isOwnProfile = currentUser?.username === isUser;
   // console.log(currentUser?.username);
   // console.log(username);
-  if (username && !accId) {
+  if (isUser && !isBoundUser) {
     return (
       <>
         <div className="flex flex-1 flex-col gap-5 md:flex-row">
           <div className="flex gap-5 text-softGray">
-            <ProfileBio
-              username={username}
-              mlbbAcc={mlbbAcc}
-              currentUser={currentUser}
-            />
+            <ProfileBio username={isUser} />
           </div>
           <Tabs defaultValue="statistics" className="w-full">
             <div className="flex items-center justify-between">
@@ -92,8 +88,8 @@ const MainApp: React.FC<MainAppProps> = ({
                   </p>
                 )}
                 <Statistics
-                  matchPlayed={matchPlayed}
-                  ownedHero={ownedHero}
+                  viewMatchPlayed={viewMatchPlayed}
+                  viewOwnedHero={viewOwnedHero}
                   isBound={false}
                 />
               </div>
@@ -102,7 +98,7 @@ const MainApp: React.FC<MainAppProps> = ({
         </div>
       </>
     );
-  } else if (username && accId) {
+  } else if (isUser && isBoundUser) {
     return (
       <>
         <div className="flex flex-col gap-5 md:flex-row">
@@ -110,11 +106,7 @@ const MainApp: React.FC<MainAppProps> = ({
 
           <div className="flex gap-5 text-softGray">
             {/* Profile Head */}
-            <ProfileBio
-              username={username}
-              mlbbAcc={mlbbAcc}
-              currentUser={currentUser}
-            />
+            <ProfileBio username={isUser} mlbbAcc={isBoundUser} />
           </div>
 
           {/* Right */}
@@ -130,8 +122,8 @@ const MainApp: React.FC<MainAppProps> = ({
               className="flex h-fit w-full flex-col gap-4 xl:flex-row"
             >
               <Statistics
-                matchPlayed={matchPlayed}
-                ownedHero={ownedHero}
+                viewMatchPlayed={viewMatchPlayed}
+                viewOwnedHero={viewOwnedHero}
                 isBound={true}
               />
             </TabsContent>

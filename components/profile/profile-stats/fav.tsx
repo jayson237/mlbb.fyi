@@ -5,7 +5,7 @@ import { Progress } from "../../shared/progress";
 
 interface FavouritesProps {
   title: string;
-  matchPlayed: {
+  viewMatchPlayed: {
     total: number;
     data: {
       id: string;
@@ -21,10 +21,10 @@ interface FavouritesProps {
 
 const Favourites: React.FC<FavouritesProps> = ({
   title,
-  matchPlayed,
+  viewMatchPlayed,
   matchType,
 }) => {
-  const data = (matchPlayed && matchPlayed[matchType]?.data) || [];
+  const data = (viewMatchPlayed && viewMatchPlayed[matchType]?.data) || [];
   return (
     <GradiantCard title={title} className="md:h-[234px]">
       {data.map((item, i) => (

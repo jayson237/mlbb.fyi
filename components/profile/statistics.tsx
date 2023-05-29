@@ -8,7 +8,7 @@ import Favourites from "./profile-stats/fav";
 import Image from "next/image";
 
 interface StatisticsProps {
-  matchPlayed: {
+  viewMatchPlayed: {
     mode: string;
     total: number;
     winrate: number;
@@ -20,7 +20,7 @@ interface StatisticsProps {
       _id: string;
     }[];
   }[];
-  ownedHero: {
+  viewOwnedHero: {
     total: number;
     data: {
       hero: string;
@@ -32,14 +32,14 @@ interface StatisticsProps {
 }
 
 const Statistics: React.FC<StatisticsProps> = ({
-  matchPlayed,
-  ownedHero,
+  viewMatchPlayed,
+  viewOwnedHero,
   isBound,
 }) => {
   const totalMatchPlayed =
-    ((matchPlayed && matchPlayed[0]?.total) || 0) +
-    ((matchPlayed && matchPlayed[1]?.total) || 0);
-  const heroes = (ownedHero && ownedHero?.total) || 0;
+    ((viewMatchPlayed && viewMatchPlayed[0]?.total) || 0) +
+    ((viewMatchPlayed && viewMatchPlayed[1]?.total) || 0);
+  const heroes = (viewOwnedHero && viewOwnedHero?.total) || 0;
 
   return (
     <div className="flex w-full flex-col gap-4 xl:flex-row">
@@ -61,13 +61,13 @@ const Statistics: React.FC<StatisticsProps> = ({
           <div className="mt-0.5 flex gap-x-4">
             <MatchInsights
               title="Classic Matches"
-              matchPlayed={matchPlayed}
+              viewMatchPlayed={viewMatchPlayed}
               matchType={0}
               isBound={isBound}
             />
             <MatchInsights
               title="Ranked Matches"
-              matchPlayed={matchPlayed}
+              viewMatchPlayed={viewMatchPlayed}
               matchType={1}
               isBound={isBound}
             />
@@ -78,13 +78,13 @@ const Statistics: React.FC<StatisticsProps> = ({
       <div className="flex w-full max-w-lg flex-col gap-4 md:max-h-2">
         <Favourites
           title="Classic Favourites"
-          matchPlayed={matchPlayed}
+          viewMatchPlayed={viewMatchPlayed}
           matchType={0}
           isBound={isBound}
         />
         <Favourites
           title="Ranked Favourites"
-          matchPlayed={matchPlayed}
+          viewMatchPlayed={viewMatchPlayed}
           matchType={1}
           isBound={isBound}
         />
@@ -101,11 +101,11 @@ const Statistics: React.FC<StatisticsProps> = ({
               involved in the creation and management of Mobile Legends.
             </p>
             <Image
-              className="mx-auto mb-16"
+              className="mb-16 mr-auto pl-[10px]"
               src={"/mlbb.fyi.svg"}
               alt="mlbb.fyi"
-              width="300"
-              height="105"
+              width="250"
+              height="55"
             />
           </>
         )}
