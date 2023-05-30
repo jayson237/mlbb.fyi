@@ -52,7 +52,7 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
             onClick={async (e) => {
               e.preventDefault();
               setLoading(true);
-              const set = await fetch(`/profile/[username]/api/follow`, {
+              const set = await fetch(`/profile/social/api/follow`, {
                 method: "POST",
                 body: JSON.stringify(user?.username),
               });
@@ -81,7 +81,7 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
             onClick={async (e) => {
               e.preventDefault();
               setLoading(true);
-              const set = await fetch(`/profile/[username]/api/unfollow`, {
+              const set = await fetch(`/profile/social/api/unfollow`, {
                 method: "POST",
                 body: JSON.stringify(user?.username),
               });
