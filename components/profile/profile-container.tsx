@@ -37,6 +37,8 @@ interface MainAppProps {
     }[];
   };
   isProfileUser: User | null;
+  profileUserFollowers: number | 0;
+  profileUserFollowings: number | 0;
   isBoundProfileUser?: MlbbAcc | null;
 }
 
@@ -45,6 +47,8 @@ const MainApp: React.FC<MainAppProps> = ({
   viewMatchPlayed,
   viewOwnedHero,
   isProfileUser,
+  profileUserFollowers,
+  profileUserFollowings,
   isBoundProfileUser,
 }) => {
   const isOwnProfile = currentUser?.username === isProfileUser;
@@ -58,6 +62,8 @@ const MainApp: React.FC<MainAppProps> = ({
             <ProfileBio
               currentUser={currentUser}
               user={isProfileUser}
+              followings={profileUserFollowings}
+              followers={profileUserFollowers}
               isOwnProfile={isOwnProfile}
             />
           </div>
@@ -111,6 +117,8 @@ const MainApp: React.FC<MainAppProps> = ({
             <ProfileBio
               currentUser={currentUser}
               user={isProfileUser}
+              followings={profileUserFollowings}
+              followers={profileUserFollowers}
               mlbbAcc={isBoundProfileUser}
               isOwnProfile={isOwnProfile}
             />
