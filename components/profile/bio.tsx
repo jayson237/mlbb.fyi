@@ -1,11 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { GradiantCard } from "../shared/gradiant-card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../shared/tabs";
 import Image from "next/image";
 import { Button } from "../shared/button";
 import { MlbbAcc } from "@prisma/client";
-import { SafeUser } from "@/types";
 
 export default function ProfileBio({
   username,
@@ -18,6 +18,7 @@ export default function ProfileBio({
   userDesc?: string | null;
   isOwnProfile: boolean;
 }) {
+  const [isFollowing, setIsFollowing] = useState(false);
   return (
     <div className="flex-col">
       {/* Profile Head */}
@@ -30,15 +31,24 @@ export default function ProfileBio({
           className="mx-auto rounded-full"
         />
         <h1 className="mt-3 text-center font-heading text-xl">{username}</h1>
-        {!isOwnProfile && (
+        {!isOwnProfile && !isFollowing && (
           <Button
-            className="mx-auto mt-2 flex h-fit w-fit justify-center rounded-2xl px-10 py-1"
+            className="mx-auto mt-2 flex h-fit w-36 justify-center rounded-2xl px-10 py-1"
             variant="gradiantNavySec"
+            onClick={() => setIsFollowing(true)}
           >
             Follow
           </Button>
         )}
-
+        {!isOwnProfile && isFollowing && (
+          <Button
+            className="mx-auto mt-2 flex h-fit w-36 justify-center rounded-2xl px-10 py-1"
+            variant="gradiantNavySec"
+            onClick={() => setIsFollowing(false)}
+          >
+            Unfollow
+          </Button>
+        )}
         <div className="mt-4 flex flex-row justify-between px-3 font-heading">
           <div className="flex flex-col text-center">
             <p className="text-xl">123</p>
@@ -54,10 +64,10 @@ export default function ProfileBio({
       <GradiantCard className="mx-auto mt-5 h-fit w-[15rem] max-w-full font-medium md:mx-0">
         <div className="flex flex-col">
           <p className={`${mlbbAcc ? "" : "hidden"}`}>
-            ID: {mlbbAcc ? mlbbAcc.accId : "-"}
+            IGN: {mlbbAcc ? mlbbAcc.nickname : "-"}
           </p>
           <p className={`${mlbbAcc ? "" : "hidden"}`}>
-            IGN: {mlbbAcc ? mlbbAcc.nickname : "-"}
+            ID: {mlbbAcc ? mlbbAcc.accId : "-"}
           </p>
           <p className="my-2 text-sm font-normal">{userDesc}</p>
         </div>

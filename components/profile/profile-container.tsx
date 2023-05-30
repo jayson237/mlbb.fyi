@@ -128,7 +128,7 @@ const MainApp: React.FC<MainAppProps> = ({
             </div>
             <TabsContent
               value="statistics"
-              className="flex h-fit w-full flex-col gap-4 xl:flex-row"
+              className="flex h-fit w-full flex-col items-center gap-4 xl:flex-row"
             >
               <Statistics
                 viewMatchPlayed={viewMatchPlayed}

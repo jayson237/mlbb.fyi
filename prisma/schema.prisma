@@ -82,6 +82,7 @@ model User {
   sessions      Session[]
 }
 
+
 model Session {
   id           String     @id @default(auto()) @map("_id") @db.ObjectId
   userId       String     @db.ObjectId
