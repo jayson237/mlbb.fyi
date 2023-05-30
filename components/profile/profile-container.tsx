@@ -2,13 +2,13 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../shared/tabs";
 import { Button } from "../shared/button";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 import ProfileBio from "./bio";
 import Statistics from "./statistics";
 import { SafeUser } from "@/types";
 import { MlbbAcc } from "@prisma/client";
+import { User } from "@prisma/client";
 
 export type MatchPLayedProps = {
   total: number;
@@ -36,30 +36,28 @@ interface MainAppProps {
       _id: string;
     }[];
   };
-  viewUserDesc: string | null;
-  isUser: string;
-  isBoundUser?: MlbbAcc | null;
+  isProfileUser: User | null;
+  isBoundProfileUser?: MlbbAcc | null;
 }
 
 const MainApp: React.FC<MainAppProps> = ({
   currentUser,
   viewMatchPlayed,
   viewOwnedHero,
-  viewUserDesc,
-  isUser,
-  isBoundUser,
+  isProfileUser,
+  isBoundProfileUser,
 }) => {
-  const isOwnProfile = currentUser?.username === isUser;
+  const isOwnProfile = currentUser?.username === isProfileUser;
   // console.log(currentUser?.username);
   // console.log(username);
-  if (isUser && !isBoundUser) {
+  if (isProfileUser && !isBoundProfileUser) {
     return (
       <>
         <div className="flex flex-1 flex-col gap-5 md:flex-row">
           <div className="mx-auto flex gap-5 text-softGray">
             <ProfileBio
-              username={isUser}
-              userDesc={viewUserDesc}
+              currentUser={currentUser}
+              user={isProfileUser}
               isOwnProfile={isOwnProfile}
             />
           </div>
@@ -102,7 +100,7 @@ const MainApp: React.FC<MainAppProps> = ({
         </div>
       </>
     );
-  } else if (isUser && isBoundUser) {
+  } else if (isProfileUser && isBoundProfileUser) {
     return (
       <>
         <div className="flex flex-col gap-5 md:flex-row">
@@ -111,9 +109,9 @@ const MainApp: React.FC<MainAppProps> = ({
           <div className="mx-auto flex gap-5 text-softGray">
             {/* Profile Head */}
             <ProfileBio
-              username={isUser}
-              mlbbAcc={isBoundUser}
-              userDesc={viewUserDesc}
+              currentUser={currentUser}
+              user={isProfileUser}
+              mlbbAcc={isBoundProfileUser}
               isOwnProfile={isOwnProfile}
             />
           </div>

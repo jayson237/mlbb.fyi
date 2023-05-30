@@ -2,23 +2,31 @@
 
 import { useState } from "react";
 import { GradiantCard } from "../shared/gradiant-card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../shared/tabs";
 import Image from "next/image";
 import { Button } from "../shared/button";
 import { MlbbAcc } from "@prisma/client";
+import { SafeUser } from "@/types";
+import LoadingDots from "../shared/icons/loading-dots";
+import { toast } from "sonner";
+import { User } from "@prisma/client";
 
-export default function ProfileBio({
-  username,
-  mlbbAcc,
-  userDesc,
-  isOwnProfile,
-}: {
-  username: string;
+interface ProfileBioProps {
+  currentUser?: SafeUser | null;
+  user: User | null;
   mlbbAcc?: MlbbAcc | null;
-  userDesc?: string | null;
   isOwnProfile: boolean;
-}) {
+}
+
+const ProfileBio: React.FC<ProfileBioProps> = ({
+  currentUser,
+  user,
+  mlbbAcc,
+  isOwnProfile,
+}) => {
   const [isFollowing, setIsFollowing] = useState(false);
+  // needs to be updated
+  const [loading, setLoading] = useState<boolean>(false);
+
   return (
     <div className="flex-col">
       {/* Profile Head */}
@@ -30,31 +38,81 @@ export default function ProfileBio({
           height={150}
           className="mx-auto rounded-full"
         />
-        <h1 className="mt-3 text-center font-heading text-xl">{username}</h1>
+        <h1 className="mt-3 text-center font-heading text-xl">
+          {user?.username}
+        </h1>
         {!isOwnProfile && !isFollowing && (
           <Button
-            className="mx-auto mt-2 flex h-fit w-36 justify-center rounded-2xl px-10 py-1"
+            className="mx-auto mt-2 flex h-8 w-36 justify-center rounded-2xl px-10 py-1"
             variant="gradiantNavySec"
-            onClick={() => setIsFollowing(true)}
+            onClick={async (e) => {
+              e.preventDefault();
+              setLoading(true);
+              const set = await fetch(
+                `/profile/${currentUser?.username}/api/follow`,
+                {
+                  method: "POST",
+                  body: JSON.stringify(user?.username),
+                }
+              );
+              const msg = await set.json();
+              if (!set.ok) {
+                setLoading(false);
+                toast.error(msg.message);
+              } else {
+                setLoading(false);
+                setIsFollowing(true);
+              }
+            }}
           >
-            Follow
+            {loading ? (
+              <>
+                <LoadingDots color="#FAFAFA" />
+              </>
+            ) : (
+              "Follow"
+            )}
           </Button>
         )}
         {!isOwnProfile && isFollowing && (
           <Button
-            className="mx-auto mt-2 flex h-fit w-36 justify-center rounded-2xl px-10 py-1"
-            onClick={() => setIsFollowing(false)}
+            className="mx-auto mt-2 flex h-8 w-36 justify-center rounded-2xl px-10 py-1"
+            onClick={async (e) => {
+              e.preventDefault();
+              setLoading(true);
+              const set = await fetch(
+                `/profile/${currentUser?.username}/api/unfollow`,
+                {
+                  method: "POST",
+                  body: JSON.stringify(user?.username),
+                }
+              );
+              const msg = await set.json();
+              if (!set.ok) {
+                setLoading(false);
+                toast.error(msg.message);
+              } else {
+                setLoading(false);
+                setIsFollowing(false);
+              }
+            }}
           >
-            Unfollow
+            {loading ? (
+              <>
+                <LoadingDots color="#FAFAFA" />
+              </>
+            ) : (
+              "Unfollow"
+            )}
           </Button>
         )}
         <div className="mt-4 flex flex-row justify-between px-3 font-heading">
           <div className="flex flex-col text-center">
-            <p className="text-xl">123</p>
+            <p className="text-xl">{}</p>
             <p className="text-[14px]">FOLLOWING</p>
           </div>
           <div className="flex flex-col text-center">
-            <p className="text-xl">1000</p>
+            <p className="text-xl">{}</p>
             <p className="text-[14px]">FOLLOWERS</p>
           </div>
         </div>
@@ -68,9 +126,11 @@ export default function ProfileBio({
           <p className={`${mlbbAcc ? "" : "hidden"}`}>
             ID: {mlbbAcc ? mlbbAcc.accId : "-"}
           </p>
-          <p className="my-2 text-sm font-normal">{userDesc}</p>
+          <p className="my-2 text-sm font-normal">{user?.desc}</p>
         </div>
       </GradiantCard>
     </div>
   );
-}
+};
+
+export default ProfileBio;

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import { LogInIcon, LogOutIcon, Settings } from "lucide-react";
+import { LogOutIcon, Settings } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { SafeUser } from "@/types";

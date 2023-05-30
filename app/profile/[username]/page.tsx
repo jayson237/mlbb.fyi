@@ -67,7 +67,7 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
       new URL(`${process.env.NEXT_PUBLIC_BASE_URL}/profile/stg`)
     );
   }
-  const userDesc = await getDesc(username);
+  const profileUser = await getUsername(username);
   let mlbbAccount = await acc(username);
   let dataAcc;
   if (!mlbbAccount) {
@@ -82,9 +82,8 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
         currentUser={user}
         viewMatchPlayed={dataAcc?.matchPlayed}
         viewOwnedHero={dataAcc?.heroOwned}
-        viewUserDesc={userDesc}
-        isUser={username}
-        isBoundUser={mlbbAccount}
+        isProfileUser={profileUser}
+        isBoundProfileUser={mlbbAccount}
       />
     </>
   );
