@@ -57,7 +57,11 @@ const MainApp: React.FC<MainAppProps> = ({
       <>
         <div className="flex flex-1 flex-col gap-5 md:flex-row">
           <div className="mx-auto flex gap-5 text-softGray">
-            <ProfileBio username={isUser} userDesc={userDesc} />
+            <ProfileBio
+              username={isUser}
+              userDesc={userDesc}
+              isOwnProfile={isOwnProfile}
+            />
           </div>
           <Tabs defaultValue="statistics" className="w-full">
             <div className="flex items-center justify-between">
@@ -110,6 +114,7 @@ const MainApp: React.FC<MainAppProps> = ({
               username={isUser}
               mlbbAcc={isBoundUser}
               userDesc={userDesc}
+              isOwnProfile={isOwnProfile}
             />
           </div>
 
