@@ -36,7 +36,7 @@ interface MainAppProps {
       _id: string;
     }[];
   };
-  userDesc: string | null;
+  viewUserDesc: string | null;
   isUser: string;
   isBoundUser?: MlbbAcc | null;
 }
@@ -45,7 +45,7 @@ const MainApp: React.FC<MainAppProps> = ({
   currentUser,
   viewMatchPlayed,
   viewOwnedHero,
-  userDesc,
+  viewUserDesc,
   isUser,
   isBoundUser,
 }) => {
@@ -59,7 +59,7 @@ const MainApp: React.FC<MainAppProps> = ({
           <div className="mx-auto flex gap-5 text-softGray">
             <ProfileBio
               username={isUser}
-              userDesc={userDesc}
+              userDesc={viewUserDesc}
               isOwnProfile={isOwnProfile}
             />
           </div>
@@ -113,7 +113,7 @@ const MainApp: React.FC<MainAppProps> = ({
             <ProfileBio
               username={isUser}
               mlbbAcc={isBoundUser}
-              userDesc={userDesc}
+              userDesc={viewUserDesc}
               isOwnProfile={isOwnProfile}
             />
           </div>

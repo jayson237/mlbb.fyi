@@ -82,7 +82,7 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
         currentUser={user}
         viewMatchPlayed={dataAcc?.matchPlayed}
         viewOwnedHero={dataAcc?.heroOwned}
-        userDesc={userDesc}
+        viewUserDesc={userDesc}
         isUser={username}
         isBoundUser={mlbbAccount}
       />
