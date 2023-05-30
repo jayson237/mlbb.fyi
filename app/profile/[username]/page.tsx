@@ -52,7 +52,6 @@ async function getDataAcc(accId: string | null) {
 const ProfilePage = async ({ params }: { params: { username: string } }) => {
   const { username } = params;
   const existingUser = await getUsername(username);
-  const userDesc = await getDesc(username);
 
   if (!existingUser) {
     return (
@@ -68,13 +67,13 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
       new URL(`${process.env.NEXT_PUBLIC_BASE_URL}/profile/stg`)
     );
   }
-
-  let account = await acc(username);
+  const userDesc = await getDesc(username);
+  let mlbbAccount = await acc(username);
   let dataAcc;
-  if (!account) {
-    account = null;
+  if (!mlbbAccount) {
+    mlbbAccount = null;
   } else {
-    dataAcc = await getDataAcc(account.accId);
+    dataAcc = await getDataAcc(mlbbAccount.accId);
   }
 
   return (
@@ -83,9 +82,9 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
         currentUser={user}
         viewMatchPlayed={dataAcc?.matchPlayed}
         viewOwnedHero={dataAcc?.heroOwned}
-        userDesc={userDesc}
+        viewUserDesc={userDesc}
         isUser={username}
-        isBoundUser={account}
+        isBoundUser={mlbbAccount}
       />
     </>
   );
