@@ -43,7 +43,6 @@ export default function ProfileBio({
         {!isOwnProfile && isFollowing && (
           <Button
             className="mx-auto mt-2 flex h-fit w-36 justify-center rounded-2xl px-10 py-1"
-            variant="gradiantNavySec"
             onClick={() => setIsFollowing(false)}
           >
             Unfollow
