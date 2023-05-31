@@ -4,6 +4,8 @@ import prisma from "@/lib/prismadb";
 import ProfileContainer from "@/components/profile/profile-container";
 import getCurrentUser from "@/lib/actions/getCurrentUser";
 import { NextResponse } from "next/server";
+import getFollowers from "@/lib/actions/getFollower";
+import getFollowings from "@/lib/actions/getFollowing";
 
 async function acc(username: string) {
   try {
@@ -19,21 +21,40 @@ async function acc(username: string) {
   }
 }
 
-async function getUsername(username: string) {
+async function getNumOfFollowers(username: string) {
+  try {
+    const get = await prisma.user.findFirst({
+      where: {
+        username,
+      },
+    });
+    const followers = await getFollowers(get?.email || "");
+    return followers?.length;
+  } catch (error) {
+    return null;
+  }
+}
+
+async function getNumOfFollowings(username: string) {
+  try {
+    const get = await prisma.user.findFirst({
+      where: {
+        username,
+      },
+    });
+    const followers = await getFollowings(get?.email || "");
+    return followers?.length;
+  } catch (error) {
+    return null;
+  }
+}
+
+async function getUser(username: string) {
   return await prisma.user.findFirst({
     where: {
       username,
     },
   });
-}
-
-async function getDesc(username: string) {
-  try {
-    const user = await getUsername(username);
-    return user?.desc || null;
-  } catch (error) {
-    return null;
-  }
 }
 
 async function getDataAcc(accId: string | null) {
@@ -51,9 +72,9 @@ async function getDataAcc(accId: string | null) {
 
 const ProfilePage = async ({ params }: { params: { username: string } }) => {
   const { username } = params;
-  const existingUser = await getUsername(username);
+  const isExistingProfileUser = await getUser(username);
 
-  if (!existingUser) {
+  if (!isExistingProfileUser) {
     return (
       <div className="flex h-screen items-center justify-center">
         <p className="mb-48 text-2xl md:ml-3">Profile does not exist...</p>
@@ -67,7 +88,7 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
       new URL(`${process.env.NEXT_PUBLIC_BASE_URL}/profile/stg`)
     );
   }
-  const userDesc = await getDesc(username);
+
   let mlbbAccount = await acc(username);
   let dataAcc;
   if (!mlbbAccount) {
@@ -76,15 +97,19 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
     dataAcc = await getDataAcc(mlbbAccount.accId);
   }
 
+  const numOfFollowers = (await getNumOfFollowers(username)) ?? 0;
+  const numOfFollowings = (await getNumOfFollowings(username)) ?? 0;
+
   return (
     <>
       <ProfileContainer
         currentUser={user}
         viewMatchPlayed={dataAcc?.matchPlayed}
         viewOwnedHero={dataAcc?.heroOwned}
-        viewUserDesc={userDesc}
-        isUser={username}
-        isBoundUser={mlbbAccount}
+        isProfileUser={isExistingProfileUser}
+        profileUserFollowers={numOfFollowers}
+        profileUserFollowings={numOfFollowings}
+        isBoundProfileUser={mlbbAccount}
       />
     </>
   );

@@ -9,88 +9,105 @@ datasource db {
 }
 
 type HerosDetails {
-  ability        String
-  coverPicture   String
-  difficulty     String
-  durability     String
-  galleryPicture String
-  heroName       String
   heroType       String
+  heroName       String
+  coverPicture   String
+  galleryPicture String
+  ability        String
   offense        String
-  
-  skill          HerosDetailsSkill[]
+  durability     String
+  difficulty     String
+  skill HerosDetailsSkill[]
 }
 
 type HerosDetailsSkill {
-  description String
-  icon        String
   name        String
+  icon        String
+  description String
   tips        String
 }
 
 model Hero {
-  id      String       @id @default(auto()) @map("_id") @db.ObjectId
-  v       Int          @map("__v")
-  //details HerosDetails
-  heroId  Int @unique
-  img     String
-  name    String @unique
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  name   String @unique
+  img    String
+  heroId Int    @unique
+  details HerosDetails
 }
 
 model MlbbAcc {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  accId     String?   @unique
-  accServer String?  
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  accId     String? @unique
+  accServer String?
   nickname  String?
-  userId    String?   @db.ObjectId
+  userId    String? @db.ObjectId
 
-  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Account {
-  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId             String   @db.ObjectId
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  
-  access_token       String? 
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? 
-  session_state      String?
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
 
-  user               User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
 
 model User {
-  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
   username      String?
   desc          String?
-  email         String     @unique
+  email         String    @unique
   emailVerified DateTime?
   image         String?
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
-  accounts      Account[]
-  mlbbaccs      MlbbAcc[]
-  sessions      Session[]
+  accounts  Account[]
+  mlbbaccs  MlbbAcc[]
+  sessions  Session[]
+  followers Follower[]
+  following Following[]
+
+  posts    Post[]
+  comments Comment[]
+}
+
+model Follower {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @db.ObjectId
+  createdAt DateTime @default(now())
+}
+
+model Following {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @db.ObjectId
+  createdAt DateTime @default(now())
 }
 
 model Session {
-  id           String     @id @default(auto()) @map("_id") @db.ObjectId
-  userId       String     @db.ObjectId
-  sessionToken String     @unique
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String   @db.ObjectId
+  sessionToken String   @unique
   expires      DateTime
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
@@ -102,4 +119,30 @@ model VerificationToken {
   updatedAt  DateTime @updatedAt
 
   @@unique([identifier, token])
+}
+
+model Post {
+  id                 String @id @default(auto()) @map("_id") @db.ObjectId
+  body               String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  userId             String @db.ObjectId
+  likedIds           String[] @db.ObjectId
+  image              String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  comments          Comment[]
+}
+
+model Comment {
+  id                 String @id @default(auto()) @map("_id") @db.ObjectId
+  body               String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  userId             String @db.ObjectId
+  postId             String @db.ObjectId
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 }

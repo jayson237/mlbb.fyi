@@ -8,34 +8,33 @@ import HeroesFilter from "./heroes-filter";
 import HeroCard from "./hero-card";
 
 interface IHeroesContainer {
-  heros: Hero[];
+  heroes: Hero[] | null;
 }
 
-const HeroesContainer = ({ heros }: IHeroesContainer) => {
+const HeroesContainer = ({ heroes }: IHeroesContainer) => {
   const heroFilter = useHeroFilter();
   const [hero, setHero] = useState<Hero[]>();
 
   useEffect(() => {
-    //console.log(heroFilter.type);
-    if (heroFilter.type.length > 0) {
+    if (heroes !== null && heroFilter.type.length > 0) {
       const filtered: Hero[] = [];
       heroFilter.type.map((item, i) => {
-        heros.filter((hero) => {
-          // if (hero.details.heroType === heroFilter.type[i]) filtered.push(hero);
+        heroes.filter((hero) => {
+          if (hero.details.heroType === heroFilter.type[i]) filtered.push(hero);
         });
       });
       setHero(filtered);
     } else {
       setHero(undefined);
     }
-  }, [heroFilter, hero, heros]);
+  }, [heroFilter, hero, heroes]);
 
   return (
     <>
       <HeroesFilter />
-      <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
+      <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7">
         {hero?.length === undefined
-          ? heros.map((hero) => (
+          ? heroes?.map((hero) => (
               <Fragment key={hero.id}>
                 <HeroCard hero={hero} />
               </Fragment>
