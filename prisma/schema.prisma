@@ -9,32 +9,30 @@ datasource db {
 }
 
 type HerosDetails {
-  ability        String
-  coverPicture   String
-  difficulty     String
-  durability     String
-  galleryPicture String
-  heroName       String
   heroType       String
+  heroName       String
+  coverPicture   String
+  galleryPicture String
+  ability        String
   offense        String
-
+  durability     String
+  difficulty     String
   skill HerosDetailsSkill[]
 }
 
 type HerosDetailsSkill {
-  description String
-  icon        String
   name        String
+  icon        String
+  description String
   tips        String
 }
 
 model Hero {
   id     String @id @default(auto()) @map("_id") @db.ObjectId
-  v      Int    @map("__v")
-  //details HerosDetails
-  heroId Int    @unique
-  img    String
   name   String @unique
+  img    String
+  heroId Int    @unique
+  details HerosDetails
 }
 
 model MlbbAcc {
