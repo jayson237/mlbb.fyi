@@ -101,7 +101,7 @@ const Statistics: React.FC<StatisticsProps> = ({
               involved in the creation and management of Mobile Legends.
             </p>
             <Image
-              className="mb-16 mr-auto pl-[10px]"
+              className="mr-auto pb-16 pl-[10px]"
               src={"/mlbb.fyi.svg"}
               alt="mlbb.fyi"
               width="250"

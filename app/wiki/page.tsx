@@ -19,7 +19,7 @@ async function getHero() {
 }
 
 async function WikiPage() {
-  const heros: Hero[] | null = await getHero();
+  const heroes: Hero[] | null = await getHero();
 
   return (
     <main>
@@ -42,16 +42,16 @@ async function WikiPage() {
           value="heroes"
           className="flex w-full flex-col gap-5 md:flex-row"
         >
-          {/* <HeroesContainer heros={heros} /> */}
+          <HeroesContainer heroes={heroes} />
         </TabsContent>
         <TabsContent value="statistics" className=""></TabsContent>
         <TabsContent value="draft-pick" className=""></TabsContent>
       </Tabs>
 
-      <p className="md:ml-3">
+      {/* <p className="md:ml-3">
         We are currently in the process of implementing the wiki section, and we
         appreciate your understanding and patience. Thank you.
-      </p>
+      </p> */}
     </main>
   );
 }
