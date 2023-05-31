@@ -27,7 +27,8 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
   const isCurrUserFollowing = currentUser?.following.includes(
     user?.id as string
   );
-  console.log(isCurrUserFollowing);
+  // console.log(isCurrUserFollowing);
+
   const [isFollowing, setIsFollowing] = useState(isCurrUserFollowing);
   const [loading, setLoading] = useState<boolean>(false);
 
