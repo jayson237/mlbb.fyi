@@ -35,14 +35,16 @@ export async function POST(req: Request) {
     );
   }
 
+  const updatedFollowing = currentUser.following.filter(
+    (id) => id !== findUser.id
+  );
+
   const setCurrentFollowings = await prisma.user.update({
     where: {
-      email: currentUser?.email,
+      email: currentUser.email,
     },
     data: {
-      following: {
-        disconnect: { id: findUser.id },
-      },
+      following: updatedFollowing,
     },
   });
 
@@ -55,25 +57,27 @@ export async function POST(req: Request) {
     );
   }
 
+  const updatedFollowers = findUser.followers.filter(
+    (id) => id !== currentUser.id
+  );
+
   const setUserFollowers = await prisma.user.update({
     where: {
-      email: findUser?.email,
+      email: findUser.email,
     },
     data: {
-      followers: {
-        disconnect: { id: currentUser.id },
-      },
+      followers: updatedFollowers,
     },
   });
 
   if (!setUserFollowers) {
     return NextResponse.json(
       {
-        message: "Failed to set user's followers",
+        message: "Failed to remove user's follower",
       },
       { status: 400 }
     );
   }
 
-  return NextResponse.json({ message: "Successful" }, { status: 200 });
+  return NextResponse.json({ message: "Unfollow successful" }, { status: 200 });
 }

@@ -41,7 +41,7 @@ export async function POST(req: Request) {
     },
     data: {
       following: {
-        connect: { id: findUser.id },
+        push: findUser.id,
       },
     },
   });
@@ -61,7 +61,7 @@ export async function POST(req: Request) {
     },
     data: {
       followers: {
-        connect: { id: currentUser.id },
+        push: currentUser.id,
       },
     },
   });

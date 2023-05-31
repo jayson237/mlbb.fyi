@@ -9,30 +9,32 @@ datasource db {
 }
 
 type HerosDetails {
-  heroType       String
-  heroName       String
-  coverPicture   String
-  galleryPicture String
   ability        String
-  offense        String
-  durability     String
+  coverPicture   String
   difficulty     String
-  skill          HerosDetailsSkill[]
+  durability     String
+  galleryPicture String
+  heroName       String
+  heroType       String
+  offense        String
+
+  skill HerosDetailsSkill[]
 }
 
 type HerosDetailsSkill {
-  name        String
-  icon        String
   description String
+  icon        String
+  name        String
   tips        String
 }
 
 model Hero {
-  id      String       @id @default(auto()) @map("_id") @db.ObjectId
-  name    String       @unique
-  img     String
-  heroId  Int          @unique
-  details HerosDetails
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  v      Int    @map("__v")
+  //details HerosDetails
+  heroId Int    @unique
+  img    String
+  name   String @unique
 }
 
 model MlbbAcc {
@@ -74,29 +76,15 @@ model User {
   image         String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  followers     String[]  @db.ObjectId
+  following     String[]  @db.ObjectId
 
-  accounts  Account[]
-  mlbbaccs  MlbbAcc[]
-  sessions  Session[]
-  followers Follower[]
-  following Following[]
+  accounts Account[]
+  mlbbaccs MlbbAcc[]
+  sessions Session[]
 
   posts    Post[]
   comments Comment[]
-}
-
-model Follower {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String   @db.ObjectId
-  createdAt DateTime @default(now())
-}
-
-model Following {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String   @db.ObjectId
-  createdAt DateTime @default(now())
 }
 
 model Session {
@@ -122,13 +110,14 @@ model VerificationToken {
 }
 
 model Post {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  body      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  userId    String   @db.ObjectId
-  likedIds  String[] @db.ObjectId
-  image     String?
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  body         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  userId       String   @db.ObjectId
+  favouriteIds String[] @db.ObjectId
+  image        String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 

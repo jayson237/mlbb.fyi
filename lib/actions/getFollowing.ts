@@ -8,9 +8,9 @@ export default async function getFollowings(email?: string) {
       },
     });
 
-    const findFollowings = await prisma.following.findMany({
+    const findFollowings = await prisma.user.findMany({
       where: {
-        userId: findUser?.id,
+        id: findUser?.id,
       },
     });
 

@@ -27,7 +27,10 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
   mlbbAcc,
   isOwnProfile,
 }) => {
-  const [isFollowing, setIsFollowing] = useState(false);
+  const isCurrUserFollowing = currentUser?.following.includes(
+    user?.id as string
+  );
+  const [isFollowing, setIsFollowing] = useState(isCurrUserFollowing);
   // needs to be updated
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -50,11 +53,12 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
             className="mx-auto mt-2 flex h-8 w-36 justify-center rounded-2xl px-10 py-1"
             variant="gradiantNavySec"
             onClick={async (e) => {
+              const username = user?.username;
               e.preventDefault();
               setLoading(true);
               const set = await fetch(`/profile/social/api/follow`, {
                 method: "POST",
-                body: JSON.stringify(user?.username),
+                body: JSON.stringify(username),
               });
               const msg = await set.json();
               if (!set.ok) {
@@ -79,11 +83,12 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
           <Button
             className="mx-auto mt-2 flex h-8 w-36 justify-center rounded-2xl px-10 py-1"
             onClick={async (e) => {
+              const username = user?.username;
               e.preventDefault();
               setLoading(true);
               const set = await fetch(`/profile/social/api/unfollow`, {
                 method: "POST",
-                body: JSON.stringify(user?.username),
+                body: JSON.stringify(username),
               });
               const msg = await set.json();
               if (!set.ok) {
