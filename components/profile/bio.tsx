@@ -13,8 +13,6 @@ import { User } from "@prisma/client";
 interface ProfileBioProps {
   currentUser?: SafeUser | null;
   user: User | null;
-  followings: number | 0;
-  followers: number | 0;
   mlbbAcc?: MlbbAcc | null;
   isOwnProfile: boolean;
 }
@@ -22,16 +20,15 @@ interface ProfileBioProps {
 const ProfileBio: React.FC<ProfileBioProps> = ({
   currentUser,
   user,
-  followings,
-  followers,
   mlbbAcc,
   isOwnProfile,
 }) => {
+  const username = user?.username;
   const isCurrUserFollowing = currentUser?.following.includes(
     user?.id as string
   );
+  console.log(isCurrUserFollowing);
   const [isFollowing, setIsFollowing] = useState(isCurrUserFollowing);
-  // needs to be updated
   const [loading, setLoading] = useState<boolean>(false);
 
   return (
@@ -53,12 +50,11 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
             className="mx-auto mt-2 flex h-8 w-36 justify-center rounded-2xl px-10 py-1"
             variant="gradiantNavySec"
             onClick={async (e) => {
-              const username = user?.username;
               e.preventDefault();
               setLoading(true);
               const set = await fetch(`/profile/social/api/follow`, {
                 method: "POST",
-                body: JSON.stringify(username),
+                body: JSON.stringify({ username }),
               });
               const msg = await set.json();
               if (!set.ok) {
@@ -83,12 +79,11 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
           <Button
             className="mx-auto mt-2 flex h-8 w-36 justify-center rounded-2xl px-10 py-1"
             onClick={async (e) => {
-              const username = user?.username;
               e.preventDefault();
               setLoading(true);
               const set = await fetch(`/profile/social/api/unfollow`, {
                 method: "POST",
-                body: JSON.stringify(username),
+                body: JSON.stringify({ username }),
               });
               const msg = await set.json();
               if (!set.ok) {
@@ -111,11 +106,19 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
         )}
         <div className="mt-4 flex flex-row justify-between px-3 font-heading">
           <div className="flex flex-col text-center">
-            <p className="text-xl">{followings}</p>
+            <p className="text-xl">
+              {isOwnProfile
+                ? currentUser?.following.length
+                : user?.following.length}
+            </p>
             <p className="text-[14px]">FOLLOWING</p>
           </div>
           <div className="flex flex-col text-center">
-            <p className="text-xl">{followers}</p>
+            <p className="text-xl">
+              {isOwnProfile
+                ? currentUser?.followers.length
+                : user?.followers.length}
+            </p>
             <p className="text-[14px]">FOLLOWERS</p>
           </div>
         </div>
