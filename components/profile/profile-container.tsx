@@ -51,7 +51,7 @@ const MainApp: React.FC<MainAppProps> = ({
   profileUserFollowings,
   isBoundProfileUser,
 }) => {
-  const isOwnProfile = currentUser?.username === isProfileUser;
+  const isOwnProfile = currentUser?.username === isProfileUser?.username;
   // console.log(currentUser?.username);
   // console.log(username);
   if (isProfileUser && !isBoundProfileUser) {
