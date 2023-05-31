@@ -5,13 +5,17 @@ import getCurrentUser from "@/lib/actions/getCurrentUser";
 export async function POST(req: Request) {
   const currentUser = await getCurrentUser();
 
-  const { username }: { username: string } = await req.json();
+  const { username } = await req.json();
+  // console.log(username);
 
   const findUser = await prisma.user.findFirst({
     where: {
       username: username,
     },
   });
+
+  // console.log(currentUser?.username);
+  // console.log(findUser?.username);
 
   if (!currentUser) {
     return NextResponse.json(
@@ -41,7 +45,7 @@ export async function POST(req: Request) {
     },
     data: {
       following: {
-        connect: { id: findUser.id },
+        push: findUser.id,
       },
     },
   });
@@ -61,7 +65,7 @@ export async function POST(req: Request) {
     },
     data: {
       followers: {
-        connect: { id: currentUser.id },
+        push: currentUser.id,
       },
     },
   });

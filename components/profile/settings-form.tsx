@@ -29,6 +29,7 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
     currentUser?.desc || ""
   );
   const [loading, setLoading] = useState<boolean>(false);
+  const [disable, setDisable] = useState<boolean>(false);
   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
   const [characterCount, setCharacterCount] = useState<number>(
     currentUser?.desc ? currentUser.desc.length : 0
@@ -164,7 +165,14 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
             )}
           </div>
 
-          <Button className="mb-8 mt-1 rounded-full" variant="gradiantNavy">
+          <Button
+            disabled={
+              username === currentUser?.username &&
+              description === currentUser?.desc
+            }
+            className="mb-8 mt-1 rounded-full"
+            variant="gradiantNavy"
+          >
             {loading ? (
               <>
                 <LoadingDots color="#FAFAFA" />

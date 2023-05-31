@@ -4,8 +4,6 @@ import prisma from "@/lib/prismadb";
 import ProfileContainer from "@/components/profile/profile-container";
 import getCurrentUser from "@/lib/actions/getCurrentUser";
 import { NextResponse } from "next/server";
-import getFollowers from "@/lib/actions/getFollower";
-import getFollowings from "@/lib/actions/getFollowing";
 
 async function acc(username: string) {
   try {
@@ -16,34 +14,6 @@ async function acc(username: string) {
     });
     const mlbbAcc = await getMlbbAcc(get?.email || "");
     return mlbbAcc;
-  } catch (error) {
-    return null;
-  }
-}
-
-async function getNumOfFollowers(username: string) {
-  try {
-    const get = await prisma.user.findFirst({
-      where: {
-        username,
-      },
-    });
-    const followers = await getFollowers(get?.email || "");
-    return followers?.length;
-  } catch (error) {
-    return null;
-  }
-}
-
-async function getNumOfFollowings(username: string) {
-  try {
-    const get = await prisma.user.findFirst({
-      where: {
-        username,
-      },
-    });
-    const followers = await getFollowings(get?.email || "");
-    return followers?.length;
   } catch (error) {
     return null;
   }
@@ -97,9 +67,6 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
     dataAcc = await getDataAcc(mlbbAccount.accId);
   }
 
-  const numOfFollowers = (await getNumOfFollowers(username)) ?? 0;
-  const numOfFollowings = (await getNumOfFollowings(username)) ?? 0;
-
   return (
     <>
       <ProfileContainer
@@ -107,8 +74,6 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
         viewMatchPlayed={dataAcc?.matchPlayed}
         viewOwnedHero={dataAcc?.heroOwned}
         isProfileUser={isExistingProfileUser}
-        profileUserFollowers={numOfFollowers}
-        profileUserFollowings={numOfFollowings}
         isBoundProfileUser={mlbbAccount}
       />
     </>
