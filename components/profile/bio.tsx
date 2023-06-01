@@ -9,6 +9,9 @@ import { SafeUser } from "@/types";
 import LoadingDots from "../shared/icons/loading-dots";
 import { toast } from "sonner";
 import { User } from "@prisma/client";
+import useSWR from "swr";
+import { fetcher } from "@/lib/utils";
+import { useParams } from "next/navigation";
 
 interface ProfileBioProps {
   currentUser?: SafeUser | null;
@@ -23,6 +26,18 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
   mlbbAcc,
   isOwnProfile,
 }) => {
+  const params = useParams();
+
+  // let baseInfo = null
+  const { data: baseInfo, mutate } = useSWR<{
+    username: string;
+    following: string[];
+    followers: string[];
+    name: string;
+    desc: string;
+  }>(`/api/user/basic-info?username=${params?.username}`, fetcher);
+  // const baseInfo = useSWR("/api/user/basic-info", fetcher);
+  // console.log(baseInfo.data);
   const username = user?.username;
   const isCurrUserFollowing = currentUser?.following.includes(
     user?.id as string
@@ -44,7 +59,7 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
           className="mx-auto rounded-full"
         />
         <h1 className="mt-3 text-center font-heading text-xl">
-          {user?.username}
+          {baseInfo?.username}
         </h1>
         {!isOwnProfile && !isFollowing && (
           <Button
@@ -65,6 +80,7 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
                 setButtonDisabled(false);
                 toast.error(msg.message);
               } else {
+                mutate();
                 setLoading(false);
                 setIsFollowing(true);
                 setButtonDisabled(false);
@@ -98,6 +114,7 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
                 setButtonDisabled(false);
                 toast.error(msg.message);
               } else {
+                mutate();
                 setLoading(false);
                 setIsFollowing(false);
                 setButtonDisabled(false);
@@ -118,7 +135,7 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
             <p className="text-xl">
               {isOwnProfile
                 ? currentUser?.following.length
-                : user?.following.length}
+                : baseInfo?.following.length}
             </p>
             <p className="text-[14px]">FOLLOWING</p>
           </div>
@@ -126,7 +143,7 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
             <p className="text-xl">
               {isOwnProfile
                 ? currentUser?.followers.length
-                : user?.followers.length}
+                : baseInfo?.followers.length}
             </p>
             <p className="text-[14px]">FOLLOWERS</p>
           </div>
