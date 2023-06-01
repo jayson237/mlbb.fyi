@@ -27,8 +27,6 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
   isOwnProfile,
 }) => {
   const params = useParams();
-
-  // let baseInfo = null
   const { data: baseInfo, mutate } = useSWR<{
     username: string;
     following: string[];
@@ -38,6 +36,7 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
   }>(`/api/user/basic-info?username=${params?.username}`, fetcher);
   // const baseInfo = useSWR("/api/user/basic-info", fetcher);
   // console.log(baseInfo.data);
+  
   const username = user?.username;
   const isCurrUserFollowing = currentUser?.following.includes(
     user?.id as string

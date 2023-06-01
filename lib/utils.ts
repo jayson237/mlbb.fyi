@@ -6,14 +6,6 @@ type PayloadType = {
   code?: string;
 };
 
-// export async function getData(url, payload) {
-//   try {
-
-//   } catch (error) {
-
-//   }
-// }
-
 export const fetcher = async (url: string) => {
   return await fetch(url, {
     method: "GET",
