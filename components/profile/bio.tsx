@@ -31,6 +31,7 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
 
   const [isFollowing, setIsFollowing] = useState(isCurrUserFollowing);
   const [loading, setLoading] = useState<boolean>(false);
+  const [buttonDisabled, setButtonDisabled] = useState<boolean>(false);
 
   return (
     <div className="flex-col">
@@ -49,10 +50,12 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
         {!isOwnProfile && !isFollowing && (
           <Button
             className="mx-auto mt-2 flex h-8 w-36 justify-center rounded-2xl px-10 py-1"
+            disabled={buttonDisabled}
             variant="gradiantNavySec"
             onClick={async (e) => {
               e.preventDefault();
               setLoading(true);
+              setButtonDisabled(true);
               const set = await fetch(`/profile/social/api/follow`, {
                 method: "POST",
                 body: JSON.stringify({ username }),
@@ -60,10 +63,12 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
               const msg = await set.json();
               if (!set.ok) {
                 setLoading(false);
+                setButtonDisabled(false);
                 toast.error(msg.message);
               } else {
                 setLoading(false);
                 setIsFollowing(true);
+                setButtonDisabled(false);
               }
             }}
           >
@@ -79,8 +84,10 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
         {!isOwnProfile && isFollowing && (
           <Button
             className="mx-auto mt-2 flex h-8 w-36 justify-center rounded-2xl px-10 py-1"
+            disabled={buttonDisabled}
             onClick={async (e) => {
               e.preventDefault();
+              setButtonDisabled(true);
               setLoading(true);
               const set = await fetch(`/profile/social/api/unfollow`, {
                 method: "POST",
@@ -89,10 +96,12 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
               const msg = await set.json();
               if (!set.ok) {
                 setLoading(false);
+                setButtonDisabled(false);
                 toast.error(msg.message);
               } else {
                 setLoading(false);
                 setIsFollowing(false);
+                setButtonDisabled(false);
               }
             }}
           >
