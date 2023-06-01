@@ -10,7 +10,11 @@ const HeroCard = ({ hero }: { hero: Hero }) => {
           // style={{
           //   backgroundImage: `url(${hero.img})`,
           // }}
-          src={hero.img.split("/image/upload")[0]+"/image/upload/q_3"+hero.img.split("/image/upload")[1]}
+          src={
+            hero.img.split("/image/upload")[0] +
+            "/image/upload/q_5" +
+            hero.img.split("/image/upload")[1]
+          }
           alt={hero.name}
           width={96}
           height={128}
