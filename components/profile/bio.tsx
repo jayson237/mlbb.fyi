@@ -12,6 +12,7 @@ import { User } from "@prisma/client";
 import useSWR from "swr";
 import { fetcher } from "@/lib/utils";
 import { useParams } from "next/navigation";
+import clsx from "clsx";
 
 interface ProfileBioProps {
   currentUser?: SafeUser | null;
@@ -36,7 +37,7 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
   }>(`/api/user/basic-info?username=${params?.username}`, fetcher);
   // const baseInfo = useSWR("/api/user/basic-info", fetcher);
   // console.log(baseInfo.data);
-  
+
   const username = user?.username;
   const isCurrUserFollowing = currentUser?.following.includes(
     user?.id as string
@@ -60,6 +61,10 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
         <h1 className="mt-3 text-center font-heading text-xl">
           {baseInfo?.username}
         </h1>
+        <p className="mb-4 px-2 text-center text-sm font-normal leading-4">
+          {user?.desc}
+        </p>
+
         {!isOwnProfile && !isFollowing && (
           <Button
             className="mx-auto mt-2 flex h-8 w-36 justify-center rounded-2xl px-10 py-1"
@@ -129,7 +134,7 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
             )}
           </Button>
         )}
-        <div className="mt-4 flex flex-row justify-between px-3 font-heading">
+        <div className="mt-6 flex flex-row justify-between px-3 font-heading">
           <div className="flex flex-col text-center">
             <p className="text-xl">
               {isOwnProfile
@@ -149,15 +154,27 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
         </div>
       </GradiantCard>
 
-      <GradiantCard className="mx-auto mt-5 h-fit w-[15rem] max-w-full font-medium md:mx-0">
+      <GradiantCard
+        className={clsx(
+          mlbbAcc
+            ? "mx-auto mt-5 h-fit w-[15rem] max-w-full font-normal md:mx-0"
+            : "hidden"
+        )}
+      >
         <div className="flex flex-col">
-          <p className={`${mlbbAcc ? "" : "hidden"}`}>
-            IGN: {mlbbAcc ? mlbbAcc.nickname : "-"}
+          <p className={`${mlbbAcc ? "flex items-center gap-2" : "hidden"}`}>
+            <Image src="/official.svg" alt="mlbb" width={20} height={20} />
+            {mlbbAcc ? (
+              <>
+                {mlbbAcc.nickname}
+                <span className="rounded-full bg-navy-600 px-2 text-sm font-semibold shadow-inner ">
+                  {mlbbAcc.accId}
+                </span>
+              </>
+            ) : (
+              ""
+            )}
           </p>
-          <p className={`${mlbbAcc ? "" : "hidden"}`}>
-            ID: {mlbbAcc ? mlbbAcc.accId : "-"}
-          </p>
-          <p className="my-2 text-sm font-normal">{user?.desc}</p>
         </div>
       </GradiantCard>
     </div>

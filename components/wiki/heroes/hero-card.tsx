@@ -12,7 +12,7 @@ const HeroCard = ({ hero }: { hero: Hero }) => {
           // }}
           src={
             hero.img.split("/image/upload")[0] +
-            "/image/upload/q_5" +
+            "/image/upload/f_auto/q_3" +
             hero.img.split("/image/upload")[1]
           }
           alt={hero.name}
