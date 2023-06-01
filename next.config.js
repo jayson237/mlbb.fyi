@@ -35,7 +35,15 @@ const nextConfig = {
         port: "",
         pathname: "/embed/avatars/**",
       },
+      {
+        protocol: "http",
+        hostname: "res.cloudinary.com",
+        port: "",
+        pathname: "/dvm5vog2j/image/upload/q_3/**/mlbb.fyi/hero/**",
+      },
     ],
+    unoptimized: true,
+    formats: ['image/webp'],
   },
 };
 
