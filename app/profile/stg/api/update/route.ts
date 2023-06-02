@@ -83,7 +83,7 @@ export async function POST(req: Request) {
   if (!set)
     return NextResponse.json(
       {
-        message: "Error setting username",
+        message: "Error setting new updates",
       },
       {
         status: 400,
