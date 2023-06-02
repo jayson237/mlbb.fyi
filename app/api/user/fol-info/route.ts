@@ -1,55 +1,50 @@
+// @ts-nocheck
 import prisma from "@/lib/prismadb";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   try {
-    const url = req.url as string;
-    const type = url.split("?type=")[1].split("&")[0];
-    const username = url.split("&username=")[1];
+    const { searchParams } = new URL(req.url);
+    const type = searchParams.get("type");
+    const username = searchParams.get("username");
 
+    console.log(username);
     if (type === "following") {
-      const data: {
+      let data: {
         name: string | undefined;
         username: string | undefined;
-        image: string | undefined;
       }[] = [];
       const user = await prisma.user.findFirst({
         where: {
-          username: username,
+          username,
         },
         select: {
           following: true,
         },
       });
+      console.log(user);
 
-      const followingIds = user?.following ?? [];
-
-      if (followingIds.length === 0) {
-        return NextResponse.json(data, { status: 200 });
+      for (const x of user?.following as string[]) {
+        await prisma.user
+          .findFirst({
+            where: {
+              id: x,
+            },
+            select: {
+              name: true,
+              username: true,
+              image: true,
+            },
+          })
+          .then((res) => {
+            // @ts-ignore
+            return data.push(res);
+          });
       }
-
-      const users = await prisma.user.findMany({
-        where: {
-          id: { in: followingIds },
-        },
-        select: {
-          name: true,
-          username: true,
-          image: true,
-        },
-      });
-
-      data.push(
-        ...users.map((user) => ({
-          name: user.name ?? undefined,
-          username: user.username ?? undefined,
-          image: user.image ?? undefined,
-        }))
-      );
-
+      console.log(data);
       return NextResponse.json(data, { status: 200 });
     } else if (type === "followers") {
-      const data: {
+      let data: {
         name: string | undefined;
         username: string | undefined;
         image: string | undefined;
@@ -63,31 +58,23 @@ export async function GET(req: Request) {
         },
       });
 
-      const followerIds = user?.followers ?? [];
-
-      if (followerIds.length === 0) {
-        return NextResponse.json(data, { status: 200 });
+      for (const x of user?.followers as string[]) {
+        await prisma.user
+          .findFirst({
+            where: {
+              id: x,
+            },
+            select: {
+              name: true,
+              username: true,
+              image: true,
+            },
+          })
+          .then((res) => {
+            // @ts-ignore
+            return data.push(res);
+          });
       }
-
-      const users = await prisma.user.findMany({
-        where: {
-          id: { in: followerIds },
-        },
-        select: {
-          name: true,
-          username: true,
-          image: true,
-        },
-      });
-
-      data.push(
-        ...users.map((user) => ({
-          name: user.name ?? undefined,
-          username: user.username ?? undefined,
-          image: user.image ?? undefined,
-        }))
-      );
-
       return NextResponse.json(data, { status: 200 });
     }
 
@@ -98,6 +85,7 @@ export async function GET(req: Request) {
     return NextResponse.json(
       {
         message: "User not found!",
+        error,
       },
       {
         status: 400,
