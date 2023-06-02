@@ -7,22 +7,17 @@ const HeroCard = ({ hero }: { hero: Hero }) => {
     <GradiantCard className="w-fit cursor-pointer p-1.5">
       <div className="relative h-32 w-24 overflow-hidden rounded-2xl">
         <Image
-          // style={{
-          //   backgroundImage: `url(${hero.img})`,
-          // }}
           src={
             hero.img.split("/image/upload")[0] +
-            "/image/upload/q_5" +
+            "/image/upload/f_auto/q_3" +
             hero.img.split("/image/upload")[1]
           }
           alt={hero.name}
           width={96}
           height={128}
-          // placeholder="blur"
           quality={1}
           className="absolute inset-0 w-full overflow-hidden  rounded-2xl bg-cover bg-top bg-no-repeat"
-          // loading="lazy"
-          priority={true}
+          loading="lazy"
         />
       </div>
       <div className="relative w-full">

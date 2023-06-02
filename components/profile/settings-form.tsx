@@ -24,18 +24,19 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
   const params = useSearchParams();
   const router = useRouter();
 
-  const [username, setUsername] = useState<string>(currentUser?.username || "");
-  const [description, setDescription] = useState<string>(
-    currentUser?.desc || ""
-  );
-  const [loading, setLoading] = useState<boolean>(false);
-  const [disable, setDisable] = useState<boolean>(false);
-  const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
-  const [characterCount, setCharacterCount] = useState<number>(
+  const [username, setUsername] = useState(currentUser?.username || "");
+  const [description, setDescription] = useState(currentUser?.desc || "");
+  const [link1, setLink1] = useState(currentUser?.links[0] || "");
+  const [link2, setLink2] = useState(currentUser?.links[1] || "");
+  const [link3, setLink3] = useState(currentUser?.links[2] || "");
+
+  const [loading, setLoading] = useState(false);
+  const [isInputFocused, setIsInputFocused] = useState(false);
+  const [characterCount, setCharacterCount] = useState(
     currentUser?.desc ? currentUser.desc.length : 0
   );
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
-  //console.log(currentUser);
   if (currentUser?.username && params?.get("ref") === "signin") {
     router.push("/explore");
     return null;
@@ -81,12 +82,14 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
           onSubmit={async (e) => {
             e.preventDefault();
             setLoading(true);
+            setButtonDisabled(true);
             const fields = {
               username: username,
               description: description,
+              links: [link1, link2, link3],
             };
 
-            const set = await fetch("/profile/stg/api/username", {
+            const set = await fetch("/profile/stg/api/update", {
               method: "POST",
               body: JSON.stringify(fields),
             });
@@ -94,6 +97,7 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
             if (!set.ok) {
               setLoading(false);
               toast.error(msg.message);
+              setButtonDisabled(false);
             } else {
               setLoading(false);
               toast.success(
@@ -123,6 +127,7 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
               disabled
             />
           </div>
+
           <div className="space-y-1">
             <Label htmlFor="username">Username</Label>
             <Input
@@ -143,9 +148,9 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
           </div>
 
           <div className="space-y-1">
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description">Description (Optional)</Label>
             <Input
-              type="desc"
+              type="text"
               placeholder="Description"
               onChange={(e) => {
                 const inputValue = e.target.value;
@@ -165,10 +170,47 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
             )}
           </div>
 
+          <Label htmlFor="social" className="mt-2">
+            Social Links (Optional)
+          </Label>
+          <div className="space-y-4">
+            <div>
+              <Input
+                type="url"
+                placeholder="Link to social profile"
+                onChange={(e) => setLink1(e.target.value)}
+                defaultValue={currentUser?.links[0] || ""}
+                name="link1"
+              />
+            </div>
+            <div>
+              <Input
+                type="url"
+                placeholder="Link to social profile"
+                onChange={(e) => setLink2(e.target.value)}
+                defaultValue={currentUser?.links[1] || ""}
+                name="link2"
+              />
+            </div>
+            <div>
+              <Input
+                type="url"
+                placeholder="Link to social profile"
+                onChange={(e) => setLink3(e.target.value)}
+                defaultValue={currentUser?.links[2] || ""}
+                name="link3"
+              />
+            </div>
+          </div>
+
           <Button
             disabled={
-              username === currentUser?.username &&
-              description === currentUser?.desc
+              (username === currentUser?.username &&
+                description === currentUser?.desc &&
+                link1 === currentUser?.links[0] &&
+                link2 === currentUser?.links[1] &&
+                link3 === currentUser?.links[2]) ||
+              buttonDisabled
             }
             className="mb-8 mt-1 rounded-full"
             variant="gradiantNavy"
