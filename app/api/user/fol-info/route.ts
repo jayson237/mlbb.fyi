@@ -34,12 +34,11 @@ export async function GET(req: Request) {
           },
         });
 
-        if (res !== null) {
-          const { name, username, image } = res;
+        if (res) {
           data.push({
-            name: name !== null ? name : undefined,
-            username: username !== null ? username : undefined,
-            image: image !== null ? image : undefined,
+            name: res.name ?? undefined,
+            username: res.username ?? undefined,
+            image: res.image ?? undefined,
           });
         }
       }
@@ -71,12 +70,11 @@ export async function GET(req: Request) {
           },
         });
 
-        if (res !== null) {
-          const { name, username, image } = res;
+        if (res) {
           data.push({
-            name: name !== null ? name : undefined,
-            username: username !== null ? username : undefined,
-            image: image !== null ? image : undefined,
+            name: res.name ?? undefined,
+            username: res.username ?? undefined,
+            image: res.image ?? undefined,
           });
         }
       }
