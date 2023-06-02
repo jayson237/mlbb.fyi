@@ -24,22 +24,19 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
   const params = useSearchParams();
   const router = useRouter();
 
-  const [username, setUsername] = useState<string>(currentUser?.username || "");
-  const [description, setDescription] = useState<string>(
-    currentUser?.desc || ""
-  );
-  const [link1, setLink1] = useState<string>(currentUser?.links[0] || "");
-  const [link2, setLink2] = useState<string>(currentUser?.links[1] || "");
-  const [link3, setLink3] = useState<string>(currentUser?.links[2] || "");
+  const [username, setUsername] = useState(currentUser?.username || "");
+  const [description, setDescription] = useState(currentUser?.desc || "");
+  const [link1, setLink1] = useState(currentUser?.links[0] || "");
+  const [link2, setLink2] = useState(currentUser?.links[1] || "");
+  const [link3, setLink3] = useState(currentUser?.links[2] || "");
 
-  const [loading, setLoading] = useState<boolean>(false);
-  const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
-  const [characterCount, setCharacterCount] = useState<number>(
+  const [loading, setLoading] = useState(false);
+  const [isInputFocused, setIsInputFocused] = useState(false);
+  const [characterCount, setCharacterCount] = useState(
     currentUser?.desc ? currentUser.desc.length : 0
   );
-  const [buttonDisabled, setButtonDisabled] = useState<boolean>(false);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
-  //console.log(currentUser);
   if (currentUser?.username && params?.get("ref") === "signin") {
     router.push("/explore");
     return null;
@@ -92,7 +89,7 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
               links: [link1, link2, link3],
             };
 
-            const set = await fetch("/profile/stg/api/username", {
+            const set = await fetch("/profile/stg/api/update", {
               method: "POST",
               body: JSON.stringify(fields),
             });
@@ -106,7 +103,7 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
               toast.success(
                 "Successfully updated profile, kindly wait before making any more updates"
               );
-              router.push(`/profile/${username}`);
+              router.push(`/profile/${username}/stats`);
             }
           }}
         >
@@ -151,7 +148,7 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
           </div>
 
           <div className="space-y-1">
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description">Description (Optional)</Label>
             <Input
               type="text"
               placeholder="Description"
@@ -174,7 +171,7 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
           </div>
 
           <Label htmlFor="social" className="mt-2">
-            Social Links
+            Social Links (Optional)
           </Label>
           <div className="space-y-4">
             <div>
