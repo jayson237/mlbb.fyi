@@ -13,7 +13,6 @@ export async function POST(req: Request) {
   }: { username: string; description: string; links: string[] } =
     await req.json();
   //console.log("username", username);
-  console.log(links);
 
   const findUsername = await prisma.user.findFirst({
     where: {

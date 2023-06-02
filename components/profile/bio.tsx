@@ -194,7 +194,6 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
                     className="flex items-center text-sm font-light"
                   >
                     <Link width={10} height={10} className="mr-2 shrink-0" />
-                    {/* Link icon */}
                     <a
                       href={user?.links[index]}
                       target="_blank"
