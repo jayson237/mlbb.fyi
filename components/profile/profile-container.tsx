@@ -71,7 +71,7 @@ const MainApp: React.FC<MainAppProps> = ({
                   className="h-8 rounded-full px-4 py-2"
                   variant="gradiantNavySec"
                 >
-                  <Link href="/profile/stg/bind" className="text-[12px]">
+                  <Link href="/profile/stg/bind" className="text-[10px]">
                     Bind account
                   </Link>
                 </Button>

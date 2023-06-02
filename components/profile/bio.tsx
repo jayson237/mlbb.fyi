@@ -13,6 +13,7 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/utils";
 import { useParams } from "next/navigation";
 import clsx from "clsx";
+import { Link } from "lucide-react";
 
 interface ProfileBioProps {
   currentUser?: SafeUser | null;
@@ -35,6 +36,7 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
     name: string;
     desc: string;
   }>(`/api/user/basic-info?username=${params?.username}`, fetcher);
+
   // const baseInfo = useSWR("/api/user/basic-info", fetcher);
   // console.log(baseInfo.data);
 
@@ -43,9 +45,21 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
     user?.id as string
   );
 
+  const noLinks = () => {
+    let bool = false;
+    if (
+      user?.links[0] === "" &&
+      user?.links[1] === "" &&
+      user?.links[2] === ""
+    ) {
+      bool = true;
+    }
+    return bool;
+  };
+
   const [isFollowing, setIsFollowing] = useState(isCurrUserFollowing);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [buttonDisabled, setButtonDisabled] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
   return (
     <div className="flex-col">
@@ -74,7 +88,7 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
               e.preventDefault();
               setLoading(true);
               setButtonDisabled(true);
-              const set = await fetch(`/profile/social/api/follow`, {
+              const set = await fetch(`/profile/[username]/api/follow`, {
                 method: "POST",
                 body: JSON.stringify({ username }),
               });
@@ -108,7 +122,7 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
               e.preventDefault();
               setButtonDisabled(true);
               setLoading(true);
-              const set = await fetch(`/profile/social/api/unfollow`, {
+              const set = await fetch(`/profile/[username]/api/unfollow`, {
                 method: "POST",
                 body: JSON.stringify({ username }),
               });
@@ -136,19 +150,11 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
         )}
         <div className="mt-6 flex flex-row justify-between px-3 font-heading">
           <div className="flex flex-col text-center">
-            <p className="text-xl">
-              {isOwnProfile
-                ? currentUser?.following.length
-                : baseInfo?.following.length}
-            </p>
+            <p className="text-xl">{user?.following.length}</p>
             <p className="text-[14px]">FOLLOWING</p>
           </div>
           <div className="flex flex-col text-center">
-            <p className="text-xl">
-              {isOwnProfile
-                ? currentUser?.followers.length
-                : baseInfo?.followers.length}
-            </p>
+            <p className="text-xl">{user?.followers.length}</p>
             <p className="text-[14px]">FOLLOWERS</p>
           </div>
         </div>
@@ -156,13 +162,17 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
 
       <GradiantCard
         className={clsx(
-          mlbbAcc
+          mlbbAcc || !noLinks()
             ? "mx-auto mt-5 h-fit w-[15rem] max-w-full font-normal md:mx-0"
             : "hidden"
         )}
       >
         <div className="flex flex-col">
-          <p className={`${mlbbAcc ? "flex items-center gap-2" : "hidden"}`}>
+          <p
+            className={clsx(
+              mlbbAcc ? "mb-2 flex items-center gap-2" : "hidden"
+            )}
+          >
             <Image src="/official.svg" alt="mlbb" width={20} height={20} />
             {mlbbAcc ? (
               <>
@@ -175,6 +185,28 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
               ""
             )}
           </p>
+          {user?.links &&
+            user.links.map((link, index) => {
+              if (link !== "") {
+                return (
+                  <div
+                    key={index}
+                    className="flex items-center text-sm font-light"
+                  >
+                    <Link width={10} height={10} className="mr-2 shrink-0" />
+                    <a
+                      href={user?.links[index]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="truncate"
+                    >
+                      {user?.links[index]}
+                    </a>
+                  </div>
+                );
+              }
+              return null;
+            })}
         </div>
       </GradiantCard>
     </div>
