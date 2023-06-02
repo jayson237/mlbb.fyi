@@ -8,7 +8,7 @@ export async function GET(req: Request) {
     const username = url.split("&username=")[1];
 
     if (type === "following") {
-      let data: {
+      const data: {
         name: string | undefined;
         username: string | undefined;
         image: string | undefined;
@@ -23,25 +23,29 @@ export async function GET(req: Request) {
       });
 
       for (const x of user?.following as string[]) {
-        await prisma.user
-          .findFirst({
-            where: {
-              id: x,
-            },
-            select: {
-              name: true,
-              username: true,
-              image: true,
-            },
-          })
-          .then((res) => {
-            // @ts-ignore
-            return data.push(res);
+        const res = await prisma.user.findFirst({
+          where: {
+            id: x,
+          },
+          select: {
+            name: true,
+            username: true,
+            image: true,
+          },
+        });
+
+        if (res !== null) {
+          const { name, username, image } = res;
+          data.push({
+            name: name !== null ? name : undefined,
+            username: username !== null ? username : undefined,
+            image: image !== null ? image : undefined,
           });
+        }
       }
       return NextResponse.json(data, { status: 200 });
     } else if (type === "followers") {
-      let data: {
+      const data: {
         name: string | undefined;
         username: string | undefined;
         image: string | undefined;
@@ -56,21 +60,25 @@ export async function GET(req: Request) {
       });
 
       for (const x of user?.followers as string[]) {
-        await prisma.user
-          .findFirst({
-            where: {
-              id: x,
-            },
-            select: {
-              name: true,
-              username: true,
-              image: true,
-            },
-          })
-          .then((res) => {
-            // @ts-ignore
-            return data.push(res);
+        const res = await prisma.user.findFirst({
+          where: {
+            id: x,
+          },
+          select: {
+            name: true,
+            username: true,
+            image: true,
+          },
+        });
+
+        if (res !== null) {
+          const { name, username, image } = res;
+          data.push({
+            name: name !== null ? name : undefined,
+            username: username !== null ? username : undefined,
+            image: image !== null ? image : undefined,
           });
+        }
       }
       return NextResponse.json(data, { status: 200 });
     }
