@@ -45,16 +45,12 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
     user?.id as string
   );
 
-  const noLinks = () => {
-    let bool = false;
-    if (
-      user?.links[0] === "" &&
-      user?.links[1] === "" &&
-      user?.links[2] === ""
-    ) {
-      bool = true;
+  const isLinksEmpty = () => {
+    let isEmpty = true;
+    if (user?.links) {
+      isEmpty = user.links.every((link) => link === "");
     }
-    return bool;
+    return isEmpty;
   };
 
   const [isFollowing, setIsFollowing] = useState(isCurrUserFollowing);
@@ -63,7 +59,6 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
 
   return (
     <div className="flex-col">
-      {/* Profile Head */}
       <GradiantCard className="mx-auto h-fit w-[15rem] max-w-full md:mx-0">
         <Image
           src={"/nana.jpg"}
@@ -88,10 +83,13 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
               e.preventDefault();
               setLoading(true);
               setButtonDisabled(true);
-              const set = await fetch(`/profile/[username]/api/follow`, {
-                method: "POST",
-                body: JSON.stringify({ username }),
-              });
+              const set = await fetch(
+                `/profile/${currentUser?.username}/api/follow`,
+                {
+                  method: "POST",
+                  body: JSON.stringify({ username }),
+                }
+              );
               const msg = await set.json();
               if (!set.ok) {
                 setLoading(false);
@@ -122,10 +120,13 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
               e.preventDefault();
               setButtonDisabled(true);
               setLoading(true);
-              const set = await fetch(`/profile/[username]/api/unfollow`, {
-                method: "POST",
-                body: JSON.stringify({ username }),
-              });
+              const set = await fetch(
+                `/profile/${currentUser?.username}/api/unfollow`,
+                {
+                  method: "POST",
+                  body: JSON.stringify({ username }),
+                }
+              );
               const msg = await set.json();
               if (!set.ok) {
                 setLoading(false);
@@ -150,11 +151,19 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
         )}
         <div className="mt-6 flex flex-row justify-between px-3 font-heading">
           <div className="flex flex-col text-center">
-            <p className="text-xl">{user?.following.length}</p>
+            <p className="text-xl">
+              {isOwnProfile
+                ? currentUser?.following.length
+                : baseInfo?.following.length}
+            </p>
             <p className="text-[14px]">FOLLOWING</p>
           </div>
           <div className="flex flex-col text-center">
-            <p className="text-xl">{user?.followers.length}</p>
+            <p className="text-xl">
+              {isOwnProfile
+                ? currentUser?.followers.length
+                : baseInfo?.followers.length}
+            </p>
             <p className="text-[14px]">FOLLOWERS</p>
           </div>
         </div>
@@ -162,7 +171,7 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
 
       <GradiantCard
         className={clsx(
-          mlbbAcc || !noLinks()
+          mlbbAcc || !isLinksEmpty()
             ? "mx-auto mt-5 h-fit w-[15rem] max-w-full font-normal md:mx-0"
             : "hidden"
         )}

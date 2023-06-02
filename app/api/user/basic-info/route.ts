@@ -45,7 +45,7 @@ export async function GET(req: Request) {
 
     if (!currentUser) {
       return NextResponse.json({
-        msg: "errs",
+        msg: "Error",
       });
     }
 
@@ -55,7 +55,7 @@ export async function GET(req: Request) {
   } catch (error) {
     return NextResponse.json(
       {
-        message: "User not found !",
+        message: "User not found!",
       },
       {
         status: 400,
