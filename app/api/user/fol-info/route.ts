@@ -13,36 +13,40 @@ export async function GET(req: Request) {
         username: string | undefined;
         image: string | undefined;
       }[] = [];
-      const user: { following?: string[]; followers?: string[] } | null =
-        await prisma.user.findFirst({
-          where: {
-            username: username,
-          },
-          select: {
-            following: true,
-          },
-        });
+      const user = await prisma.user.findFirst({
+        where: {
+          username: username,
+        },
+        select: {
+          following: true,
+        },
+      });
 
-      for (const x of user?.following ?? []) {
-        const res = await prisma.user.findFirst({
-          where: {
-            id: x,
-          },
-          select: {
-            name: true,
-            username: true,
-            image: true,
-          },
-        });
+      const followingIds = user?.following ?? [];
 
-        if (res) {
-          data.push({
-            name: res.name ?? undefined,
-            username: res.username ?? undefined,
-            image: res.image ?? undefined,
-          });
-        }
+      if (followingIds.length === 0) {
+        return NextResponse.json(data, { status: 200 });
       }
+
+      const users = await prisma.user.findMany({
+        where: {
+          id: { in: followingIds },
+        },
+        select: {
+          name: true,
+          username: true,
+          image: true,
+        },
+      });
+
+      data.push(
+        ...users.map((user) => ({
+          name: user.name ?? undefined,
+          username: user.username ?? undefined,
+          image: user.image ?? undefined,
+        }))
+      );
+
       return NextResponse.json(data, { status: 200 });
     } else if (type === "followers") {
       const data: {
@@ -50,36 +54,40 @@ export async function GET(req: Request) {
         username: string | undefined;
         image: string | undefined;
       }[] = [];
-      const user: { following?: string[]; followers?: string[] } | null =
-        await prisma.user.findFirst({
-          where: {
-            username: username,
-          },
-          select: {
-            followers: true,
-          },
-        });
+      const user = await prisma.user.findFirst({
+        where: {
+          username: username,
+        },
+        select: {
+          followers: true,
+        },
+      });
 
-      for (const x of user?.followers ?? []) {
-        const res = await prisma.user.findFirst({
-          where: {
-            id: x,
-          },
-          select: {
-            name: true,
-            username: true,
-            image: true,
-          },
-        });
+      const followerIds = user?.followers ?? [];
 
-        if (res) {
-          data.push({
-            name: res.name ?? undefined,
-            username: res.username ?? undefined,
-            image: res.image ?? undefined,
-          });
-        }
+      if (followerIds.length === 0) {
+        return NextResponse.json(data, { status: 200 });
       }
+
+      const users = await prisma.user.findMany({
+        where: {
+          id: { in: followerIds },
+        },
+        select: {
+          name: true,
+          username: true,
+          image: true,
+        },
+      });
+
+      data.push(
+        ...users.map((user) => ({
+          name: user.name ?? undefined,
+          username: user.username ?? undefined,
+          image: user.image ?? undefined,
+        }))
+      );
+
       return NextResponse.json(data, { status: 200 });
     }
 
