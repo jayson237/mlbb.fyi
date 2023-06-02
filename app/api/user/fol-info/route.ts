@@ -13,14 +13,15 @@ export async function GET(req: Request) {
         username: string | undefined;
         image: string | undefined;
       }[] = [];
-      const user = await prisma.user.findFirst({
-        where: {
-          username: username,
-        },
-        select: {
-          following: true,
-        },
-      });
+      const user: { following?: string[]; followers?: string[] } | null =
+        await prisma.user.findFirst({
+          where: {
+            username: username,
+          },
+          select: {
+            following: true,
+          },
+        });
 
       for (const x of user?.following ?? []) {
         const res = await prisma.user.findFirst({
@@ -49,14 +50,15 @@ export async function GET(req: Request) {
         username: string | undefined;
         image: string | undefined;
       }[] = [];
-      const user = await prisma.user.findFirst({
-        where: {
-          username: username,
-        },
-        select: {
-          followers: true,
-        },
-      });
+      const user: { following?: string[]; followers?: string[] } | null =
+        await prisma.user.findFirst({
+          where: {
+            username: username,
+          },
+          select: {
+            followers: true,
+          },
+        });
 
       for (const x of user?.followers ?? []) {
         const res = await prisma.user.findFirst({
