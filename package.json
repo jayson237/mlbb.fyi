@@ -60,13 +60,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/raymondtju/mlbb.git"
+    "url": "git+https://github.com/jayson237/mlbb.fyi.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/raymondtju/mlbb/issues"
+    "url": "https://github.com/jayson237/mlbb.fyi/issues"
   },
-  "homepage": "https://github.com/raymondtju/mlbb#readme"
+  "homepage": "https://github.com/jayson237/mlbb.fyi#readme"
 }
