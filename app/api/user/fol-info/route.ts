@@ -22,7 +22,7 @@ export async function GET(req: Request) {
         },
       });
 
-      for (const x of user?.following as string[]) {
+      for (const x of user?.following ?? []) {
         const res = await prisma.user.findFirst({
           where: {
             id: x,
@@ -58,7 +58,7 @@ export async function GET(req: Request) {
         },
       });
 
-      for (const x of user?.followers as string[]) {
+      for (const x of user?.followers ?? []) {
         const res = await prisma.user.findFirst({
           where: {
             id: x,
