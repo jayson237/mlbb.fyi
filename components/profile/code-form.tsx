@@ -93,7 +93,7 @@ const CodeForm: React.FC<CodeFormProps> = ({ currentUser }) => {
           } else {
             toast(bodyToast(res?.message));
             setLoadingSend(false);
-            router.push(`/profile/${currentUser?.username}/stats`);
+            router.push(`/profile/${currentUser?.username}`);
           }
         }}
         className="mx-auto mt-8 flex max-w-md flex-col gap-y-2"

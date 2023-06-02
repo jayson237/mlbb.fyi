@@ -103,7 +103,7 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
               toast.success(
                 "Successfully updated profile, kindly wait before making any more updates"
               );
-              router.push(`/profile/${username}/stats`);
+              router.push(`/profile/${username}`);
             }
           }}
         >
