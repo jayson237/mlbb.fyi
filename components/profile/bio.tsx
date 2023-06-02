@@ -151,19 +151,11 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
         )}
         <div className="mt-6 flex flex-row justify-between px-3 font-heading">
           <div className="flex flex-col text-center">
-            <p className="text-xl">
-              {isOwnProfile
-                ? currentUser?.following.length
-                : baseInfo?.following.length}
-            </p>
+            <p className="text-xl">{baseInfo?.following.length}</p>
             <p className="text-[14px]">FOLLOWING</p>
           </div>
           <div className="flex flex-col text-center">
-            <p className="text-xl">
-              {isOwnProfile
-                ? currentUser?.followers.length
-                : baseInfo?.followers.length}
-            </p>
+            <p className="text-xl">{baseInfo?.followers.length}</p>
             <p className="text-[14px]">FOLLOWERS</p>
           </div>
         </div>
