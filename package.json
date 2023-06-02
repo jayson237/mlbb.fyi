@@ -15,6 +15,7 @@
     "@next-auth/prisma-adapter": "^1.0.5",
     "@prisma/client": "^4.14.1",
     "@radix-ui/react-checkbox": "^1.0.3",
+    "@radix-ui/react-dialog": "^1.0.4",
     "@radix-ui/react-label": "^2.0.1",
     "@radix-ui/react-progress": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.3",
@@ -32,7 +33,6 @@
     "react": "^18.2.0",
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0",
-    "react-loader-spinner": "^5.3.4",
     "sonner": "^0.3.0",
     "swr": "^2.1.5",
     "tailwind-merge": "^1.11.0",
@@ -50,6 +50,7 @@
     "prettier-plugin-tailwindcss": "^0.2.7",
     "prisma": "^4.14.1",
     "tailwindcss": "^3.3.1",
+    "tailwindcss-animate": "^1.0.5",
     "typescript": "^5.0.4"
   },
   "description": "test",
@@ -59,13 +60,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jayson237/mlbb.fyi.git"
+    "url": "git+https://github.com/raymondtju/mlbb.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jayson237/mlbb.fyi/issues"
+    "url": "https://github.com/raymondtju/mlbb/issues"
   },
-  "homepage": "https://github.com/jayson237/mlbb.fyi#readme"
+  "homepage": "https://github.com/raymondtju/mlbb#readme"
 }
