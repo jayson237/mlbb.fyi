@@ -13,6 +13,7 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/utils";
 import { useParams } from "next/navigation";
 import clsx from "clsx";
+import { Link } from "lucide-react";
 
 interface ProfileBioProps {
   currentUser?: SafeUser | null;
@@ -156,13 +157,17 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
 
       <GradiantCard
         className={clsx(
-          mlbbAcc
+          mlbbAcc || currentUser?.links
             ? "mx-auto mt-5 h-fit w-[15rem] max-w-full font-normal md:mx-0"
             : "hidden"
         )}
       >
         <div className="flex flex-col">
-          <p className={`${mlbbAcc ? "flex items-center gap-2" : "hidden"}`}>
+          <p
+            className={clsx(
+              mlbbAcc ? "mb-2 flex items-center gap-2" : "hidden"
+            )}
+          >
             <Image src="/official.svg" alt="mlbb" width={20} height={20} />
             {mlbbAcc ? (
               <>
@@ -175,6 +180,29 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
               ""
             )}
           </p>
+          {user?.links &&
+            user.links.map((link, index) => {
+              if (link !== "") {
+                return (
+                  <div
+                    key={index}
+                    className="flex items-center text-sm font-light"
+                  >
+                    <Link width={10} height={10} className="mr-2 shrink-0" />
+                    {/* Link icon */}
+                    <a
+                      href={user?.links[index]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="truncate"
+                    >
+                      {user?.links[index]}
+                    </a>
+                  </div>
+                );
+              }
+              return null;
+            })}
         </div>
       </GradiantCard>
     </div>

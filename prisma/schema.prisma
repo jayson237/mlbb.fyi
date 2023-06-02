@@ -76,6 +76,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   followers     String[]  @db.ObjectId
   following     String[]  @db.ObjectId
+  links         String[]
 
   accounts Account[]
   mlbbaccs MlbbAcc[]
