@@ -80,7 +80,7 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
                 href={
                   menu.href === "/profile"
                     ? currentUser?.username
-                      ? `/profile/${currentUser?.username}/stats`
+                      ? `/profile/${currentUser?.username}`
                       : "/profile/stg"
                     : menu.href
                 }
