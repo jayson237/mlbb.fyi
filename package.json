@@ -26,6 +26,7 @@
     "class-variance-authority": "^0.5.1",
     "clsx": "^1.2.1",
     "eslint-config-next": "^13.4.0",
+    "lazysizes": "^5.3.2",
     "lucide-react": "^0.216.0",
     "next": "^13.4.0",
     "next-auth": "^4.21.1",
@@ -60,13 +61,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jayson237/mlbb.fyi.git"
+    "url": "git+https://github.com/raymondtju/mlbb.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jayson237/mlbb.fyi/issues"
+    "url": "https://github.com/raymondtju/mlbb/issues"
   },
-  "homepage": "https://github.com/jayson237/mlbb.fyi#readme"
+  "homepage": "https://github.com/raymondtju/mlbb#readme"
 }

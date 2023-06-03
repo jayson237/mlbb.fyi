@@ -15,7 +15,7 @@ const GradiantCard = ({
       className={cn(
         // "relative z-[1] h-fit w-full rounded-[20px] bg-gradient-to-b from-navy-800/80 to-black p-5",
         // "mask relative h-fit w-full rounded-3xl bg-black/20 p-5 backdrop-blur-2xl after:absolute after:inset-0 after:rounded-3xl after:bg-gradient-to-br after:from-navy-400/80 after:via-navy-400/10 after:to-navy-400/80 after:p-px",
-        "mask relative h-fit w-full rounded-3xl bg-black/20 p-5 backdrop-blur-2xl after:absolute after:inset-0 after:rounded-3xl after:bg-gradient-to-br after:from-navy-400/40 after:via-navy-400/5 after:to-navy-400/40 after:p-px",
+        "mask relative h-fit w-full rounded-xl bg-black/20 p-5 backdrop-blur-2xl after:absolute after:inset-0 after:rounded-xl after:bg-gradient-to-br after:from-navy-400/40 after:via-navy-400/5 after:to-navy-400/40 after:p-px",
         className
       )}
     >
