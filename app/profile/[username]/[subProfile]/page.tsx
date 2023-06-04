@@ -51,14 +51,6 @@ async function SubProfilePage({
   const profileUsername = params.username;
   const isExistingUser = await getUser(profileUsername);
 
-  if (!isExistingUser) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <p className="mb-48 text-2xl md:ml-3">Profile does not exist...</p>
-      </div>
-    );
-  }
-
   let isBoundProfile = await acc(profileUsername);
   let dataAcc;
   if (!isBoundProfile) {
