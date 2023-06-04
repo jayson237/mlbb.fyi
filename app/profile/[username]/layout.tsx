@@ -74,6 +74,13 @@ export default async function LayoutProfile({
   }
 
   const isOwnProfile = currentUser?.username === isExistingUser?.username;
+  if (!isExistingUser) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <p className="mb-48 text-2xl md:ml-3">Profile does not exist...</p>
+      </div>
+    );
+  }
 
   return (
     <main className="max-w-[1280px] xl:mx-auto">
