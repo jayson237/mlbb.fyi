@@ -60,9 +60,10 @@ export async function middleware(request: NextRequest) {
   if (path.split("/")[1] === "wiki") {
     return NextResponse.redirect(new URL("/wiki/heroes", request.url));
   }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/profile/settings", "/profile", "/wiki"],
+  matcher: ["/profile/stg", "/profile", "/wiki"],
 };

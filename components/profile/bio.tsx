@@ -317,6 +317,16 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
               })}
           </div>
         </GradiantCard>
+        {!mlbbAcc && isOwnProfile && (
+          <Button
+            className="mt-4 h-8 w-full rounded-lg px-[10px] py-2"
+            variant="gradiantNavySec"
+          >
+            <Link href="/profile/stg/bind" className="text-[12px]">
+              Bind account
+            </Link>
+          </Button>
+        )}
       </div>
     </>
   );

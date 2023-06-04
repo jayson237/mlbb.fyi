@@ -6,8 +6,6 @@ import { Hero } from "@prisma/client";
 import useHeroFilter from "@/lib/state/useHeroFilter";
 import HeroesFilter from "./heroes-filter";
 import HeroCard from "./hero-card";
-import Image from "next/image";
-import { GradiantCard } from "@/components/shared/gradiant-card";
 
 interface IHeroesContainer {
   heroes: Hero[] | null;
@@ -42,7 +40,7 @@ const HeroesContainer = ({ heroes }: IHeroesContainer) => {
                   <div key={hero.id}>
                     <HeroCard hero={hero} />
                     {/* <GradiantCard className="w-fit cursor-pointer p-1.5"> */}
-                      {/* <Image
+                    {/* <Image
                         src={
                           hero.img.split("/image/upload")[0] +
                             "/image/upload/c_fill,h_256,w_192,g_north" +
