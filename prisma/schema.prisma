@@ -17,7 +17,7 @@ type HerosDetails {
   offense        String
   durability     String
   difficulty     String
-  skill HerosDetailsSkill[]
+  skill          HerosDetailsSkill[]
 }
 
 type HerosDetailsSkill {
@@ -28,10 +28,10 @@ type HerosDetailsSkill {
 }
 
 model Hero {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  name   String @unique
-  img    String
-  heroId Int    @unique
+  id      String       @id @default(auto()) @map("_id") @db.ObjectId
+  name    String       @unique
+  img     String
+  heroId  Int          @unique
   details HerosDetails
 }
 
@@ -84,6 +84,8 @@ model User {
 
   posts    Post[]
   comments Comment[]
+
+  @@unique([id, username])
 }
 
 model Session {
@@ -109,16 +111,16 @@ model VerificationToken {
 }
 
 model Post {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  title        String
-  body         String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  userId       String   @db.ObjectId
-  favouriteIds String[] @db.ObjectId
-  image        String?
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  body      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String   @db.ObjectId
+  createdBy String
+  image     String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId, createdBy], references: [id, username], onDelete: Cascade)
 
   comments Comment[]
 }
