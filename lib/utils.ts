@@ -25,7 +25,7 @@ export async function sendVerificationCode(payload: PayloadType) {
       },
     }
   );
-  console.log(response);
+  // console.log(response);
   return response;
 }
 
@@ -50,7 +50,7 @@ export async function bindAcc(payload: PayloadType) {
       nickname: string;
     };
   } = await res.json();
-  console.log(response);
+  // console.log(response);
 
   // const response = await axios.post<{
   //   message: string;
