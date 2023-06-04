@@ -2,7 +2,7 @@ import getMlbbAcc from "@/lib/actions/getMlbbAcc";
 import getCurrentUser from "@/lib/actions/getCurrentUser";
 
 import prisma from "@/lib/prismadb";
-import { TabsContent } from "@radix-ui/react-tabs";
+import { TabsContent } from "@/components/shared/tabs";
 import Statistics from "@/components/profile/statistics";
 
 async function acc(username: string) {
@@ -75,7 +75,7 @@ async function SubProfilePage({
     >
       {params.subProfile === "statistics" ? (
         <div className="flex w-full flex-col gap-4">
-          {!isOwnProfile && (
+          {!isOwnProfile && !isBoundProfile && (
             <p className="pl-2 text-sm">
               This user&apos;s Mobile Legends account hasn&apos;t been bound yet
             </p>
