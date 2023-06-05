@@ -41,7 +41,7 @@ const HeroesContainer = ({ heroes }: IHeroesContainer) => {
                   <HeroCard
                     hero={hero}
                     onClick={() => {
-                      router.push(`/wiki/heroes/${hero.name.toLowerCase()}`);
+                      router.push(`/wiki/heroes/${hero.name}`);
                     }}
                   />
                 </div>
