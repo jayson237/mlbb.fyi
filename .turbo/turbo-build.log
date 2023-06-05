@@ -4,7 +4,6 @@
 
 info  - Loaded env from D:\Orbital23\mlbb.fyi\.env
 info  - Creating an optimized production build...
-<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (659kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
 warn  - Compiled with warnings
 
 ./node_modules/cloudinary/lib-es5/utils/index.js
@@ -12,7 +11,6 @@ Critical dependency: the request of a dependency is an expression
 
 Import trace for requested module:
 ./node_modules/cloudinary/lib-es5/utils/index.js
-./node_modules/cloudinary/lib-es5/utils/srcsetUtils.js
 ./node_modules/cloudinary/lib-es5/cloudinary.js
 ./node_modules/cloudinary/cloudinary.js
 ./app/profile/stg/api/cdn-sign/route.ts
@@ -20,28 +18,17 @@ Import trace for requested module:
 ./node_modules/cloudinary/lib/utils/index.js
 Critical dependency: the request of a dependency is an expression
 
-info  - Linting and checking validity of types...
 Import trace for requested module:
 ./node_modules/cloudinary/lib/utils/index.js
-./node_modules/cloudinary/lib/utils/srcsetUtils.js
+info  - Linting and checking validity of types...
 ./node_modules/cloudinary/lib/cloudinary.js
 ./node_modules/cloudinary/cloudinary.js
 ./app/profile/stg/api/cdn-sign/route.ts
 
-./node_modules/next/dist/server/web/spec-extension/image-response.js
-A Node.js API is used (process.turbopack at line: 14) which is not supported in the Edge Runtime.
-Learn more: https://nextjs.org/docs/api-reference/edge-runtime
-
-Import trace for requested module:
-./node_modules/next/dist/server/web/spec-extension/image-response.js
-./node_modules/next/server.js
-./node_modules/next-auth/next/middleware.js
-./node_modules/next-auth/middleware.js
-
 info  - Collecting page data...
 info  - Generating static pages (0/20)
 info  - Generating static pages (5/20)
-(node:18748) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
+(node:21460) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
 (Use `node --trace-warnings ...` to show where the warning was created)
 [next-auth][error][CLIENT_FETCH_ERROR] 
 https://next-auth.js.org/errors#client_fetch_error fetch failed {
@@ -56,7 +43,6 @@ https://next-auth.js.org/errors#client_fetch_error fetch failed {
   message: 'fetch failed'
 }
 warn  - Entire page /auth/signin deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /auth/signin
-info  - Generating static pages (10/20)
 [next-auth][error][CLIENT_FETCH_ERROR] 
 https://next-auth.js.org/errors#client_fetch_error fetch failed {
   error: {
@@ -69,13 +55,14 @@ https://next-auth.js.org/errors#client_fetch_error fetch failed {
   url: 'http://localhost:3010/api/auth/csrf',
   message: 'fetch failed'
 }
+info  - Generating static pages (10/20)
+info  - Generating static pages (15/20)
+warn  - Entire page /profile/stg deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /profile/stg
 
 warn  - metadata.metadataBase is not set for resolving social open graph or twitter images, fallbacks to "http://localhost:3000". See https://beta.nextjs.org/docs/api-reference/metadata#metadatabase
 
 
 
-info  - Generating static pages (15/20)
-warn  - Entire page /profile/stg deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /profile/stg
 info  - Generating static pages (20/20)
 info  - Finalizing page optimization...
 
