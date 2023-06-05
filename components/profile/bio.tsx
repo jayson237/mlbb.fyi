@@ -17,7 +17,7 @@ import { fetcher } from "@/lib/utils";
 import { GradiantCard } from "../shared/gradiant-card";
 import { Button } from "../shared/button";
 import LoadingDots from "../shared/icons/loading-dots";
-import FolDialog from "../folDialog";
+import FolDialog from "../fol-dialog";
 
 interface ProfileBioProps {
   currentUser?: SafeUser | null;
@@ -77,13 +77,25 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
     <>
       <div className="flex-col">
         <GradiantCard className="mx-auto h-fit w-[15rem] max-w-full md:mx-0">
-          <Image
-            src={user?.image || "/nana.jpg"}
-            alt=""
-            width={150}
-            height={150}
-            className="mx-auto rounded-full"
-          />
+          <div className="relative mx-auto h-[150px] w-[150px] overflow-hidden rounded-full">
+            <Image
+              src={
+                user?.image?.split("/image/upload/")[0] +
+                  "/image/upload/c_fill,h_150,w_150/" +
+                  user?.image?.split("/image/upload/")[1] || "/nana.jpg"
+              }
+              alt=""
+              width={150}
+              height={150}
+              className="mx-auto h-auto w-auto bg-contain bg-center"
+              placeholder="blur"
+              blurDataURL={
+                user?.image?.split("/image/upload/")[0] +
+                "/image/upload/e_blur:400,h_100,w_100/" +
+                user?.image?.split("/image/upload/")[1]
+              }
+            />
+          </div>
           <h1 className="mt-3 text-center font-heading text-xl">
             {baseInfo?.username}
           </h1>

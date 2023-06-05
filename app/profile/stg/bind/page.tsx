@@ -1,8 +1,8 @@
 import getCurrentUser from "@/lib/actions/getCurrentUser";
 import SyncForm from "@/components/profile/bind-form";
 import getMlbbAcc from "@/lib/actions/getMlbbAcc";
-import SignInPrompt from "@/components/SignInPrompt";
-import BoundedPrompt from "@/components/BoundedPrompt";
+import SignInPrompt from "@/components/signin-prompt";
+import BoundedPrompt from "@/components/bounded-prompt";
 
 export default async function AppBind() {
   const currentUser = await getCurrentUser();

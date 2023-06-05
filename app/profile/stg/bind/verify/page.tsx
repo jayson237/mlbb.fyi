@@ -2,8 +2,8 @@ import getCurrentUser from "@/lib/actions/getCurrentUser";
 import getMlbbAcc from "@/lib/actions/getMlbbAcc";
 
 import CodeForm from "@/components/profile/code-form";
-import BoundedPrompt from "@/components/BoundedPrompt";
-import SignInPrompt from "@/components/SignInPrompt";
+import BoundedPrompt from "@/components/bounded-prompt";
+import SignInPrompt from "@/components/signin-prompt";
 
 export default async function AppBindVerify() {
   const currentUser = await getCurrentUser();

@@ -1,15 +1,3 @@
-// "use client";
-
-// interface ClientProps {
-//   children: React.ReactNode;
-// }
-
-// const Client: React.FC<ClientProps> = ({ children }) => {
-//   return <>{children}</>;
-// };
-
-// export default Client;
-
 "use client";
 
 import React, { useState, useEffect } from "react";

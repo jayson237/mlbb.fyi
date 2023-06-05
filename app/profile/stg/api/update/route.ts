@@ -10,8 +10,10 @@ export async function POST(req: Request) {
     username,
     description,
     links,
-  }: { username: string; description: string; links: string[] } =
+    img,
+  }: { username: string; description: string; links: string[]; img: string } =
     await req.json();
+    console.log(img);
   //console.log("username", username);
 
   const findUsername = await prisma.user.findFirst({
@@ -77,6 +79,7 @@ export async function POST(req: Request) {
       username: username.toLowerCase(),
       desc: description,
       links: links,
+      image: img
     },
   });
 

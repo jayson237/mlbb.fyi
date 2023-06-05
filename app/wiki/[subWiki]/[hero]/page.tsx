@@ -20,7 +20,9 @@ export default async function HeroPage({
 }: {
   params: { subWiki: string; hero: string };
 }) {
-  const hero = decodeURIComponent(params.hero.replace(/\+/g, " "));
+  const decodedString = decodeURIComponent(params?.hero.replace(/\+/g, " "));
+
+  const hero = decodedString.replace(/\b\w/g, (c) => c.toUpperCase());
   const isExistingHero = await getHero(hero);
   if (params.subWiki !== "heroes" || !isExistingHero) {
     notFound();
