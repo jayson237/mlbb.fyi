@@ -1,3 +1,4 @@
+import HeroFyi from "@/components/wiki/heroes/hero-info";
 import prisma from "@/lib/prismadb";
 import { notFound } from "next/navigation";
 
@@ -24,5 +25,9 @@ export default async function HeroPage({
   if (params.subWiki !== "heroes" || !isExistingHero) {
     notFound();
   }
-  return <>udin</>;
+  return (
+    <>
+      <HeroFyi hero={isExistingHero}></HeroFyi>
+    </>
+  );
 }
