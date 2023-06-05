@@ -3,7 +3,6 @@ import { GradiantCard } from "@/components/shared/gradiant-card";
 import { Label } from "@/components/shared/label";
 import { HeroType } from "@/lib/const";
 import useHeroFilter from "@/lib/state/useHeroFilter";
-import { useEffect } from "react";
 
 const HeroesFilter = () => {
   const heroFilter = useHeroFilter();
@@ -31,7 +30,9 @@ const HeroesFilter = () => {
                   id={type.name}
                   onClick={() => addOrRemove(type.name)}
                 />
-                <Label htmlFor={type.name}>{type.name}</Label>
+                <Label htmlFor={type.name} className="mt-[1px]">
+                  {type.name}
+                </Label>
               </li>
             ))}
           </ul>
