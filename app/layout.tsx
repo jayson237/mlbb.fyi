@@ -31,9 +31,7 @@ export default async function RootLayout({
         <ToasterProvider />
         <Navbar currentUser={currentUser} />
         <div className="">
-          <div className="relative mx-auto max-w-[1080px] px-4 ">
-            {children}
-          </div>
+          <div className="relative mx-auto max-w-[1080px] px-4">{children}</div>
         </div>
         <Analytics />
       </body>

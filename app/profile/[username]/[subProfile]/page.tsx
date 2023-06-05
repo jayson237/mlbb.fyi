@@ -5,6 +5,7 @@ import isUserBound from "@/lib/actions/isUserBound";
 
 import { TabsContent } from "@/components/shared/tabs";
 import Statistics from "@/components/profile/statistics";
+import { notFound } from "next/navigation";
 
 async function SubProfilePage({
   params,
@@ -23,6 +24,14 @@ async function SubProfilePage({
     dataAcc = await getMlbbData(isBoundProfile.accId);
   }
   const isOwnProfile = currentUser?.username === isExistingUser?.username;
+
+  if (
+    params.subProfile !== "statistics" &&
+    params.subProfile !== "posts" &&
+    params.subProfile !== "starred"
+  ) {
+    notFound();
+  }
 
   return (
     <TabsContent
