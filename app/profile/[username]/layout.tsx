@@ -1,8 +1,8 @@
 import getCurrentUser from "@/lib/actions/getCurrentUser";
-import getMlbbAcc from "@/lib/actions/getMlbbAcc";
+import getUser from "@/lib/actions/getUser";
+import isUserBound from "@/lib/actions/isUserBound";
 
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prismadb";
 import Link from "next/link";
 import { Tabs, TabsList, TabsTrigger } from "@/components/shared/tabs";
 import ProfileBio from "@/components/profile/bio";
@@ -11,28 +11,6 @@ export const metadata = {
   title: "Profile - mlbb.fyi",
   description: "Your mlbb.fyi profile",
 };
-
-async function acc(username: string) {
-  try {
-    const get = await prisma.user.findFirst({
-      where: {
-        username,
-      },
-    });
-    const mlbbAcc = await getMlbbAcc(get?.email || "");
-    return mlbbAcc;
-  } catch (error) {
-    return null;
-  }
-}
-
-async function getUser(username: string) {
-  return await prisma.user.findFirst({
-    where: {
-      username,
-    },
-  });
-}
 
 const ProfileTabList = [
   {
@@ -68,7 +46,7 @@ export default async function LayoutProfile({
   const profileUsername = params.username;
   const isExistingUser = await getUser(profileUsername);
 
-  let isBoundProfile = await acc(profileUsername);
+  let isBoundProfile = await isUserBound(profileUsername);
   if (!isBoundProfile) {
     isBoundProfile = null;
   }

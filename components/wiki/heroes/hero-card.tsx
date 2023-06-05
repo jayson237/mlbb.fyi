@@ -1,12 +1,11 @@
 "use client";
 
 import { Hero } from "@prisma/client";
-import { GradiantCard } from "@/components/shared/gradiant-card";
 import Image from "next/image";
 
-const HeroCard = ({ hero }: { hero: Hero }) => {
+const HeroCard = ({ hero, onClick }: { hero: Hero; onClick: () => void }) => {
   return (
-    <div className="w-fit cursor-pointer p-1.5">
+    <div className="w-fit cursor-pointer p-1.5" onClick={onClick}>
       <div className="relative h-32 w-24 overflow-hidden rounded-lg">
         <Image
           src={

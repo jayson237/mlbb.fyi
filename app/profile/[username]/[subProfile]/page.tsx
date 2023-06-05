@@ -1,46 +1,10 @@
-import getMlbbAcc from "@/lib/actions/getMlbbAcc";
 import getCurrentUser from "@/lib/actions/getCurrentUser";
+import getUser from "@/lib/actions/getUser";
+import getMlbbData from "@/lib/actions/getMlbbData";
+import isUserBound from "@/lib/actions/isUserBound";
 
-import prisma from "@/lib/prismadb";
 import { TabsContent } from "@/components/shared/tabs";
 import Statistics from "@/components/profile/statistics";
-
-async function acc(username: string) {
-  try {
-    const get = await prisma.user.findFirst({
-      where: {
-        username,
-      },
-    });
-    const mlbbAcc = await getMlbbAcc(get?.email || "");
-    return mlbbAcc;
-  } catch (error) {
-    return null;
-  }
-}
-
-async function getDataAcc(accId: string | null) {
-  try {
-    const get = await fetch(`${process.env.BE_API_URL}/data?accId=${accId}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${process.env.BE_API_SECRET}`,
-      },
-    });
-    const res = await get.json();
-
-    return res;
-  } catch (error) {
-    return null;
-  }
-}
-async function getUser(username: string) {
-  return await prisma.user.findFirst({
-    where: {
-      username,
-    },
-  });
-}
 
 async function SubProfilePage({
   params,
@@ -51,12 +15,12 @@ async function SubProfilePage({
   const profileUsername = params.username;
   const isExistingUser = await getUser(profileUsername);
 
-  let isBoundProfile = await acc(profileUsername);
+  let isBoundProfile = await isUserBound(profileUsername);
   let dataAcc;
   if (!isBoundProfile) {
     isBoundProfile = null;
   } else {
-    dataAcc = await getDataAcc(isBoundProfile.accId);
+    dataAcc = await getMlbbData(isBoundProfile.accId);
   }
   const isOwnProfile = currentUser?.username === isExistingUser?.username;
 
