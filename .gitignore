@@ -42,3 +42,7 @@ next-env.d.ts
 #turborepo
 # + .turbo
 + .turbo
+
+#script
+res.json
+script.js
