@@ -35,6 +35,7 @@ model Hero {
   use     String
   win     String
   ban     String
+  role    String[]
   details HerosDetails
 }
 
