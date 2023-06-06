@@ -32,13 +32,32 @@ export default function HeroFyi({ hero }: { hero: Hero | null }) {
           <Image
             src={hero?.img || "/nana.jpg"}
             alt={hero?.name || ""}
-            width={2160}
-            height={3840}
+            width={96}
+            height={128}
             className="h-[200px] w-[112px] overflow-hidden rounded-lg bg-cover bg-top bg-no-repeat sm:h-[355px] sm:w-[200px]"
+            priority
           />
 
           <div className="flex flex-col">
-            <p className="font-heading text-xl md:text-3xl">{hero?.name}</p>
+            <div className="flex flex-row items-center gap-2">
+              <p className="font-heading text-xl md:text-3xl">{hero?.name}</p>
+              <Image
+                src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1686042255/mlbb.fyi/heroRole/${hero?.role[0]}.webp`}
+                alt={hero?.role[0] || ""}
+                width={25}
+                height={25}
+                className="mb-[5px] h-[25px] w-[25px]"
+              />
+              {hero?.role[1] && (
+                <Image
+                  src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1686042255/mlbb.fyi/heroRole/${hero?.role[1]}.webp`}
+                  alt={hero?.role[1] || ""}
+                  width={25}
+                  height={20}
+                  className="mb-[5px] h-[25px] w-[25px]"
+                />
+              )}
+            </div>
             <div className="flex flex-row">
               <Image
                 src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1685987710/mlbb.fyi/heroType/${hero?.details.heroType}.webp`}
@@ -47,10 +66,13 @@ export default function HeroFyi({ hero }: { hero: Hero | null }) {
                 height={20}
                 className="mr-2 h-[20px] w-[20px]"
               />
-              <p className="text-normal sm:text-md text-sm text-gray-500">
-                {hero?.details.heroType}
+              <p className="text-semibold sm:text-md text-sm text-gray-500">
+                {`${hero?.details.heroType} (${hero?.role[0]}${
+                  hero?.role[1] ? " - " + hero?.role[1] : ""
+                })`}
               </p>
             </div>
+
             {heroData.map((item, i) => (
               <div key={i} className="mt-2">
                 <div className="flex justify-between">
@@ -59,7 +81,7 @@ export default function HeroFyi({ hero }: { hero: Hero | null }) {
                 <Progress
                   value={item.value ? parseInt(item.value) : 0}
                   max={100}
-                  className="w-[85px] sm:w-[350px]"
+                  className="w-[150px] sm:w-[350px]"
                 />
               </div>
             ))}
