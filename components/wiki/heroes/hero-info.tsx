@@ -81,7 +81,7 @@ export default function HeroFyi({ hero }: { hero: Hero | null }) {
                 <Progress
                   value={item.value ? parseInt(item.value) : 0}
                   max={100}
-                  className="w-[150px] sm:w-[350px]"
+                  className="w-[150px] sm:w-[300px]"
                 />
               </div>
             ))}
