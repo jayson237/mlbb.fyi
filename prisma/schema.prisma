@@ -32,6 +32,9 @@ model Hero {
   name    String       @unique
   img     String
   heroId  Int          @unique
+  use     String
+  win     String
+  ban     String
   details HerosDetails
 }
 
