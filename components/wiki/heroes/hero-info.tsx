@@ -4,7 +4,6 @@ import { GradiantCard } from "@/components/shared/gradiant-card";
 import { Hero } from "@prisma/client";
 import { Progress } from "@/components/shared/progress";
 import Image from "next/image";
-import { parse } from "path";
 
 export default function HeroFyi({ hero }: { hero: Hero | null }) {
   const heroData = [
