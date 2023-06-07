@@ -12,6 +12,13 @@ datasource db {
 //   items Item[]
 // }
 
+model Emblem {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  desc String
+  img  String
+}
+
 model Spell {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
   name    String
@@ -30,6 +37,10 @@ model Item {
   category  String
   attribute String[]
   details   String[]
+}
+
+type Build {
+  items String[]
 }
 
 type HerosDetails {

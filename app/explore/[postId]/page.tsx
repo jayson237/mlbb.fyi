@@ -2,11 +2,10 @@ import getCurrentUser from "@/lib/actions/getCurrentUser";
 import Image from "next/image";
 import getUser from "@/lib/actions/getUser";
 import Link from "next/link";
-import { BsFillPencilFill } from "react-icons/bs";
-import { FaTrash } from "react-icons/fa";
 import FolDialog from "@/components/fol-dialog";
 import getCurrentPost from "@/lib/actions/getCurrentPost";
 import PostForm from "@/components/explore/post-form";
+import { Edit3, Trash2 } from "lucide-react";
 
 export default async function PostPage({
   params,
@@ -46,13 +45,10 @@ export default async function PostPage({
           </div>
           {currUser?.username === user?.username && (
             <div className="flex flex-row">
-              <FolDialog
-                title="Edit"
-                triggerChild={<BsFillPencilFill className="mr-5" />}
-              >
-                <PostForm currentUser={currUser} />
+              <FolDialog title="Edit" triggerChild={<Edit3 className="mr-5" />}>
+                Test
               </FolDialog>
-              <FaTrash />
+              <Trash2 />
             </div>
           )}
         </div>
