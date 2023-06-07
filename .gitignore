@@ -44,5 +44,5 @@ next-env.d.ts
 + .turbo
 
 #script
-res.json
 script.js
+updateDetails.js
