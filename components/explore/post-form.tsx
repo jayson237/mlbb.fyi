@@ -26,7 +26,7 @@ const PostForm: React.FC<newPost> = ({ currentUser }) => {
 
   return (
     <>
-      <h1 className="text-heading text-center text-3xl font-bold">
+      <h1 className="text-center font-heading text-3xl font-bold">
         Post New Topic
       </h1>
       <div className="mx-auto max-w-md">
@@ -50,7 +50,7 @@ const PostForm: React.FC<newPost> = ({ currentUser }) => {
               toast.error(msg.message);
             } else {
               setLoading(false);
-              toast.success("Successfully posted! Please refresh");
+              toast.success("Successfully posted! Please wait.");
               router.push(`/explore`);
             }
           }}

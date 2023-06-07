@@ -7,7 +7,7 @@ const PostButton = () => {
   const route = useRouter();
 
   const handleClick = () => {
-    route.push("/explore/stg");
+    route.push("/explore/stg/post");
   };
   return <Button onClick={handleClick}>Create a New Topic</Button>;
 };

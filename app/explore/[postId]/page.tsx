@@ -4,8 +4,9 @@ import getUser from "@/lib/actions/getUser";
 import Link from "next/link";
 import FolDialog from "@/components/fol-dialog";
 import getCurrentPost from "@/lib/actions/getCurrentPost";
-import PostForm from "@/components/explore/post-form";
 import { Edit3, Trash2 } from "lucide-react";
+import DelDialog from "@/components/explore/del-dialog";
+import DeleteButton from "@/components/explore/del-button";
 
 export default async function PostPage({
   params,
@@ -48,7 +49,12 @@ export default async function PostPage({
               <FolDialog title="Edit" triggerChild={<Edit3 className="mr-5" />}>
                 Test
               </FolDialog>
-              <Trash2 />
+              <DelDialog title="Delete" triggerChild={<Trash2 />}>
+                <p className="flex justify-center">
+                  Click the button below to confirm deletion
+                </p>
+                <DeleteButton postId={params.postId} />
+              </DelDialog>
             </div>
           )}
         </div>
