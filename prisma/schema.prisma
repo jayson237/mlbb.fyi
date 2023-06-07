@@ -8,25 +8,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// type Build {
-//   items Item[]
-// }
-
-model Emblem {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
-  desc String
-  img  String
+model Spell {
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  desc          String
+  img           String
+  cd            String
+  details       String[]
+  variant       String[]
+  heroDetails   HerosDetails @relation(fields: [heroDetailsId], references: [id])
+  heroDetailsId String       @db.ObjectId
 }
 
-model Spell {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  name    String
-  desc    String
-  img     String
-  cd      String
-  details String[]
-  variant String[]
+model Emblem {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  desc           String
+  img            String
+  talents        String[]
+  HerosDetails   HerosDetails @relation(fields: [herosDetailsId], references: [id])
+  herosDetailsId String       @db.ObjectId
 }
 
 model Item {
@@ -36,14 +37,20 @@ model Item {
   img       String
   category  String
   attribute String[]
-  details   String[]
+  details   String
+  build     Build    @relation(fields: [buildId], references: [id])
+  buildId   String   @db.ObjectId
 }
 
-type Build {
-  items String[]
+model Build {
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  Item          Item[]
+  heroDetails   HerosDetails @relation(fields: [heroDetailsId], references: [id])
+  heroDetailsId String       @db.ObjectId
 }
 
-type HerosDetails {
+model HerosDetails {
+  id             String              @id @default(auto()) @map("_id") @db.ObjectId
   heroType       String
   heroName       String
   coverPicture   String
@@ -52,8 +59,11 @@ type HerosDetails {
   offense        String
   durability     String
   difficulty     String
-  // builds      Build[]
+  spells         Spell[]
+  emblems        Emblem[]
+  builds         Build[]
   skill          HerosDetailsSkill[]
+  Hero           Hero[]
 }
 
 type HerosDetailsSkill {
@@ -64,15 +74,16 @@ type HerosDetailsSkill {
 }
 
 model Hero {
-  id      String       @id @default(auto()) @map("_id") @db.ObjectId
-  name    String       @unique
-  img     String
-  heroId  Int          @unique
-  use     String
-  win     String
-  ban     String
-  role    String[]
-  details HerosDetails
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  name           String       @unique
+  img            String
+  heroId         Int          @unique
+  use            String
+  win            String
+  ban            String
+  role           String[]
+  details        HerosDetails @relation(fields: [herosDetailsId], references: [id])
+  herosDetailsId String       @db.ObjectId
 }
 
 model MlbbAcc {
