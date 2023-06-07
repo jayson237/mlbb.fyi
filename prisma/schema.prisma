@@ -8,27 +8,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Spell {
-  id            String       @id @default(auto()) @map("_id") @db.ObjectId
-  name          String
-  desc          String
-  img           String
-  cd            String
-  details       String[]
-  variant       String[]
-  heroDetails   HerosDetails @relation(fields: [heroDetailsId], references: [id])
-  heroDetailsId String       @db.ObjectId
-}
+// model Spell {
+//   id            String       @id @default(auto()) @map("_id") @db.ObjectId
+//   name          String
+//   desc          String
+//   img           String
+//   cd            String
+//   details       String[]
+//   variant       String[]
+//   heroDetails   HerosDetails @relation(fields: [heroDetailsId], references: [id])
+//   heroDetailsId String       @db.ObjectId
+// }
 
-model Emblem {
-  id             String       @id @default(auto()) @map("_id") @db.ObjectId
-  name           String
-  desc           String
-  img            String
-  talents        String[]
-  HerosDetails   HerosDetails @relation(fields: [herosDetailsId], references: [id])
-  herosDetailsId String       @db.ObjectId
-}
+// model Emblem {
+//   id             String       @id @default(auto()) @map("_id") @db.ObjectId
+//   name           String
+//   desc           String
+//   img            String
+//   talents        String[]
+//   HerosDetails   HerosDetails @relation(fields: [herosDetailsId], references: [id])
+//   herosDetailsId String       @db.ObjectId
+// }
 
 model Item {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -59,8 +59,8 @@ model HerosDetails {
   offense        String
   durability     String
   difficulty     String
-  spells         Spell[]
-  emblems        Emblem[]
+  // spells         Spell[]
+  // emblems        Emblem[]
   builds         Build[]
   skill          HerosDetailsSkill[]
   Hero           Hero[]
