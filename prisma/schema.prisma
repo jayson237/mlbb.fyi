@@ -8,6 +8,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// type Build {
+//   items Item[]
+// }
+
+model Item {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  desc      String
+  img       String
+  category  String
+  attribute String[]
+  details   String[]
+}
+
 type HerosDetails {
   heroType       String
   heroName       String
@@ -17,6 +31,7 @@ type HerosDetails {
   offense        String
   durability     String
   difficulty     String
+  // builds         Build[]
   skill          HerosDetailsSkill[]
 }
 
