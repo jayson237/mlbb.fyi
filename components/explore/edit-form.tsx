@@ -14,7 +14,7 @@ interface newPost {
   currentUser?: SafeUser | null;
 }
 
-const PostForm: React.FC<newPost> = ({ currentUser }) => {
+const EditForm: React.FC<newPost> = ({ currentUser }) => {
   const router = useRouter();
 
   const [title, setTitle] = useState<string>("");
@@ -113,4 +113,4 @@ const PostForm: React.FC<newPost> = ({ currentUser }) => {
   );
 };
 
-export default PostForm;
+export default EditForm;

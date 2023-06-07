@@ -13,7 +13,7 @@ async function ExplorePage() {
         <div>Search Bar PlaceHolder </div>
         {currentUser && <PostButton />}
       </div>
-      <div>{posts && <PostList items={posts} />}</div>
+      <div>{posts && <PostList posts={posts} />}</div>
     </>
   );
 }

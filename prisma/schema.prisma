@@ -12,6 +12,11 @@ datasource db {
 //   items Item[]
 // }
 
+model Spell {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+}
+
 model Item {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
