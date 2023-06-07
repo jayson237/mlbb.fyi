@@ -20,16 +20,6 @@ model Spell {
   heroDetailsId String       @db.ObjectId
 }
 
-model Emblem {
-  id             String       @id @default(auto()) @map("_id") @db.ObjectId
-  name           String
-  desc           String
-  img            String
-  talents        String[]
-  HerosDetails   HerosDetails @relation(fields: [herosDetailsId], references: [id])
-  herosDetailsId String       @db.ObjectId
-}
-
 model Item {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
@@ -60,7 +50,6 @@ model HerosDetails {
   durability     String
   difficulty     String
   spells         Spell[]
-  emblems        Emblem[]
   builds         Build[]
   skill          HerosDetailsSkill[]
   Hero           Hero[]
