@@ -39,14 +39,14 @@ datasource db {
 //   heroDetailsId String       @db.ObjectId
 // }
 
-type HerosDetailsSkill {
+type HeroDetailsSkills {
   name        String
   icon        String
   description String
   tips        String
 }
 
-model HerosDetails {
+model HeroDetails {
   id             String              @id @default(auto()) @map("_id") @db.ObjectId
   heroId         String              @unique @db.ObjectId
   heroType       String
@@ -57,20 +57,20 @@ model HerosDetails {
   offense        String
   durability     String
   difficulty     String
-  skill          HerosDetailsSkill[]
+  skill          HeroDetailsSkills[]
   hero           Hero                @relation(fields: [heroId], references: [id])
 }
 
 model Hero {
-  id      String        @id @default(auto()) @map("_id") @db.ObjectId
-  name    String        @unique
+  id      String       @id @default(auto()) @map("_id") @db.ObjectId
+  name    String       @unique
   img     String
-  heroId  Int           @unique
+  heroId  Int          @unique
   use     String
   win     String
   ban     String
   role    String[]
-  details HerosDetails?
+  details HeroDetails?
 }
 
 model MlbbAcc {

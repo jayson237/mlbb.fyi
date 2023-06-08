@@ -1,33 +1,27 @@
 "use client";
 
 import { GradiantCard } from "@/components/shared/gradiant-card";
-import { Hero, HerosDetails } from "@prisma/client";
+import { Hero } from "@prisma/client";
 import { Progress } from "@/components/shared/progress";
 import Image from "next/image";
 
-export default function HeroFyi({
-  heroData,
-  hero,
-}: {
-  heroData: HerosDetails | null;
-  hero: Hero | null;
-}) {
+export default function HeroFyi({ hero }: { hero: Hero | null }) {
   const data = [
     {
       name: "Ability",
-      value: heroData?.ability,
+      value: hero?.details.ability,
     },
     {
       name: "Offense",
-      value: heroData?.offense,
+      value: hero?.details.offense,
     },
     {
       name: "Durability",
-      value: heroData?.durability,
+      value: hero?.details.durability,
     },
     {
       name: "Difficulty",
-      value: heroData?.difficulty,
+      value: hero?.details.difficulty,
     },
   ];
   return (
@@ -65,14 +59,14 @@ export default function HeroFyi({
             </div>
             <div className="flex flex-row items-center">
               <Image
-                src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1685987710/mlbb.fyi/heroType/${heroData?.heroType}.webp`}
-                alt={heroData?.heroType || ""}
+                src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1685987710/mlbb.fyi/heroType/${hero?.details.heroType}.webp`}
+                alt={hero?.details.heroType || ""}
                 width={20}
                 height={20}
                 className="mr-2 h-[20px] w-[20px]"
               />
               <p className="text-semibold text-[12px] text-gray-500 sm:text-sm">
-                {`${heroData?.heroType} (${hero?.role[0]}${
+                {`${hero?.details.heroType} (${hero?.role[0]}${
                   hero?.role[1] ? " - " + hero?.role[1] : ""
                 })`}
               </p>
