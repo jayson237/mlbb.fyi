@@ -7,26 +7,24 @@ import { Progress } from "@/components/shared/progress";
 import Image from "next/image";
 
 export default function HeroFyi({ hero }: { hero: Hero | null }) {
+  // @ts-ignore
+  const heroDetails = hero?.details;
   const data = [
     {
       name: "Ability",
-      // @ts-ignore
-      value: hero?.details.ability,
+      value: heroDetails.ability,
     },
     {
       name: "Offense",
-      // @ts-ignore
-      value: hero?.details.offense,
+      value: heroDetails.offense,
     },
     {
       name: "Durability",
-      // @ts-ignore
-      value: hero?.details.durability,
+      value: heroDetails.durability,
     },
     {
       name: "Difficulty",
-      // @ts-ignore
-      value: hero?.details.difficulty,
+      value: heroDetails.difficulty,
     },
   ];
   return (
@@ -45,8 +43,7 @@ export default function HeroFyi({ hero }: { hero: Hero | null }) {
           <div className="flex flex-col gap-x-4 sm:gap-x-8">
             <div className="flex flex-row items-center gap-2">
               <p className="font-heading text-xl md:text-3xl">
-                {/* @ts-ignore */}
-                {hero?.details.heroName}
+                {heroDetails.heroName}
               </p>
               <Image
                 src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1686042255/mlbb.fyi/heroRole/${hero?.role[0]}.webp`}
@@ -67,17 +64,14 @@ export default function HeroFyi({ hero }: { hero: Hero | null }) {
             </div>
             <div className="flex flex-row items-center">
               <Image
-                /* @ts-ignore */
-                src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1685987710/mlbb.fyi/heroType/${hero?.details.heroType}.webp`}
-                /* @ts-ignore */
-                alt={hero?.details.heroType || ""}
+                src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1685987710/mlbb.fyi/heroType/${heroDetails.heroType}.webp`}
+                alt={heroDetails.heroType || ""}
                 width={20}
                 height={20}
                 className="mr-2 h-[20px] w-[20px]"
               />
               <p className="text-semibold text-[12px] text-gray-500 sm:text-sm">
-                {/* @ts-ignore */}
-                {`${hero?.details.heroType} (${hero?.role[0]}${
+                {`${heroDetails.heroType} (${hero?.role[0]}${
                   hero?.role[1] ? " - " + hero?.role[1] : ""
                 })`}
               </p>
