@@ -34,7 +34,10 @@ export default async function HeroPage({
 
   return (
     <>
-      <HeroFyi hero={isExistingHero}></HeroFyi>
+      <HeroFyi
+        hero={isExistingHero}
+        heroDetails={isExistingHero.details}
+      ></HeroFyi>
     </>
   );
 }
