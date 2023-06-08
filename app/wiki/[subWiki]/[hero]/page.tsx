@@ -36,7 +36,7 @@ export default async function HeroPage({
     <>
       <HeroFyi
         hero={isExistingHero}
-        heroDetails={isExistingHero.details}
+        // heroDetails={isExistingHero.details}
       ></HeroFyi>
     </>
   );

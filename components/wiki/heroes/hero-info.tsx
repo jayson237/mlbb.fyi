@@ -1,33 +1,32 @@
 "use client";
+// @ts-nocheck
 
 import { GradiantCard } from "@/components/shared/gradiant-card";
-import { Hero, HeroDetails } from "@prisma/client";
+import { Hero } from "@prisma/client";
 import { Progress } from "@/components/shared/progress";
 import Image from "next/image";
 
-export default function HeroFyi({
-  hero,
-  heroDetails,
-}: {
-  hero: Hero | null;
-  heroDetails: HeroDetails | null;
-}) {
+export default function HeroFyi({ hero }: { hero: Hero | null }) {
   const data = [
     {
       name: "Ability",
-      value: heroDetails?.ability,
+      // @ts-ignore
+      value: hero?.details.ability,
     },
     {
       name: "Offense",
-      value: heroDetails?.offense,
+      // @ts-ignore
+      value: hero?.details.offense,
     },
     {
       name: "Durability",
-      value: heroDetails?.durability,
+      // @ts-ignore
+      value: hero?.details.durability,
     },
     {
       name: "Difficulty",
-      value: heroDetails?.difficulty,
+      // @ts-ignore
+      value: hero?.details.difficulty,
     },
   ];
   return (
@@ -46,7 +45,8 @@ export default function HeroFyi({
           <div className="flex flex-col gap-x-4 sm:gap-x-8">
             <div className="flex flex-row items-center gap-2">
               <p className="font-heading text-xl md:text-3xl">
-                {heroDetails?.heroName}
+                {/* @ts-ignore */}
+                {hero?.details.heroName}
               </p>
               <Image
                 src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1686042255/mlbb.fyi/heroRole/${hero?.role[0]}.webp`}
@@ -67,14 +67,17 @@ export default function HeroFyi({
             </div>
             <div className="flex flex-row items-center">
               <Image
-                src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1685987710/mlbb.fyi/heroType/${heroDetails?.heroType}.webp`}
-                alt={heroDetails?.heroType || ""}
+                /* @ts-ignore */
+                src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1685987710/mlbb.fyi/heroType/${hero?.details.heroType}.webp`}
+                /* @ts-ignore */
+                alt={hero?.details.heroType || ""}
                 width={20}
                 height={20}
                 className="mr-2 h-[20px] w-[20px]"
               />
               <p className="text-semibold text-[12px] text-gray-500 sm:text-sm">
-                {`${heroDetails?.heroType} (${hero?.role[0]}${
+                {/* @ts-ignore */}
+                {`${hero?.details.heroType} (${hero?.role[0]}${
                   hero?.role[1] ? " - " + hero?.role[1] : ""
                 })`}
               </p>
