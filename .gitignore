@@ -42,7 +42,3 @@ next-env.d.ts
 #turborepo
 # + .turbo
 + .turbo
-
-#script
-script.js
-updateDetails.js

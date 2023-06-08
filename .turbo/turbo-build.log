@@ -4,6 +4,7 @@
 
 info  - Loaded env from D:\Orbital23\mlbb.fyi\.env
 info  - Creating an optimized production build...
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (659kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
 warn  - Compiled with warnings
 
 ./node_modules/cloudinary/lib-es5/utils/index.js
@@ -11,6 +12,7 @@ Critical dependency: the request of a dependency is an expression
 
 Import trace for requested module:
 ./node_modules/cloudinary/lib-es5/utils/index.js
+./node_modules/cloudinary/lib-es5/utils/srcsetUtils.js
 ./node_modules/cloudinary/lib-es5/cloudinary.js
 ./node_modules/cloudinary/cloudinary.js
 ./app/profile/stg/api/cdn-sign/route.ts
@@ -20,16 +22,27 @@ Critical dependency: the request of a dependency is an expression
 
 Import trace for requested module:
 ./node_modules/cloudinary/lib/utils/index.js
+./node_modules/cloudinary/lib/utils/srcsetUtils.js
 ./node_modules/cloudinary/lib/cloudinary.js
 ./node_modules/cloudinary/cloudinary.js
 ./app/profile/stg/api/cdn-sign/route.ts
 
+./node_modules/next/dist/server/web/spec-extension/image-response.js
+A Node.js API is used (process.turbopack at line: 14) which is not supported in the Edge Runtime.
+Learn more: https://nextjs.org/docs/api-reference/edge-runtime
+
+Import trace for requested module:
+./node_modules/next/dist/server/web/spec-extension/image-response.js
+./node_modules/next/server.js
 info  - Linting and checking validity of types...
+./node_modules/next-auth/next/middleware.js
+./node_modules/next-auth/middleware.js
+
 info  - Collecting page data...
 info  - Generating static pages (0/21)
 info  - Generating static pages (5/21)
 info  - Generating static pages (10/21)
-(node:17476) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
+(node:18604) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
 (Use `node --trace-warnings ...` to show where the warning was created)
 [next-auth][error][CLIENT_FETCH_ERROR] 
 https://next-auth.js.org/errors#client_fetch_error fetch failed {
@@ -57,8 +70,8 @@ https://next-auth.js.org/errors#client_fetch_error fetch failed {
   message: 'fetch failed'
 }
 
-warn  - metadata.metadataBase is not set for resolving social open graph or twitter images, fallbacks to "http://localhost:3000". See https://beta.nextjs.org/docs/api-reference/metadata#metadatabase
 
+warn  - metadata.metadataBase is not set for resolving social open graph or twitter images, fallbacks to "http://localhost:3000". See https://beta.nextjs.org/docs/api-reference/metadata#metadatabase
 
 
 info  - Generating static pages (15/21)
@@ -98,15 +111,15 @@ Route (app)                                Size     First Load JS
   ├ chunks/139-acfc4b32a423a0ef.js         24.4 kB
   ├ chunks/2443530c-c2f05af95e964045.js    50.5 kB
   ├ chunks/main-app-ab37dec774e15ec4.js    214 B
-  └ chunks/webpack-3273a155f6dc890f.js     1.8 kB
+  └ chunks/webpack-3c8f95a41271f8f7.js     1.8 kB
 
 Route (pages)                              Size     First Load JS
 ┌ ○ /404                                   178 B          86.2 kB
-└ λ /api/auth/[...nextauth]                0 B              86 kB
-+ First Load JS shared by all              86 kB
+└ λ /api/auth/[...nextauth]                0 B            86.1 kB
++ First Load JS shared by all              86.1 kB
   ├ chunks/main-5bcbc6d559e01f11.js        84.1 kB
   ├ chunks/pages/_app-c544d6df833bfd4a.js  192 B
-  └ chunks/webpack-3273a155f6dc890f.js     1.8 kB
+  └ chunks/webpack-3c8f95a41271f8f7.js     1.8 kB
 
 ƒ Middleware                               214 kB
 
