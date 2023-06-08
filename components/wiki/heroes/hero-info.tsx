@@ -9,6 +9,10 @@ import Image from "next/image";
 export default function HeroFyi({ hero }: { hero: Hero | null }) {
   // @ts-ignore
   const heroDetails = hero?.details;
+  const heroSkills = heroDetails?.skill;
+  const heroEmblems = heroDetails?.emblems;
+  const heroSpells = heroDetails?.spells;
+  const heroBuilds = heroDetails?.builds;
   const data = [
     {
       name: "Ability",

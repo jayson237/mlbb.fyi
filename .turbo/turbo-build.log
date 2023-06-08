@@ -28,9 +28,9 @@ info  - Linting and checking validity of types...
 info  - Collecting page data...
 info  - Generating static pages (0/21)
 info  - Generating static pages (5/21)
-(node:11392) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
-(Use `node --trace-warnings ...` to show where the warning was created)
 info  - Generating static pages (10/21)
+(node:12804) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
 [next-auth][error][CLIENT_FETCH_ERROR] 
 https://next-auth.js.org/errors#client_fetch_error fetch failed {
   error: {
@@ -93,7 +93,7 @@ Route (app)                                Size     First Load JS
 ├ λ /profile/stg/bind/verify               2.18 kB        98.6 kB
 ├ λ /wiki                                  145 B          77.1 kB
 ├ λ /wiki/[subWiki]                        5.31 kB        99.3 kB
-└ λ /wiki/[subWiki]/[hero]                 3.68 kB        93.1 kB
+└ λ /wiki/[subWiki]/[hero]                 3.71 kB        93.1 kB
 + First Load JS shared by all              77 kB
   ├ chunks/139-acfc4b32a423a0ef.js         24.4 kB
   ├ chunks/2443530c-c2f05af95e964045.js    50.5 kB
