@@ -66,7 +66,7 @@ export default function HeroFyi({ hero }: { hero: Hero | null }) {
                 />
               )}
             </div>
-            <div className="flex flex-row items-center">
+            <div className="mb-1 flex flex-row items-center">
               <Image
                 src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1685987710/mlbb.fyi/heroType/${heroDetails.heroType}.webp`}
                 alt={heroDetails.heroType || ""}
@@ -81,7 +81,7 @@ export default function HeroFyi({ hero }: { hero: Hero | null }) {
               </p>
             </div>
 
-            <div className="my-3 flex flex-row gap-4 sm:my-4  sm:gap-8">
+            <div className="my-3 flex flex-row gap-4   sm:gap-8">
               <div className="flex flex-col">
                 <p className="font-heading text-[12px] sm:text-[16px]">
                   Winrate
