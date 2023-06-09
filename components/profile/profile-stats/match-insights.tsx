@@ -1,7 +1,6 @@
 "use client";
 
 import { GradiantCard } from "@/components/shared/gradiant-card";
-import { match } from "assert";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 
 interface MatchInsightsProps {

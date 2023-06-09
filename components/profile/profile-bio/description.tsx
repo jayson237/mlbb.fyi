@@ -1,11 +1,13 @@
 "use client";
 
-import { User } from "@prisma/client";
-import { MlbbAcc } from "@prisma/client";
+import { LinkIcon } from "lucide-react";
 import clsx from "clsx";
 import Image from "next/image";
+
+import { User } from "@prisma/client";
+import { MlbbAcc } from "@prisma/client";
+
 import { GradiantCard } from "@/components/shared/gradiant-card";
-import { LinkIcon } from "lucide-react";
 
 interface ProfileDescProps {
   user: User | null;

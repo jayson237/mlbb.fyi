@@ -1,20 +1,20 @@
 "use client";
 
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import Image from "next/image";
 import { toast } from "sonner";
+import { useCallback, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { CheckCircle, XCircle } from "lucide-react";
+import { FileRejection, useDropzone } from "react-dropzone";
+import Image from "next/image";
 
 import { SafeUser } from "@/types";
 import { Input } from "../shared/input";
 import { Button } from "../shared/button";
 import { Label } from "../shared/label";
 import LoadingDots from "../shared/icons/loading-dots";
-import { CheckCircle, XCircle } from "lucide-react";
 import { MlbbAcc } from "@prisma/client";
 import { cn } from "@/lib/utils";
-import { useSearchParams } from "next/navigation";
-import { Accept, FileRejection, useDropzone } from "react-dropzone";
 
 interface ISettingsForm {
   currentUser?: SafeUser | null;

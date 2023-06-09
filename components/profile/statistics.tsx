@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 
 import InfoCard from "./profile-stats/player-info";
 import MatchInsights from "./profile-stats/match-insights";
 import Favourites from "./profile-stats/fav";
-import Image from "next/image";
 
 interface StatisticsProps {
   viewMatchPlayed: {

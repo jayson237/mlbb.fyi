@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import FolDialog from "@/components/fol-dialog";
 import Image from "next/image";
 import Link from "next/link";
+import FolDialog from "@/components/fol-dialog";
 
 interface ViewDialogProps {
   baseInfo?: {
