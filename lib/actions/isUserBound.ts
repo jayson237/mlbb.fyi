@@ -1,7 +1,7 @@
 import getMlbbAcc from "./getMlbbAcc";
 import prisma from "@/lib/prismadb";
 
-export default async function isUserBound(username: string) {
+export default async function isUserBound(username: string | null | undefined) {
   try {
     const get = await prisma.user.findFirst({
       where: {

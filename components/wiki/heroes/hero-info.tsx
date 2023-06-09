@@ -6,12 +6,25 @@ import { Hero } from "@prisma/client";
 import { Progress } from "@/components/shared/progress";
 import Image from "next/image";
 
-export default function HeroFyi({ hero }: { hero: Hero | null }) {
+interface HeroFyiContainer {
+  hero: Hero | null;
+  heroData?: {
+    mode: string;
+    total: number;
+    winrate: number;
+    data: {
+      id: string;
+      total: number;
+      win: number;
+      name: string;
+      _id: string;
+    }[];
+  }[];
+}
+
+export default function HeroFyi({ hero, heroData }: HeroFyiContainer) {
   // @ts-ignore
   const heroDetails = hero?.details;
-  const heroEmblems = heroDetails?.emblems;
-  const heroSpells = heroDetails?.spells;
-  const heroBuilds = heroDetails?.builds;
   const data = [
     {
       name: "Ability",
@@ -116,11 +129,11 @@ export default function HeroFyi({ hero }: { hero: Hero | null }) {
       <GradiantCard className="h-fit w-full">
         <p className="font-heading text-xl md:text-3xl">Passive</p>
         <div className="my-4">
-          <div className="flex flex-row gap-2 sm:items-center">
+          <div className="flex flex-row gap-2">
             {heroDetails.skill && (
               <>
                 <Image
-                  src={`ht${heroDetails.skill[3].icon}`}
+                  src={heroDetails.skill[3].icon}
                   alt={heroDetails.skill[3].name || ""}
                   width={60}
                   height={60}
@@ -142,26 +155,30 @@ export default function HeroFyi({ hero }: { hero: Hero | null }) {
         <p className="font-heading text-xl md:text-3xl">Skills</p>
         <div className="my-4">
           {/* @ts-ignore */}
-          {heroDetails.skill.slice(0, 3).map((skills, i) => (
-            <div key={i} className="mb-8">
-              <div className="flex flex-row gap-2 sm:items-center">
-                <Image
-                  src={`ht${skills.icon}`}
-                  alt={skills.name || ""}
-                  width={60}
-                  height={60}
-                  className="mr-2 h-[60px] w-[60px] justify-start"
-                />
-                <div className="flex flex-col pr-2">
-                  <p className="font-heading">{skills.name}</p>
-                  <p
-                    className="text-justify text-sm text-gray-400"
-                    dangerouslySetInnerHTML={{ __html: skills.description }}
-                  ></p>
+          {heroDetails.skill.slice(0, 3).map((skills, i) => {
+            if (skills.name === "") return null;
+
+            return (
+              <div key={i} className="mb-8">
+                <div className="flex flex-row gap-2">
+                  <Image
+                    src={skills.icon}
+                    alt={skills.name || ""}
+                    width={60}
+                    height={60}
+                    className="mr-2 h-[60px] w-[60px] justify-start"
+                  />
+                  <div className="flex flex-col pr-2">
+                    <p className="font-heading">{skills.name}</p>
+                    <p
+                      className="text-justify text-sm text-gray-400"
+                      dangerouslySetInnerHTML={{ __html: skills.description }}
+                    ></p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </GradiantCard>
     </div>

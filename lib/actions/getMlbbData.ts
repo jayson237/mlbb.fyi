@@ -1,5 +1,3 @@
-import prisma from "@/lib/prismadb";
-
 export default async function getMlbbData(accId: string | null) {
   try {
     const get = await fetch(
