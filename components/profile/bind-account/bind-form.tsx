@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+
 import { SafeUser } from "@/types";
-import LoadingDots from "@/components/shared/icons/loading-dots";
+
 import { Input } from "@/components/shared/input";
 import { Button } from "@/components/shared/button";
-import { useRouter } from "next/navigation";
+import LoadingDots from "@/components/shared/icons/loading-dots";
 
 const bodyToast = (msg: string) => <div className="">{msg}</div>;
 

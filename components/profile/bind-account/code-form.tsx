@@ -2,13 +2,15 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { toast } from "sonner";
-import { Input } from "../shared/input";
-import { SafeUser } from "@/types";
-import { Button } from "../shared/button";
 import { useSearchParams } from "next/navigation";
-import LoadingDots from "../shared/icons/loading-dots";
+import { toast } from "sonner";
 import Link from "next/link";
+
+import { SafeUser } from "@/types";
+
+import { Input } from "@/components/shared/input";
+import { Button } from "@/components/shared/button";
+import LoadingDots from "@/components/shared/icons/loading-dots";
 
 const bodyToast = (msg: string) => <div className="">{msg}</div>;
 const toastStyle = {

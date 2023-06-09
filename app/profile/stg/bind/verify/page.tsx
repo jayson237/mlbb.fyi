@@ -1,7 +1,7 @@
 import getCurrentUser from "@/lib/actions/getCurrentUser";
 import getMlbbAcc from "@/lib/actions/getMlbbAcc";
 
-import CodeForm from "@/components/profile/code-form";
+import CodeForm from "@/components/profile/bind-account/code-form";
 import BoundedPrompt from "@/components/bounded-prompt";
 import SignInPrompt from "@/components/signin-prompt";
 

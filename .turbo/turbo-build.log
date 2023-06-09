@@ -19,7 +19,6 @@ Import trace for requested module:
 ./node_modules/cloudinary/lib/utils/index.js
 Critical dependency: the request of a dependency is an expression
 
-info  - Linting and checking validity of types...
 Import trace for requested module:
 ./node_modules/cloudinary/lib/utils/index.js
 ./node_modules/cloudinary/lib/utils/srcsetUtils.js
@@ -27,10 +26,13 @@ Import trace for requested module:
 ./node_modules/cloudinary/cloudinary.js
 ./app/profile/stg/api/cdn-sign/route.ts
 
+info  - Linting and checking validity of types...
 info  - Collecting page data...
 info  - Generating static pages (0/22)
 info  - Generating static pages (5/22)
-(node:12784) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
+warn  - Entire page /auth/signin deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /auth/signin
+info  - Generating static pages (10/22)
+(node:5508) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
 (Use `node --trace-warnings ...` to show where the warning was created)
 [next-auth][error][CLIENT_FETCH_ERROR] 
 https://next-auth.js.org/errors#client_fetch_error fetch failed {
@@ -44,23 +46,9 @@ https://next-auth.js.org/errors#client_fetch_error fetch failed {
   url: 'http://localhost:3010/api/auth/csrf',
   message: 'fetch failed'
 }
-warn  - Entire page /auth/signin deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /auth/signin
-[next-auth][error][CLIENT_FETCH_ERROR] 
-https://next-auth.js.org/errors#client_fetch_error fetch failed {
-  error: {
-    message: 'fetch failed',
-    stack: 'TypeError: fetch failed\n' +
-      '    at Object.fetch (node:internal/deps/undici/undici:11118:11)\n' +
-      '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)',
-    name: 'TypeError'
-  },
-  url: 'http://localhost:3010/api/auth/csrf',
-  message: 'fetch failed'
-}
-info  - Generating static pages (10/22)
+
 
 warn  - metadata.metadataBase is not set for resolving social open graph or twitter images, fallbacks to "http://localhost:3000". See https://beta.nextjs.org/docs/api-reference/metadata#metadatabase
-
 
 
 info  - Generating static pages (16/22)
@@ -84,7 +72,7 @@ Route (app)                                Size     First Load JS
 ├ ○ /favicon.ico                           0 B                0 B
 ├ λ /profile                               149 B          77.1 kB
 ├ λ /profile/[username]                    306 B          77.3 kB
-├ λ /profile/[username]/[subProfile]       4.93 kB          99 kB
+├ λ /profile/[username]/[subProfile]       4.92 kB          99 kB
 ├ λ /profile/[username]/api                0 B                0 B
 ├ λ /profile/[username]/api/follow         0 B                0 B
 ├ λ /profile/[username]/api/unfollow       0 B                0 B
@@ -93,15 +81,15 @@ Route (app)                                Size     First Load JS
 ├ ○ /profile/stg/api/cdn-sign              0 B                0 B
 ├ λ /profile/stg/api/update                0 B                0 B
 ├ λ /profile/stg/bind                      1.91 kB        98.3 kB
-├ λ /profile/stg/bind/verify               2.18 kB        98.6 kB
+├ λ /profile/stg/bind/verify               2.17 kB        98.6 kB
 ├ λ /wiki                                  149 B          77.1 kB
 ├ λ /wiki/[subWiki]                        5.31 kB        99.3 kB
-└ λ /wiki/[subWiki]/[hero]                 3.71 kB        93.1 kB
+└ λ /wiki/[subWiki]/[hero]                 3.89 kB        93.3 kB
 + First Load JS shared by all              77 kB
   ├ chunks/139-acfc4b32a423a0ef.js         24.4 kB
   ├ chunks/2443530c-c2f05af95e964045.js    50.5 kB
   ├ chunks/main-app-ab37dec774e15ec4.js    214 B
-  └ chunks/webpack-5fa7d651d5e161c0.js     1.8 kB
+  └ chunks/webpack-347f17b480f2bc96.js     1.8 kB
 
 Route (pages)                              Size     First Load JS
 ┌ ○ /404                                   178 B          86.2 kB
@@ -109,7 +97,7 @@ Route (pages)                              Size     First Load JS
 + First Load JS shared by all              86.1 kB
   ├ chunks/main-6a88d0b10ef5b230.js        84.1 kB
   ├ chunks/pages/_app-c544d6df833bfd4a.js  192 B
-  └ chunks/webpack-5fa7d651d5e161c0.js     1.8 kB
+  └ chunks/webpack-347f17b480f2bc96.js     1.8 kB
 
 ƒ Middleware                               214 kB
 
