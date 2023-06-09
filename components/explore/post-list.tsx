@@ -1,16 +1,16 @@
 "use client";
 
 import { Post } from "@prisma/client";
+import { fetcher } from "@/lib/utils";
 import Link from "next/link";
+import useSWR from "swr";
 
-interface PostsProps {
-  posts: Post[];
-}
+const PostList = () => {
+  const { data: post } = useSWR("/api/post", fetcher);
 
-const PostList: React.FC<PostsProps> = ({ posts }) => {
   return (
     <ul role="list" className="divide-y divide-gray-100/50">
-      {posts.map((post) => (
+      {post?.map((post: Post) => (
         <li key={post.id} className="flex justify-between gap-x-6 py-5">
           <div className="min-w-0 flex-auto">
             <Link href={`/explore/${post.id}`}>

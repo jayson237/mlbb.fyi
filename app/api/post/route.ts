@@ -1,6 +1,7 @@
 import prisma from "@/lib/prismadb";
+import { NextResponse } from "next/server";
 
-export default async function getPosts() {
+export async function GET() {
   try {
     const posts = await prisma.post.findMany({
       orderBy: {
@@ -8,7 +9,9 @@ export default async function getPosts() {
       },
     });
 
-    return posts;
+    return NextResponse.json(posts, {
+      status: 200,
+    });
   } catch (error: any) {
     return null;
   }
