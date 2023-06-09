@@ -27,7 +27,7 @@ const Favourites: React.FC<FavouritesProps> = ({
   const data = (viewMatchPlayed && viewMatchPlayed[matchType]?.data) || [];
   return (
     <GradiantCard title={title} className="md:h-[234px]">
-      {data.slice(0, 5).map((item, i) => (
+      {data.map((item, i) => (
         <div key={i} className="mt-2">
           <div className="flex justify-between">
             <p className="text-[12px]">
