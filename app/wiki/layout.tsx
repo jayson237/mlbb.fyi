@@ -20,10 +20,6 @@ const WikiTabList = [
     name: "Patch",
     href: "/wiki/patch",
   },
-  {
-    name: "META",
-    href: "/wiki/meta",
-  },
 ];
 
 export interface LayoutWikiProps {
