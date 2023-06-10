@@ -1,14 +1,16 @@
-import { useState, useCallback } from "react";
+"use client";
+
+import { useRef, useState, useCallback, ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import { FileRejection, useDropzone } from "react-dropzone";
 import { toast } from "sonner";
-import Image from "next/image";
 
 import { SafeUser } from "@/types";
 
 import { Button } from "@/components/shared/button";
 import LoadingDots from "@/components/shared/icons/loading-dots";
 import { Paperclip } from "lucide-react";
+import { Slider } from "@mui/material";
 import AvatarEditor from "react-avatar-editor";
 
 interface EditPictureProps {
@@ -16,10 +18,12 @@ interface EditPictureProps {
 }
 
 const EditPicture: React.FC<EditPictureProps> = ({ currentUser }) => {
+  const editorRef = useRef(null);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
+  const [slideValue, setSlideValue] = useState(10);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
   const onDrop = useCallback(
@@ -59,8 +63,7 @@ const EditPicture: React.FC<EditPictureProps> = ({ currentUser }) => {
     }
   };
 
-  const handleUpload = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const handleUpload = async (dataUrl: string) => {
     const sign = await fetch("/profile/stg/api/cdn-sign");
     const data = await sign.json();
     const url =
@@ -68,7 +71,7 @@ const EditPicture: React.FC<EditPictureProps> = ({ currentUser }) => {
     try {
       const formData = new FormData();
       if (selectedImage) {
-        formData.append("file", selectedImage);
+        formData.append("file", dataUrl);
         formData.append("api_key", data.apikey);
         formData.append("timestamp", data.timestamp.toString());
         formData.append("signature", data.signature);
@@ -94,25 +97,55 @@ const EditPicture: React.FC<EditPictureProps> = ({ currentUser }) => {
     }
   };
 
+  const handleSave = async (e: any) => {
+    e.preventDefault();
+    if (editorRef) {
+      // @ts-ignore
+      const dataUrl = editorRef.current.getImageScaledToCanvas().toDataURL();
+      // @ts-ignore
+      setSelectedImage(dataUrl);
+      handleUpload(dataUrl);
+    } else {
+      toast.error("Error saving your picture");
+    }
+  };
+
   return (
     <>
       <div>
-        <div className="flex justify-center">
+        <div className="flex flex-col items-center justify-center">
           {selectedImage && (
-            <AvatarEditor
-              image={`${URL.createObjectURL(selectedImage)}`}
-              width={150}
-              height={150}
-              border={20}
-              borderRadius={100}
-              color={[50, 50, 50, 0.6]}
-              className="h-[150px] w-[150px]"
-            />
+            <>
+              <AvatarEditor
+                ref={editorRef}
+                image={selectedImage}
+                width={150}
+                height={150}
+                border={0}
+                borderRadius={150}
+                color={[0, 0, 0, 0.72]}
+                scale={slideValue / 10}
+                rotate={0}
+              />
+              <Slider
+                min={10}
+                max={50}
+                sx={{
+                  margin: "0 auto",
+                  width: "50%",
+                  color: "##3652ba",
+                }}
+                size="medium"
+                defaultValue={slideValue}
+                value={slideValue}
+                onChange={(e: any) => setSlideValue(e.target.value)}
+              />
+            </>
           )}
         </div>
+
         <div className="cursor-pointer text-sm" {...getRootProps()}>
           <input {...getInputProps()} />
-
           {isDragActive ? (
             <div className="my-4 flex cursor-pointer flex-row items-center justify-center">
               <Paperclip className="mr-1 mt-[1px] h-3 w-3" />
@@ -133,7 +166,7 @@ const EditPicture: React.FC<EditPictureProps> = ({ currentUser }) => {
         <Button
           disabled={!selectedImage}
           onClick={(e) => {
-            handleUpload(e);
+            handleSave(e);
             setLoading(true);
             setButtonDisabled(true);
           }}
