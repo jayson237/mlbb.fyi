@@ -84,9 +84,11 @@ const Settings: React.FC<ISettings> = ({ currentUser, mlbbAcc }) => {
           <div className="relative mx-auto h-[150px] w-[150px] overflow-hidden rounded-full">
             <Image
               src={
-                currentUser?.image?.split("/image/upload/")[0] +
-                  "/image/upload/c_fill,h_150,w_150/" +
-                  currentUser?.image?.split("/image/upload/")[1] || "/nana.jpg"
+                currentUser?.image === ""
+                  ? "/nana.jpg"
+                  : currentUser?.image?.split("/image/upload/")[0] +
+                    "/image/upload/c_fill,h_150,w_150/" +
+                    currentUser?.image?.split("/image/upload/")[1]
               }
               alt=""
               width={150}

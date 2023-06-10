@@ -129,7 +129,7 @@ model User {
   desc          String?
   email         String    @unique
   emailVerified DateTime?
-  image         String?
+  image         String
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   followers     String[]  @db.ObjectId

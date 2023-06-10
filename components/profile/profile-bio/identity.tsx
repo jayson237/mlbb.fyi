@@ -21,9 +21,11 @@ const IdentityHolder: React.FC<IdentityHolderProps> = ({ user, baseInfo }) => {
       <div className="relative mx-auto h-[150px] w-[150px] overflow-hidden rounded-full">
         <Image
           src={
-            user?.image?.split("/image/upload/")[0] +
-              "/image/upload/c_fill,h_150,w_150/" +
-              user?.image?.split("/image/upload/")[1] || "/nana.jpg"
+            user?.image === ""
+              ? "/nana.jpg"
+              : user?.image?.split("/image/upload/")[0] +
+                "/image/upload/c_fill,h_150,w_150/" +
+                user?.image?.split("/image/upload/")[1]
           }
           alt=""
           width={150}

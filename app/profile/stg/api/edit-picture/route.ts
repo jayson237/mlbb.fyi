@@ -6,7 +6,6 @@ export async function POST(req: Request) {
   const currentUser = await getCurrentUser();
 
   const { img }: { img: string } = await req.json();
-  console.log(img);
 
   const set = await prisma.user.update({
     where: {

@@ -48,7 +48,7 @@ export default function HeroFyi({ hero, heroData }: HeroFyiContainer) {
       <GradiantCard className="my-4 h-fit w-full">
         <div className="flex flex-row gap-x-4 sm:gap-x-8">
           <Image
-            src={hero?.img || "/nana.jpg"}
+            src={hero?.img || ""}
             alt={hero?.name || ""}
             width={96}
             height={128}

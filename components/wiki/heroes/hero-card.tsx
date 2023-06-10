@@ -16,8 +16,8 @@ const HeroCard = ({
         <Image
           src={
             hero.galleryPicture.split("/image/upload")[0] +
-              "/image/upload/c_fill,h_256,w_192,g_north" +
-              hero.galleryPicture.split("/image/upload")[1] || "/nana.jpg"
+            "/image/upload/c_fill,h_256,w_192,g_north" +
+            hero.galleryPicture.split("/image/upload")[1]
           }
           alt={hero.heroName}
           width={96}
