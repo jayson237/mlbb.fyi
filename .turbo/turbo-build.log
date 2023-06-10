@@ -4,7 +4,6 @@
 
 info  - Loaded env from D:\Orbital23\mlbb.fyi\.env
 info  - Creating an optimized production build...
-<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (659kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
 warn  - Compiled with warnings
 
 ./node_modules/cloudinary/lib-es5/utils/index.js
@@ -12,7 +11,6 @@ Critical dependency: the request of a dependency is an expression
 
 Import trace for requested module:
 ./node_modules/cloudinary/lib-es5/utils/index.js
-./node_modules/cloudinary/lib-es5/utils/srcsetUtils.js
 ./node_modules/cloudinary/lib-es5/cloudinary.js
 ./node_modules/cloudinary/cloudinary.js
 ./app/profile/stg/api/cdn-sign/route.ts
@@ -22,18 +20,16 @@ Critical dependency: the request of a dependency is an expression
 
 Import trace for requested module:
 ./node_modules/cloudinary/lib/utils/index.js
-./node_modules/cloudinary/lib/utils/srcsetUtils.js
 ./node_modules/cloudinary/lib/cloudinary.js
 ./node_modules/cloudinary/cloudinary.js
 ./app/profile/stg/api/cdn-sign/route.ts
 
 info  - Linting and checking validity of types...
 info  - Collecting page data...
-info  - Generating static pages (0/23)
-info  - Generating static pages (5/23)
-info  - Generating static pages (11/23)
+info  - Generating static pages (0/26)
+info  - Generating static pages (6/26)
 warn  - Entire page /auth/signin deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /auth/signin
-(node:21248) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
+(node:17816) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
 (Use `node --trace-warnings ...` to show where the warning was created)
 [next-auth][error][CLIENT_FETCH_ERROR] 
 https://next-auth.js.org/errors#client_fetch_error fetch failed {
@@ -47,29 +43,33 @@ https://next-auth.js.org/errors#client_fetch_error fetch failed {
   url: 'http://localhost:3010/api/auth/csrf',
   message: 'fetch failed'
 }
+info  - Generating static pages (12/26)
 
 warn  - metadata.metadataBase is not set for resolving social open graph or twitter images, fallbacks to "http://localhost:3000". See https://beta.nextjs.org/docs/api-reference/metadata#metadatabase
 
 
 
-info  - Generating static pages (17/23)
+info  - Generating static pages (19/26)
 warn  - Entire page /profile/stg deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /profile/stg
-info  - Generating static pages (23/23)
+info  - Generating static pages (26/26)
 info  - Finalizing page optimization...
 
 Route (app)                                Size     First Load JS
 ┌ λ /                                      175 B          82.8 kB
 ├ λ /api/code                              0 B                0 B
+├ λ /api/comment/list                      0 B                0 B
+├ λ /api/comment/pic                       0 B                0 B
 ├ ○ /api/post                              0 B                0 B
 ├ λ /api/test                              0 B                0 B
 ├ λ /api/user/basic-info                   0 B                0 B
 ├ λ /api/user/fol-info                     0 B                0 B
-├ λ /auth/signin                           2.03 kB         107 kB
-├ λ /explore                               2.94 kB         114 kB
-├ λ /explore/[postId]                      2.88 kB         115 kB
+├ λ /auth/signin                           2.02 kB         107 kB
+├ λ /explore                               2.96 kB         114 kB
+├ λ /explore/[postId]                      3.54 kB         120 kB
 ├ λ /explore/stg/api/delete                0 B                0 B
 ├ λ /explore/stg/api/edit                  0 B                0 B
 ├ λ /explore/stg/api/post                  0 B                0 B
+├ λ /explore/stg/api/postComment           0 B                0 B
 ├ ○ /favicon.ico                           0 B                0 B
 ├ λ /profile                               149 B          77.1 kB
 ├ λ /profile/[username]                    306 B          77.3 kB
@@ -82,8 +82,8 @@ Route (app)                                Size     First Load JS
 ├ ○ /profile/stg/api/cdn-sign              0 B                0 B
 ├ λ /profile/stg/api/edit-picture          0 B                0 B
 ├ λ /profile/stg/api/update                0 B                0 B
-├ λ /profile/stg/bind                      1.91 kB        98.3 kB
-├ λ /profile/stg/bind/verify               2.17 kB        98.6 kB
+├ λ /profile/stg/bind                      1.92 kB        98.3 kB
+├ λ /profile/stg/bind/verify               2.18 kB        98.6 kB
 ├ λ /wiki                                  149 B          77.1 kB
 ├ λ /wiki/[subWiki]                        5.99 kB        99.3 kB
 └ λ /wiki/[subWiki]/[hero]                 1.72 kB        93.6 kB
@@ -91,15 +91,15 @@ Route (app)                                Size     First Load JS
   ├ chunks/139-acfc4b32a423a0ef.js         24.4 kB
   ├ chunks/2443530c-c2f05af95e964045.js    50.5 kB
   ├ chunks/main-app-ab37dec774e15ec4.js    214 B
-  └ chunks/webpack-1e703c8f3dd96b7d.js     1.81 kB
+  └ chunks/webpack-8bd1f648c6674595.js     1.81 kB
 
 Route (pages)                              Size     First Load JS
 ┌ ○ /404                                   178 B          86.2 kB
 └ λ /api/auth/[...nextauth]                0 B            86.1 kB
 + First Load JS shared by all              86.1 kB
-  ├ chunks/main-3aa1a2b588f05ec9.js        84.1 kB
+  ├ chunks/main-50a60a6b3b2ee617.js        84.1 kB
   ├ chunks/pages/_app-c544d6df833bfd4a.js  192 B
-  └ chunks/webpack-1e703c8f3dd96b7d.js     1.81 kB
+  └ chunks/webpack-8bd1f648c6674595.js     1.81 kB
 
 ƒ Middleware                               214 kB
 

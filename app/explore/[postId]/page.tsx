@@ -8,6 +8,8 @@ import DelDialog from "@/components/explore/del-dialog";
 import DeleteButton from "@/components/explore/del-button";
 import EditForm from "@/components/explore/edit-form";
 import ExploreDialog from "@/components/explore/explore-dialog";
+import CommentForm from "@/components/explore/comment-form";
+import CommentList from "@/components/explore/comment-list";
 
 export default async function PostPage({
   params,
@@ -16,6 +18,7 @@ export default async function PostPage({
 }) {
   const post = await getCurrentPost(params.postId);
   const currUser = await getCurrentUser();
+  // const comments = await getComments(params.postId);
 
   if (post) {
     const user = await getUser(post.createdBy);
@@ -68,6 +71,29 @@ export default async function PostPage({
           </div>
           <p className="text-xl">Comments:</p>
         </div>
+        {currUser && (
+          <div className="mb-3 mt-8 flex flex-row items-center">
+            <Image
+              src={
+                currUser?.image?.split("/image/upload/")[0] +
+                  "/image/upload/c_fill,h_150,w_150/" +
+                  currUser?.image?.split("/image/upload/")[1] || "/nana.jpg"
+              }
+              alt=""
+              width={40}
+              height={40}
+              className="mr-4 object-none object-left"
+              placeholder="blur"
+              blurDataURL={
+                currUser?.image?.split("/image/upload/")[0] +
+                "/image/upload/e_blur:400,h_100,w_100/" +
+                currUser?.image?.split("/image/upload/")[1]
+              }
+            />
+            <CommentForm postId={params.postId} />
+          </div>
+        )}
+        <CommentList postId={params.postId} />
       </div>
     );
   }

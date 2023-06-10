@@ -23,10 +23,6 @@ const nextConfig = {
         port: "",
         pathname: "/dvm5vog2j/image/upload/**",
       },
-      {
-        protocol: "https",
-        hostname: "akmweb.youngjoygame.com",
-      },
     ],
     formats: ["image/webp"],
   },

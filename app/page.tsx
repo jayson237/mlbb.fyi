@@ -45,7 +45,7 @@ export default async function Home() {
           </p>
 
           <Button
-            className="mx-auto mt-4 w-fit rounded-lg"
+            className="mx-auto mt-4 w-fit rounded-full"
             variant="gradiantNavySec"
           >
             <Link href="/explore">Get Started</Link>

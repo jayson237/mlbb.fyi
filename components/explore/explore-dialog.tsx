@@ -9,7 +9,7 @@ import {
   DialogTrigger,
 } from "../shared/dialog";
 
-interface ExploreDialogProps {
+interface FolDialogProps {
   children: React.ReactNode;
   triggerChild: React.ReactNode;
   title: string;
@@ -21,7 +21,7 @@ const ExploreDialog = ({
   triggerChild,
   title,
   description,
-}: ExploreDialogProps) => {
+}: FolDialogProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>{triggerChild}</DialogTrigger>

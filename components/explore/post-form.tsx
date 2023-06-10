@@ -4,15 +4,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-import { SafeUser } from "@/types";
 import { Input } from "../shared/input";
 import { Button } from "../shared/button";
 import { Label } from "../shared/label";
 import LoadingDots from "../shared/icons/loading-dots";
 
 const PostForm = () => {
-  const router = useRouter();
-
   const [title, setTitle] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
