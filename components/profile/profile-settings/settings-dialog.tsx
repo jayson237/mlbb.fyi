@@ -7,25 +7,25 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../shared/dialog";
+} from "@/components/shared/dialog";
 
-interface DelDialogProps {
+interface SettingsDialogProps {
   children: React.ReactNode;
   triggerChild: React.ReactNode;
   title: string;
   description?: string;
 }
 
-const DelDialog = ({
+const SettingsDialog = ({
   children,
   triggerChild,
   title,
   description,
-}: DelDialogProps) => {
+}: SettingsDialogProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>{triggerChild}</DialogTrigger>
-      <DialogContent className="h-52">
+      <DialogContent className="h-fit">
         <DialogTitle className="flex justify-center">{title}</DialogTitle>
         <DialogHeader>
           <DialogDescription>{description}</DialogDescription>
@@ -37,4 +37,4 @@ const DelDialog = ({
   );
 };
 
-export default DelDialog;
+export default SettingsDialog;

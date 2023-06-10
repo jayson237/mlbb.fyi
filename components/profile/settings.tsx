@@ -1,11 +1,11 @@
 "use client";
 
 import { toast } from "sonner";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { CheckCircle, XCircle } from "lucide-react";
-import { FileRejection, useDropzone } from "react-dropzone";
+import { CheckCircle, UserCog, XCircle } from "lucide-react";
+
 import Image from "next/image";
 
 import { SafeUser } from "@/types";
@@ -15,13 +15,15 @@ import { Label } from "../shared/label";
 import LoadingDots from "../shared/icons/loading-dots";
 import { MlbbAcc } from "@prisma/client";
 import { cn } from "@/lib/utils";
+import SettingsDialog from "./profile-settings/settings-dialog";
+import EditPicture from "./profile-settings/edit-picture";
 
-interface ISettingsForm {
+interface ISettings {
   currentUser?: SafeUser | null;
   mlbbAcc?: MlbbAcc | null;
 }
 
-const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
+const Settings: React.FC<ISettings> = ({ currentUser, mlbbAcc }) => {
   const params = useSearchParams();
   const router = useRouter();
 
@@ -30,28 +32,6 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
   const [link1, setLink1] = useState(currentUser?.links[0] || "");
   const [link2, setLink2] = useState(currentUser?.links[1] || "");
   const [link3, setLink3] = useState(currentUser?.links[2] || "");
-  const [image, setImage] = useState("");
-
-  const [selectedImages, setSelectedImages] = useState([]);
-
-  const onDrop = useCallback(
-    // @ts-ignore
-    (acceptedFiles: T[], rejectedFiles: FileRejection[]) => {
-      acceptedFiles.forEach((file) => {
-        // @ts-ignore
-        setSelectedImages((prevState): never[] => [...prevState, file]);
-      });
-    },
-    []
-  );
-
-  const {
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    isDragAccept,
-    isDragReject,
-  } = useDropzone({ onDrop, maxFiles: 1, maxSize: 5242880 });
 
   const [loading, setLoading] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -59,42 +39,6 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
     currentUser?.desc ? currentUser.desc.length : 0
   );
   const [buttonDisabled, setButtonDisabled] = useState(false);
-
-  const handleUpload = async (e: any) => {
-    e.preventDefault();
-    const sign = await fetch("/profile/stg/api/cdn-sign");
-    const data = await sign.json();
-    const url =
-      "https://api.cloudinary.com/v1_1/" + data.cloudname + "/auto/upload";
-    try {
-      const formData = new FormData();
-
-      // const files = e.target.files
-      if (selectedImages) {
-        formData.append("file", selectedImages[0]);
-        formData.append("api_key", data.apikey);
-        formData.append("timestamp", data.timestamp.toString());
-        formData.append("signature", data.signature);
-        formData.append("eager", data.eager);
-        formData.append("folder", data.folder);
-        // formData.append("public_id", currentUser?.username as string);
-
-        const response = await fetch(url, {
-          method: "POST",
-          body: formData,
-        });
-        const result = await response.json();
-        console.log(result);
-        setImage(result.secure_url);
-        console.log(image);
-        alert("Upload was successful");
-      } else {
-        alert("No files");
-      }
-    } catch (error) {
-      console.log("Failed to upload", error);
-    }
-  };
 
   if (currentUser?.username && params?.get("ref") === "signin") {
     router.push("/explore");
@@ -107,37 +51,36 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
         Profile Settings
       </h1>
       <div className="mx-auto max-w-md">
-        <div className="mb-8 flex justify-center">
-          <Button
-            className="h-fit w-fit gap-2 rounded-full py-1"
-            onClick={() => {
-              router.push("/profile/stg/bind");
-            }}
-            disabled={mlbbAcc ? true : false}
-          >
-            Mobile Legends Account
-            {mlbbAcc ? (
-              <>
-                <span>{`: ${mlbbAcc.accId} (${mlbbAcc.nickname})`}</span>
-                <CheckCircle
+        <form className="flex w-full flex-col gap-3">
+          <div className="mb-4 flex justify-center">
+            <Button
+              className="h-fit w-fit gap-2 rounded-full py-1"
+              onClick={() => {
+                router.push("/profile/stg/bind");
+              }}
+              disabled={mlbbAcc ? true : false}
+            >
+              Mobile Legends Account
+              {mlbbAcc ? (
+                <>
+                  <span>{`: ${mlbbAcc.accId} (${mlbbAcc.nickname})`}</span>
+                  <CheckCircle
+                    className={cn(
+                      "h-4 w-4",
+                      mlbbAcc ? "text-green-500" : "text-red-500"
+                    )}
+                  />
+                </>
+              ) : (
+                <XCircle
                   className={cn(
                     "h-4 w-4",
                     mlbbAcc ? "text-green-500" : "text-red-500"
                   )}
                 />
-              </>
-            ) : (
-              <XCircle
-                className={cn(
-                  "h-4 w-4",
-                  mlbbAcc ? "text-green-500" : "text-red-500"
-                )}
-              />
-            )}
-          </Button>
-        </div>
-
-        <form className="flex w-full flex-col gap-3">
+              )}
+            </Button>
+          </div>
           <div className="relative mx-auto h-[150px] w-[150px] overflow-hidden rounded-full">
             <Image
               src={
@@ -148,7 +91,7 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
               alt=""
               width={150}
               height={150}
-              className="mx-auto h-auto w-auto bg-contain bg-center"
+              className="mx-auto mb-4 h-[150px] w-[150px] items-center bg-contain bg-center"
               placeholder="blur"
               blurDataURL={
                 currentUser?.image?.split("/image/upload/")[0] +
@@ -157,38 +100,23 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
               }
             />
           </div>
-          <div className="">
-            <Label htmlFor="picture">Set profile picture</Label>
-            <div className="cursor-pointer text-sm" {...getRootProps()}>
-              <input {...getInputProps()} />
 
-              {isDragActive ? (
-                <p>Drop file(s) here ...</p>
-              ) : (
-                <p>Drag and drop file(s) here, or click to select files </p>
-              )}
-            </div>
-            <div className="">
-              {selectedImages.length > 0 &&
-                selectedImages.map((image, index) => (
-                  <Image
-                    src={`${URL.createObjectURL(image)}`}
-                    key={index}
-                    alt=""
-                    width={150}
-                    height={150}
-                    className="h-auto w-auto"
-                  />
-                ))}
-            </div>
-            <Button
-              onClick={(e) => handleUpload(e)}
-              variant="gradiantNavy"
-              className="mt-4"
-            >
-              Done
-            </Button>
-          </div>
+          <SettingsDialog
+            title="Choose profile picture (Max 5 MB)"
+            triggerChild={
+              <div className="flex cursor-pointer flex-row items-center justify-center gap-2">
+                <UserCog
+                  width={16}
+                  height={16}
+                  className="h-4 w-4"
+                  color="#3652ba"
+                />
+                <p className="text-bold mt-1 text-sm ">Edit profile picture</p>
+              </div>
+            }
+          >
+            <EditPicture currentUser={currentUser} />
+          </SettingsDialog>
 
           <div className="space-y-1">
             <Label htmlFor="email">Email</Label>
@@ -295,7 +223,6 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
                 username: username,
                 description: description,
                 links: [link1, link2, link3],
-                img: image,
               };
 
               const set = await fetch("/profile/stg/api/update", {
@@ -330,4 +257,4 @@ const SettingsForm: React.FC<ISettingsForm> = ({ currentUser, mlbbAcc }) => {
   );
 };
 
-export default SettingsForm;
+export default Settings;

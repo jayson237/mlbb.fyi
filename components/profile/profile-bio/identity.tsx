@@ -28,7 +28,7 @@ const IdentityHolder: React.FC<IdentityHolderProps> = ({ user, baseInfo }) => {
           alt=""
           width={150}
           height={150}
-          className="mx-auto h-auto w-auto bg-contain bg-center"
+          className="mx-auto h-[150px] w-[150px] bg-contain bg-center"
           placeholder="blur"
           blurDataURL={
             user?.image?.split("/image/upload/")[0] +
