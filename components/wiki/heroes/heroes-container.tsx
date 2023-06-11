@@ -15,7 +15,6 @@ const HeroesContainer = ({ heroes }: IHeroesContainer) => {
   const router = useRouter();
   const heroFilter = useHeroFilter();
   const [hero, setHero] = useState<Hero[]>();
-  const [noMatchingHeroes, setNoMatchingHeroes] = useState(false);
 
   useEffect(() => {
     if (heroes !== null && heroFilter.type.length > 0) {
