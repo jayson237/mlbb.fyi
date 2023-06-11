@@ -5,7 +5,7 @@ import HeroesContainer from "@/components/wiki/heroes/heroes-container";
 import { notFound } from "next/navigation";
 
 async function SubWikiPage({ params }: { params: { subWiki: string } }) {
-  const heroes: HeroDetails[] | null = await getHeroes();
+  const heroes: Hero[] | null = await getHeroes();
   if (
     params.subWiki !== "heroes" &&
     params.subWiki !== "statistics" &&
