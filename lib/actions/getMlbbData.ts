@@ -10,7 +10,6 @@ export default async function getMlbbData(accId: string | null) {
       }
     );
     const res = await get.json();
-
     return res;
   } catch (error) {
     return null;

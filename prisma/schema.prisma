@@ -15,54 +15,54 @@ type HeroDetailsSkills {
   tips        String
 }
 
-type SubTalent {
-  name      String
-  attribute String[]
-  img       String?
-}
+// type SubTalent {
+//   name      String
+//   attribute String[]
+//   img       String?
+// }
 
-type Talent {
-  subTalent SubTalent[]
-}
+// type Talent {
+//   subTalent SubTalent[]
+// }
 
-model Spell {
-  id          String      @id @default(auto()) @map("_id") @db.ObjectId
-  detailsId   String      @db.ObjectId
-  name        String
-  desc        String
-  img         String
-  cd          String
-  details     String[]
-  variant     String[]
-  heroDetails HeroDetails @relation(fields: [detailsId], references: [id])
-}
+// model Spell {
+//   id          String      @id @default(auto()) @map("_id") @db.ObjectId
+//   detailsId   String      @db.ObjectId
+//   name        String
+//   desc        String
+//   img         String
+//   cd          String
+//   details     String[]
+//   variant     String[]
+//   heroDetails HeroDetails @relation(fields: [detailsId], references: [id])
+// }
 
-model Emblem {
-  id          String      @id @default(auto()) @map("_id") @db.ObjectId
-  detailsId   String      @db.ObjectId
-  type        String
-  talents     Talent[]
-  heroDetails HeroDetails @relation(fields: [detailsId], references: [id])
-}
+// model Emblem {
+//   id          String      @id @default(auto()) @map("_id") @db.ObjectId
+//   detailsId   String      @db.ObjectId
+//   type        String
+//   talents     Talent[]
+//   heroDetails HeroDetails @relation(fields: [detailsId], references: [id])
+// }
 
-model Item {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  // buildId   String   @db.ObjectId
-  name      String
-  desc      String
-  img       String
-  category  String
-  attribute String[]
-  // Build     Build    @relation(fields: [buildId], references: [id])
-}
+// model Item {
+//   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+//   // buildId   String   @db.ObjectId
+//   name      String
+//   desc      String
+//   img       String
+//   category  String
+//   attribute String[]
+//   // Build     Build    @relation(fields: [buildId], references: [id])
+// }
 
-model Build {
-  id          String      @id @default(auto()) @map("_id") @db.ObjectId
-  heroId      String      @db.ObjectId
-  detailsId   String      @db.ObjectId
-  Item        String[]
-  heroDetails HeroDetails @relation(fields: [detailsId], references: [id])
-}
+// model Build {
+//   id          String      @id @default(auto()) @map("_id") @db.ObjectId
+//   heroId      String      @db.ObjectId
+//   detailsId   String      @db.ObjectId
+//   items       String[]
+//   heroDetails HeroDetails @relation(fields: [detailsId], references: [id])
+// }
 
 model HeroDetails {
   id             String              @id @default(auto()) @map("_id") @db.ObjectId
@@ -76,9 +76,9 @@ model HeroDetails {
   durability     String
   difficulty     String
   skill          HeroDetailsSkills[]
-  spells         Spell[]
-  emblems        Emblem[]
-  builds         Build[]
+  // spells         Spell[]
+  // emblems        Emblem[]
+  // builds         Build[]
   hero           Hero                @relation(fields: [heroId], references: [id])
 }
 
