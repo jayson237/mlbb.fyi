@@ -2,7 +2,7 @@
 
 import { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Hero, HeroDetails } from "@prisma/client";
+import { Hero } from "@prisma/client";
 import useHeroFilter from "@/lib/state/useHeroFilter";
 import HeroesFilter from "./heroes-filter";
 import HeroCard from "./hero-card";
