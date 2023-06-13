@@ -21,7 +21,11 @@ const MatchInsights: React.FC<MatchInsightsProps> = ({
   return (
     <GradiantCard title={title}>
       <div className={isHorizontal ? "flex flex-row justify-between" : ""}>
-        <div className="flex flex-row items-center gap-2">
+        <div
+          className={`${
+            isHorizontal ? "" : "pl-20"
+          }flex flex-row items-center gap-2`}
+        >
           <p
             className={`${
               isBound ? "my-16" : "my-[1.8rem]"
