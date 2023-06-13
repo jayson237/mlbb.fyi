@@ -146,7 +146,7 @@ const ContainerBuildCMS = ({ items, heroes }: IContainerBuildCMS) => {
           ))}
         </select>
 
-        <button>Haha</button>
+        <button className="text-white">Submit</button>
       </form>
 
       <ul className="flex flex-col gap-4">

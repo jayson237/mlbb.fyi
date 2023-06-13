@@ -8,43 +8,30 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// type SubTalent {
-//   name      String
-//   attribute String[]
-//   img       String?
-// }
-
-// type Talent {
-//   subTalent SubTalent[]
-// }
-
-// model Emblem {
-//   id          String      @id @default(auto()) @map("_id") @db.ObjectId
-//   detailsId   String      @db.ObjectId
-//   type        String
-//   talents     Talent[]
-//   heroDetails HeroDetails @relation(fields: [detailsId], references: [id])
-// }
+model Emblem {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  attribute String[]
+  img       String
+}
 
 model Spell {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
-  desc String
-  img  String
-  cd   String
-  // details String[]
-  // variant String[]
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  desc    String
+  img     String
+  cd      String
+  details String[]
+  variant String[]
 }
 
 model Item {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  // buildId   String   @db.ObjectId
   name      String
   desc      String
   img       String
   category  String
   attribute String[]
-  // Build     Build    @relation(fields: [buildId], references: [id])
 }
 
 type HeroDetailsSkills {

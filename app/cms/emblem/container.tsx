@@ -2,44 +2,44 @@
 "use client";
 
 import { fetcher } from "@/lib/utils";
-import { Hero, Spell } from "@prisma/client";
+import { Hero, Emblem } from "@prisma/client";
 import { useState } from "react";
 import useSWR from "swr";
 
-interface IConatainerSpellCMS {
-  spells: Spell[];
+interface IContainerEmblemCMS {
+  emblems: Emblem[];
   heroes: Hero[];
 }
 
-const ContainerSpellCMS = ({ spells, heroes }: IConatainerSpellCMS) => {
+const ContainerEmblemCMS = ({ emblems, heroes }: IContainerEmblemCMS) => {
   const [selectedHeroes, setSelectedHeroes] = useState("");
-  const [selectedSpells, setSelectedSpells] = useState({
+  const [selectedEmblems, setSelectedEmblems] = useState({
     choice1: "",
     choice2: "",
   });
 
-  const { data: fetchSpell } = useSWR<{
+  const { data: fetchEmblem } = useSWR<{
     message: string;
     data: {
       _id: string;
       heroId: string;
-      spells: Spell[];
+      emblems: Emblem[];
     }[];
-  }>("/api/spell", fetcher);
+  }>("/api/emblem", fetcher);
   return (
     <>
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          await fetch("/api/spell/create", {
+          await fetch("/api/emblem/create", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
               hero: selectedHeroes || null,
-              choice1: selectedSpells.choice1,
-              choice2: selectedSpells.choice2,
+              choice1: selectedEmblems.choice1,
+              choice2: selectedEmblems.choice2,
             }),
           });
         }}
@@ -63,12 +63,12 @@ const ContainerSpellCMS = ({ spells, heroes }: IConatainerSpellCMS) => {
           name="items1"
           id="items1"
           onChange={(e) => {
-            setSelectedSpells({ ...selectedSpells, choice1: e.target.value });
+            setSelectedEmblems({ ...selectedEmblems, choice1: e.target.value });
           }}
         >
-          {spells.map((spell) => (
-            <option value={spell.id} key={spell.id} className="">
-              {spell.name}
+          {emblems.map((emblem) => (
+            <option value={emblem.id} key={emblem.id} className="">
+              {emblem.name}
             </option>
           ))}
         </select>
@@ -76,12 +76,12 @@ const ContainerSpellCMS = ({ spells, heroes }: IConatainerSpellCMS) => {
           name="items2"
           id="items2"
           onChange={(e) => {
-            setSelectedSpells({ ...selectedSpells, choice2: e.target.value });
+            setSelectedEmblems({ ...selectedEmblems, choice2: e.target.value });
           }}
         >
-          {spells.map((spell) => (
-            <option value={spell.id} key={spell.id} className="">
-              {spell.name}
+          {emblems.map((emblem) => (
+            <option value={emblem.id} key={emblem.id} className="">
+              {emblem.name}
             </option>
           ))}
         </select>
@@ -90,13 +90,13 @@ const ContainerSpellCMS = ({ spells, heroes }: IConatainerSpellCMS) => {
       </form>
 
       <ul className="flex flex-col gap-4">
-        {fetchSpell?.data?.map((spell) => {
+        {fetchEmblem?.data?.map((emblem) => {
           // @ts-nocheck
           return (
-            <li key={spell._id}>
-              <p>{spell.heroId}</p>
+            <li key={emblem._id}>
+              <p>{emblem.heroId}</p>
               <ul className="flex gap-4">
-                {spell.spells.map((item) => (
+                {emblem.emblems.map((item) => (
                   <li key={item.id}>
                     <img src={item.img} alt={item.id} width={40} height={40} />
                     <p>{item.name}</p>
@@ -111,4 +111,4 @@ const ContainerSpellCMS = ({ spells, heroes }: IConatainerSpellCMS) => {
   );
 };
 
-export default ContainerSpellCMS;
+export default ContainerEmblemCMS;

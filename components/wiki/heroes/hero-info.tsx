@@ -12,6 +12,7 @@ interface HeroFyiContainer {
   hero: Hero | null;
   heroBuild: Object[] | null;
   heroSpell: Object[] | null;
+  heroEmblem: Object[] | null;
   matches: {
     mode: string;
     total: number;
@@ -33,6 +34,7 @@ export default function HeroFyi({
   hero,
   heroBuild,
   heroSpell,
+  heroEmblem,
   matches,
   classicIndex,
   rankedIndex,
@@ -41,6 +43,9 @@ export default function HeroFyi({
   const heroDetails = hero?.details;
   const uniqueSpells = Array.from(
     new Set(heroSpell?.map((spell) => spell.name))
+  );
+  const uniqueEmblems = Array.from(
+    new Set(heroEmblem?.map((emblem) => emblem.name))
   );
   const data = [
     {
@@ -162,6 +167,33 @@ export default function HeroFyi({
                     />
                     <div className=" bg-opacity/75 absolute bottom-0 left-0 h-full w-full items-center justify-center rounded-full bg-black/80 py-1 text-center text-[10px] font-medium text-white opacity-0 transition-opacity duration-200">
                       <p className="mt-3">{spellName}</p>
+                    </div>
+                  </div>
+                  <style jsx>{`
+                    .relative:hover .absolute {
+                      opacity: 1;
+                    }
+                  `}</style>
+                </div>
+              ))}
+            </div>
+            <p className="text-sm text-gray-500">Recommended emblem/s</p>
+            <div className="flex flex-row">
+              {uniqueEmblems.map((emblemName, i) => (
+                <div key={i} className="mr-2 sm:mr-4">
+                  <div className="relative">
+                    <Image
+                      src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1686126880/mlbb.fyi/emblems/${emblemName.replace(
+                        /[' ]/g,
+                        "_"
+                      )}.webp`}
+                      alt=""
+                      width={50}
+                      height={50}
+                      className="h-[45px] w-[45px] sm:h-[50px] sm:w-[50px] "
+                    />
+                    <div className=" bg-opacity/75 absolute bottom-0 left-0 h-full w-full items-center justify-center rounded-full bg-black/80 py-1 text-center text-[10px] font-medium text-white opacity-0 transition-opacity duration-200">
+                      <p className="mt-3">{emblemName}</p>
                     </div>
                   </div>
                   <style jsx>{`

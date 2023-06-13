@@ -1,5 +1,6 @@
 import getHeroBuild from "@/lib/actions/getHeroBuild";
 import getHeroSpell from "@/lib/actions/getHeroSpell";
+import getHeroEmblem from "@/lib/actions/getHeroEmblem";
 import getMlbbData from "@/lib/actions/getMlbbData";
 import isUserBound from "@/lib/actions/isUserBound";
 
@@ -49,6 +50,7 @@ export default async function HeroPage({
 
   const heroBuild = await getHeroBuild(isExistingHero.id);
   const heroSpell = await getHeroSpell(isExistingHero.id);
+  const heroEmblem = await getHeroEmblem(isExistingHero.id);
 
   let isBoundProfile = await isUserBound(currentUser?.username || "");
   let dataAcc;
@@ -61,11 +63,11 @@ export default async function HeroPage({
 
     classicIndex = await findIndexById(
       dataAcc?.matchPlayed[0].data,
-      String(isExistingHero.heroId)
+      isExistingHero.heroId.toString()
     );
     rankedIndex = await findIndexById(
       dataAcc?.matchPlayed[1].data,
-      String(isExistingHero.heroId)
+      isExistingHero.heroId.toString()
     );
   }
 
@@ -75,6 +77,7 @@ export default async function HeroPage({
         hero={isExistingHero}
         heroBuild={heroBuild.data.items}
         heroSpell={heroSpell.data.spells}
+        heroEmblem={heroEmblem.data.emblems}
         matches={dataAcc?.matchPlayed}
         classicIndex={classicIndex || 0}
         rankedIndex={rankedIndex || 0}
