@@ -13,7 +13,7 @@ const PostList = () => {
       <ul role="list" className="divide-y divide-gray-100/50">
         {post?.map((post: Post) => (
           <li key={post.id} className="flex justify-between gap-x-6 py-5">
-            <div className="min-w-0 flex-auto">
+            <div className="flex  min-w-0 flex-col">
               <Link href={`/explore/${post.id}`}>
                 <p className=" text-white-500 text-xl font-semibold leading-6">
                   {post.title}

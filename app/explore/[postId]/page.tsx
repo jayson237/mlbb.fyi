@@ -72,28 +72,32 @@ export default async function PostPage({
           <p className="text-xl">Comments:</p>
         </div>
         {currUser && (
-          <div className="mb-3 mt-8 flex flex-row items-center">
-            <Image
-              src={
-                currUser?.image?.split("/image/upload/")[0] +
-                  "/image/upload/c_fill,h_150,w_150/" +
-                  currUser?.image?.split("/image/upload/")[1] || "/nana.jpg"
-              }
-              alt=""
-              width={40}
-              height={40}
-              className="mr-4 object-none object-left"
-              placeholder="blur"
-              blurDataURL={
-                currUser?.image?.split("/image/upload/")[0] +
-                "/image/upload/e_blur:400,h_100,w_100/" +
-                currUser?.image?.split("/image/upload/")[1]
-              }
-            />
-            <CommentForm postId={params.postId} />
+          <div className="mb-3 mt-8 flex flex-row">
+            <div>
+              <Image
+                src={
+                  currUser?.image?.split("/image/upload/")[0] +
+                    "/image/upload/c_fill,h_150,w_150/" +
+                    currUser?.image?.split("/image/upload/")[1] || "/nana.jpg"
+                }
+                alt=""
+                width={40}
+                height={40}
+                className="mr-4 items-start object-none object-left"
+                placeholder="blur"
+                blurDataURL={
+                  currUser?.image?.split("/image/upload/")[0] +
+                  "/image/upload/e_blur:400,h_100,w_100/" +
+                  currUser?.image?.split("/image/upload/")[1]
+                }
+              />
+            </div>
+            <div className="mt-4 grow ">
+              <CommentForm postId={params.postId} />
+            </div>
           </div>
         )}
-        <CommentList postId={params.postId} />
+        <CommentList postId={params.postId} userId={currUser?.id} />
       </div>
     );
   }

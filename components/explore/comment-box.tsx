@@ -3,12 +3,16 @@ import useSWR from "swr";
 import Image from "next/image";
 import Link from "next/link";
 import { fetcher } from "@/lib/fetcher-utils";
+import { Edit3, Trash2 } from "lucide-react";
+import DelDialog from "./del-dialog";
+import DelCommentButton from "./del-comment-button";
 
 interface CommentBoxProps {
   comment: Comment;
+  userId?: string;
 }
 
-const CommentBox: React.FC<CommentBoxProps> = ({ comment }) => {
+const CommentBox: React.FC<CommentBoxProps> = ({ comment, userId }) => {
   const { data: image } = useSWR(["/api/comment/pic", comment.userId], fetcher);
 
   return (
@@ -38,8 +42,19 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment }) => {
             <p className="font-semibold">{comment?.createdBy}</p>
           </Link>
         </div>
+        {userId === comment.userId && (
+          <div className="flex flex-row">
+            <Edit3 className="mr-5" />
+            <DelDialog title="Delete" triggerChild={<Trash2 />}>
+              <p className="flex justify-center">
+                Click the button below to confirm deletion
+              </p>
+              <DelCommentButton commentId={comment.id} />
+            </DelDialog>
+          </div>
+        )}
       </div>
-      <div className="mb-8 ml-14">
+      <div className="mb-8 ml-14 whitespace-pre-line">
         <p>{comment?.body}</p>
       </div>
     </div>

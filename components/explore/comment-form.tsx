@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { Input } from "../shared/input";
+import useAutosizeTextArea from "@/lib/useAutosizeTextArea";
+import { useRef, useState } from "react";
 import { Button } from "../shared/button";
 import LoadingDots from "../shared/icons/loading-dots";
 import { toast } from "sonner";
@@ -10,68 +10,73 @@ interface CommentProps {
   postId: string;
 }
 
-const CommentForm: React.FC<CommentProps> = ({ postId }) => {
-  const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>("");
-  const [messageCharacterCount, setMessageCharacterCount] = useState<number>(0);
+const NewCommentForm: React.FC<CommentProps> = ({ postId }) => {
+  const [value, setValue] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  return (
-    <div>
-      <form
-        className="flex w-full flex-row gap-3"
-        onSubmit={async (e) => {
-          e.preventDefault();
-          setLoading(true);
-          const fields = {
-            postId: postId,
-            message: message,
-          };
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-          const set = await fetch("/explore/stg/api/postComment", {
-            method: "POST",
-            body: JSON.stringify(fields),
-          });
-          const msg = await set.json();
-          if (!set.ok) {
-            setLoading(false);
-            toast.error(msg.message);
-          } else {
-            setLoading(false);
-            toast.success(msg.message);
-            window.location.reload();
-          }
-        }}
-      >
-        <Input
-          type="Body"
-          onChange={(e) => {
-            const inputValue = e.target.value;
-            setMessage(inputValue);
-            setMessageCharacterCount(inputValue.length);
+  useAutosizeTextArea(textAreaRef.current, value);
+
+  return (
+    <>
+      <div>
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            setLoading(true);
+            const fields = {
+              postId: postId,
+              message: value,
+            };
+
+            const set = await fetch("/explore/stg/api/postComment", {
+              method: "POST",
+              body: JSON.stringify(fields),
+            });
+            const msg = await set.json();
+            if (!set.ok) {
+              setLoading(false);
+              toast.error(msg.message);
+            } else {
+              setLoading(false);
+              toast.success(msg.message);
+              window.location.reload();
+            }
           }}
-          onFocus={() => setIsInputFocused(true)}
-          onBlur={() => setIsInputFocused(false)}
-          name="body"
-          maxLength={2000}
-        />
-        {isInputFocused && (
-          <p className="text-[10px] text-neutral-500">
-            {messageCharacterCount} / {2000} characters
-          </p>
-        )}
-        <Button className="ml-8 rounded-full" variant="gradiantNavy">
-          {loading ? (
-            <>
-              <LoadingDots color="#FAFAFA" />
-            </>
-          ) : (
-            "Post"
-          )}
-        </Button>
-      </form>
-    </div>
+        >
+          <textarea
+            id="review-text"
+            className="w-full resize-none overflow-hidden border border-transparent border-b-gray-500 bg-transparent focus:border-b-white focus:outline-none"
+            onChange={(e) => {
+              const inputValue = e.target.value;
+              setValue(inputValue);
+            }}
+            placeholder="Add a comment"
+            ref={textAreaRef}
+            rows={1}
+            value={value}
+          />
+          <div className="flex justify-end"></div>
+          <div className="flex justify-end">
+            <Button
+              className="mb-8 mt-1 rounded-full"
+              variant="gradiantNavy"
+              disabled={!value}
+            >
+              {loading ? (
+                <>
+                  <LoadingDots color="#FAFAFA" />
+                </>
+              ) : (
+                "Comment"
+              )}
+            </Button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 };
 
-export default CommentForm;
+export default NewCommentForm;
