@@ -2,20 +2,19 @@ import mongoose, { Schema, model, models } from "mongoose";
 import { IHero } from "./hero.model";
 
 export interface ISpell {
-  heroId: IHero;
   name: string;
   desc: string;
   img: string;
   cd: string;
-  details: string[];
 }
 
-const SpellSchema = new mongoose.Schema(
+export interface ISpells {
+  heroId: IHero;
+  spells: ISpell[];
+}
+
+const SpellSchema = new Schema<ISpell>(
   {
-    heroId: {
-      type: mongoose.Types.ObjectId,
-      ref: "Hero",
-    },
     name: String,
     desc: String,
     img: String,
@@ -26,4 +25,23 @@ const SpellSchema = new mongoose.Schema(
   }
 );
 
+const SpellsSchema = new Schema<ISpells>(
+  {
+    heroId: {
+      type: mongoose.Types.ObjectId,
+      ref: "Hero",
+    },
+    spells: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Spell",
+      },
+    ],
+  },
+  {
+    collection: "Spells",
+  }
+);
+
 export const SpellModel = models.Spell || model("Spell", SpellSchema);
+export const SpellsModel = models.Spells || model<ISpells>("Spells", SpellsSchema)

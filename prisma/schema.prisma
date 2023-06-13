@@ -27,13 +27,13 @@ datasource db {
 // }
 
 model Spell {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  name    String
-  desc    String
-  img     String
-  cd      String
-  details String[]
-  variant String[]
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  desc String
+  img  String
+  cd   String
+  // details String[]
+  // variant String[]
 }
 
 model Item {
