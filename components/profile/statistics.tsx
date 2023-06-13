@@ -84,13 +84,11 @@ const Statistics: React.FC<StatisticsProps> = ({
           title="Classic Favourites"
           viewMatchPlayed={viewMatchPlayed}
           matchType={0}
-          isBound={isBound}
         />
         <Favourites
           title="Ranked Favourites"
           viewMatchPlayed={viewMatchPlayed}
           matchType={1}
-          isBound={isBound}
         />
         {!isBound && (
           <>

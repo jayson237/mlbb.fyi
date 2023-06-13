@@ -46,24 +46,26 @@ export default async function HeroPage({
     notFound();
   }
 
+  const heroBuild = await getHeroBuild(isExistingHero.id);
+
   let isBoundProfile = await isUserBound(currentUser?.username || "");
   let dataAcc;
-  if (!isBoundProfile) {
+  let classicIndex;
+  let rankedIndex;
+  if (!currentUser || !isBoundProfile) {
     isBoundProfile = null;
   } else {
     dataAcc = await getMlbbData(isBoundProfile.accId);
+
+    classicIndex = await findIndexById(
+      dataAcc?.matchPlayed[0].data,
+      String(isExistingHero.heroId)
+    );
+    rankedIndex = await findIndexById(
+      dataAcc?.matchPlayed[1].data,
+      String(isExistingHero.heroId)
+    );
   }
-
-  const heroBuild = await getHeroBuild(isExistingHero.id);
-
-  const classicIndex = await findIndexById(
-    dataAcc.matchPlayed[0].data,
-    String(isExistingHero.heroId)
-  );
-  const rankedIndex = await findIndexById(
-    dataAcc.matchPlayed[1].data,
-    String(isExistingHero.heroId)
-  );
 
   return (
     <>
@@ -71,8 +73,9 @@ export default async function HeroPage({
         hero={isExistingHero}
         heroBuild={heroBuild.data.items}
         matches={dataAcc?.matchPlayed}
-        classicIndex={classicIndex}
-        rankedIndex={rankedIndex}
+        classicIndex={classicIndex || -1}
+        rankedIndex={rankedIndex || -1}
+        showWR={isBoundProfile && currentUser ? true : false}
       ></HeroFyi>
     </>
   );

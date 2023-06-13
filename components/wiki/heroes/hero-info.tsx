@@ -24,6 +24,7 @@ interface HeroFyiContainer {
   }[];
   classicIndex: number;
   rankedIndex: number;
+  showWR: boolean;
 }
 
 export default function HeroFyi({
@@ -32,6 +33,7 @@ export default function HeroFyi({
   matches,
   classicIndex,
   rankedIndex,
+  showWR,
 }: HeroFyiContainer) {
   const heroDetails = hero?.details;
   const data = [
@@ -167,26 +169,30 @@ export default function HeroFyi({
       </div>
 
       <div className="flex flex-row gap-4">
-        <MatchInsights
-          title={`Your ${heroDetails?.heroName} classic stats`}
-          totalMatches={matches?.[0]?.data?.[classicIndex]?.total ?? 0}
-          winrate={
-            (matches?.[0]?.data?.[classicIndex]?.win /
-              matches?.[0]?.data?.[classicIndex]?.total || 0) * 100
-          }
-          isBound={matches}
-          isHorizontal={true}
-        />
-        <MatchInsights
-          title={`Your ${heroDetails?.heroName} ranked stats`}
-          totalMatches={matches?.[1]?.data?.[rankedIndex]?.total ?? 0}
-          winrate={
-            (matches?.[1]?.data?.[rankedIndex]?.win /
-              matches?.[1]?.data?.[rankedIndex]?.total || 0) * 100
-          }
-          isBound={matches}
-          isHorizontal={true}
-        />
+        {showWR && (
+          <>
+            <MatchInsights
+              title={`Your ${heroDetails?.heroName} classic stats`}
+              totalMatches={matches?.[0]?.data?.[classicIndex]?.total ?? 0}
+              winrate={
+                (matches?.[0]?.data?.[classicIndex]?.win /
+                  matches?.[0]?.data?.[classicIndex]?.total || 0) * 100
+              }
+              isBound={matches}
+              isHorizontal={true}
+            />
+            <MatchInsights
+              title={`Your ${heroDetails?.heroName} ranked stats`}
+              totalMatches={matches?.[1]?.data?.[rankedIndex]?.total ?? 0}
+              winrate={
+                (matches?.[1]?.data?.[rankedIndex]?.win /
+                  matches?.[1]?.data?.[rankedIndex]?.total || 0) * 100
+              }
+              isBound={matches}
+              isHorizontal={true}
+            />
+          </>
+        )}
       </div>
 
       <GradiantCard className="h-fit w-full">

@@ -16,7 +16,6 @@ interface FavouritesProps {
     }[];
   }[];
   matchType: number;
-  isBound: boolean;
 }
 
 const Favourites: React.FC<FavouritesProps> = ({
