@@ -17,7 +17,12 @@ const CommentList: React.FC<CommentListProps> = ({ postId, userId }) => {
     return (
       <ul role="list" className="divide-y divide-gray-100/50">
         {comments.map((comment: Comment) => (
-          <CommentBox key={comment.id} comment={comment} userId={userId} />
+          <CommentBox
+            key={comment.id}
+            comment={comment}
+            postId={postId}
+            userId={userId}
+          />
         ))}
       </ul>
     );

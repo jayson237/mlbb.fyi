@@ -6,14 +6,18 @@ import { fetcher } from "@/lib/fetcher-utils";
 import { Edit3, Trash2 } from "lucide-react";
 import DelDialog from "./del-dialog";
 import DelCommentButton from "./del-comment-button";
+import { useState } from "react";
+import EditCommentForm from "./edit-comment-form";
 
 interface CommentBoxProps {
   comment: Comment;
+  postId: string;
   userId?: string;
 }
 
-const CommentBox: React.FC<CommentBoxProps> = ({ comment, userId }) => {
+const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
   const { data: image } = useSWR(["/api/comment/pic", comment.userId], fetcher);
+  const [editActive, setEditActive] = useState<boolean>(false);
 
   return (
     <div>
@@ -44,7 +48,13 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, userId }) => {
         </div>
         {userId === comment.userId && (
           <div className="flex flex-row">
-            <Edit3 className="mr-5" />
+            <button onClick={() => setEditActive(!editActive)}>
+              {editActive ? (
+                <Edit3 color="#00ff40" strokeWidth={3} className="mr-5" />
+              ) : (
+                <Edit3 className="mr-5" />
+              )}
+            </button>
             <DelDialog title="Delete" triggerChild={<Trash2 />}>
               <p className="flex justify-center">
                 Click the button below to confirm deletion
@@ -54,9 +64,15 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, userId }) => {
           </div>
         )}
       </div>
-      <div className="mb-8 ml-14 whitespace-pre-line">
-        <p>{comment?.body}</p>
-      </div>
+      {editActive ? (
+        <div className="mb-8 ml-14 grow">
+          <EditCommentForm commentId={comment.id} commentBody={comment?.body} />
+        </div>
+      ) : (
+        <div className="mb-8 ml-14 whitespace-pre-line">
+          <p>{comment?.body}</p>
+        </div>
+      )}
     </div>
   );
 };

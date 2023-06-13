@@ -92,7 +92,7 @@ export default async function PostPage({
                 }
               />
             </div>
-            <div className="mt-4 grow ">
+            <div className="mt-4 grow">
               <CommentForm postId={params.postId} />
             </div>
           </div>

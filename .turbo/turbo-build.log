@@ -26,11 +26,10 @@ Import trace for requested module:
 
 info  - Linting and checking validity of types...
 info  - Collecting page data...
-info  - Generating static pages (0/30)
-info  - Generating static pages (7/30)
+info  - Generating static pages (0/31)
+info  - Generating static pages (7/31)
 warn  - Entire page /auth/signin deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /auth/signin
-info  - Generating static pages (14/30)
-(node:4656) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
+(node:9520) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
 (Use `node --trace-warnings ...` to show where the warning was created)
 [next-auth][error][CLIENT_FETCH_ERROR] 
 https://next-auth.js.org/errors#client_fetch_error fetch failed {
@@ -44,14 +43,15 @@ https://next-auth.js.org/errors#client_fetch_error fetch failed {
   url: 'http://localhost:3010/api/auth/csrf',
   message: 'fetch failed'
 }
+info  - Generating static pages (15/31)
+info  - Generating static pages (23/31)
 
 warn  - metadata.metadataBase is not set for resolving social open graph or twitter images, fallbacks to "http://localhost:3000". See https://beta.nextjs.org/docs/api-reference/metadata#metadatabase
 
 
 
-info  - Generating static pages (22/30)
 warn  - Entire page /profile/stg deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /profile/stg
-info  - Generating static pages (30/30)
+info  - Generating static pages (31/31)
 info  - Finalizing page optimization...
 
 Route (app)                                Size     First Load JS
@@ -68,8 +68,9 @@ Route (app)                                Size     First Load JS
 ├ λ /cms/emblem                            915 B          90.1 kB
 ├ λ /cms/spell                             915 B          90.1 kB
 ├ λ /explore                               2.97 kB         114 kB
-├ λ /explore/[postId]                      4.42 kB         121 kB
+├ λ /explore/[postId]                      4.66 kB         121 kB
 ├ λ /explore/stg/api/comDelete             0 B                0 B
+├ λ /explore/stg/api/comEdit               0 B                0 B
 ├ λ /explore/stg/api/delete                0 B                0 B
 ├ λ /explore/stg/api/edit                  0 B                0 B
 ├ λ /explore/stg/api/post                  0 B                0 B
@@ -95,7 +96,7 @@ Route (app)                                Size     First Load JS
   ├ chunks/139-acfc4b32a423a0ef.js         24.4 kB
   ├ chunks/2443530c-c2f05af95e964045.js    50.5 kB
   ├ chunks/main-app-ab37dec774e15ec4.js    214 B
-  └ chunks/webpack-038d763f2270ad0a.js     1.81 kB
+  └ chunks/webpack-56e5a80a1ea7f523.js     1.81 kB
 
 Route (pages)                              Size     First Load JS
 ┌ ○ /404                                   178 B          86.3 kB
@@ -107,9 +108,9 @@ Route (pages)                              Size     First Load JS
 ├ λ /api/spell                             0 B            86.1 kB
 └ λ /api/spell/create                      0 B            86.1 kB
 + First Load JS shared by all              86.1 kB
-  ├ chunks/main-8861d05daa2dac1d.js        84.1 kB
+  ├ chunks/main-149fbe3f651c763e.js        84.1 kB
   ├ chunks/pages/_app-c544d6df833bfd4a.js  192 B
-  └ chunks/webpack-038d763f2270ad0a.js     1.81 kB
+  └ chunks/webpack-56e5a80a1ea7f523.js     1.81 kB
 
 ƒ Middleware                               214 kB
 
