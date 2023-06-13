@@ -55,7 +55,7 @@ export default function HeroFyi({
     },
   ];
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col">
       <div className="flex flex-col sm:flex-row sm:gap-x-4">
         <GradiantCard className="mt-4 h-fit w-full">
           <div className="flex flex-row gap-x-4">
@@ -168,34 +168,32 @@ export default function HeroFyi({
         </GradiantCard>
       </div>
 
-      <div className="flex flex-row gap-4">
-        {showWR && (
-          <>
-            <MatchInsights
-              title={`Your ${heroDetails?.heroName} classic stats`}
-              totalMatches={matches?.[0]?.data?.[classicIndex]?.total ?? 0}
-              winrate={
-                (matches?.[0]?.data?.[classicIndex]?.win /
-                  matches?.[0]?.data?.[classicIndex]?.total || 0) * 100
-              }
-              isBound={matches}
-              isHorizontal={true}
-            />
-            <MatchInsights
-              title={`Your ${heroDetails?.heroName} ranked stats`}
-              totalMatches={matches?.[1]?.data?.[rankedIndex]?.total ?? 0}
-              winrate={
-                (matches?.[1]?.data?.[rankedIndex]?.win /
-                  matches?.[1]?.data?.[rankedIndex]?.total || 0) * 100
-              }
-              isBound={matches}
-              isHorizontal={true}
-            />
-          </>
-        )}
-      </div>
+      {showWR && (
+        <div className="mt-4 flex flex-row gap-x-4">
+          <MatchInsights
+            title={`Your ${heroDetails?.heroName} classic stats`}
+            totalMatches={matches?.[0]?.data?.[classicIndex]?.total ?? 0}
+            winrate={
+              (matches?.[0]?.data?.[classicIndex]?.win /
+                matches?.[0]?.data?.[classicIndex]?.total || 0) * 100
+            }
+            isBound={matches}
+            isHorizontal={true}
+          />
+          <MatchInsights
+            title={`Your ${heroDetails?.heroName} ranked stats`}
+            totalMatches={matches?.[1]?.data?.[rankedIndex]?.total ?? 0}
+            winrate={
+              (matches?.[1]?.data?.[rankedIndex]?.win /
+                matches?.[1]?.data?.[rankedIndex]?.total || 0) * 100
+            }
+            isBound={matches}
+            isHorizontal={true}
+          />
+        </div>
+      )}
 
-      <GradiantCard className="h-fit w-full">
+      <GradiantCard className="mt-4 h-fit w-full">
         <p className="font-heading text-xl md:text-3xl">Passive</p>
         <div className="my-4">
           <div className="flex flex-row gap-2">
