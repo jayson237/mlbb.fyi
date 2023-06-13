@@ -1,7 +1,7 @@
 export default async function getMlbbData(accId: string | null) {
   try {
     const get = await fetch(
-      `${process.env.BE_API_URL}/data?accId=${accId}&cmp=5`,
+      `${process.env.BE_API_URL}/data?accId=${accId}&cmp=119`,
       {
         method: "GET",
         headers: {

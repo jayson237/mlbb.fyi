@@ -61,14 +61,18 @@ const Statistics: React.FC<StatisticsProps> = ({
           <div className="mt-0.5 flex gap-x-4">
             <MatchInsights
               title="Classic Matches"
-              viewMatchPlayed={viewMatchPlayed}
-              matchType={0}
+              totalMatches={(viewMatchPlayed && viewMatchPlayed[0]?.total) || 0}
+              winrate={
+                (viewMatchPlayed && viewMatchPlayed[0]?.winrate * 100) || 0
+              }
               isBound={isBound}
             />
             <MatchInsights
               title="Ranked Matches"
-              viewMatchPlayed={viewMatchPlayed}
-              matchType={1}
+              totalMatches={(viewMatchPlayed && viewMatchPlayed[1]?.total) || 0}
+              winrate={
+                (viewMatchPlayed && viewMatchPlayed[1]?.winrate * 100) || 0
+              }
               isBound={isBound}
             />
           </div>

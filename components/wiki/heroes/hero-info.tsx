@@ -5,13 +5,34 @@ import { GradiantCard } from "@/components/shared/gradiant-card";
 import { Hero } from "@prisma/client";
 import { Progress } from "@/components/shared/progress";
 import Image from "next/image";
+import MatchInsights from "@/components/profile/profile-stats/match-insights";
 
 interface HeroFyiContainer {
   hero: Hero | null;
   heroBuild: Object[] | null;
+  matches: {
+    mode: string;
+    total: number;
+    winrate: number;
+    data: {
+      id: string;
+      total: number;
+      win: number;
+      name: string;
+      _id: string;
+    }[];
+  }[];
+  classicIndex: number;
+  rankedIndex: number;
 }
 
-export default function HeroFyi({ hero, heroBuild }: HeroFyiContainer) {
+export default function HeroFyi({
+  hero,
+  heroBuild,
+  matches,
+  classicIndex,
+  rankedIndex,
+}: HeroFyiContainer) {
   const heroDetails = hero?.details;
   const data = [
     {
@@ -32,7 +53,7 @@ export default function HeroFyi({ hero, heroBuild }: HeroFyiContainer) {
     },
   ];
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-4">
       <div className="flex flex-col sm:flex-row sm:gap-x-4">
         <GradiantCard className="mt-4 h-fit w-full">
           <div className="flex flex-row gap-x-4">
@@ -119,6 +140,7 @@ export default function HeroFyi({ hero, heroBuild }: HeroFyiContainer) {
         <GradiantCard className="mt-4 h-fit w-full">
           <p className="font-heading text-xl md:text-3xl">Equipments</p>
           <div className="flex flex-col gap-y-4">
+            <p className="text-sm text-gray-500">Recommended spells</p>
             <div className="flex flex-row items-center">
               <p className="font-heading">mlbb.fyi</p>
               <p className="text-semibold text-sm text-gray-500">
@@ -144,7 +166,30 @@ export default function HeroFyi({ hero, heroBuild }: HeroFyiContainer) {
         </GradiantCard>
       </div>
 
-      <GradiantCard className="mt-4 h-fit w-full">
+      <div className="flex flex-row gap-4">
+        <MatchInsights
+          title={`Your ${heroDetails?.heroName} classic stats`}
+          totalMatches={matches?.[0]?.data?.[classicIndex]?.total ?? 0}
+          winrate={
+            (matches?.[0]?.data?.[classicIndex]?.win /
+              matches?.[0]?.data?.[classicIndex]?.total || 0) * 100
+          }
+          isBound={matches}
+          isHorizontal={true}
+        />
+        <MatchInsights
+          title={`Your ${heroDetails?.heroName} ranked stats`}
+          totalMatches={matches?.[1]?.data?.[rankedIndex]?.total ?? 0}
+          winrate={
+            (matches?.[1]?.data?.[rankedIndex]?.win /
+              matches?.[1]?.data?.[rankedIndex]?.total || 0) * 100
+          }
+          isBound={matches}
+          isHorizontal={true}
+        />
+      </div>
+
+      <GradiantCard className="h-fit w-full">
         <p className="font-heading text-xl md:text-3xl">Passive</p>
         <div className="my-4">
           <div className="flex flex-row gap-2">
