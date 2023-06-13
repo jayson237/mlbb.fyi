@@ -33,12 +33,10 @@ export default async function HeroPage({
   }
 
   const heroBuild = await getHeroBuild(isExistingHero.id);
-  console.log(heroBuild);
-  console.log(typeof heroBuild);
 
   return (
     <>
-      <HeroFyi hero={isExistingHero}></HeroFyi>
+      <HeroFyi hero={isExistingHero} heroBuild={heroBuild.data.items}></HeroFyi>
     </>
   );
 }

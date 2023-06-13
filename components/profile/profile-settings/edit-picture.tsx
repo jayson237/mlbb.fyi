@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import { useRef, useState, useCallback, ChangeEvent } from "react";
@@ -100,9 +101,7 @@ const EditPicture: React.FC<EditPictureProps> = ({ currentUser }) => {
   const handleSave = async (e: any) => {
     e.preventDefault();
     if (editorRef) {
-      // @ts-ignore
       const dataUrl = editorRef.current.getImageScaledToCanvas().toDataURL();
-      // @ts-ignore
       setSelectedImage(dataUrl);
       handleUpload(dataUrl);
     } else {

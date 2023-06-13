@@ -22,7 +22,8 @@ const HeroesFilter = () => {
     <>
       <form action="">
         <GradiantCard className="max-w-[590px] px-6 md:w-[200px]">
-          <h3 className="font-semibold">Filters</h3>
+          <h3 className="font-semibold">Filter by</h3>
+          <p className="text-medium mt-1 text-sm">Type</p>
           <ul className="mt-2.5 flex w-full flex-col gap-2">
             {HeroType.map((type, i) => (
               <li key={i} className="flex w-full items-center gap-1.5">

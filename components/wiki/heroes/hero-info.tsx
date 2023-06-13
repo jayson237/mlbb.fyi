@@ -1,5 +1,5 @@
-"use client";
 // @ts-nocheck
+"use client";
 
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import { Hero } from "@prisma/client";
@@ -8,10 +8,10 @@ import Image from "next/image";
 
 interface HeroFyiContainer {
   hero: Hero | null;
+  heroBuild: Object[] | null;
 }
 
-export default function HeroFyi({ hero }: HeroFyiContainer) {
-  // @ts-ignore
+export default function HeroFyi({ hero, heroBuild }: HeroFyiContainer) {
   const heroDetails = hero?.details;
   const data = [
     {
@@ -33,19 +33,19 @@ export default function HeroFyi({ hero }: HeroFyiContainer) {
   ];
   return (
     <div className="flex flex-col">
-      <div className="flex flex-row gap-x-4">
-        <GradiantCard className="my-4 h-fit w-full">
-          <div className="flex flex-row gap-x-4 sm:gap-x-8">
+      <div className="flex flex-col sm:flex-row sm:gap-x-4">
+        <GradiantCard className="mt-4 h-fit w-full">
+          <div className="flex flex-row gap-x-4">
             <Image
               src={hero?.img || ""}
               alt={hero?.name || ""}
               width={96}
               height={128}
-              className="h-[250px] w-[150px] overflow-hidden rounded-lg bg-cover bg-top bg-no-repeat sm:h-[300px] sm:w-[169px]"
+              className="h-[255px] w-[240px] overflow-hidden rounded-lg bg-cover bg-top bg-no-repeat sm:h-[300px] sm:w-[270px]"
               priority
             />
 
-            <div className="flex flex-col gap-x-4 sm:gap-x-8">
+            <div className="flex w-full flex-col gap-x-4 ">
               <div className="flex flex-row items-center gap-2">
                 <p className="font-heading text-xl md:text-3xl">
                   {heroDetails.heroName}
@@ -109,7 +109,6 @@ export default function HeroFyi({ hero }: HeroFyiContainer) {
                   <Progress
                     value={item.value ? parseInt(item.value) : 0}
                     max={100}
-                    className="w-full sm:w-[250px]"
                   />
                 </div>
               ))}
@@ -117,17 +116,35 @@ export default function HeroFyi({ hero }: HeroFyiContainer) {
           </div>
         </GradiantCard>
 
-        <GradiantCard className="my-4 h-fit w-full" title="Equipments">
+        <GradiantCard className="mt-4 h-fit w-full">
+          <p className="font-heading text-xl md:text-3xl">Equipments</p>
           <div className="flex flex-col gap-y-4">
-            <div className="mt-4 flex flex-row">
-              <p className="mt-[1px] font-heading">mlbb.fyi</p>
-              <p>&apos;s recommended build</p>
+            <div className="flex flex-row items-center">
+              <p className="font-heading">mlbb.fyi</p>
+              <p className="text-semibold text-sm text-gray-500">
+                &apos;s recommended build
+              </p>
+            </div>
+            <div className="flex flex-row">
+              {heroBuild?.map((item, i) => (
+                <div key={i} className="mr-2 sm:mr-4">
+                  <Image
+                    src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1686126880/mlbb.fyi/items/${item?.name.replace(
+                      /[' ]/g,
+                      "_"
+                    )}.webp`}
+                    alt={""}
+                    width={50}
+                    height={50}
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </GradiantCard>
       </div>
 
-      <GradiantCard className="h-fit w-full">
+      <GradiantCard className="mt-4 h-fit w-full">
         <p className="font-heading text-xl md:text-3xl">Passive</p>
         <div className="my-4">
           <div className="flex flex-row gap-2">
@@ -155,7 +172,6 @@ export default function HeroFyi({ hero }: HeroFyiContainer) {
         </div>
         <p className="font-heading text-xl md:text-3xl">Skills</p>
         <div className="my-4">
-          {/* @ts-ignore */}
           {heroDetails.skill.slice(0, 3).map((skills, i) => {
             if (skills.name === "") return null;
 

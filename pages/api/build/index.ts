@@ -18,36 +18,36 @@ export default async function get(
 
   // switch (method) {
   //   case "GET":
-      try {
-        if (heroId) {
-          res.setHeader("Access-Control-Allow-Origin", "*");
-          return res.status(200).json({
-            message: "success",
-            data: await BuildModel.findOne({heroId}).populate({
-              path: "items",
-              select: "-_id",
-            }),
-          });
-        }
-        const get = await BuildModel.find().populate({
+  try {
+    if (heroId) {
+      res.setHeader("Access-Control-Allow-Origin", "*");
+      return res.status(200).json({
+        message: "success",
+        data: await BuildModel.findOne({ heroId }).populate({
           path: "items",
           select: "-_id",
-        });
+        }),
+      });
+    }
+    const get = await BuildModel.find().populate({
+      path: "items",
+      select: "-_id",
+    });
 
-        return res.status(200).json({
-          message: "success",
-          data: get,
-        });
-      } catch (err) {
-        return res.status(400).json({
-          message: err.message,
-        });
-      }
+    return res.status(200).json({
+      message: "success",
+      data: get,
+    });
+  } catch (err) {
+    return res.status(400).json({
+      message: err.message,
+    });
+  }
 
-    // default:
-    //   res.setHeader("Allow", ["GET"]);
-    //   return res.status(405).json({
-    //     message: `Method ${method} Not Allowed`,
-    //   });
+  // default:
+  //   res.setHeader("Allow", ["GET"]);
+  //   return res.status(405).json({
+  //     message: `Method ${method} Not Allowed`,
+  //   });
   // }
 }

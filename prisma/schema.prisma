@@ -45,16 +45,16 @@ type HeroDetailsSkills {
 //   heroDetails HeroDetails @relation(fields: [detailsId], references: [id])
 // }
 
-// model Item {
-//   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-//   // buildId   String   @db.ObjectId
-//   name      String
-//   desc      String
-//   img       String
-//   category  String
-//   attribute String[]
-//   // Build     Build    @relation(fields: [buildId], references: [id])
-// }
+model Item {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  // buildId   String   @db.ObjectId
+  name      String
+  desc      String
+  img       String
+  category  String
+  attribute String[]
+  // Build     Build    @relation(fields: [buildId], references: [id])
+}
 
 // model Build {
 //   id          String      @id @default(auto()) @map("_id") @db.ObjectId

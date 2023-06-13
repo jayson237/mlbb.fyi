@@ -6,7 +6,7 @@ export default async function getHeroBuild(heroId: string) {
         method: "GET",
       }
     );
-    const res = await get.json;
+    const res = await get.json();
     return res;
   } catch (error) {
     return null;
