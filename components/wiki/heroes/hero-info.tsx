@@ -158,8 +158,9 @@ export default function HeroFyi({
                       alt=""
                       width={50}
                       height={50}
+                      className="h-[45px] w-[45px] sm:h-[50px] sm:w-[50px] "
                     />
-                    <div className="text-xs bg-opacity/75 absolute bottom-0 left-0 h-full w-full items-center justify-center rounded-full bg-black/70 py-1 text-center text-[10px] font-normal text-white opacity-0 transition-opacity duration-200">
+                    <div className=" bg-opacity/75 absolute bottom-0 left-0 h-full w-full items-center justify-center rounded-full bg-black/80 py-1 text-center text-[10px] font-medium text-white opacity-0 transition-opacity duration-200">
                       <p className="mt-3">{spellName}</p>
                     </div>
                   </div>
@@ -190,7 +191,7 @@ export default function HeroFyi({
                       width={50}
                       height={50}
                     />
-                    <div className="text-xs bg-opacity/75 absolute bottom-0 left-0 h-full w-full items-center justify-center rounded-full bg-black/70 py-1 text-center text-[10px] font-normal text-white opacity-0 transition-opacity duration-200">
+                    <div className="bg-opacity/75 absolute bottom-0 left-0 h-full w-full items-center justify-center rounded-full bg-black/80 py-1 text-center text-[10px] font-medium text-white opacity-0 transition-opacity duration-200">
                       <p className="mt-2">{item?.name}</p>
                     </div>
                   </div>
