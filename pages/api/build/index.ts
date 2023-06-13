@@ -11,7 +11,7 @@ export default async function get(
 ): Promise<any> {
   const { method } = req;
   const { heroId } = req.query;
-  console.log(heroId);
+  // console.log(heroId);
 
   await clientPromise;
   await BuildModel.init();

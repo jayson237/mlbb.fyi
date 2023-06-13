@@ -169,10 +169,10 @@ export default function HeroFyi({
       </div>
 
       {showWR && (
-        <div className="mt-4 flex flex-row gap-x-4">
+        <div className="mt-4 flex flex-col  gap-x-4 sm:flex-row">
           <MatchInsights
-            title={`Your ${heroDetails?.heroName} classic stats`}
-            totalMatches={matches?.[0]?.data?.[classicIndex]?.total ?? 0}
+            title={`Your clasic ${heroDetails?.heroName} stats`}
+            totalMatches={matches[0]?.data?.[classicIndex]?.total ?? 0}
             winrate={
               (matches?.[0]?.data?.[classicIndex]?.win /
                 matches?.[0]?.data?.[classicIndex]?.total || 0) * 100
@@ -181,7 +181,7 @@ export default function HeroFyi({
             isHorizontal={true}
           />
           <MatchInsights
-            title={`Your ${heroDetails?.heroName} ranked stats`}
+            title={`Your ranked ${heroDetails?.heroName} stats`}
             totalMatches={matches?.[1]?.data?.[rankedIndex]?.total ?? 0}
             winrate={
               (matches?.[1]?.data?.[rankedIndex]?.win /

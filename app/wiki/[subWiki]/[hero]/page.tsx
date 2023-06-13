@@ -73,8 +73,8 @@ export default async function HeroPage({
         hero={isExistingHero}
         heroBuild={heroBuild.data.items}
         matches={dataAcc?.matchPlayed}
-        classicIndex={classicIndex || -1}
-        rankedIndex={rankedIndex || -1}
+        classicIndex={classicIndex || 0}
+        rankedIndex={rankedIndex || 0}
         showWR={isBoundProfile && currentUser ? true : false}
       ></HeroFyi>
     </>
