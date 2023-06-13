@@ -21,19 +21,20 @@ const MatchInsights: React.FC<MatchInsightsProps> = ({
   return (
     <GradiantCard title={title}>
       <div className={isHorizontal ? "flex flex-row justify-between" : ""}>
-        <p
-          className={`${
-            isBound ? "my-16" : "my-[1.8rem]"
-          }  text-right text-xl/[16px] font-semibold sm:mt-7 md:mt-12 md:text-2xl lg:text-3xl`}
-        >
-          {isHorizontal ? (
-            <div className="flex flex-row items-center  gap-2 sm:mt-4">
-              {totalMatches} <p className="mt-1 font-heading"> Matches</p>
-            </div>
-          ) : (
-            totalMatches
+        <div className="flex flex-row items-center gap-2">
+          <p
+            className={`${
+              isBound ? "my-16" : "my-[1.8rem]"
+            }  pb-[6px] text-right text-xl/[16px] font-semibold sm:mt-[56px] md:text-2xl lg:text-3xl`}
+          >
+            {totalMatches}
+          </p>
+          {isHorizontal && (
+            <p className="font-heading text-xl sm:pb-2 sm:text-3xl">
+              {totalMatches === 1 ? "Match" : "Matches"}
+            </p>
           )}
-        </p>
+        </div>
         <div className="relative">
           <CircularProgressbar
             value={winrate}

@@ -11,8 +11,7 @@ export default async function create(
   res: NextApiResponse
 ): Promise<any> {
   const { method } = req;
-  const { hero, choice1, choice2} =
-    await req.body;
+  const { hero, choice1, choice2 } = await req.body;
 
   await clientPromise;
   await SpellsModel.init();
@@ -24,7 +23,7 @@ export default async function create(
 
         const set = await SpellsModel.create({
           heroId: hero,
-          spells,
+          spells: spells,
         });
 
         return res.status(200).json({
@@ -32,6 +31,7 @@ export default async function create(
           data: set,
         });
       } catch (err) {
+        // console.log("Error:", err);
         return res.status(400).json({
           message: err.message,
         });

@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import { SpellsModel, SpellModel } from "@/lib/model/spell.model";
+import { SpellsModel } from "@/lib/model/spell.model";
 import { HeroModel } from "lib/model/hero.model";
 import clientPromise from "lib/mongoose";
 import { NextApiRequest, NextApiResponse } from "next";

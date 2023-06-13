@@ -37,7 +37,7 @@ const ContainerSpellCMS = ({ spells, heroes }: IConatainerSpellCMS) => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              hero: selectedHeroes,
+              hero: selectedHeroes || null,
               choice1: selectedSpells.choice1,
               choice2: selectedSpells.choice2,
             }),

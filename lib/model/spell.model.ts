@@ -44,4 +44,5 @@ const SpellsSchema = new Schema<ISpells>(
 );
 
 export const SpellModel = models.Spell || model("Spell", SpellSchema);
-export const SpellsModel = models.Spells || model<ISpells>("Spells", SpellsSchema)
+export const SpellsModel =
+  models.Spells || model<ISpells>("Spells", SpellsSchema);

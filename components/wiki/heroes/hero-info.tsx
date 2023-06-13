@@ -1,6 +1,7 @@
 // @ts-nocheck
 "use client";
 
+import { useState } from "react";
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import { Hero } from "@prisma/client";
 import { Progress } from "@/components/shared/progress";
@@ -10,6 +11,7 @@ import MatchInsights from "@/components/profile/profile-stats/match-insights";
 interface HeroFyiContainer {
   hero: Hero | null;
   heroBuild: Object[] | null;
+  heroSpell: Object[] | null;
   matches: {
     mode: string;
     total: number;
@@ -30,12 +32,16 @@ interface HeroFyiContainer {
 export default function HeroFyi({
   hero,
   heroBuild,
+  heroSpell,
   matches,
   classicIndex,
   rankedIndex,
   showWR,
 }: HeroFyiContainer) {
   const heroDetails = hero?.details;
+  const uniqueSpells = Array.from(
+    new Set(heroSpell?.map((spell) => spell.name))
+  );
   const data = [
     {
       name: "Ability",
@@ -141,8 +147,30 @@ export default function HeroFyi({
 
         <GradiantCard className="mt-4 h-fit w-full">
           <p className="font-heading text-xl md:text-3xl">Equipments</p>
-          <div className="flex flex-col gap-y-4">
-            <p className="text-sm text-gray-500">Recommended spells</p>
+          <div className="flex flex-col gap-y-2">
+            <p className="text-sm text-gray-500">Recommended spell/s</p>
+            <div className="flex flex-row">
+              {uniqueSpells.map((spellName, i) => (
+                <div key={i} className="mr-2 sm:mr-4">
+                  <div className="relative">
+                    <Image
+                      src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1686126880/mlbb.fyi/spells/${spellName}.webp`}
+                      alt=""
+                      width={50}
+                      height={50}
+                    />
+                    <div className="text-xs bg-opacity/75 absolute bottom-0 left-0 h-full w-full items-center justify-center rounded-full bg-black/70 py-1 text-center text-[10px] font-normal text-white opacity-0 transition-opacity duration-200">
+                      <p className="mt-3">{spellName}</p>
+                    </div>
+                  </div>
+                  <style jsx>{`
+                    .relative:hover .absolute {
+                      opacity: 1;
+                    }
+                  `}</style>
+                </div>
+              ))}
+            </div>
             <div className="flex flex-row items-center">
               <p className="font-heading">mlbb.fyi</p>
               <p className="text-semibold text-sm text-gray-500">
@@ -152,15 +180,25 @@ export default function HeroFyi({
             <div className="flex flex-row">
               {heroBuild?.map((item, i) => (
                 <div key={i} className="mr-2 sm:mr-4">
-                  <Image
-                    src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1686126880/mlbb.fyi/items/${item?.name.replace(
-                      /[' ]/g,
-                      "_"
-                    )}.webp`}
-                    alt={""}
-                    width={50}
-                    height={50}
-                  />
+                  <div className="relative">
+                    <Image
+                      src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1686126880/mlbb.fyi/items/${item?.name.replace(
+                        /[' ]/g,
+                        "_"
+                      )}.webp`}
+                      alt={""}
+                      width={50}
+                      height={50}
+                    />
+                    <div className="text-xs bg-opacity/75 absolute bottom-0 left-0 h-full w-full items-center justify-center rounded-full bg-black/70 py-1 text-center text-[10px] font-normal text-white opacity-0 transition-opacity duration-200">
+                      <p className="mt-2">{item?.name}</p>
+                    </div>
+                  </div>
+                  <style jsx>{`
+                    .relative:hover .absolute {
+                      opacity: 1;
+                    }
+                  `}</style>
                 </div>
               ))}
             </div>
