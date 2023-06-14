@@ -51,36 +51,36 @@ const Settings: React.FC<ISettings> = ({ currentUser, mlbbAcc }) => {
         Profile Settings
       </h1>
       <div className="mx-auto max-w-md">
-        <form className="flex w-full flex-col gap-3">
-          <div className="mb-4 flex justify-center">
-            <Button
-              className="h-fit w-fit gap-2 rounded-full py-1"
-              onClick={() => {
-                router.push("/profile/stg/bind");
-              }}
-              disabled={mlbbAcc ? true : false}
-            >
-              Mobile Legends Account
-              {mlbbAcc ? (
-                <>
-                  <span>{`: ${mlbbAcc.accId} (${mlbbAcc.nickname})`}</span>
-                  <CheckCircle
-                    className={cn(
-                      "h-4 w-4",
-                      mlbbAcc ? "text-green-500" : "text-red-500"
-                    )}
-                  />
-                </>
-              ) : (
-                <XCircle
+        <div className="mb-4 flex justify-center">
+          <Button
+            className="h-fit w-fit gap-2 rounded-full py-1"
+            onClick={() => {
+              router.push("/profile/stg/bind");
+            }}
+            disabled={mlbbAcc ? true : false}
+          >
+            Mobile Legends Account
+            {mlbbAcc ? (
+              <>
+                <span>{`: ${mlbbAcc.accId} (${mlbbAcc.nickname})`}</span>
+                <CheckCircle
                   className={cn(
                     "h-4 w-4",
                     mlbbAcc ? "text-green-500" : "text-red-500"
                   )}
                 />
-              )}
-            </Button>
-          </div>
+              </>
+            ) : (
+              <XCircle
+                className={cn(
+                  "h-4 w-4",
+                  mlbbAcc ? "text-green-500" : "text-red-500"
+                )}
+              />
+            )}
+          </Button>
+        </div>
+        <form className="flex w-full flex-col gap-3">
           <div className="relative mx-auto h-[150px] w-[150px] overflow-hidden rounded-full">
             <Image
               src={
