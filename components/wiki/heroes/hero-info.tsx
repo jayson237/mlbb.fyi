@@ -277,61 +277,6 @@ export default function HeroFyi({
       )}
 
       <GradiantCard className="mt-4 h-fit w-full">
-        <p className="font-heading text-xl md:text-3xl">Passive</p>
-        <div className="my-4">
-          <div className="flex flex-row gap-2">
-            {heroDetails.skill && (
-              <>
-                <Image
-                  src={heroDetails.skill[3].icon}
-                  alt={heroDetails.skill[3].name || ""}
-                  width={60}
-                  height={60}
-                  className="mr-2 h-[60px] w-[60px] justify-start"
-                />
-                <div className="flex flex-col pr-2">
-                  <p className="font-heading">{heroDetails.skill[3].name}</p>
-                  <p
-                    className="text-justify text-sm text-gray-400"
-                    dangerouslySetInnerHTML={{
-                      __html: heroDetails.skill[3].description,
-                    }}
-                  ></p>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-        <p className="font-heading text-xl md:text-3xl">Skills</p>
-        <div className="my-4">
-          {heroDetails.skill.slice(0, 3).map((skills, i) => {
-            if (skills.name === "") return null;
-
-            return (
-              <div key={i} className="mb-8">
-                <div className="flex flex-row gap-2">
-                  <Image
-                    src={skills.icon}
-                    alt={skills.name || ""}
-                    width={60}
-                    height={60}
-                    className="mr-2 h-[60px] w-[60px] justify-start"
-                  />
-                  <div className="flex flex-col pr-2">
-                    <p className="font-heading">{skills.name}</p>
-                    <p
-                      className="text-justify text-sm text-gray-400"
-                      dangerouslySetInnerHTML={{ __html: skills.description }}
-                    ></p>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </GradiantCard>
-
-      <GradiantCard className="mt-4 h-fit w-full">
         <p className="font-heading text-xl md:text-3xl">Strong against</p>
         <div className="my-4">
           <div className="grid grid-cols-3 flex-row gap-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7">
@@ -409,6 +354,61 @@ export default function HeroFyi({
               </div>
             ))}
           </div>
+        </div>
+      </GradiantCard>
+
+      <GradiantCard className="mt-4 h-fit w-full">
+        <p className="font-heading text-xl md:text-3xl">Passive</p>
+        <div className="my-4">
+          <div className="flex flex-row gap-2">
+            {heroDetails.skill && (
+              <>
+                <Image
+                  src={heroDetails.skill[3].icon}
+                  alt={heroDetails.skill[3].name || ""}
+                  width={60}
+                  height={60}
+                  className="mr-2 h-[60px] w-[60px] justify-start"
+                />
+                <div className="flex flex-col pr-2">
+                  <p className="font-heading">{heroDetails.skill[3].name}</p>
+                  <p
+                    className="text-justify text-sm text-gray-400"
+                    dangerouslySetInnerHTML={{
+                      __html: heroDetails.skill[3].description,
+                    }}
+                  ></p>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+        <p className="font-heading text-xl md:text-3xl">Skills</p>
+        <div className="my-4">
+          {heroDetails.skill.slice(0, 3).map((skills, i) => {
+            if (skills.name === "") return null;
+
+            return (
+              <div key={i} className="mb-8">
+                <div className="flex flex-row gap-2">
+                  <Image
+                    src={skills.icon}
+                    alt={skills.name || ""}
+                    width={60}
+                    height={60}
+                    className="mr-2 h-[60px] w-[60px] justify-start"
+                  />
+                  <div className="flex flex-col pr-2">
+                    <p className="font-heading">{skills.name}</p>
+                    <p
+                      className="text-justify text-sm text-gray-400"
+                      dangerouslySetInnerHTML={{ __html: skills.description }}
+                    ></p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </GradiantCard>
     </div>
