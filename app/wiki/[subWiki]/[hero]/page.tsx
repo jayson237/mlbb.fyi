@@ -1,6 +1,8 @@
 import getHeroBuild from "@/lib/actions/getHeroBuild";
 import getHeroSpell from "@/lib/actions/getHeroSpell";
 import getHeroEmblem from "@/lib/actions/getHeroEmblem";
+import getHeroCounter from "@/lib/actions/getHeroCounter";
+import getHeroCorr from "@/lib/actions/getHeroCorr";
 import getMlbbData from "@/lib/actions/getMlbbData";
 import isUserBound from "@/lib/actions/isUserBound";
 
@@ -34,6 +36,14 @@ async function findIndexById(arr: any[], targetId: string): Promise<number> {
   return -1;
 }
 
+async function handleStrongAgainst(arr: any[]): Promise<Object[]> {
+  let newArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    newArr.push(arr[i].heroId);
+  }
+  return newArr;
+}
+
 export default async function HeroPage({
   params,
 }: {
@@ -51,6 +61,13 @@ export default async function HeroPage({
   const heroBuild = await getHeroBuild(isExistingHero.id);
   const heroSpell = await getHeroSpell(isExistingHero.id);
   const heroEmblem = await getHeroEmblem(isExistingHero.id);
+  const heroWeakAgainst = await getHeroCounter(isExistingHero.id);
+  const heroStrongAgainst = await getHeroCorr(isExistingHero.id);
+
+  let strongAgainst;
+  if (heroStrongAgainst.data) {
+    strongAgainst = await handleStrongAgainst(heroStrongAgainst.data);
+  }
 
   let isBoundProfile = await isUserBound(currentUser?.username || "");
   let dataAcc;
@@ -78,6 +95,8 @@ export default async function HeroPage({
         heroBuild={heroBuild.data.items}
         heroSpell={heroSpell.data.spells}
         heroEmblem={heroEmblem.data.emblems}
+        heroWeakAgainst={heroWeakAgainst.data.counters}
+        heroStrongAgainst={strongAgainst}
         matches={dataAcc?.matchPlayed}
         classicIndex={classicIndex || 0}
         rankedIndex={rankedIndex || 0}
