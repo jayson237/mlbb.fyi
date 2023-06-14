@@ -57,15 +57,17 @@ model HeroDetails {
 }
 
 model Hero {
-  id      String       @id @default(auto()) @map("_id") @db.ObjectId
-  name    String       @unique
-  img     String
-  heroId  Int          @unique
-  use     String
-  win     String
-  ban     String
-  role    String[]
-  details HeroDetails?
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  name        String       @unique
+  img         String
+  heroId      Int          @unique
+  use         String
+  win         String
+  ban         String
+  role        String[]
+  counters    String[]
+  counteredBy String[]
+  details     HeroDetails?
 }
 
 model MlbbAcc {

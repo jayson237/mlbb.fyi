@@ -29,15 +29,10 @@ const MatchInsights: React.FC<MatchInsightsProps> = ({
           <p
             className={`${
               isBound ? "my-16" : "my-[1.8rem]"
-            }  pb-[6px] text-right text-xl/[16px] font-semibold sm:mt-[56px] md:text-2xl lg:text-3xl`}
+            }  text-right text-xl/[16px] font-semibold sm:mt-12 md:text-2xl lg:text-3xl`}
           >
             {totalMatches}
           </p>
-          {isHorizontal && (
-            <p className="font-heading text-xl sm:pb-2 sm:text-3xl">
-              {totalMatches === 1 ? "Match" : "Matches"}
-            </p>
-          )}
         </div>
         <div className="relative">
           <CircularProgressbar
@@ -48,7 +43,7 @@ const MatchInsights: React.FC<MatchInsightsProps> = ({
               trailColor: `#232323`,
               pathColor: `#74E092`,
             })}
-            className={isHorizontal ? "mt-2 h-40 w-40" : ""}
+            className={isHorizontal ? "mt-4 h-40 w-40" : ""}
           />
           <div className="md: absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white sm:text-xl md:text-2xl">
             {`${winrate.toFixed(2)}%`}

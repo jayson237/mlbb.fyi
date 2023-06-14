@@ -150,7 +150,7 @@ export default function HeroFyi({
           </div>
         </GradiantCard>
 
-        <GradiantCard className="mt-4 h-fit w-full">
+        <GradiantCard className="mt-4 h-[340px] w-full">
           <p className="font-heading text-xl md:text-3xl">Equipments</p>
           <div className="flex flex-col gap-y-2">
             <p className="text-sm text-gray-500">Recommended spell/s</p>
@@ -222,6 +222,7 @@ export default function HeroFyi({
                       alt={""}
                       width={50}
                       height={50}
+                      className="flex"
                     />
                     <div className="bg-opacity/75 absolute bottom-0 left-0 h-full w-full items-center justify-center rounded-full bg-black/80 py-1 text-center text-[10px] font-medium text-white opacity-0 transition-opacity duration-200">
                       <p className="mt-2">{item?.name}</p>
@@ -240,9 +241,9 @@ export default function HeroFyi({
       </div>
 
       {showWR && (
-        <div className="mt-4 flex flex-col  gap-x-4 sm:flex-row">
+        <div className="mt-4 flex flex-col gap-y-4 sm:flex-row sm:gap-x-4">
           <MatchInsights
-            title={`Your clasic ${heroDetails?.heroName} stats`}
+            title={`Your clasic ${heroDetails?.heroName} matches`}
             totalMatches={matches[0]?.data?.[classicIndex]?.total ?? 0}
             winrate={
               (matches?.[0]?.data?.[classicIndex]?.win /
@@ -252,7 +253,7 @@ export default function HeroFyi({
             isHorizontal={true}
           />
           <MatchInsights
-            title={`Your ranked ${heroDetails?.heroName} stats`}
+            title={`Your ranked ${heroDetails?.heroName} matches`}
             totalMatches={matches?.[1]?.data?.[rankedIndex]?.total ?? 0}
             winrate={
               (matches?.[1]?.data?.[rankedIndex]?.win /
@@ -317,6 +318,13 @@ export default function HeroFyi({
             );
           })}
         </div>
+      </GradiantCard>
+
+      <GradiantCard className="mt-4 h-fit w-full">
+        <p className="font-heading text-xl md:text-3xl">Counters</p>
+        <div className="my-4"></div>
+        <p className="font-heading text-xl md:text-3xl">Countered By</p>
+        <div className="my-4"></div>
       </GradiantCard>
     </div>
   );
