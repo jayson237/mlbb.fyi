@@ -29,7 +29,7 @@ const HeroesContainer = ({ heroes }: IHeroesContainer) => {
     } else {
       setHero(undefined);
     }
-  }, [heroFilter, hero, heroes]);
+  }, [heroFilter, heroes]);
 
   return (
     <>
