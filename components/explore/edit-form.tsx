@@ -1,42 +1,48 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
-import { SafeUser } from "@/types";
-import { Input } from "../shared/input";
 import { Button } from "../shared/button";
 import { Label } from "../shared/label";
 import LoadingDots from "../shared/icons/loading-dots";
-import getCurrentPost from "@/lib/actions/getCurrentPost";
 import { Post } from "@prisma/client";
+import useAutosizeTextArea from "@/lib/useAutosizeTextArea";
+import React from "react";
 
 interface editPostProps {
   post: Post;
 }
 
 const EditForm: React.FC<editPostProps> = ({ post }) => {
-  const router = useRouter();
-
   const [title, setTitle] = useState<string>(post.title);
   const [message, setMessage] = useState<string>(post.body);
+  const [activate, setActivate] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [isTitleInputFocused, setIsTitleInputFocused] =
-    useState<boolean>(false);
-  const [isMessageInputFocused, setIsMessageInputFocused] =
     useState<boolean>(false);
   const [titleCharacterCount, setTitleCharacterCount] = useState<number>(
     post.title.length
   );
-  const [messageCharacterCount, setMessageCharacterCount] = useState<number>(
-    post.body.length
-  );
+
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  useAutosizeTextArea(textAreaRef.current, message);
+
+  useEffect(() => {
+    if (textAreaRef.current) {
+      textAreaRef.current.style.height = "0px";
+      const scrollHeight = textAreaRef.current.scrollHeight;
+
+      textAreaRef.current.style.height = scrollHeight + "px";
+    }
+
+    setActivate(!activate);
+  }, [activate]);
 
   return (
     <>
-      <h1 className="text-center font-heading text-3xl font-bold">Edit</h1>
-      <div className="mx-auto max-w-md">
+      <div>
         <form
           className="flex w-full flex-col gap-3"
           onSubmit={async (e) => {
@@ -64,11 +70,10 @@ const EditForm: React.FC<editPostProps> = ({ post }) => {
           }}
         >
           <div className="space-y-1">
-            <Label htmlFor="title">Title</Label>
-            <Input
-              type="title"
+            <Label htmlFor="body">Title</Label>
+            <textarea
               placeholder="Insert title here"
-              defaultValue={post.title}
+              className="w-full resize-none overflow-hidden border border-gray-500 bg-transparent focus:border-white focus:outline-none"
               onChange={(e) => {
                 const inputValue = e.target.value;
                 setTitle(inputValue);
@@ -76,8 +81,9 @@ const EditForm: React.FC<editPostProps> = ({ post }) => {
               }}
               onFocus={() => setIsTitleInputFocused(true)}
               onBlur={() => setIsTitleInputFocused(false)}
-              name="title"
               maxLength={50}
+              value={title}
+              rows={1}
             />
             {isTitleInputFocused && (
               <p className="text-[10px] text-neutral-500">
@@ -85,43 +91,35 @@ const EditForm: React.FC<editPostProps> = ({ post }) => {
               </p>
             )}
           </div>
-
           <div className="space-y-1">
             <Label htmlFor="body">Message</Label>
-            <Input
-              type="Body"
-              placeholder="Insert message here"
-              defaultValue={post.body}
+            <textarea
+              className="w-full resize-none overflow-hidden border border-gray-500 bg-transparent focus:border-white focus:outline-none"
               onChange={(e) => {
                 const inputValue = e.target.value;
                 setMessage(inputValue);
-                setMessageCharacterCount(inputValue.length);
               }}
-              onFocus={() => setIsMessageInputFocused(true)}
-              onBlur={() => setIsMessageInputFocused(false)}
-              name="body"
-              maxLength={2000}
+              placeholder="Insert message here"
+              ref={textAreaRef}
+              value={message}
+              rows={1}
             />
-            {isMessageInputFocused && (
-              <p className="text-[10px] text-neutral-500">
-                {messageCharacterCount} / {2000} characters
-              </p>
-            )}
           </div>
-
-          <Button
-            disabled={post.title === title && post.body === message}
-            className="mb-8 mt-1 rounded-full"
-            variant="gradiantNavy"
-          >
-            {loading ? (
-              <>
-                <LoadingDots color="#FAFAFA" />
-              </>
-            ) : (
-              "Edit"
-            )}
-          </Button>
+          <div className="flex justify-end">
+            <Button
+              disabled={post.title === title && post.body === message}
+              className="mb-8 mt-1 rounded-full"
+              variant="gradiantNavy"
+            >
+              {loading ? (
+                <>
+                  <LoadingDots color="#FAFAFA" />
+                </>
+              ) : (
+                "Edit"
+              )}
+            </Button>
+          </div>
         </form>
       </div>
     </>

@@ -29,8 +29,9 @@ info  - Collecting page data...
 info  - Generating static pages (0/32)
 info  - Generating static pages (8/32)
 warn  - Entire page /auth/signin deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /auth/signin
-(node:3896) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
+(node:7836) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
 (Use `node --trace-warnings ...` to show where the warning was created)
+info  - Generating static pages (16/32)
 [next-auth][error][CLIENT_FETCH_ERROR] 
 https://next-auth.js.org/errors#client_fetch_error fetch failed {
   error: {
@@ -43,11 +44,10 @@ https://next-auth.js.org/errors#client_fetch_error fetch failed {
   url: 'http://localhost:3010/api/auth/csrf',
   message: 'fetch failed'
 }
-info  - Generating static pages (16/32)
 info  - Generating static pages (24/32)
 
-warn  - metadata.metadataBase is not set for resolving social open graph or twitter images, fallbacks to "http://localhost:3000". See https://beta.nextjs.org/docs/api-reference/metadata#metadatabase
 
+warn  - metadata.metadataBase is not set for resolving social open graph or twitter images, fallbacks to "http://localhost:3000". See https://beta.nextjs.org/docs/api-reference/metadata#metadatabase
 
 
 warn  - Entire page /profile/stg deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /profile/stg
@@ -69,7 +69,7 @@ Route (app)                                Size     First Load JS
 ├ λ /cms/emblem                            915 B          90.1 kB
 ├ λ /cms/spell                             915 B          90.1 kB
 ├ λ /explore                               2.97 kB         114 kB
-├ λ /explore/[postId]                      4.66 kB         121 kB
+├ λ /explore/[postId]                      4.73 kB         121 kB
 ├ λ /explore/stg/api/comDelete             0 B                0 B
 ├ λ /explore/stg/api/comEdit               0 B                0 B
 ├ λ /explore/stg/api/delete                0 B                0 B
