@@ -1,27 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 
-import { Input } from "../shared/input";
 import { Button } from "../shared/button";
 import { Label } from "../shared/label";
 import LoadingDots from "../shared/icons/loading-dots";
+import useAutosizeTextArea from "@/lib/useAutosizeTextArea";
 
 const PostForm = () => {
   const [title, setTitle] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
+  const [isTitleInputFocused, setIsTitleInputFocused] =
+    useState<boolean>(false);
+  const [isMessageInputFocused, setIsMessageInputFocused] =
+    useState<boolean>(false);
   const [titleCharacterCount, setTitleCharacterCount] = useState<number>(0);
   const [messageCharacterCount, setMessageCharacterCount] = useState<number>(0);
+  useState<boolean>(false);
+
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  useAutosizeTextArea(textAreaRef.current, message);
 
   return (
     <>
-      <h1 className="text-center font-heading text-3xl font-bold">
-        Post New Topic
-      </h1>
-      <div className="mx-auto max-w-md">
+      <div>
         <form
           className="flex w-full flex-col gap-3"
           onSubmit={async (e) => {
@@ -49,56 +54,60 @@ const PostForm = () => {
         >
           <div className="space-y-1">
             <Label htmlFor="title">Title</Label>
-            <Input
-              type="title"
-              placeholder="Title"
+            <textarea
+              placeholder="Insert title here"
+              className="w-full resize-none overflow-hidden border border-gray-500 bg-transparent focus:border-white focus:outline-none"
               onChange={(e) => {
                 const inputValue = e.target.value;
                 setTitle(inputValue);
                 setTitleCharacterCount(inputValue.length);
               }}
-              onFocus={() => setIsInputFocused(true)}
-              onBlur={() => setIsInputFocused(false)}
-              name="title"
+              onFocus={() => setIsTitleInputFocused(true)}
+              onBlur={() => setIsTitleInputFocused(false)}
               maxLength={50}
+              value={title}
+              rows={1}
             />
-            {isInputFocused && (
+            {isTitleInputFocused && (
               <p className="text-[10px] text-neutral-500">
                 {titleCharacterCount} / {50} characters
               </p>
             )}
           </div>
-
           <div className="space-y-1">
             <Label htmlFor="body">Message</Label>
-            <Input
-              type="Body"
+            <textarea
+              className="w-full resize-none overflow-hidden border border-gray-500 bg-transparent focus:border-white focus:outline-none"
               onChange={(e) => {
                 const inputValue = e.target.value;
                 setMessage(inputValue);
                 setMessageCharacterCount(inputValue.length);
               }}
-              onFocus={() => setIsInputFocused(true)}
-              onBlur={() => setIsInputFocused(false)}
-              name="body"
+              onFocus={() => setIsMessageInputFocused(true)}
+              onBlur={() => setIsMessageInputFocused(false)}
               maxLength={2000}
+              placeholder="Insert message here"
+              ref={textAreaRef}
+              value={message}
+              rows={1}
             />
-            {isInputFocused && (
+            {isMessageInputFocused && (
               <p className="text-[10px] text-neutral-500">
                 {messageCharacterCount} / {2000} characters
               </p>
             )}
           </div>
-
-          <Button className="mb-8 mt-1 rounded-full" variant="gradiantNavy">
-            {loading ? (
-              <>
-                <LoadingDots color="#FAFAFA" />
-              </>
-            ) : (
-              "Post"
-            )}
-          </Button>
+          <div className="flex justify-end">
+            <Button className="mb-8 mt-1 rounded-full" variant="gradiantNavy">
+              {loading ? (
+                <>
+                  <LoadingDots color="#FAFAFA" />
+                </>
+              ) : (
+                "Post"
+              )}
+            </Button>
+          </div>
         </form>
       </div>
     </>

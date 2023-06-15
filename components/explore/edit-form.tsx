@@ -21,8 +21,13 @@ const EditForm: React.FC<editPostProps> = ({ post }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isTitleInputFocused, setIsTitleInputFocused] =
     useState<boolean>(false);
+  const [isMessageInputFocused, setIsMessageInputFocused] =
+    useState<boolean>(false);
   const [titleCharacterCount, setTitleCharacterCount] = useState<number>(
     post.title.length
+  );
+  const [messageCharacterCount, setMessageCharacterCount] = useState<number>(
+    post.body.length
   );
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -98,12 +103,21 @@ const EditForm: React.FC<editPostProps> = ({ post }) => {
               onChange={(e) => {
                 const inputValue = e.target.value;
                 setMessage(inputValue);
+                setMessageCharacterCount(inputValue.length);
               }}
+              onFocus={() => setIsMessageInputFocused(true)}
+              onBlur={() => setIsMessageInputFocused(false)}
+              maxLength={2000}
               placeholder="Insert message here"
               ref={textAreaRef}
               value={message}
               rows={1}
             />
+            {isMessageInputFocused && (
+              <p className="text-[10px] text-neutral-500">
+                {messageCharacterCount} / {2000} characters
+              </p>
+            )}
           </div>
           <div className="flex justify-end">
             <Button

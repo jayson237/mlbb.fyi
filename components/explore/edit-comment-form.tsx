@@ -18,6 +18,11 @@ const EditCommentForm: React.FC<EditCommentProps> = ({
   const [value, setValue] = useState<string>(commentBody);
   const [activate, setActivate] = useState<boolean>(false); //Just to make sure the useEffect always activate once entering the page
   const [loading, setLoading] = useState<boolean>(false);
+  const [isCommentInputFocused, setIsCommentInputFocused] =
+    useState<boolean>(false);
+  const [commentCharacterCount, setCommentCharacterCount] = useState<number>(
+    commentBody.length
+  );
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -66,11 +71,20 @@ const EditCommentForm: React.FC<EditCommentProps> = ({
             onChange={(e) => {
               const inputValue = e.target.value;
               setValue(inputValue);
+              setCommentCharacterCount(inputValue.length);
             }}
             placeholder="Add a comment"
+            onFocus={() => setIsCommentInputFocused(true)}
+            onBlur={() => setIsCommentInputFocused(false)}
+            maxLength={1000}
             ref={textAreaRef}
             value={value}
           />
+          {isCommentInputFocused && (
+            <p className="text-[10px] text-neutral-500">
+              {commentCharacterCount} / {1000} characters
+            </p>
+          )}
           <div className="flex justify-end">
             <Button
               className="mb-8 mt-1 rounded-full"
