@@ -12,11 +12,6 @@ export default function PatchContainer({ patches }: IPatch) {
   const router = useRouter();
   return (
     <div className="ml-2 flex w-full flex-col gap-4">
-      <p className="text-mdfont-medium">
-        Patches are sorted from the latest release by Moonton in the original
-        Mobile Legends: Bang Bang server
-      </p>
-
       <div className="flex flex-col gap-4">
         {patches?.map((patch, i) => (
           <div
