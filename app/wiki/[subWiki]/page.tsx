@@ -1,7 +1,8 @@
 import getHeroes from "@/lib/actions/getHeroes";
+import getPatches from "@/lib/actions/getPatches";
 import { notFound } from "next/navigation";
 
-import { Hero } from "@prisma/client";
+import { Hero, Patch } from "@prisma/client";
 
 import { TabsContent } from "@/components/shared/tabs";
 import HeroesContainer from "@/components/wiki/heroes/heroes-container";
@@ -9,11 +10,12 @@ import PatchContainer from "@/components/wiki/patch/patch-container";
 
 async function SubWikiPage({ params }: { params: { subWiki: string } }) {
   const heroes: Hero[] | null = await getHeroes();
+  const patches: Patch[] | null = await getPatches();
   if (
     params.subWiki !== "heroes" &&
     params.subWiki !== "statistics" &&
     params.subWiki !== "draft-pick" &&
-    params.subWiki !== "patch"
+    params.subWiki !== "patches"
   ) {
     notFound();
   }
@@ -32,8 +34,8 @@ async function SubWikiPage({ params }: { params: { subWiki: string } }) {
       component: <></>,
     },
     {
-      key: "patch",
-      component: <PatchContainer />,
+      key: "patches",
+      component: <PatchContainer patches={patches} />,
     },
   ];
 

@@ -170,3 +170,21 @@ model Comment {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
+
+type Field {
+  name       String?  @map("name")
+  subheading String?  @map("subheading")
+  updates    String[]
+}
+
+type Heading {
+  name   String
+  fields Field[]
+}
+
+model Patch {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  version  String
+  intro    String[]
+  headings Heading[]
+}
