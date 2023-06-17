@@ -51,7 +51,7 @@ export async function POST(req: Request) {
 
   return NextResponse.json(
     {
-      message: "Post has been removed from favourites",
+      message: "Post has been removed from starred",
     },
     {
       status: 200,
