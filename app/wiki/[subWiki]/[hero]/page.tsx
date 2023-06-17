@@ -7,9 +7,9 @@ import getMlbbData from "@/lib/actions/getMlbbData";
 import isUserBound from "@/lib/actions/isUserBound";
 import getCurrentUser from "@/lib/actions/getCurrentUser";
 
-import NotFoundPage from "@/app/not-found/page";
 import HeroFyi from "@/components/wiki/heroes/hero-info";
 import prisma from "@/lib/prismadb";
+import RedirectNotFound from "@/components/redirect-notfound";
 
 async function getHero(name: string) {
   try {
@@ -55,7 +55,7 @@ export default async function HeroPage({
   const isExistingHero = await getHero(parseHero);
 
   if (params.subWiki !== "heroes" || !isExistingHero) {
-    return NotFoundPage();
+    return <RedirectNotFound />;
   }
 
   const heroBuild = await getHeroBuild(isExistingHero.id);
