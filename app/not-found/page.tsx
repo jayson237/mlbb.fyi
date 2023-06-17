@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { Button } from "@/components/shared/button";
-import Link from "next/link";
 
 const NotFoundPage = () => {
   useEffect(() => {
