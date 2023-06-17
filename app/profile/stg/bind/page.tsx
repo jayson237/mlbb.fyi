@@ -1,16 +1,27 @@
 import getCurrentUser from "@/lib/actions/getCurrentUser";
 import SyncForm from "@/components/profile/bind-account/bind-form";
 import getMlbbAcc from "@/lib/actions/getMlbbAcc";
-import SignInPrompt from "@/components/signin-prompt";
-import BoundedPrompt from "@/components/bounded-prompt";
+import Prompt from "@/components/shared/prompt";
 
 export default async function AppBind() {
   const currentUser = await getCurrentUser();
   const mlbbAcc = await getMlbbAcc(currentUser?.email);
   if (mlbbAcc) {
-    return <BoundedPrompt />;
+    return (
+      <Prompt
+        message="You have previously bound your Mobile Legends account"
+        link="/profile/stg"
+        button="Back to settings"
+      />
+    );
   } else if (!currentUser) {
-    return <SignInPrompt />;
+    return (
+      <Prompt
+        message="Please sign in first"
+        link="/auth/signin"
+        button="Go to sign-in page"
+      />
+    );
   }
   return (
     <div className="mt-24">

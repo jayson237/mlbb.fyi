@@ -55,7 +55,9 @@ export default async function LayoutProfile({
   if (!isExistingUser) {
     return (
       <div className="flex h-screen items-center justify-center">
-        <p className="mb-48 text-2xl md:ml-3">Profile does not exist...</p>
+        <p className="mb-48 font-heading text-2xl md:ml-3">
+          Profile does not exist...
+        </p>
       </div>
     );
   }

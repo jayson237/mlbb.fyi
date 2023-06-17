@@ -4,6 +4,7 @@ import { Comment } from "@prisma/client";
 import CommentBox from "./comment-box";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher-utils";
+import Loading from "../shared/loading";
 
 interface CommentListProps {
   postId: string;
@@ -28,11 +29,7 @@ const CommentList: React.FC<CommentListProps> = ({ postId, userId }) => {
     );
   }
 
-  return (
-    <div className="flex h-screen justify-center">
-      <p className="mt-10 text-2xl md:ml-3">Loading...</p>
-    </div>
-  );
+  return <Loading />;
 };
 
 export default CommentList;

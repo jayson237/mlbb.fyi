@@ -11,6 +11,7 @@ import HeroFyi from "@/components/wiki/heroes/hero-info";
 import prisma from "@/lib/prismadb";
 import { Button } from "@/components/shared/button";
 import Link from "next/link";
+import Prompt from "@/components/shared/prompt";
 
 async function getHero(name: string) {
   try {
@@ -57,16 +58,11 @@ export default async function HeroPage({
 
   if (params.subWiki !== "heroes" || !isExistingHero) {
     return (
-      <div className="mt-32 flex items-center justify-center">
-        <div className="mx-auto text-center">
-          <p className="my-2 ml-2 font-heading text-xl">
-            There is no such hero
-          </p>
-          <Button className="rounded-lg" variant="gradiantNavySec">
-            <Link href="/wiki/heroes">Back to heroes</Link>
-          </Button>
-        </div>
-      </div>
+      <Prompt
+        message="There is no such hero"
+        link="/wiki/heroes"
+        button="Back to heroes"
+      />
     );
   }
 

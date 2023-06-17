@@ -2,10 +2,10 @@ import getCurrentUser from "@/lib/actions/getCurrentUser";
 import getUser from "@/lib/actions/getUser";
 import getMlbbData from "@/lib/actions/getMlbbData";
 import isUserBound from "@/lib/actions/isUserBound";
+import { notFound } from "next/navigation";
 
 import { TabsContent } from "@/components/shared/tabs";
 import Statistics from "@/components/profile/statistics";
-import { notFound } from "next/navigation";
 
 async function SubProfilePage({
   params,
