@@ -1,5 +1,7 @@
 "use client";
 
+import { SafeUser } from "@/types";
+
 import { Post, User } from "@prisma/client";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,15 +10,19 @@ import { Edit3, Star, Trash2 } from "lucide-react";
 import DelDialog from "./del-dialog";
 import DeleteButton from "./del-button";
 import EditForm from "./edit-form";
+import { toast } from "sonner";
 
 interface PostPageProp {
   post: Post;
   user: User | null;
-  currUser: string | null | undefined;
+  currUser?: SafeUser | null;
 }
 
 const PostPageBox: React.FC<PostPageProp> = ({ post, user, currUser }) => {
+  const isCurrUserFollowing = currUser?.favourite.includes(post.id as string);
+
   const [editActive, setEditActive] = useState<boolean>(false);
+  const [favourite, setFavourite] = useState(isCurrUserFollowing);
 
   return (
     <>
@@ -43,7 +49,7 @@ const PostPageBox: React.FC<PostPageProp> = ({ post, user, currUser }) => {
             <p className="font-semibold">{post?.createdBy}</p>
           </Link>
         </div>
-        {currUser === user?.username && (
+        {currUser && currUser.username === user?.username && (
           <div className="flex flex-row">
             <button onClick={() => setEditActive(!editActive)}>
               {editActive ? (
@@ -60,11 +66,51 @@ const PostPageBox: React.FC<PostPageProp> = ({ post, user, currUser }) => {
             </DelDialog>
           </div>
         )}
+        {currUser && currUser.username !== user?.username && !favourite && (
+          <button
+            onClick={async () => {
+              const fields = {
+                postId: post.id,
+              };
 
-        {currUser && currUser !== user?.username && (
-          <div className="flex flex-row">
+              const set = await fetch("/explore/stg/api/favourite", {
+                method: "POST",
+                body: JSON.stringify(fields),
+              });
+              const msg = await set.json();
+              if (!set.ok) {
+                toast.error(msg.message);
+              } else {
+                toast.success(msg.message);
+                setFavourite(true);
+              }
+            }}
+          >
             <Star />
-          </div>
+          </button>
+        )}
+        {currUser && currUser.username !== user?.username && favourite && (
+          <button
+            onClick={async () => {
+              const fields = {
+                postId: post.id,
+              };
+
+              const set = await fetch("/explore/stg/api/unfavourite", {
+                method: "POST",
+                body: JSON.stringify(fields),
+              });
+              const msg = await set.json();
+              if (!set.ok) {
+                toast.error(msg.message);
+              } else {
+                toast.success(msg.message);
+                setFavourite(false);
+              }
+            }}
+          >
+            <Star color="#ffff80" strokeWidth={3} />
+          </button>
         )}
       </div>
       <div>
