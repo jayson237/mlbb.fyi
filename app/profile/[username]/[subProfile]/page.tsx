@@ -55,7 +55,7 @@ async function SubProfilePage({
       )}
       {params.subProfile === "posts" && (
         <div className="grow">
-          <PostList />
+          <PostList username={params.username} />
         </div>
       )}
     </TabsContent>

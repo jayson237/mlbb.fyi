@@ -1,13 +1,17 @@
 "use client";
 
 import { Post } from "@prisma/client";
-import { fetcher } from "@/lib/utils";
+import { fetcher } from "@/lib/fetcher-utils";
 import Link from "next/link";
 import useSWR from "swr";
 import { GradiantCard } from "@/components/shared/gradiant-card";
 
-const PostList = () => {
-  const { data: post } = useSWR("/api/user/post", fetcher);
+interface PostListProps {
+  username: string;
+}
+
+const PostList: React.FC<PostListProps> = ({ username }) => {
+  const { data: post } = useSWR(["/api/user/post", username], fetcher);
 
   if (post) {
     return (
@@ -38,11 +42,8 @@ const PostList = () => {
       </GradiantCard>
     );
   }
-  return (
-    <div className="flex h-screen items-center justify-center">
-      <p className="mb-48 text-2xl md:ml-3">Loading...</p>
-    </div>
-  );
+
+  return <div></div>;
 };
 
 export default PostList;

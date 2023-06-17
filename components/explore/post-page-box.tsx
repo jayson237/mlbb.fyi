@@ -4,7 +4,7 @@ import { Post, User } from "@prisma/client";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { Edit3, Trash2 } from "lucide-react";
+import { Edit3, Star, Trash2 } from "lucide-react";
 import DelDialog from "./del-dialog";
 import DeleteButton from "./del-button";
 import EditForm from "./edit-form";
@@ -58,6 +58,12 @@ const PostPageBox: React.FC<PostPageProp> = ({ post, user, currUser }) => {
               </p>
               <DeleteButton postId={post.id} />
             </DelDialog>
+          </div>
+        )}
+
+        {currUser && currUser !== user?.username && (
+          <div className="flex flex-row">
+            <Star />
           </div>
         )}
       </div>

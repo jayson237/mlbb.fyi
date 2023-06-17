@@ -1,20 +1,13 @@
-import getCurrentUser from "@/lib/actions/getCurrentUser";
 import prisma from "@/lib/prismadb";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function POST(req: Request) {
   try {
-    const user = await getCurrentUser();
-
-    if (!user) {
-      return NextResponse.json({
-        msg: "Error",
-      });
-    }
+    const { data }: { data: string } = await req.json();
 
     const posts = await prisma.post.findMany({
       where: {
-        userId: user.id,
+        createdBy: data,
       },
       orderBy: {
         updatedAt: "desc",
