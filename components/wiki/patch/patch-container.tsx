@@ -11,7 +11,7 @@ interface IPatch {
 export default function PatchContainer({ patches }: IPatch) {
   const router = useRouter();
   return (
-    <div className="ml-2 flex w-full flex-col gap-4">
+    <div className="flex w-full flex-col gap-4">
       <div className="flex flex-col gap-4">
         {patches?.map((patch, i) => (
           <div
@@ -21,7 +21,7 @@ export default function PatchContainer({ patches }: IPatch) {
           >
             <GradiantCard className="w-full transition-all duration-300 hover:bg-gray-500/25">
               <p className="text-lg text-center font-semibold">
-                {patch.version} Patch
+                {i === 0 ? `${patch.version} ( Current )` : patch.version}
               </p>
             </GradiantCard>
           </div>

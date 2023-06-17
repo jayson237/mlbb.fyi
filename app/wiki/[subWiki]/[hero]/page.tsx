@@ -7,11 +7,9 @@ import getMlbbData from "@/lib/actions/getMlbbData";
 import isUserBound from "@/lib/actions/isUserBound";
 import getCurrentUser from "@/lib/actions/getCurrentUser";
 
+import NotFoundPage from "@/app/not-found/page";
 import HeroFyi from "@/components/wiki/heroes/hero-info";
 import prisma from "@/lib/prismadb";
-import { Button } from "@/components/shared/button";
-import Link from "next/link";
-import Prompt from "@/components/shared/prompt";
 
 async function getHero(name: string) {
   try {
@@ -57,13 +55,7 @@ export default async function HeroPage({
   const isExistingHero = await getHero(parseHero);
 
   if (params.subWiki !== "heroes" || !isExistingHero) {
-    return (
-      <Prompt
-        message="There is no such hero"
-        link="/wiki/heroes"
-        button="Back to heroes"
-      />
-    );
+    return NotFoundPage();
   }
 
   const heroBuild = await getHeroBuild(isExistingHero.id);

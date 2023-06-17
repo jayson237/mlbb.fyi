@@ -1,9 +1,9 @@
 import getHeroes from "@/lib/actions/getHeroes";
 import getPatches from "@/lib/actions/getPatches";
-import { notFound } from "next/navigation";
 
 import { Hero, Patch } from "@prisma/client";
 
+import NotFound from "@/components/shared/not-found";
 import { TabsContent } from "@/components/shared/tabs";
 import HeroesContainer from "@/components/wiki/heroes/heroes-container";
 import PatchContainer from "@/components/wiki/patch/patch-container";
@@ -17,7 +17,7 @@ async function SubWikiPage({ params }: { params: { subWiki: string } }) {
     params.subWiki !== "draft-pick" &&
     params.subWiki !== "patches"
   ) {
-    notFound();
+    return <NotFound />;
   }
 
   const tabs = [
@@ -45,7 +45,7 @@ async function SubWikiPage({ params }: { params: { subWiki: string } }) {
       value={params.subWiki}
       className="flex w-full flex-col gap-5 md:flex-row"
     >
-      {selectedTab ? selectedTab.component : notFound()}
+      {selectedTab ? selectedTab.component : NotFound()}
     </TabsContent>
   );
 }
