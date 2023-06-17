@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useRouter } from "next/navigation";
 import { Patch } from "@prisma/client";
 import { GradiantCard } from "@/components/shared/gradiant-card";
@@ -10,26 +11,59 @@ interface IPatch {
 
 export default function PatchContainer({ patches }: IPatch) {
   const router = useRouter();
+
+  const groupedPatches = (patches || []).reduce((acc, patch) => {
+    const year = patch.release.split("-")[0];
+
+    if (!acc[year]) {
+      acc[year] = [];
+    }
+
+    acc[year].push(patch);
+
+    return acc;
+  }, {} as { [year: string]: Patch[] });
+
+  const sortedYears = Object.keys(groupedPatches).sort((a, b) =>
+    b.localeCompare(a)
+  );
+  const latestYear = sortedYears[0];
+
   return (
-    <div className="flex w-full flex-col gap-4">
+    <div className="mb-8 flex w-full flex-col gap-4">
       <div className="flex flex-col gap-4">
-        {patches?.map((patch, i) => (
-          <div
-            key={i}
-            onClick={() => router.push(`wiki/patch/${patch.version}`)}
-            className="cursor-pointer"
-          >
-            <GradiantCard className="w-full transition-all duration-300 hover:bg-gray-500/25">
-              <p className="text-lg font-semibold">
-                {i === 0 ? `${patch.version} ( Current )` : patch.version}
-              </p>
-            </GradiantCard>
-          </div>
+        {sortedYears.map((year) => (
+          <React.Fragment key={year}>
+            <h2 className="ml-2 font-heading text-5xl">{year}</h2>
+            {groupedPatches[year].map((patch, i) => (
+              <div
+                key={i}
+                onClick={() => router.push(`wiki/patch/${patch.version}`)}
+                className="cursor-pointer"
+              >
+                <GradiantCard className="flex flex-row justify-between rounded-lg p-4 shadow-lg transition-all duration-300 hover:bg-gray-500/25">
+                  <div className="mr-auto flex flex-col">
+                    <p className="text-xl font-semibold">{patch.version}</p>
+                    <p className="text-sm text-gray-500">
+                      Released on {patch.release}
+                    </p>
+                  </div>
+                  {year === latestYear && i === 0 ? (
+                    <div className="flex items-start">
+                      <p className="text-md font-semibold text-green-500">
+                        (Current)
+                      </p>
+                    </div>
+                  ) : null}
+                </GradiantCard>
+              </div>
+            ))}
+          </React.Fragment>
         ))}
       </div>
       <p className="text-sm text-gray-500">
-        These patches are retrieved from
-        https://liquipedia.net/mobilelegends/Portal:Patches
+        These patches, available from 2021, are obtained from the website
+        https://liquipedia.net/mobilelegends/Portal:Patches.
       </p>
     </div>
   );

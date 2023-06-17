@@ -186,6 +186,7 @@ type Heading {
 model Patch {
   id       String    @id @default(auto()) @map("_id") @db.ObjectId
   version  String
+  release  String
   intro    String[]
   headings Heading[]
 }
