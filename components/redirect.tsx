@@ -2,10 +2,14 @@
 
 import { useRouter } from "next/navigation";
 
-const Redirect = () => {
+const Redirect = ({ destination }: { destination?: string }) => {
   const router = useRouter();
 
-  router.push("/");
+  if (destination === "not-found") {
+    router.push("/not-found");
+  } else {
+    router.push("/");
+  }
 
   return null;
 };

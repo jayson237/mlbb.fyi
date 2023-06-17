@@ -5,7 +5,7 @@ import isUserBound from "@/lib/actions/isUserBound";
 
 import { TabsContent } from "@/components/shared/tabs";
 import Statistics from "@/components/profile/statistics";
-import RedirectNotFound from "@/components/redirect-notfound";
+import Redirect from "@/components/redirect";
 
 async function SubProfilePage({
   params,
@@ -30,7 +30,7 @@ async function SubProfilePage({
     params.subProfile !== "posts" &&
     params.subProfile !== "starred"
   ) {
-    return <RedirectNotFound />;
+    return <Redirect destination="not-found" />;
   }
 
   return (

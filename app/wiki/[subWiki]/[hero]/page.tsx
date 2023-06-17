@@ -9,7 +9,7 @@ import getCurrentUser from "@/lib/actions/getCurrentUser";
 
 import HeroFyi from "@/components/wiki/heroes/hero-info";
 import prisma from "@/lib/prismadb";
-import RedirectNotFound from "@/components/redirect-notfound";
+import Redirect from "@/components/redirect";
 
 async function getHero(name: string) {
   try {
@@ -55,7 +55,7 @@ export default async function HeroPage({
   const isExistingHero = await getHero(parseHero);
 
   if (params.subWiki !== "heroes" || !isExistingHero) {
-    return <RedirectNotFound />;
+    return <Redirect destination="not-found" />;
   }
 
   const heroBuild = await getHeroBuild(isExistingHero.id);

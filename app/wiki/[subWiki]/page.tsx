@@ -6,7 +6,7 @@ import { Hero, Patch } from "@prisma/client";
 import { TabsContent } from "@/components/shared/tabs";
 import HeroesContainer from "@/components/wiki/heroes/heroes-container";
 import PatchContainer from "@/components/wiki/patch/patch-container";
-import RedirectNotFound from "@/components/redirect-notfound";
+import Redirect from "@/components/redirect";
 
 async function SubWikiPage({ params }: { params: { subWiki: string } }) {
   const heroes: Hero[] | null = await getHeroes();
@@ -17,7 +17,7 @@ async function SubWikiPage({ params }: { params: { subWiki: string } }) {
     params.subWiki !== "draft-pick" &&
     params.subWiki !== "patches"
   ) {
-    return <RedirectNotFound />;
+    return <Redirect destination="not-found" />;
   }
 
   const tabs = [
@@ -45,7 +45,11 @@ async function SubWikiPage({ params }: { params: { subWiki: string } }) {
       value={params.subWiki}
       className="flex w-full flex-col gap-5 md:flex-row"
     >
-      {selectedTab ? selectedTab.component : <RedirectNotFound />}
+      {selectedTab ? (
+        selectedTab.component
+      ) : (
+        <Redirect destination="not-found" />
+      )}
     </TabsContent>
   );
 }
