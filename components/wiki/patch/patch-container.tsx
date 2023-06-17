@@ -31,7 +31,7 @@ export default function PatchContainer({ patches }: IPatch) {
 
   return (
     <div className="mb-8 flex w-full flex-col gap-4">
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-8">
         {sortedYears.map((year) => (
           <React.Fragment key={year}>
             <h2 className="ml-2 font-heading text-5xl">{year}</h2>
@@ -47,21 +47,26 @@ export default function PatchContainer({ patches }: IPatch) {
                     <p className="text-sm text-gray-500">
                       Released on {patch.release}
                     </p>
-                  </div>
-                  {year === latestYear && i === 0 ? (
-                    <div className="flex items-start">
-                      <p className="text-md font-semibold text-green-500">
-                        (Current)
+                    {patch.intro && (
+                      <p className="mt-4 line-clamp-2 text-justify text-[14px] text-gray-300">
+                        {patch.intro[1]}
                       </p>
+                    )}
+                  </div>
+                  {year === latestYear && i === 0 && (
+                    <div className="flex items-start">
+                      <div className="text-md rounded-full bg-green-500/30 px-2 font-semibold text-green-500">
+                        <p>Current</p>
+                      </div>
                     </div>
-                  ) : null}
+                  )}
                 </GradiantCard>
               </div>
             ))}
           </React.Fragment>
         ))}
       </div>
-      <p className="text-sm text-gray-500">
+      <p className="text-center text-[10px] text-gray-500">
         These patches, available from 2021, are obtained from the website
         https://liquipedia.net/mobilelegends/Portal:Patches.
       </p>
