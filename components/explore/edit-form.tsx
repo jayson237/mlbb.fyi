@@ -121,7 +121,11 @@ const EditForm: React.FC<editPostProps> = ({ post }) => {
           </div>
           <div className="flex justify-end">
             <Button
-              disabled={post.title === title && post.body === message}
+              disabled={
+                (post.title === title && post.body === message) ||
+                !title ||
+                !message
+              }
               className="mb-8 mt-1 rounded-full"
               variant="gradiantNavy"
             >

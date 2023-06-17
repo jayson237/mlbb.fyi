@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 
 import { TabsContent } from "@/components/shared/tabs";
 import Statistics from "@/components/profile/statistics";
+import PostList from "@/components/profile/profile-bio/post-list";
 
 async function SubProfilePage({
   params,
@@ -38,7 +39,7 @@ async function SubProfilePage({
       value={params.subProfile}
       className="flex w-full flex-col gap-4 md:flex-row"
     >
-      {params.subProfile === "statistics" ? (
+      {params.subProfile === "statistics" && (
         <div className="flex w-full flex-col gap-4">
           {!isOwnProfile && !isBoundProfile && (
             <p className="pl-2 text-sm">
@@ -51,8 +52,11 @@ async function SubProfilePage({
             isBound={isBoundProfile ? true : false}
           />
         </div>
-      ) : (
-        <></>
+      )}
+      {params.subProfile === "posts" && (
+        <div className="grow">
+          <PostList />
+        </div>
       )}
     </TabsContent>
   );
