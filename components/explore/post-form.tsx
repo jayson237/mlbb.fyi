@@ -98,7 +98,11 @@ const PostForm = () => {
             )}
           </div>
           <div className="flex justify-end">
-            <Button className="mb-8 mt-1 rounded-full" variant="gradiantNavy">
+            <Button
+              className="mb-8 mt-1 rounded-full"
+              variant="gradiantNavy"
+              disabled={!title || !message}
+            >
               {loading ? (
                 <>
                   <LoadingDots color="#FAFAFA" />

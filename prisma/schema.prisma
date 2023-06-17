@@ -110,6 +110,7 @@ model User {
   followers     String[]  @db.ObjectId
   following     String[]  @db.ObjectId
   links         String[]
+  favourite     String[]  @db.ObjectId
 
   accounts Account[]
   mlbbaccs MlbbAcc[]
