@@ -9,9 +9,7 @@ import getCurrentUser from "@/lib/actions/getCurrentUser";
 
 import HeroFyi from "@/components/wiki/heroes/hero-info";
 import prisma from "@/lib/prismadb";
-import { Button } from "@/components/shared/button";
-import Link from "next/link";
-import Prompt from "@/components/shared/prompt";
+import Redirect from "@/components/redirect";
 
 async function getHero(name: string) {
   try {
@@ -57,13 +55,7 @@ export default async function HeroPage({
   const isExistingHero = await getHero(parseHero);
 
   if (params.subWiki !== "heroes" || !isExistingHero) {
-    return (
-      <Prompt
-        message="There is no such hero"
-        link="/wiki/heroes"
-        button="Back to heroes"
-      />
-    );
+    return <Redirect destination="not-found" />;
   }
 
   const heroBuild = await getHeroBuild(isExistingHero.id);

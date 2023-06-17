@@ -2,11 +2,11 @@ import getCurrentUser from "@/lib/actions/getCurrentUser";
 import getUser from "@/lib/actions/getUser";
 import getMlbbData from "@/lib/actions/getMlbbData";
 import isUserBound from "@/lib/actions/isUserBound";
-import { notFound } from "next/navigation";
 
 import { TabsContent } from "@/components/shared/tabs";
 import Statistics from "@/components/profile/statistics";
 import PostList from "@/components/profile/profile-bio/post-list";
+import Redirect from "@/components/redirect";
 
 async function SubProfilePage({
   params,
@@ -31,7 +31,7 @@ async function SubProfilePage({
     params.subProfile !== "posts" &&
     params.subProfile !== "starred"
   ) {
-    notFound();
+    return <Redirect destination="not-found" />;
   }
 
   return (

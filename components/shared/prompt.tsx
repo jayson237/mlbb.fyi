@@ -14,7 +14,7 @@ const Prompt = ({ message, link, button }: IPrompt) => {
     <div className="flex h-screen flex-col items-center justify-center">
       <div className="w-full max-w-xl">
         <div className="mx-auto mb-40 text-center">
-          <p className="pt-3 font-heading text-2xl">{message}</p>
+          <p className="pt-3 font-heading text-4xl">{message}</p>
           <Button className="mt-4 w-fit rounded-lg" variant="gradiantNavySec">
             <Link href={link || "/"}>{button}</Link>
           </Button>
