@@ -20,7 +20,7 @@ export default function PatchContainer({ patches }: IPatch) {
             className="cursor-pointer"
           >
             <GradiantCard className="w-full transition-all duration-300 hover:bg-gray-500/25">
-              <p className="text-lg text-center font-semibold">
+              <p className="text-lg font-semibold">
                 {i === 0 ? `${patch.version} ( Current )` : patch.version}
               </p>
             </GradiantCard>
