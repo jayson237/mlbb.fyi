@@ -11,6 +11,7 @@ import DelDialog from "./del-dialog";
 import DeleteButton from "./del-button";
 import EditForm from "./edit-form";
 import { toast } from "sonner";
+import LoadingDots from "../shared/icons/loading-dots";
 
 interface PostPageProp {
   post: Post;
@@ -23,6 +24,7 @@ const PostPageBox: React.FC<PostPageProp> = ({ post, user, currUser }) => {
 
   const [editActive, setEditActive] = useState<boolean>(false);
   const [favourite, setFavourite] = useState(isCurrUserFollowing);
+  const [loading, setLoading] = useState(false);
 
   return (
     <>
@@ -69,10 +71,10 @@ const PostPageBox: React.FC<PostPageProp> = ({ post, user, currUser }) => {
         {currUser && currUser.username !== user?.username && !favourite && (
           <button
             onClick={async () => {
+              setLoading(true);
               const fields = {
                 postId: post.id,
               };
-
               const set = await fetch("/explore/stg/api/favourite", {
                 method: "POST",
                 body: JSON.stringify(fields),
@@ -80,22 +82,25 @@ const PostPageBox: React.FC<PostPageProp> = ({ post, user, currUser }) => {
               const msg = await set.json();
               if (!set.ok) {
                 toast.error(msg.message);
+                setLoading(false);
               } else {
-                toast.success(msg.message);
                 setFavourite(true);
+                setLoading(false);
+                window.location.reload();
+                toast.success(msg.message);
               }
             }}
           >
-            <Star />
+            {loading ? <LoadingDots color="#FAFAFA" /> : <Star />}
           </button>
         )}
         {currUser && currUser.username !== user?.username && favourite && (
           <button
             onClick={async () => {
+              setLoading(true);
               const fields = {
                 postId: post.id,
               };
-
               const set = await fetch("/explore/stg/api/unfavourite", {
                 method: "POST",
                 body: JSON.stringify(fields),
@@ -103,13 +108,20 @@ const PostPageBox: React.FC<PostPageProp> = ({ post, user, currUser }) => {
               const msg = await set.json();
               if (!set.ok) {
                 toast.error(msg.message);
+                setLoading(false);
               } else {
-                toast.success(msg.message);
                 setFavourite(false);
+                setLoading(false);
+                window.location.reload();
+                toast.success(msg.message);
               }
             }}
           >
-            <Star color="#ffff80" strokeWidth={3} />
+            {loading ? (
+              <LoadingDots color="#FAFAFA" />
+            ) : (
+              <Star color="#ffff80" strokeWidth={3} />
+            )}
           </button>
         )}
       </div>
