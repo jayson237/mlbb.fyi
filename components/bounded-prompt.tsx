@@ -7,7 +7,7 @@ const BoundedPrompt = () => {
   return (
     <div className="mt-48">
       <div className="mx-auto flex max-w-xl flex-col justify-center text-center">
-        <p className="pt-3 text-[16px] md:text-2xl">
+        <p className="pt-3 font-heading text-[16px] md:text-2xl">
           You have previously bound your Mobile Legends account
         </p>
         <Button

@@ -5,11 +5,12 @@ import getHeroCounter from "@/lib/actions/getHeroCounter";
 import getHeroCorr from "@/lib/actions/getHeroCorr";
 import getMlbbData from "@/lib/actions/getMlbbData";
 import isUserBound from "@/lib/actions/isUserBound";
+import getCurrentUser from "@/lib/actions/getCurrentUser";
 
 import HeroFyi from "@/components/wiki/heroes/hero-info";
 import prisma from "@/lib/prismadb";
-import { notFound } from "next/navigation";
-import getCurrentUser from "@/lib/actions/getCurrentUser";
+import { Button } from "@/components/shared/button";
+import Link from "next/link";
 
 async function getHero(name: string) {
   try {
@@ -55,7 +56,18 @@ export default async function HeroPage({
   const isExistingHero = await getHero(parseHero);
 
   if (params.subWiki !== "heroes" || !isExistingHero) {
-    notFound();
+    return (
+      <div className="mt-32 flex items-center justify-center">
+        <div className="mx-auto text-center">
+          <p className="my-2 ml-2 font-heading text-xl">
+            There is no such hero
+          </p>
+          <Button className="rounded-lg" variant="gradiantNavySec">
+            <Link href="/wiki/heroes">Back to heroes</Link>
+          </Button>
+        </div>
+      </div>
+    );
   }
 
   const heroBuild = await getHeroBuild(isExistingHero.id);
