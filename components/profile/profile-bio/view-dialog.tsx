@@ -31,7 +31,7 @@ const ViewDialog: React.FC<ViewDialogProps> = ({ baseInfo }) => {
     }[]
   >();
   return (
-    <div className="mt-6 flex flex-row justify-between px-3 font-heading">
+    <div className="mt-6 flex flex-row justify-between px-3 font-sat font-semibold">
       <div
         onClick={async () => {
           const get = await fetch(

@@ -64,8 +64,8 @@ export default async function LayoutProfile({
 
   return (
     <main className="max-w-[1280px] xl:mx-auto">
-      <div className="flex flex-1 flex-col gap-5 md:flex-row">
-        <div className="mx-auto flex gap-5 text-softGray">
+      <div className="flex flex-1 flex-col gap-1.5 md:flex-row">
+        <div className="mx-auto flex gap-1.5 text-softGray">
           <ProfileBio
             currentUser={currentUser}
             user={isExistingUser}
@@ -75,7 +75,7 @@ export default async function LayoutProfile({
         </div>
         <Tabs defaultValue="statistics" className="w-full">
           <div className="no-scrollbar h-[52px] overflow-x-scroll">
-            <TabsList>
+            <TabsList className="grid w-fit grid-cols-3">
               {ProfileTabList.map((item, i) =>
                 !isOwnProfile && item.name === "Starred" ? null : (
                   <Link

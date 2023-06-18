@@ -46,7 +46,7 @@ const MatchInsights: React.FC<MatchInsightsProps> = ({
             className={isHorizontal ? "mt-4 h-40 w-40" : ""}
           />
           <div className="md: absolute left-1/2 top-1/2 mt-1 -translate-x-1/2 -translate-y-1/2 text-white sm:text-xl md:text-2xl">
-            <p className="text-sat font-semibold">{`${winrate.toFixed(2)}%`}</p>
+            <p className="font-sat font-semibold">{`${winrate.toFixed(2)}%`}</p>
             <p className="text-[10px] font-semibold">Winrate</p>
           </div>
         </div>

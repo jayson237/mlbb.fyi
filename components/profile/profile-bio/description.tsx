@@ -29,6 +29,7 @@ const ProfileDesc: React.FC<ProfileDescProps> = ({ user, mlbbAcc }) => {
           ? "mx-auto mt-5 h-fit w-[15rem] max-w-full font-normal md:mx-0"
           : "hidden"
       )}
+      variant="clean"
     >
       <div className="flex flex-col">
         <p

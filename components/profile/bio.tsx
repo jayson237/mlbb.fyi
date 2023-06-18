@@ -52,7 +52,10 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
   return (
     <>
       <div className="flex-col">
-        <GradiantCard className="mx-auto h-fit w-[15rem] max-w-full md:mx-0">
+        <GradiantCard
+          className="mx-auto h-fit w-[15rem] max-w-full md:mx-0"
+          variant="clean"
+        >
           <IdentityHolder user={user} baseInfo={baseInfo} />
           {!isOwnProfile && !isFollowing && (
             <Button
