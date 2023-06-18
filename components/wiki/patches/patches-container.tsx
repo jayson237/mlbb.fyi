@@ -30,7 +30,7 @@ export default function PatchContainer({ patches }: IPatch) {
   const latestYear = sortedYears[0];
 
   return (
-    <div className="mb-8 flex w-full flex-col">
+    <div className="mb-8 mt-4 flex w-full flex-col">
       <div className="flex flex-col gap-8">
         {sortedYears.map((year) => (
           <React.Fragment key={year}>
@@ -43,7 +43,7 @@ export default function PatchContainer({ patches }: IPatch) {
             {groupedPatches[year].map((patch, i) => (
               <div
                 key={i}
-                onClick={() => router.push(`wiki/patch/${patch.version}`)}
+                onClick={() => router.push(`wiki/patches/${patch.version}`)}
                 className="cursor-pointer"
               >
                 <GradiantCard className="flex flex-row justify-between rounded-lg p-4 shadow-lg transition-all duration-300 hover:bg-gray-500/25">
@@ -53,7 +53,7 @@ export default function PatchContainer({ patches }: IPatch) {
                       Released on {patch.release}
                     </p>
                     {patch.intro && (
-                      <p className="mt-4 line-clamp-2 text-justify text-[14px] text-gray-300">
+                      <p className="mt-4 line-clamp-2 text-justify text-[14px] text-gray-400">
                         {patch.intro[1]}
                       </p>
                     )}

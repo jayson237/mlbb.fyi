@@ -45,6 +45,7 @@ export default function HeroFyi({
   rankedIndex,
   showWR,
 }: HeroFyiContainer) {
+  const router = useRouter();
   const [strongAgainstData, setStrongAgainstData] = useState([]);
 
   useEffect(() => {
@@ -56,10 +57,9 @@ export default function HeroFyi({
         // Handle error if needed
       }
     };
-
     fetchData();
   }, [heroStrongAgainst]);
-  const router = useRouter();
+
   const uniqueSpells = Array.from(
     new Set(heroSpell?.map((spell) => spell.name))
   );
