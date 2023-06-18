@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { Patch } from "@prisma/client";
 
 interface IPatch {
