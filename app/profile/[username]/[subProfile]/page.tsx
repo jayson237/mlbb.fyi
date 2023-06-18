@@ -7,6 +7,7 @@ import { TabsContent } from "@/components/shared/tabs";
 import Statistics from "@/components/profile/statistics";
 import PostList from "@/components/profile/profile-bio/post-list";
 import Redirect from "@/components/redirect";
+import FavouriteList from "@/components/profile/profile-bio/favourite-list";
 
 async function SubProfilePage({
   params,
@@ -55,7 +56,12 @@ async function SubProfilePage({
       )}
       {params.subProfile === "posts" && (
         <div className="grow">
-          <PostList />
+          <PostList username={params.username} />
+        </div>
+      )}
+      {params.subProfile === "starred" && (
+        <div className="grow">
+          <FavouriteList username={params.username} />
         </div>
       )}
     </TabsContent>
