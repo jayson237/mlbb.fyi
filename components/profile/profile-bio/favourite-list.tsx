@@ -10,8 +10,8 @@ interface PostListProps {
   username: string;
 }
 
-const PostList: React.FC<PostListProps> = ({ username }) => {
-  const { data: post } = useSWR(["/api/user/post", username], fetcher);
+const FavouriteList: React.FC<PostListProps> = ({ username }) => {
+  const { data: post } = useSWR(["/api/user/favourite", username], fetcher);
 
   if (post) {
     return (
@@ -46,4 +46,4 @@ const PostList: React.FC<PostListProps> = ({ username }) => {
   return <div></div>;
 };
 
-export default PostList;
+export default FavouriteList;

@@ -18,7 +18,7 @@ export default async function PostPage({
     const user = await getUser(post.createdBy);
     return (
       <div>
-        <PostPageBox post={post} user={user} currUser={currUser?.username} />
+        <PostPageBox post={post} user={user} currUser={currUser} />
         {currUser && (
           <div className="mb-3 mt-8 flex flex-row">
             <div>
