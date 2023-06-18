@@ -9,21 +9,23 @@ interface IPatch {
 
 export default function PatchFyi({ patch }: IPatch) {
   return (
-    <div className="mb-8 ml-3 flex flex-col">
-      <div className="mt-8 flex flex-row items-center">
-        <p className=" font-sat text-5xl font-semibold">{patch?.version}</p>
-        <div className="text-md ml-3 flex flex-col font-semibold text-gray-500">
-          <p>released on</p>
-          <p>{patch?.release}</p>
-        </div>
-      </div>
-      {patch?.intro.map((paragraph, i) => {
-        return (
-          <div key={i} className="mt-8">
-            <p className="text-justify text-gray-400">{paragraph}</p>
+    <div className="mb-8  flex flex-col">
+      <div className="ml-3">
+        <div className="mt-8 flex flex-row items-center">
+          <p className=" font-sat text-5xl font-semibold">{patch?.version}</p>
+          <div className="text-md ml-3 flex flex-col font-medium text-gray-500">
+            <p>released on</p>
+            <p>{patch?.release}</p>
           </div>
-        );
-      })}
+        </div>
+        {patch?.intro.map((paragraph, i) => {
+          return (
+            <div key={i} className="mt-8">
+              <p className="text-justify text-gray-400">{paragraph}</p>
+            </div>
+          );
+        })}
+      </div>
       {patch?.headings.map((heading, i) => {
         return (
           <div key={i}>
