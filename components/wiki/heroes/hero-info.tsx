@@ -1,6 +1,7 @@
 // @ts-nocheck
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import { Hero } from "@prisma/client";
@@ -14,8 +15,8 @@ interface HeroFyiContainer {
   heroSpell: Object[] | null;
   heroEmblem: Object[] | null;
   heroWeakAgainst?: Object[] | null;
-  heroStrongAgainst?: Object[] | null;
-  matches: {
+  heroStrongAgainst?: Promise<Object[]> | never[];
+  matches?: {
     mode: string;
     total: number;
     winrate: number;
@@ -27,8 +28,8 @@ interface HeroFyiContainer {
       _id: string;
     }[];
   }[];
-  classicIndex: number;
-  rankedIndex: number;
+  classicIndex?: number;
+  rankedIndex?: number;
   showWR: boolean;
 }
 
@@ -44,6 +45,20 @@ export default function HeroFyi({
   rankedIndex,
   showWR,
 }: HeroFyiContainer) {
+  const [strongAgainstData, setStrongAgainstData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await heroStrongAgainst;
+        setStrongAgainstData(data);
+      } catch (error) {
+        // Handle error if needed
+      }
+    };
+
+    fetchData();
+  }, [heroStrongAgainst]);
   const router = useRouter();
   const uniqueSpells = Array.from(
     new Set(heroSpell?.map((spell) => spell.name))
@@ -277,12 +292,12 @@ export default function HeroFyi({
       )}
 
       <GradiantCard className="mt-4 h-fit w-full">
-        {heroStrongAgainst.length !== 0 && (
+        {strongAgainstData.length !== 0 && (
           <>
             <p className="font-heading text-xl md:text-3xl">Strong against</p>
             <div className="my-4">
               <div className="grid grid-cols-3 flex-row gap-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7">
-                {heroStrongAgainst.map((hero, i) => (
+                {strongAgainstData.map((hero, i) => (
                   <div
                     key={i}
                     onClick={() => {

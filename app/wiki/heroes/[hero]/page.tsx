@@ -13,7 +13,7 @@ import Redirect from "@/components/redirect";
 
 async function getHero(name: string) {
   try {
-    const hero = await prisma?.hero.findFirst({
+    const hero = await prisma.hero.findFirst({
       where: {
         name: name,
       },
@@ -37,47 +37,43 @@ async function findIndexById(arr: any[], targetId: string): Promise<number> {
 }
 
 async function handleStrongAgainst(arr: any[]): Promise<Object[]> {
-  let newArr = [];
-  for (let i = 0; i < arr.length; i++) {
-    newArr.push(arr[i].heroId);
-  }
-  return newArr;
+  return arr.map((item) => item.heroId);
 }
 
 export default async function HeroPage({
   params,
 }: {
-  params: { subWiki: string; hero: string };
+  params: { hero: string };
 }) {
   const currentUser = await getCurrentUser();
   const decodedString = decodeURIComponent(params?.hero.replace(/\+/g, " "));
   const parseHero = decodedString.replace(/\b\w/g, (c) => c.toUpperCase());
   const isExistingHero = await getHero(parseHero);
 
-  if (params.subWiki !== "heroes" || !isExistingHero) {
+  if (!isExistingHero) {
     return <Redirect destination="not-found" />;
   }
 
-  const heroBuild = await getHeroBuild(isExistingHero.id);
-  const heroSpell = await getHeroSpell(isExistingHero.id);
-  const heroEmblem = await getHeroEmblem(isExistingHero.id);
-  const heroWeakAgainst = await getHeroCounter(isExistingHero.id);
-  const heroStrongAgainst = await getHeroCorr(isExistingHero.id);
+  const [heroBuild, heroSpell, heroEmblem, heroWeakAgainst, heroStrongAgainst] =
+    await Promise.all([
+      getHeroBuild(isExistingHero.id),
+      getHeroSpell(isExistingHero.id),
+      getHeroEmblem(isExistingHero.id),
+      getHeroCounter(isExistingHero.id),
+      getHeroCorr(isExistingHero.id),
+    ]);
 
-  let strongAgainst;
-  if (heroStrongAgainst.data) {
-    strongAgainst = await handleStrongAgainst(heroStrongAgainst.data);
-  }
+  const strongAgainst = heroStrongAgainst.data
+    ? handleStrongAgainst(heroStrongAgainst.data)
+    : [];
 
   let isBoundProfile = await isUserBound(currentUser?.username || "");
   let dataAcc;
   let classicIndex;
   let rankedIndex;
-  if (!currentUser || !isBoundProfile) {
-    isBoundProfile = null;
-  } else {
-    dataAcc = await getMlbbData(isBoundProfile.accId);
 
+  if (currentUser && isBoundProfile) {
+    dataAcc = await getMlbbData(isBoundProfile.accId);
     classicIndex = await findIndexById(
       dataAcc?.matchPlayed[0].data,
       isExistingHero.heroId.toString()
@@ -90,18 +86,30 @@ export default async function HeroPage({
 
   return (
     <>
-      <HeroFyi
-        hero={isExistingHero}
-        heroBuild={heroBuild.data.items}
-        heroSpell={heroSpell.data.spells}
-        heroEmblem={heroEmblem.data.emblems}
-        heroWeakAgainst={heroWeakAgainst.data.counters}
-        heroStrongAgainst={strongAgainst}
-        matches={dataAcc?.matchPlayed}
-        classicIndex={classicIndex || 0}
-        rankedIndex={rankedIndex || 0}
-        showWR={isBoundProfile && currentUser ? true : false}
-      ></HeroFyi>
+      {isBoundProfile && currentUser ? (
+        <HeroFyi
+          hero={isExistingHero}
+          heroBuild={heroBuild.data.items}
+          heroSpell={heroSpell.data.spells}
+          heroEmblem={heroEmblem.data.emblems}
+          heroWeakAgainst={heroWeakAgainst.data.counters}
+          heroStrongAgainst={strongAgainst}
+          matches={dataAcc?.matchPlayed}
+          classicIndex={classicIndex || 0}
+          rankedIndex={rankedIndex || 0}
+          showWR={true}
+        />
+      ) : (
+        <HeroFyi
+          hero={isExistingHero}
+          heroBuild={heroBuild.data.items}
+          heroSpell={heroSpell.data.spells}
+          heroEmblem={heroEmblem.data.emblems}
+          heroWeakAgainst={heroWeakAgainst.data.counters}
+          heroStrongAgainst={strongAgainst}
+          showWR={false}
+        />
+      )}
     </>
   );
 }
