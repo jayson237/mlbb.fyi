@@ -31,11 +31,13 @@ export default function PatchContainer({ patches }: IPatch) {
 
   return (
     <div className="mb-8 mt-4 flex w-full flex-col">
-      <div className="flex flex-col gap-8">
-        {sortedYears.map((year) => (
+      <div className="flex flex-col">
+        {sortedYears.map((year, i) => (
           <React.Fragment key={year}>
             <div className="flex flex-row items-center">
-              <h2 className="ml-3 font-heading text-5xl">{year}</h2>
+              <h2 className={`${i > 0 && "pt-2"} ml-3 font-heading text-5xl`}>
+                {year}
+              </h2>
               <p className="text-md ml-4 mt-2 font-semibold text-green-500">
                 ({groupedPatches[year].length} Adjustments)
               </p>
@@ -44,11 +46,16 @@ export default function PatchContainer({ patches }: IPatch) {
               <div
                 key={i}
                 onClick={() => router.push(`wiki/patches/${patch.version}`)}
-                className="cursor-pointer"
+                className="mb-4 cursor-pointer"
               >
-                <GradiantCard className="flex flex-row justify-between rounded-lg p-4 shadow-lg transition-all duration-300 hover:bg-gray-500/25">
+                <GradiantCard
+                  className="flex flex-row justify-between p-4 shadow-lg transition-all duration-300 hover:rounded-2xl hover:bg-gray-500/25 "
+                  variant="clean"
+                >
                   <div className="mr-auto flex flex-col">
-                    <p className="text-xl font-semibold">{patch.version}</p>
+                    <p className="font-sat text-xl font-semibold">
+                      {patch.version}
+                    </p>
                     <p className="text-sm text-gray-500">
                       Released on {patch.release}
                     </p>

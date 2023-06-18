@@ -14,6 +14,10 @@ const fontHeading = localFont({
   src: "../assets/fonts/cal-sans/CalSans-SemiBold.woff2",
   variable: "--font-heading",
 });
+const fontSatoshi = localFont({
+  src: "../assets/fonts/Satoshi-Variable.ttf",
+  variable: "--font-satoshi",
+});
 
 export default async function RootLayout({
   children,
@@ -25,9 +29,9 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.className} ${fontHeading.variable} text-softGray`}
+      className={`${inter.className} ${fontHeading.variable} ${fontSatoshi.variable} text-softGray`}
     >
-      <body className="relative mx-auto bg-bgblack pt-24 text-pwhite after:fixed after:inset-x-0 after:top-[-1350px] after:z-[-1] after:mx-auto after:h-[1440px] after:w-[1880px] after:rounded-full after:bg-navy-600 after:blur-[150px]">
+      <body className="relative mx-auto bg-bgblack pt-24 text-pwhite selection:bg-navy-400 after:fixed after:inset-x-0 after:top-[-1450px] after:z-[-1] after:mx-auto after:h-[1280px] after:w-[1880px] after:rounded-full after:bg-navy-600 after:blur-[400px]">
         <ToasterProvider />
         <Navbar currentUser={currentUser} />
         <div className="">

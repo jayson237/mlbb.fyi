@@ -94,7 +94,7 @@ export default function HeroFyi({
   return (
     <div className="flex flex-col">
       <div className="flex flex-col sm:flex-row sm:gap-x-4">
-        <GradiantCard className="mt-4 h-fit w-full">
+        <GradiantCard className="mt-4 h-fit w-full" variant="clean">
           <div className="flex flex-row gap-x-4">
             <Image
               src={hero?.img || ""}
@@ -147,17 +147,23 @@ export default function HeroFyi({
                   <p className="font-heading text-[12px] sm:text-[16px]">
                     Winrate
                   </p>
-                  <p className="text-[12px] sm:text-[20px]">{hero?.win}</p>
+                  <p className="font-sat text-[12px] font-semibold sm:text-[20px]">
+                    {hero?.win}
+                  </p>
                 </div>
                 <div className="flex flex-col">
-                  <p className="font-heading text-[12px] sm:text-[16px]">
+                  <p className=" font-heading text-[12px] sm:text-[16px]">
                     Pick
                   </p>
-                  <p className="text-[12px] sm:text-[20px]">{hero?.use}</p>
+                  <p className="font-sat text-[12px] font-semibold sm:text-[20px]">
+                    {hero?.use}
+                  </p>
                 </div>
                 <div className="flex flex-col">
                   <p className="font-heading text-[12px] sm:text-[16px]">Ban</p>
-                  <p className="text-[12px] sm:text-[20px]">{hero?.ban}</p>
+                  <p className="font-sat text-[12px] font-semibold sm:text-[20px]">
+                    {hero?.ban}
+                  </p>
                 </div>
               </div>
 
@@ -176,7 +182,7 @@ export default function HeroFyi({
           </div>
         </GradiantCard>
 
-        <GradiantCard className="mt-4 h-[340px] w-full">
+        <GradiantCard className="mt-4 h-[340px] w-full" variant="clean">
           <p className="font-heading text-xl md:text-3xl">Equipments</p>
           <div className="flex flex-col gap-y-2">
             <p className="text-sm text-gray-500">Recommended spell/s</p>
@@ -291,7 +297,7 @@ export default function HeroFyi({
         </div>
       )}
 
-      <GradiantCard className="mt-4 h-fit w-full">
+      <GradiantCard className="mt-4 h-fit w-full" variant="clean">
         {strongAgainstData.length !== 0 && (
           <>
             <p className="font-heading text-xl md:text-3xl">Strong against</p>
@@ -377,7 +383,7 @@ export default function HeroFyi({
         </div>
       </GradiantCard>
 
-      <GradiantCard className="mb-8 mt-4 h-fit w-full">
+      <GradiantCard className="mb-8 mt-4 h-fit w-full" variant="clean">
         <p className="font-heading text-xl md:text-3xl">Passive</p>
         <div className="my-4">
           <div className="flex flex-row gap-2">

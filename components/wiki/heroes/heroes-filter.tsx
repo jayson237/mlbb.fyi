@@ -21,7 +21,10 @@ const HeroesFilter = () => {
   return (
     <>
       <form action="">
-        <GradiantCard className="max-w-[590px] px-6 md:w-[200px]">
+        <GradiantCard
+          className="max-w-[590px] px-6 md:w-[200px]"
+          variant="clean"
+        >
           <h3 className="font-semibold">Filter by</h3>
           <p className="text-medium mt-1 text-sm">Type</p>
           <ul className="mt-2.5 flex w-full flex-col gap-2">
