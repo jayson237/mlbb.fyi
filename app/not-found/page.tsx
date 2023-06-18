@@ -14,7 +14,7 @@ const NotFoundPage = () => {
       <h1 className="font-heading text-4xl">Ooops...</h1>
       <h2 className="mb-4 font-semibold">This page cannot be found</h2>
       <Button className=" w-52 rounded-lg" variant="gradiantNavySec">
-        <Link href="/"> Back to homepage</Link>
+        <Link href="/">Back to homepage</Link>
       </Button>
     </div>
   );
