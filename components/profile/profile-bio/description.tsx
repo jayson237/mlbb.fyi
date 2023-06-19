@@ -26,7 +26,7 @@ const ProfileDesc: React.FC<ProfileDescProps> = ({ user, mlbbAcc }) => {
     <GradiantCard
       className={clsx(
         mlbbAcc || !isLinksEmpty()
-          ? "mx-auto mt-5 h-fit w-[15rem] max-w-full font-normal md:mx-0"
+          ? "mx-auto mt-5 h-fit max-w-[16rem] font-normal md:mx-0"
           : "hidden"
       )}
       variant="clean"

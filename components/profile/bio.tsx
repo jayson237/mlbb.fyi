@@ -53,7 +53,7 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
     <>
       <div className="flex-col">
         <GradiantCard
-          className="mx-auto h-fit w-[15rem] max-w-full md:mx-0"
+          className="mx-auto h-fit max-w-[16rem] md:mx-0"
           variant="clean"
         >
           <IdentityHolder user={user} baseInfo={baseInfo} />

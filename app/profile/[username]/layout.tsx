@@ -75,7 +75,11 @@ export default async function LayoutProfile({
         </div>
         <Tabs defaultValue="statistics" className="w-full">
           <div className="no-scrollbar h-[52px] overflow-x-scroll">
-            <TabsList className="grid w-fit grid-cols-3">
+            <TabsList
+              className={`grid w-fit ${
+                !isOwnProfile ? "grid-cols-2" : "grid-cols-3"
+              } space-x-4`}
+            >
               {ProfileTabList.map((item, i) =>
                 !isOwnProfile && item.name === "Starred" ? null : (
                   <Link
