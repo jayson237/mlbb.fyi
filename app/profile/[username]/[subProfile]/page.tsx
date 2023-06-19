@@ -6,8 +6,8 @@ import isUserBound from "@/lib/actions/isUserBound";
 import { TabsContent } from "@/components/shared/tabs";
 import Statistics from "@/components/profile/statistics";
 import { notFound } from "next/navigation";
-import FavouriteList from "@/components/profile/profile-bio/favourite-list";
-import PostList from "@/components/profile/profile-bio/post-list";
+import FavouriteList from "@/components/profile/favourite-list";
+import PostList from "@/components/profile/post-list";
 
 async function SubProfilePage({
   params,

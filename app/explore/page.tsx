@@ -6,14 +6,10 @@ async function ExplorePage() {
   const currentUser = await getCurrentUser();
 
   return (
-    <>
-      <div>
-        <PostTopBar currUser={currentUser?.id} />
-      </div>
-      <div>
-        <PostList />
-      </div>
-    </>
+    <div>
+      <PostTopBar currUser={currentUser?.id} />
+      <PostList />
+    </div>
   );
 }
 

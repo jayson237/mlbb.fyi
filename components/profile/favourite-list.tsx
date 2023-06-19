@@ -15,7 +15,7 @@ const FavouriteList: React.FC<PostListProps> = ({ username }) => {
 
   if (post) {
     return (
-      <GradiantCard>
+      <GradiantCard variant="clean">
         <ul role="list" className="divide-y divide-gray-100/50">
           {post?.map((post: Post) => (
             <li key={post.id} className="flex justify-between gap-x-6 py-5">

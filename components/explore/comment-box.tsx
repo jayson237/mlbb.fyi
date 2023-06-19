@@ -31,9 +31,9 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
                   image?.split("/image/upload/")[1] || "/nana.jpg"
               }
               alt=""
-              width={40}
-              height={40}
-              className="mr-4 object-none object-left"
+              width={48}
+              height={48}
+              className="mr-4 rounded-full object-none object-left"
               placeholder="blur"
               blurDataURL={
                 image?.split("/image/upload/")[0] +
