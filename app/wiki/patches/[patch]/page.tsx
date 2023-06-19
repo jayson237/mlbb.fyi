@@ -17,6 +17,15 @@ async function getPatch(version: string) {
   }
 }
 
+async function getPathes() {
+  try {
+    const patches = await prisma.patch.findMany();
+    return patches;
+  } catch (error) {
+    return null;
+  }
+}
+
 export default async function PatchPage({
   params,
 }: {
@@ -27,5 +36,6 @@ export default async function PatchPage({
   if (!isValidPatch) {
     return <Redirect destination="not-found" />;
   }
-  return <PatchFyi patch={isValidPatch} />;
+  const patches = await getPathes();
+  return <PatchFyi patch={isValidPatch} patches={patches} />;
 }

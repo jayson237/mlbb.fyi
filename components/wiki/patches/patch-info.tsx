@@ -2,22 +2,63 @@
 
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import { Patch } from "@prisma/client";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface IPatch {
   patch: Patch | null;
+  patches: Patch[] | null;
 }
 
-export default function PatchFyi({ patch }: IPatch) {
+export default function PatchFyi({ patch, patches }: IPatch) {
+  const patchIndex: number = patch
+    ? patches?.findIndex((item) => item.id === patch.id) || 0
+    : -1;
+
+  const previousPatch =
+    patchIndex > 0 && patches ? patches[patchIndex - 1] : null;
+  const nextPatch =
+    patchIndex >= 0 && patches && patchIndex < patches.length - 1
+      ? patches[patchIndex + 1]
+      : null;
+
+  const router = useRouter();
   const dateFormat = /^\d{2}\/\d{2}\/\d{4}/;
   return (
     <div className="mb-8  flex flex-col">
       <div className="mx-auto px-4">
-        <div className="mt-8 flex flex-row items-center">
-          <p className=" font-sat text-5xl font-semibold">{patch?.version}</p>
-          <div className="text-md ml-3 flex flex-col font-medium text-gray-500">
-            <p>released on</p>
-            <p>{patch?.release}</p>
+        <div className="mt-8 flex flex-row items-center justify-between">
+          {previousPatch && (
+            <div
+              className="flex cursor-pointer flex-row items-center"
+              onClick={() =>
+                router.push(`wiki/patches/${previousPatch?.version}`)
+              }
+            >
+              <ArrowLeft className="hover:text-navy-200 hover:duration-300" />
+              <p className="ml-2 font-sat text-xl font-semibold">
+                {previousPatch?.version}
+              </p>
+            </div>
+          )}
+          <div className="flex flex-row">
+            <p className="font-sat text-5xl font-semibold">{patch?.version}</p>
+            <div className="text-md ml-3 mt-3 flex flex-col font-medium text-gray-500">
+              <p>released on</p>
+              <p>{patch?.release}</p>
+            </div>
           </div>
+          {nextPatch && (
+            <div
+              className="flex cursor-pointer flex-row items-center"
+              onClick={() => router.push(`wiki/patches/${nextPatch?.version}`)}
+            >
+              <p className="mr-2 font-sat text-xl font-semibold ">
+                {nextPatch?.version}
+              </p>
+              <ArrowRight className="hover:text-navy-200 hover:duration-300" />
+            </div>
+          )}
         </div>
         {patch?.intro.map((paragraph, i) => (
           <div key={i} className="mt-4">
@@ -51,8 +92,14 @@ export default function PatchFyi({ patch }: IPatch) {
                           update === "Skill 1" ||
                           update === "Skill 2" ||
                           update === "Skill 3" ||
-                          update.startsWith("Passive") ||
-                          update.startsWith("Ultimate") ||
+                          update === "Passive" ||
+                          update === "Ultimate" ||
+                          update === "Attributes" ||
+                          update.startsWith("Skill 1 -") ||
+                          update.startsWith("Skill 2 -") ||
+                          update.startsWith("Skill 3 -") ||
+                          update.startsWith("Passive -") ||
+                          update.startsWith("Ultimate -") ||
                           update.startsWith("Unique Passive")
                             ? "mt-4 font-bold text-green-500"
                             : ""
