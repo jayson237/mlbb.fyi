@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
-import { Button } from "../shared/button";
-import { Label } from "../shared/label";
-import LoadingDots from "../shared/icons/loading-dots";
+import { Button } from "@/components/shared/button";
+import { Label } from "@/components/shared/label";
+import LoadingDots from "@/components/shared/icons/loading-dots";
 import { Post } from "@prisma/client";
 import useAutosizeTextArea from "@/lib/useAutosizeTextArea";
 import React from "react";

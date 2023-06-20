@@ -8,9 +8,9 @@ import Image from "next/image";
 
 import { SafeUser } from "@/types";
 
-import { Button } from "../shared/button";
-import { GradiantCard } from "../shared/gradiant-card";
-import LoadingDots from "../shared/icons/loading-dots";
+import { Button } from "@/components/shared/button";
+import { GradiantCard } from "@/components/shared/gradiant-card";
+import LoadingDots from "@/components/shared/icons/loading-dots";
 
 const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
   const [title, setTitle] = useState<string>("");

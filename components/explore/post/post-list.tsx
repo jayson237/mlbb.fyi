@@ -6,7 +6,7 @@ import useSWR from "swr";
 import { Post } from "@prisma/client";
 import { fetcher } from "@/lib/utils";
 
-import { GradiantCard } from "../shared/gradiant-card";
+import { GradiantCard } from "@/components/shared/gradiant-card";
 
 const PostList = () => {
   const { data: posts } = useSWR("/api/post", fetcher);

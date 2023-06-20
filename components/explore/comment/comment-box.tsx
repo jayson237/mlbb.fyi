@@ -11,7 +11,7 @@ import { fetcher } from "@/lib/fetcher-utils";
 import { Edit3, Trash2 } from "lucide-react";
 import DelCommentButton from "./del-comment-button";
 import EditCommentForm from "./edit-comment-form";
-import DialogFit from "../shared/dialog-fit";
+import DialogFit from "@/components/shared/dialog-fit";
 
 interface CommentBoxProps {
   comment: Comment;
