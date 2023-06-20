@@ -4,7 +4,7 @@ import { Comment } from "@prisma/client";
 import CommentBox from "./comment-box";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher-utils";
-import Loading from "../shared/loading";
+import Loading from "../../shared/loading";
 
 interface CommentListProps {
   postId: string;

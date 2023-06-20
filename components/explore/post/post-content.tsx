@@ -8,19 +8,20 @@ import { SafeUser } from "@/types";
 import { Post, User } from "@prisma/client";
 
 import { Edit3, Star, Trash2 } from "lucide-react";
-import { GradiantCard } from "../shared/gradiant-card";
+
 import DeletePost from "./del-post";
 import EditForm from "./edit-form";
-import LoadingDots from "../shared/icons/loading-dots";
-import DialogFit from "../shared/dialog-fit";
+import { GradiantCard } from "@/components/shared/gradiant-card";
+import LoadingDots from "@/components/shared/icons/loading-dots";
+import DialogFit from "@/components/shared/dialog-fit";
 
-interface PostPageProp {
+interface PostContentProp {
   post: Post;
   user: User | null;
   currUser?: SafeUser | null;
 }
 
-const PostPageBox: React.FC<PostPageProp> = ({ post, user, currUser }) => {
+const PostContent: React.FC<PostContentProp> = ({ post, user, currUser }) => {
   const isCurrUserFollowing = currUser?.favourite.includes(post.id as string);
 
   const [editActive, setEditActive] = useState<boolean>(false);
@@ -178,4 +179,4 @@ const PostPageBox: React.FC<PostPageProp> = ({ post, user, currUser }) => {
   );
 };
 
-export default PostPageBox;
+export default PostContent;

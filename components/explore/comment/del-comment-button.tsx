@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Button } from "../shared/button";
+import { Button } from "../../shared/button";
 import { toast } from "sonner";
-import LoadingDots from "../shared/icons/loading-dots";
+import LoadingDots from "../../shared/icons/loading-dots";
 
 interface DelCommentProps {
   commentId: string;

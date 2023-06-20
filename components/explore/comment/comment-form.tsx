@@ -5,9 +5,9 @@ import { useRef, useState } from "react";
 import { toast } from "sonner";
 import Image from "next/image";
 
-import { GradiantCard } from "../shared/gradiant-card";
+import { GradiantCard } from "@/components/shared/gradiant-card";
 import { SendIcon } from "lucide-react";
-import LoadingDots from "../shared/icons/loading-dots";
+import LoadingDots from "@/components/shared/icons/loading-dots";
 
 interface CommentProps {
   postId: string;
@@ -96,7 +96,7 @@ const NewCommentForm: React.FC<CommentProps> = ({ postId, img }) => {
               ) : (
                 <SendIcon
                   size={20}
-                  className="mb-[6px] rotate-45 hover:text-navy-300 hover:duration-300"
+                  className="mb-[6px] mr-1 rotate-45 hover:text-navy-300 hover:duration-300"
                 />
               )}
             </button>

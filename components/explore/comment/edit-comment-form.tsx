@@ -2,9 +2,10 @@
 
 import useAutosizeTextArea from "@/lib/useAutosizeTextArea";
 import { useEffect, useRef, useState } from "react";
-import { Button } from "../shared/button";
-import LoadingDots from "../shared/icons/loading-dots";
 import { toast } from "sonner";
+
+import { Button } from "@/components/shared/button";
+import LoadingDots from "@/components/shared/icons/loading-dots";
 
 interface EditCommentProps {
   commentId: string;

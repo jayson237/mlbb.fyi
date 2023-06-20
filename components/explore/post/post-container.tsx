@@ -3,11 +3,11 @@
 import { SafeUser } from "@/types";
 import PostForm from "./post-form";
 
-interface PostTopBarProps {
+interface PostContainerProps {
   currUser?: SafeUser;
 }
 
-const PostTopBar: React.FC<PostTopBarProps> = ({ currUser }) => {
+const PostContainer: React.FC<PostContainerProps> = ({ currUser }) => {
   return (
     <>
       <div className="mb-1.5 flex flex-row gap-6">
@@ -17,4 +17,4 @@ const PostTopBar: React.FC<PostTopBarProps> = ({ currUser }) => {
   );
 };
 
-export default PostTopBar;
+export default PostContainer;

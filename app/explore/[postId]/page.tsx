@@ -1,10 +1,9 @@
 import getCurrentUser from "@/lib/actions/getCurrentUser";
-import Image from "next/image";
 import getUser from "@/lib/actions/getUser";
 import getCurrentPost from "@/lib/actions/getCurrentPost";
-import CommentForm from "@/components/explore/comment-form";
-import CommentList from "@/components/explore/comment-list";
-import PostPageBox from "@/components/explore/post-page-box";
+import CommentForm from "@/components/explore/comment/comment-form";
+import CommentList from "@/components/explore/comment/comment-list";
+import PostContent from "@/components/explore/post/post-content";
 
 export default async function PostPage({
   params,
@@ -19,7 +18,7 @@ export default async function PostPage({
     const user = await getUser(post.createdBy);
     return (
       <div>
-        <PostPageBox post={post} user={user} currUser={currUser} />
+        <PostContent post={post} user={user} currUser={currUser} />
         {currUser && <CommentForm postId={params.postId} img={img || ""} />}
         <CommentList postId={params.postId} userId={currUser?.id} />
       </div>
