@@ -65,7 +65,7 @@ const PostContent: React.FC<PostContentProp> = ({ post, user, currUser }) => {
                 <div className="mt-3 flex cursor-pointer flex-row">
                   <button onClick={() => setEditActive(!editActive)}>
                     {editActive ? (
-                      <Edit3 strokeWidth={2} className="mr-5 h-5 w-5" />
+                      <Edit3 className="mr-5 h-5 w-5" />
                     ) : (
                       <Edit3 className="mr-5 h-5 w-5 ease-in-out hover:text-navy-400 hover:duration-300" />
                     )}
@@ -108,7 +108,7 @@ const PostContent: React.FC<PostContentProp> = ({ post, user, currUser }) => {
                     {loading ? (
                       <LoadingDots color="#FAFAFA" />
                     ) : (
-                      <Star className="transition-all duration-300 ease-in-out hover:text-yellow-300" />
+                      <Star className="mt-3 h-5 w-5 transition-all duration-300 ease-in-out hover:text-yellow-300" />
                     )}
                   </button>
                 )}
@@ -140,7 +140,7 @@ const PostContent: React.FC<PostContentProp> = ({ post, user, currUser }) => {
                     {loading ? (
                       <LoadingDots color="#FAFAFA" />
                     ) : (
-                      <Star color="#FACC18" strokeWidth={2} />
+                      <Star className="mt-3 h-5 w-5 text-yellow-300" />
                     )}
                   </button>
                 )}

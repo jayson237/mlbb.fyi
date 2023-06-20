@@ -19,7 +19,7 @@ export default async function PostPage({
     return (
       <div>
         <PostContent post={post} user={user} currUser={currUser} />
-        {currUser && <CommentForm postId={params.postId} img={img || ""} />}
+        {<CommentForm postId={params.postId} img={img || ""} />}
         <CommentList postId={params.postId} userId={currUser?.id} />
       </div>
     );
