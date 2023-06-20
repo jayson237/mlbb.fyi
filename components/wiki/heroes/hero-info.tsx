@@ -97,8 +97,8 @@ export default function HeroFyi({
   ];
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col sm:flex-row sm:gap-x-4">
-        <GradiantCard className="mt-4 h-fit w-full" variant="clean">
+      <div className="flex flex-col sm:flex-row sm:gap-x-1.5">
+        <GradiantCard className="mt-1.5 h-fit w-full" variant="clean">
           <div className="flex flex-row gap-x-4">
             <Image
               src={hero?.img || ""}
@@ -109,7 +109,7 @@ export default function HeroFyi({
               priority
             />
 
-            <div className="flex w-full flex-col gap-x-4 ">
+            <div className="flex w-full flex-col gap-x-1.5 ">
               <div className="flex flex-row items-center gap-2">
                 <p className="font-heading text-xl md:text-3xl">
                   {heroDetails.heroName}
@@ -186,7 +186,7 @@ export default function HeroFyi({
           </div>
         </GradiantCard>
 
-        <GradiantCard className="mt-4 h-[340px] w-full" variant="clean">
+        <GradiantCard className="mt-1.5 h-[340px] w-full" variant="clean">
           <p className="font-heading text-xl md:text-3xl">Equipments</p>
           <div className="flex flex-col gap-y-2">
             <p className="text-sm text-gray-500">Recommended spell/s</p>
@@ -277,7 +277,7 @@ export default function HeroFyi({
       </div>
 
       {showWR && (
-        <div className="mt-4 flex flex-col gap-y-4 sm:flex-row sm:gap-x-4">
+        <div className="mt-1.5 flex flex-col gap-y-1.5 sm:flex-row sm:gap-x-1.5">
           <MatchInsights
             title={`Your classic ${heroDetails?.heroName} matches`}
             totalMatches={matches[0]?.data?.[classicIndex]?.total ?? 0}
@@ -301,7 +301,7 @@ export default function HeroFyi({
         </div>
       )}
 
-      <GradiantCard className="mt-4 h-fit w-full" variant="clean">
+      <GradiantCard className="mt-1.5 h-fit w-full" variant="clean">
         {strongAgainstData.length !== 0 && (
           <>
             <p className="font-heading text-xl md:text-3xl">Strong against</p>
@@ -387,7 +387,7 @@ export default function HeroFyi({
         </div>
       </GradiantCard>
 
-      <GradiantCard className="mb-8 mt-4 h-fit w-full" variant="clean">
+      <GradiantCard className="mb-8 mt-1.5 h-fit w-full" variant="clean">
         <p className="font-heading text-xl md:text-3xl">Passive</p>
         <div className="my-4">
           <div className="flex flex-row gap-2">
