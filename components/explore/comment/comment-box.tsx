@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import useSWR from "swr";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,6 +22,32 @@ interface CommentBoxProps {
 const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
   const { data: image } = useSWR(["/api/comment/pic", comment.userId], fetcher);
   const [editActive, setEditActive] = useState<boolean>(false);
+
+  const [expanded, setExpanded] = useState(false);
+  const [expandedable, setExpandedable] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const paragraphRef = useRef<HTMLParagraphElement>(null);
+
+  function isExpandable(): boolean | undefined {
+    if (containerRef.current && paragraphRef.current) {
+      const conth = containerRef.current.clientHeight;
+      const parah = parseInt(getComputedStyle(paragraphRef.current).lineHeight);
+      const lineCount = conth / parah;
+      if (lineCount >= 2) return true;
+      else false;
+    }
+  }
+  useEffect(() => {
+    isExpandable() === true ? setExpandedable(true) : setExpandedable(false);
+  }, []);
+
+  const toggleExpand = () => {
+    setExpanded(!expanded);
+  };
+
+  const closeEdit = () => {
+    setEditActive(false);
+  };
 
   return (
     <>
@@ -47,11 +73,11 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
             />
           )}
           <Link href={`/profile/${comment.createdBy}/statistics`}>
-            <p className="font-semibold">{comment?.createdBy}</p>
+            <p className="font-heading text-xl">{comment?.createdBy}</p>
           </Link>
         </div>
         {userId === comment.userId && (
-          <div className="flex flex-row">
+          <div className="mt-3 flex flex-row">
             <button onClick={() => setEditActive(!editActive)}>
               {editActive ? (
                 <Edit3 className="mr-5 h-5 w-5" />
@@ -71,13 +97,34 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
         )}
       </div>
       {editActive ? (
-        <div className="mb-8 ml-14 grow">
-          <EditCommentForm commentId={comment.id} commentBody={comment?.body} />
+        <div className="mb-8 ml-16 grow">
+          <EditCommentForm
+            commentId={comment.id}
+            commentBody={comment?.body}
+            onCancel={closeEdit}
+          />
         </div>
       ) : (
-        <div className="mb-8 ml-14">
-          <p>{comment?.body}</p>
-        </div>
+        <>
+          <div className="mb-8 ml-16 flex flex-col" ref={containerRef}>
+            <p
+              className={`${expanded ? "" : "line-clamp-2"}`}
+              ref={paragraphRef}
+            >
+              {comment.body}
+            </p>
+            <span>
+              {expandedable && (
+                <button
+                  onClick={toggleExpand}
+                  className="font-bold text-navy-300 transition-all ease-in-out hover:underline hover:duration-300"
+                >
+                  {!expanded ? "See more" : "See less"}
+                </button>
+              )}
+            </span>
+          </div>
+        </>
       )}
     </>
   );

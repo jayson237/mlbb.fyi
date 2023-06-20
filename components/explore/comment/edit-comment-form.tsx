@@ -10,11 +10,13 @@ import LoadingDots from "@/components/shared/icons/loading-dots";
 interface EditCommentProps {
   commentId: string;
   commentBody: string;
+  onCancel: () => void;
 }
 
 const EditCommentForm: React.FC<EditCommentProps> = ({
   commentId,
   commentBody,
+  onCancel,
 }) => {
   const [value, setValue] = useState<string>(commentBody);
   const [activate, setActivate] = useState<boolean>(false);
@@ -39,6 +41,10 @@ const EditCommentForm: React.FC<EditCommentProps> = ({
 
     setActivate(!activate);
   }, [activate]);
+
+  const handleCancel = () => {
+    onCancel();
+  };
 
   return (
     <>
@@ -68,7 +74,7 @@ const EditCommentForm: React.FC<EditCommentProps> = ({
           }}
         >
           <textarea
-            className="w-full resize-none overflow-hidden border border-gray-500 bg-transparent focus:border-white focus:outline-none"
+            className="w-full resize-none overflow-hidden rounded-lg border border-slate-700 bg-transparent p-3 text-slate-200 outline-none focus:outline-none focus:ring"
             onChange={(e) => {
               const inputValue = e.target.value;
               setValue(inputValue);
@@ -88,7 +94,13 @@ const EditCommentForm: React.FC<EditCommentProps> = ({
           )}
           <div className="flex justify-end">
             <Button
-              className="mb-8 mt-1 rounded-2xl"
+              className="mb-2 mr-4 mt-1 w-24 rounded-2xl"
+              onClick={handleCancel}
+            >
+              Cancel
+            </Button>
+            <Button
+              className="mb-2 mt-1 w-24 rounded-2xl"
               variant="gradiantNavy"
               disabled={!value || value === commentBody}
             >

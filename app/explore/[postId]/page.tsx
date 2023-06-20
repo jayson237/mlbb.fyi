@@ -1,28 +1,21 @@
 import getCurrentUser from "@/lib/actions/getCurrentUser";
 import getUser from "@/lib/actions/getUser";
 import getCurrentPost from "@/lib/actions/getCurrentPost";
-import CommentForm from "@/components/explore/comment/comment-form";
-import CommentList from "@/components/explore/comment/comment-list";
-import PostContent from "@/components/explore/post/post-content";
+
+import Post from "@/components/explore/post";
 
 export default async function PostPage({
   params,
 }: {
   params: { postId: string };
 }) {
-  const post = await getCurrentPost(params.postId);
-  const currUser = await getCurrentUser();
-  const img = currUser?.image;
+  const postId = params.postId;
+  const post = await getCurrentPost(postId);
+  const currentUser = await getCurrentUser();
 
   if (post) {
     const user = await getUser(post.createdBy);
-    return (
-      <div>
-        <PostContent post={post} user={user} currUser={currUser} />
-        {currUser && <CommentForm postId={params.postId} img={img || ""} />}
-        <CommentList postId={params.postId} userId={currUser?.id} />
-      </div>
-    );
+    return <Post currentUser={currentUser} post={post} user={user} />;
   }
 
   return (

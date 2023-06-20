@@ -189,7 +189,11 @@ export default function HeroFyi({
         <GradiantCard className="mt-1.5 h-[340px] w-full" variant="clean">
           <p className="font-heading text-xl md:text-3xl">Equipments</p>
           <div className="flex flex-col gap-y-2">
-            <p className="text-sm text-gray-500">Recommended spell/s</p>
+            <p className="text-sm text-gray-500">
+              {uniqueSpells.length < 2
+                ? "Recommended spell"
+                : "Recommended spells"}
+            </p>
             <div className="flex flex-row">
               {uniqueSpells.map((spellName, i) => (
                 <div key={i} className="mr-2 sm:mr-4">
@@ -213,7 +217,11 @@ export default function HeroFyi({
                 </div>
               ))}
             </div>
-            <p className="text-sm text-gray-500">Recommended emblem/s</p>
+            <p className="text-sm text-gray-500">
+              {uniqueEmblems.length < 2
+                ? "Recommended emblem"
+                : "Recommended emblems"}
+            </p>
             <div className="flex flex-row">
               {uniqueEmblems.map((emblemName, i) => (
                 <div key={i} className="mr-2 sm:mr-4">

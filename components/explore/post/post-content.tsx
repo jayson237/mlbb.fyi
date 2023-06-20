@@ -1,13 +1,11 @@
 "use client";
 
-import { useState, useRef } from "react";
-import useSWR from "swr";
+import { useState, useEffect, useRef } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
 
 import { SafeUser } from "@/types";
 import { Post, User } from "@prisma/client";
-import { fetcher } from "@/lib/utils";
 
 import { Edit3, Star, Trash2 } from "lucide-react";
 
@@ -21,17 +19,23 @@ interface PostContentProp {
   post: Post;
   user: User | null;
   currUser?: SafeUser | null;
+  comments: any;
 }
 
-const PostContent: React.FC<PostContentProp> = ({ post, user, currUser }) => {
+const PostContent: React.FC<PostContentProp> = ({
+  post,
+  user,
+  currUser,
+  comments,
+}) => {
   const isStarred = currUser?.favourite.includes(post.id as string);
-  const { data: comments } = useSWR(["/api/comment/list", post.id], fetcher);
 
   const [editActive, setEditActive] = useState<boolean>(false);
   const [favourite, setFavourite] = useState(isStarred);
   const [loading, setLoading] = useState(false);
 
   const [expanded, setExpanded] = useState(false);
+  const [expandedable, setExpandedable] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const paragraphRef = useRef<HTMLParagraphElement>(null);
 
@@ -42,10 +46,13 @@ const PostContent: React.FC<PostContentProp> = ({ post, user, currUser }) => {
 
       const lineCount = conth / parah;
       console.log(lineCount);
-      if (lineCount > 3) return true;
+      if (lineCount >= 3) return true;
       else false;
     }
   }
+  useEffect(() => {
+    isExpandable() === true ? setExpandedable(true) : setExpandedable(false);
+  }, []);
 
   const toggleExpand = () => {
     setExpanded(!expanded);
@@ -68,7 +75,7 @@ const PostContent: React.FC<PostContentProp> = ({ post, user, currUser }) => {
                 <div className="mt-3 flex cursor-pointer flex-row">
                   <button onClick={() => setEditActive(!editActive)}>
                     {editActive ? (
-                      <Edit3 className="mr-5 h-5 w-5" />
+                      <Edit3 strokeWidth={2} className="mr-5 h-5 w-5" />
                     ) : (
                       <Edit3 className="mr-5 h-5 w-5 ease-in-out hover:text-navy-400 hover:duration-300" />
                     )}
@@ -111,7 +118,7 @@ const PostContent: React.FC<PostContentProp> = ({ post, user, currUser }) => {
                     {loading ? (
                       <LoadingDots color="#FAFAFA" />
                     ) : (
-                      <Star className="mt-3 h-5 w-5 transition-all duration-300 ease-in-out hover:text-yellow-300" />
+                      <Star className="transition-all duration-300 ease-in-out hover:fill-yellow-300 hover:text-yellow-300" />
                     )}
                   </button>
                 )}
@@ -143,7 +150,11 @@ const PostContent: React.FC<PostContentProp> = ({ post, user, currUser }) => {
                     {loading ? (
                       <LoadingDots color="#FAFAFA" />
                     ) : (
-                      <Star className="mt-3 h-5 w-5 text-yellow-300" />
+                      <Star
+                        color="#FACC18"
+                        strokeWidth={2}
+                        className="fill-yellow-300"
+                      />
                     )}
                   </button>
                 )}
@@ -166,7 +177,7 @@ const PostContent: React.FC<PostContentProp> = ({ post, user, currUser }) => {
               {post.body}
             </p>
             <span>
-              {isExpandable() && (
+              {expandedable && (
                 <button
                   onClick={toggleExpand}
                   className="font-bold text-navy-300 transition-all ease-in-out hover:underline hover:duration-300"
@@ -176,12 +187,13 @@ const PostContent: React.FC<PostContentProp> = ({ post, user, currUser }) => {
               )}
             </span>
           </div>
-
           <div className="my-4 flex flex-row gap-x-1">
             <p className="text-lg font-sat font-semibold">
               {comments && comments.length ? comments.length : 0}
             </p>
-            <p className="text-lg mt-[2px] font-heading">Comments</p>
+            <p className="text-lg mt-[2px] font-heading">
+              {comments && comments.length < 2 ? "Comment" : "Comments"}
+            </p>
           </div>
         </>
       )}

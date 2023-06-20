@@ -113,7 +113,9 @@ const Settings: React.FC<ISettings> = ({ currentUser, mlbbAcc }) => {
                   className="h-4 w-4"
                   color="#3652ba"
                 />
-                <p className="text-bold mt-1 text-sm ">Edit profile picture</p>
+                <p className="text-bold mt-1 text-sm hover:underline">
+                  Edit profile picture
+                </p>
               </div>
             }
           >
@@ -215,6 +217,7 @@ const Settings: React.FC<ISettings> = ({ currentUser, mlbbAcc }) => {
                 link3 === currentUser?.links[2]) ||
               buttonDisabled
             }
+            variant="gradiantNavy"
             className="mb-8 mt-1 rounded-lg"
             onClick={async (e) => {
               e.preventDefault();

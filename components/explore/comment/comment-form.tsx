@@ -8,6 +8,7 @@ import Image from "next/image";
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import { SendIcon } from "lucide-react";
 import LoadingDots from "@/components/shared/icons/loading-dots";
+import useMutCom from "@/lib/state/useMutCom";
 
 interface CommentProps {
   postId: string;
@@ -15,6 +16,7 @@ interface CommentProps {
 }
 
 const NewCommentForm: React.FC<CommentProps> = ({ postId, img }) => {
+  const togMut = useMutCom();
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -63,8 +65,12 @@ const NewCommentForm: React.FC<CommentProps> = ({ postId, img }) => {
               toast.error(msg.message);
             } else {
               setLoading(false);
+              setValue("");
               toast.success(msg.message);
-              window.location.reload();
+              togMut.togMut();
+              setTimeout(() => {
+                togMut.clamMut();
+              }, 1000);
             }
           }}
         >
@@ -96,7 +102,7 @@ const NewCommentForm: React.FC<CommentProps> = ({ postId, img }) => {
               ) : (
                 <SendIcon
                   size={20}
-                  className="mb-[6px] mr-1 rotate-45 hover:text-navy-300 hover:duration-300"
+                  className="mb-[6px] rotate-45 hover:text-navy-300 hover:duration-300"
                 />
               )}
             </button>
