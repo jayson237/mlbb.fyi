@@ -1,11 +1,13 @@
 "use client";
 
-import { Post } from "@prisma/client";
-import { fetcher } from "@/lib/utils";
 import Link from "next/link";
 import useSWR from "swr";
-import Loading from "../shared/loading";
+
+import { Post } from "@prisma/client";
+import { fetcher } from "@/lib/utils";
+
 import { GradiantCard } from "../shared/gradiant-card";
+import Loading from "../shared/loading";
 
 const PostList = () => {
   const { data: posts } = useSWR("/api/post", fetcher);
@@ -23,21 +25,19 @@ const PostList = () => {
             >
               <div className="flex min-w-0 flex-col">
                 <Link href={`/explore/${post.id}`}>
-                  <p className="text-white-500 text-xl font-semibold leading-6">
+                  <p className="text-white-500 text-xl font-semibold leading-6 ease-in-out hover:text-navy-200 hover:duration-300">
                     {post.title}
                   </p>
                 </Link>
-                <Link href={`/profile/${post.createdBy}/statistics`}>
-                  <p className="text-xs mt-1 truncate leading-5 text-gray-500">
-                    {post.createdBy}
-                  </p>
-                </Link>
+                <div className="flex items-center">
+                  <Link href={`/profile/${post.createdBy}/statistics`}>
+                    <p className="text-xs mt-2 truncate leading-5 text-gray-500 ease-in-out hover:text-navy-300 hover:underline">
+                      {post.createdBy}
+                    </p>
+                  </Link>
+                </div>
               </div>
-              <div className="sm:flex-col sm:items-end">
-                <p className="text-sm leading-6 text-gray-500">
-                  Created at or updated at PlaceHolder
-                </p>
-              </div>
+
               {index !== posts.length - 1 && (
                 <div className="absolute inset-x-0 bottom-0 mx-[-23px] h-0.5 bg-navy-400/30"></div>
               )}

@@ -1,8 +1,7 @@
 "use client";
 
-import { User } from "@prisma/client";
-import PostForm from "./post-form";
 import { SafeUser } from "@/types";
+import PostForm from "./post-form";
 
 interface PostTopBarProps {
   currUser?: SafeUser;

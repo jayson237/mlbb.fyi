@@ -1,11 +1,11 @@
-import PostList from "@/components/explore/post-list";
-import PostTopBar from "@/components/explore/post-top-bar";
-import { GradiantCard } from "@/components/shared/gradiant-card";
 import getCurrentUser from "@/lib/actions/getCurrentUser";
-import { PanelTopClose } from "lucide-react";
-import prisma from "@/lib/prismadb";
 import Image from "next/image";
 import Link from "next/link";
+import prisma from "@/lib/prismadb";
+import { GradiantCard } from "@/components/shared/gradiant-card";
+import { PanelTopClose } from "lucide-react";
+import PostList from "@/components/explore/post-list";
+import PostTopBar from "@/components/explore/post-top-bar";
 
 async function getRandomUser() {
   const productsCount = await prisma.user.count();

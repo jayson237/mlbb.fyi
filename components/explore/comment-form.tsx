@@ -2,12 +2,12 @@
 
 import useAutosizeTextArea from "@/lib/useAutosizeTextArea";
 import { useRef, useState } from "react";
+import { toast } from "sonner";
 import Image from "next/image";
 
 import { GradiantCard } from "../shared/gradiant-card";
-import LoadingDots from "../shared/icons/loading-dots";
-import { toast } from "sonner";
 import { SendIcon } from "lucide-react";
+import LoadingDots from "../shared/icons/loading-dots";
 
 interface CommentProps {
   postId: string;
@@ -69,7 +69,7 @@ const NewCommentForm: React.FC<CommentProps> = ({ postId, img }) => {
           <div className="flex flex-row items-end">
             <textarea
               id="review-text"
-              className="font-mediumfocus:outline-none w-full resize-none overflow-hidden border border-transparent border-b-gray-500 bg-transparent py-1 focus:border-b-white"
+              className="w-full resize-none overflow-hidden rounded-lg border-b border-slate-700 bg-transparent px-3 py-2 text-slate-200 outline-none transition-all duration-500 focus:outline-none"
               onChange={(e) => {
                 const inputValue = e.target.value;
                 setValue(inputValue);

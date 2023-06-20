@@ -1,16 +1,16 @@
 "use client";
 
+import useAutosizeTextArea from "@/lib/useAutosizeTextArea";
+
 import { useRef, useState } from "react";
 import { toast } from "sonner";
+import Image from "next/image";
+
+import { SafeUser } from "@/types";
 
 import { Button } from "../shared/button";
-import { Label } from "../shared/label";
-import LoadingDots from "../shared/icons/loading-dots";
-import useAutosizeTextArea from "@/lib/useAutosizeTextArea";
 import { GradiantCard } from "../shared/gradiant-card";
-import { User } from "@prisma/client";
-import { SafeUser } from "@/types";
-import Image from "next/image";
+import LoadingDots from "../shared/icons/loading-dots";
 
 const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
   const [title, setTitle] = useState<string>("");

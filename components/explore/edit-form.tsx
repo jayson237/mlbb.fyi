@@ -12,9 +12,10 @@ import React from "react";
 
 interface editPostProps {
   post: Post;
+  onCancel: () => void;
 }
 
-const EditForm: React.FC<editPostProps> = ({ post }) => {
+const EditForm: React.FC<editPostProps> = ({ post, onCancel }) => {
   const [title, setTitle] = useState<string>(post.title);
   const [message, setMessage] = useState<string>(post.body);
   const [activate, setActivate] = useState<boolean>(false);
@@ -44,6 +45,10 @@ const EditForm: React.FC<editPostProps> = ({ post }) => {
 
     setActivate(!activate);
   }, [activate]);
+
+  const handleCancel = () => {
+    onCancel(); 
+  };
 
   return (
     <>
@@ -78,7 +83,7 @@ const EditForm: React.FC<editPostProps> = ({ post }) => {
             <Label htmlFor="body">Title</Label>
             <textarea
               placeholder="Insert title here"
-              className="w-full resize-none overflow-hidden border border-gray-500 bg-transparent focus:border-white focus:outline-none"
+              className="w-full resize-none overflow-hidden rounded-lg border-b border-slate-700 bg-transparent px-3 py-2 text-slate-200 outline-none transition-all duration-500 focus:outline-none"
               onChange={(e) => {
                 const inputValue = e.target.value;
                 setTitle(inputValue);
@@ -99,7 +104,7 @@ const EditForm: React.FC<editPostProps> = ({ post }) => {
           <div className="space-y-1">
             <Label htmlFor="body">Message</Label>
             <textarea
-              className="w-full resize-none overflow-hidden border border-gray-500 bg-transparent focus:border-white focus:outline-none"
+              className="w-full resize-none overflow-hidden rounded-lg border border-slate-700 bg-transparent p-3 text-slate-200 outline-none focus:outline-none focus:ring"
               onChange={(e) => {
                 const inputValue = e.target.value;
                 setMessage(inputValue);
@@ -120,13 +125,14 @@ const EditForm: React.FC<editPostProps> = ({ post }) => {
             )}
           </div>
           <div className="flex justify-end">
+            <Button className="mb-8 mr-4 mt-1 w-24 rounded-full" onClick={handleCancel}>Cancel</Button>
             <Button
               disabled={
                 (post.title === title && post.body === message) ||
                 !title ||
                 !message
               }
-              className="mb-8 mt-1 rounded-full"
+              className="mb-8 mt-1 w-24 rounded-full"
               variant="gradiantNavy"
             >
               {loading ? (
@@ -134,7 +140,7 @@ const EditForm: React.FC<editPostProps> = ({ post }) => {
                   <LoadingDots color="#FAFAFA" />
                 </>
               ) : (
-                "Edit"
+                "Confirm"
               )}
             </Button>
           </div>
