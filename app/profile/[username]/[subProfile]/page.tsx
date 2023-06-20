@@ -3,11 +3,11 @@ import getUser from "@/lib/actions/getUser";
 import getMlbbData from "@/lib/actions/getMlbbData";
 import isUserBound from "@/lib/actions/isUserBound";
 
-import { TabsContent } from "@/components/shared/tabs";
-import Statistics from "@/components/profile/statistics";
 import { notFound } from "next/navigation";
-import FavouriteList from "@/components/profile/favourite-list";
-import PostList from "@/components/profile/post-list";
+import { TabsContent } from "@/components/shared/tabs";
+
+import Statistics from "@/components/profile/statistics";
+import ProfileList from "@/components/profile/profile-list";
 
 async function SubProfilePage({
   params,
@@ -57,12 +57,12 @@ async function SubProfilePage({
 
       {params.subProfile === "posts" && (
         <div className="grow">
-          <PostList username={params.username} />
+          <ProfileList username={params.username} type="post" />
         </div>
       )}
       {params.subProfile === "starred" && (
         <div className="grow">
-          <FavouriteList username={params.username} />
+          <ProfileList username={params.username} type="favourite" />
         </div>
       )}
     </TabsContent>

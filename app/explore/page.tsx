@@ -32,12 +32,12 @@ async function ExplorePage() {
       >
         <PanelTopClose className="h-4 w-4" />
       </GradiantCard>
-      <div className="no-scrollbar max-h-[90vh] w-full overflow-scroll md:w-[1720px]">
+      <div className="no-scrollbar max-h-[90vh] w-full overflow-scroll md:w-[2000px]">
         <PostTopBar currUser={currentUser} />
         <PostList />
       </div>
       <GradiantCard
-        className="sticky top-14 h-full max-h-[90vh] w-36 rounded-3xl"
+        className="sticky top-14 h-full max-h-[90vh] rounded-3xl"
         variant="clean"
       >
         <h2 className="font-heading text-xl font-bold tracking-wide">

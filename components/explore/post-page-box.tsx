@@ -9,10 +9,10 @@ import { Post, User } from "@prisma/client";
 
 import { Edit3, Star, Trash2 } from "lucide-react";
 import { GradiantCard } from "../shared/gradiant-card";
-import DelDialog from "./del-dialog";
-import DeleteButton from "./del-button";
+import DeletePost from "./del-post";
 import EditForm from "./edit-form";
 import LoadingDots from "../shared/icons/loading-dots";
+import DialogFit from "../shared/dialog-fit";
 
 interface PostPageProp {
   post: Post;
@@ -58,10 +58,10 @@ const PostPageBox: React.FC<PostPageProp> = ({ post, user, currUser }) => {
       ) : (
         <>
           <div className="flex flex-col">
-            <div className="flex flex-row items-center justify-between">
+            <div className="flex flex-row items-start justify-between">
               <p className="font-heading text-3xl">{post?.title}</p>
               {currUser && currUser.username === user?.username && (
-                <div className="flex cursor-pointer flex-row">
+                <div className="mt-3 flex cursor-pointer flex-row">
                   <button onClick={() => setEditActive(!editActive)}>
                     {editActive ? (
                       <Edit3 strokeWidth={2} className="mr-5" />
@@ -69,14 +69,14 @@ const PostPageBox: React.FC<PostPageProp> = ({ post, user, currUser }) => {
                       <Edit3 className="mr-5 ease-in-out hover:text-navy-400 hover:duration-300" />
                     )}
                   </button>
-                  <DelDialog
+                  <DialogFit
                     title="Delete Post"
                     triggerChild={
                       <Trash2 className="ease-in-out hover:text-red-400 hover:duration-300" />
                     }
                   >
-                    <DeleteButton postId={post.id} />
-                  </DelDialog>
+                    <DeletePost postId={post.id} />
+                  </DialogFit>
                 </div>
               )}
               {currUser &&
@@ -104,7 +104,11 @@ const PostPageBox: React.FC<PostPageProp> = ({ post, user, currUser }) => {
                       }
                     }}
                   >
-                    {loading ? <LoadingDots color="#FAFAFA" /> : <Star />}
+                    {loading ? (
+                      <LoadingDots color="#FAFAFA" />
+                    ) : (
+                      <Star className="transition-all duration-300 ease-in-out hover:text-yellow-300" />
+                    )}
                   </button>
                 )}
               {currUser &&
@@ -135,7 +139,7 @@ const PostPageBox: React.FC<PostPageProp> = ({ post, user, currUser }) => {
                     {loading ? (
                       <LoadingDots color="#FAFAFA" />
                     ) : (
-                      <Star color="#FACC50" strokeWidth={2} />
+                      <Star color="#FACC18" strokeWidth={2} />
                     )}
                   </button>
                 )}

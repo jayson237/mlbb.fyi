@@ -148,14 +148,14 @@ const EditPicture: React.FC<EditPictureProps> = ({ currentUser }) => {
           {isDragActive ? (
             <div className="my-4 flex cursor-pointer flex-row items-center justify-center">
               <Paperclip className="mr-1 mt-[1px] h-3 w-3" />
-              <p className="text-decoration: underline underline-offset-2">
+              <p className="font-semiboldtext-decoration: text-sm underline underline-offset-2">
                 Drop file here
               </p>
             </div>
           ) : (
             <div className="my-4 flex cursor-pointer flex-row items-center justify-center">
               <Paperclip className="mr-1 mt-[1px] h-3 w-3" />
-              <p className="text-decoration: underline underline-offset-2">
+              <p className="text-decoration: text-sm font-semibold underline underline-offset-2">
                 Drag and drop file here, or click to select and replace file
               </p>
             </div>

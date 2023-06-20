@@ -88,9 +88,9 @@ const NewCommentForm: React.FC<CommentProps> = ({ postId, img }) => {
               disabled={!value}
             >
               {loading ? (
-                <>
+                <div className="mb-2">
                   <LoadingDots color="#FAFAFA" />
-                </>
+                </div>
               ) : (
                 <SendIcon
                   size={20}

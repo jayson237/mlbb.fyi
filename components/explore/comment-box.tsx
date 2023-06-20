@@ -1,13 +1,17 @@
-import { Comment } from "@prisma/client";
+"use client";
+
+import { useState } from "react";
 import useSWR from "swr";
 import Image from "next/image";
 import Link from "next/link";
+
+import { Comment } from "@prisma/client";
 import { fetcher } from "@/lib/fetcher-utils";
+
 import { Edit3, Trash2 } from "lucide-react";
-import DelDialog from "./del-dialog";
 import DelCommentButton from "./del-comment-button";
-import { useState } from "react";
 import EditCommentForm from "./edit-comment-form";
+import DialogFit from "../shared/dialog-fit";
 
 interface CommentBoxProps {
   comment: Comment;
@@ -55,12 +59,12 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
                 <Edit3 className="mr-5" />
               )}
             </button>
-            <DelDialog title="Delete" triggerChild={<Trash2 />}>
+            <DialogFit title="Delete" triggerChild={<Trash2 />}>
               <p className="flex justify-center">
                 Click the button below to confirm deletion
               </p>
               <DelCommentButton commentId={comment.id} />
-            </DelDialog>
+            </DialogFit>
           </div>
         )}
       </div>

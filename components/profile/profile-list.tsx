@@ -6,12 +6,13 @@ import Link from "next/link";
 import useSWR from "swr";
 import { GradiantCard } from "@/components/shared/gradiant-card";
 
-interface PostListProps {
+interface ProfileListProps {
   username: string;
+  type: string;
 }
 
-const FavouriteList: React.FC<PostListProps> = ({ username }) => {
-  const { data: post } = useSWR(["/api/user/favourite", username], fetcher);
+const ProfileList: React.FC<ProfileListProps> = ({ username, type }) => {
+  const { data: post } = useSWR([`/api/user/${type}`, username], fetcher);
 
   if (post) {
     return (
@@ -31,11 +32,6 @@ const FavouriteList: React.FC<PostListProps> = ({ username }) => {
                   </p>
                 </Link>
               </div>
-              <div className="sm:flex-col sm:items-end">
-                <p className="text-sm leading-6 text-gray-500">
-                  Created at or updated at PlaceHolder
-                </p>
-              </div>
             </li>
           ))}
         </ul>
@@ -43,7 +39,7 @@ const FavouriteList: React.FC<PostListProps> = ({ username }) => {
     );
   }
 
-  return <div></div>;
+  return null;
 };
 
-export default FavouriteList;
+export default ProfileList;

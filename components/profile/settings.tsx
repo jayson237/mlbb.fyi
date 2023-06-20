@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { CheckCircle, UserCog, XCircle } from "lucide-react";
 
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 import { SafeUser } from "@/types";
 import { Input } from "../shared/input";
@@ -14,9 +15,8 @@ import { Button } from "../shared/button";
 import { Label } from "../shared/label";
 import LoadingDots from "../shared/icons/loading-dots";
 import { MlbbAcc } from "@prisma/client";
-import { cn } from "@/lib/utils";
-import SettingsDialog from "./profile-settings/settings-dialog";
-import EditPicture from "./profile-settings/edit-picture";
+import EditPicture from "./edit-picture";
+import DialogFit from "../shared/dialog-fit";
 
 interface ISettings {
   currentUser?: SafeUser | null;
@@ -103,7 +103,7 @@ const Settings: React.FC<ISettings> = ({ currentUser, mlbbAcc }) => {
             />
           </div>
 
-          <SettingsDialog
+          <DialogFit
             title="Choose profile picture (Max 5 MB)"
             triggerChild={
               <div className="flex cursor-pointer flex-row items-center justify-center gap-2">
@@ -118,7 +118,7 @@ const Settings: React.FC<ISettings> = ({ currentUser, mlbbAcc }) => {
             }
           >
             <EditPicture currentUser={currentUser} />
-          </SettingsDialog>
+          </DialogFit>
 
           <div className="space-y-1">
             <Label htmlFor="email">Email</Label>

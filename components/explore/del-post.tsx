@@ -10,13 +10,13 @@ interface DeletePostProps {
   postId: string;
 }
 
-const DeleteButton: React.FC<DeletePostProps> = ({ postId }) => {
+const DeletePost: React.FC<DeletePostProps> = ({ postId }) => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
 
   return (
-    <>
-      <p className="flex justify-center text-sm font-semibold">
+    <div className="flex flex-col items-center justify-center gap-8">
+      <p className="text-center text-sm font-semibold">
         Click the button below to confirm deletion
       </p>
       <Button
@@ -43,7 +43,7 @@ const DeleteButton: React.FC<DeletePostProps> = ({ postId }) => {
             router.replace(`/explore`);
           }
         }}
-        className="mx-auto w-[260px] rounded-lg"
+        className="mx-auto w-full rounded-lg"
         variant="destructive"
       >
         {loading ? (
@@ -54,8 +54,8 @@ const DeleteButton: React.FC<DeletePostProps> = ({ postId }) => {
           "Confirm"
         )}
       </Button>
-    </>
+    </div>
   );
 };
 
-export default DeleteButton;
+export default DeletePost;
