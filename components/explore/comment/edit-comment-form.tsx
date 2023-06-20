@@ -17,7 +17,7 @@ const EditCommentForm: React.FC<EditCommentProps> = ({
   commentBody,
 }) => {
   const [value, setValue] = useState<string>(commentBody);
-  const [activate, setActivate] = useState<boolean>(false); //Just to make sure the useEffect always activate once entering the page
+  const [activate, setActivate] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [isCommentInputFocused, setIsCommentInputFocused] =
     useState<boolean>(false);

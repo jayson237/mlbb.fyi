@@ -9,7 +9,7 @@ import { Comment } from "@prisma/client";
 import { fetcher } from "@/lib/fetcher-utils";
 
 import { Edit3, Trash2 } from "lucide-react";
-import DelCommentButton from "./del-comment-button";
+import DelComment from "./del-comment";
 import EditCommentForm from "./edit-comment-form";
 import DialogFit from "@/components/shared/dialog-fit";
 
@@ -24,7 +24,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
   const [editActive, setEditActive] = useState<boolean>(false);
 
   return (
-    <div>
+    <>
       <div className="flex flex-row items-center justify-between">
         <div className="mb-3 mt-8 flex flex-row items-center">
           {image && (
@@ -54,16 +54,18 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
           <div className="flex flex-row">
             <button onClick={() => setEditActive(!editActive)}>
               {editActive ? (
-                <Edit3 color="#00ff40" strokeWidth={3} className="mr-5" />
+                <Edit3 className="mr-5 h-5 w-5" />
               ) : (
-                <Edit3 className="mr-5" />
+                <Edit3 className="mr-5 h-5 w-5 ease-in-out hover:text-navy-400 hover:duration-300" />
               )}
             </button>
-            <DialogFit title="Delete" triggerChild={<Trash2 />}>
-              <p className="flex justify-center">
-                Click the button below to confirm deletion
-              </p>
-              <DelCommentButton commentId={comment.id} />
+            <DialogFit
+              title="Delete Comment"
+              triggerChild={
+                <Trash2 className="h-5 w-5 ease-in-out hover:text-red-400 hover:duration-300" />
+              }
+            >
+              <DelComment commentId={comment.id} />
             </DialogFit>
           </div>
         )}
@@ -73,11 +75,11 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
           <EditCommentForm commentId={comment.id} commentBody={comment?.body} />
         </div>
       ) : (
-        <div className="mb-8 ml-14 whitespace-pre-line">
+        <div className="mb-8 ml-14">
           <p>{comment?.body}</p>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

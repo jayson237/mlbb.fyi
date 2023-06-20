@@ -3,10 +3,7 @@
 import useAutosizeTextArea from "@/lib/useAutosizeTextArea";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
-import useSWR from "swr";
 import Image from "next/image";
-
-import { fetcher } from "@/lib/utils";
 
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import { SendIcon } from "lucide-react";
@@ -22,7 +19,6 @@ const NewCommentForm: React.FC<CommentProps> = ({ postId, img }) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const { data: comments } = useSWR(["/api/comment/list", postId], fetcher);
 
   useAutosizeTextArea(textAreaRef.current, value);
 
