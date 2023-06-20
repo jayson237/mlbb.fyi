@@ -32,7 +32,7 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
     <>
       <GradiantCard variant="clean">
         <h1 className="font-heading text-xl font-bold tracking-wide">
-          Create a new topic!
+          Start a new discussion!
         </h1>
         <form
           className="mt-3 flex w-full flex-col gap-3"

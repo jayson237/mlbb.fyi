@@ -41,7 +41,7 @@ async function ExplorePage() {
         variant="clean"
       >
         <h2 className="font-heading text-xl font-bold tracking-wide">
-          Explore Player
+          Connect with other players
         </h2>
 
         <ul className="mt-3 flex flex-col gap-3">

@@ -109,7 +109,7 @@ const PostPageBox: React.FC<PostPageProp> = ({ post, user, currUser }) => {
                     {loading ? (
                       <LoadingDots color="#FAFAFA" />
                     ) : (
-                      <Star color="#ffff80" strokeWidth={3} />
+                      <Star color="#ffff80" strokeWidth={2} />
                     )}
                   </button>
                 )}
