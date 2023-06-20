@@ -68,7 +68,6 @@ const Statistics: React.FC<StatisticsProps> = ({
               winrate={
                 (viewMatchPlayed && viewMatchPlayed[0]?.winrate * 100) || 0
               }
-              isBound={isBound}
             />
             <MatchInsights
               title="Ranked Win Statistic"
@@ -76,7 +75,6 @@ const Statistics: React.FC<StatisticsProps> = ({
               winrate={
                 (viewMatchPlayed && viewMatchPlayed[1]?.winrate * 100) || 0
               }
-              isBound={isBound}
             />
           </div>
         </div>

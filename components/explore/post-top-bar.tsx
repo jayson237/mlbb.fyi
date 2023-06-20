@@ -1,25 +1,19 @@
 "use client";
 
-import { Button } from "../shared/button";
-import { useState } from "react";
+import { User } from "@prisma/client";
 import PostForm from "./post-form";
+import { SafeUser } from "@/types";
 
 interface PostTopBarProps {
-  currUser?: string;
+  currUser?: SafeUser;
 }
 
 const PostTopBar: React.FC<PostTopBarProps> = ({ currUser }) => {
-  const [active, setActive] = useState<boolean>(false);
-
   return (
     <>
-      <div className="flex flex-row gap-6">
-        <div>Search Bar PlaceHolder </div>
-        {currUser && (
-          <Button onClick={() => setActive(!active)}>Create a New Topic</Button>
-        )}
+      <div className="mb-1.5 flex flex-row gap-6">
+        {currUser && <PostForm currUser={currUser} />}
       </div>
-      <div>{active && <PostForm />}</div>
     </>
   );
 };

@@ -8,14 +8,12 @@ interface MatchInsightsProps {
   title: string;
   totalMatches: number;
   winrate: number;
-  isBound: boolean;
 }
 
 const MatchInsights: React.FC<MatchInsightsProps> = ({
   title,
   totalMatches,
   winrate,
-  isBound,
 }) => {
   return (
     <GradiantCard variant="clean">

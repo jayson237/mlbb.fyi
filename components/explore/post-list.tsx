@@ -5,15 +5,20 @@ import { fetcher } from "@/lib/utils";
 import Link from "next/link";
 import useSWR from "swr";
 import Loading from "../shared/loading";
+import { GradiantCard } from "../shared/gradiant-card";
 
 const PostList = () => {
   const { data: post } = useSWR("/api/post", fetcher);
 
   if (post) {
     return (
-      <ul role="list" className="divide-y divide-gray-100/50">
+      <ul role="list" className="">
         {post?.map((post: Post) => (
-          <li key={post.id} className="flex justify-between gap-x-6 py-5">
+          <GradiantCard
+            key={post.id}
+            className="mb-1.5 flex justify-between gap-x-6 py-5"
+            variant="clean"
+          >
             <div className="flex  min-w-0 flex-col">
               <Link href={`/explore/${post.id}`}>
                 <p className=" text-white-500 text-xl font-semibold leading-6">
@@ -31,7 +36,7 @@ const PostList = () => {
                 Created at or updated at PlaceHolder
               </p>
             </div>
-          </li>
+          </GradiantCard>
         ))}
       </ul>
     );

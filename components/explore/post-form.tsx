@@ -7,8 +7,12 @@ import { Button } from "../shared/button";
 import { Label } from "../shared/label";
 import LoadingDots from "../shared/icons/loading-dots";
 import useAutosizeTextArea from "@/lib/useAutosizeTextArea";
+import { GradiantCard } from "../shared/gradiant-card";
+import { User } from "@prisma/client";
+import { SafeUser } from "@/types";
+import Image from "next/image";
 
-const PostForm = () => {
+const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
   const [title, setTitle] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -26,9 +30,12 @@ const PostForm = () => {
 
   return (
     <>
-      <div>
+      <GradiantCard variant="clean">
+        <h1 className="font-heading text-xl font-bold tracking-wide">
+          Create a new topic!
+        </h1>
         <form
-          className="flex w-full flex-col gap-3"
+          className="mt-3 flex w-full flex-col gap-3"
           onSubmit={async (e) => {
             e.preventDefault();
             setLoading(true);
@@ -52,32 +59,43 @@ const PostForm = () => {
             }
           }}
         >
-          <div className="space-y-1">
-            <Label htmlFor="title">Title</Label>
+          {/* <Label htmlFor="title" className="font-light">
+              Title
+            </Label> */}
+          <div className="flex h-fit items-center gap-2.5 rounded-lg p-2 pt-0">
+            <Image
+              src={currUser?.image as string}
+              alt="image"
+              width={32}
+              height={32}
+              className="h-auto w-auto rounded-full object-cover"
+            />
             <textarea
-              placeholder="Insert title here"
-              className="w-full resize-none overflow-hidden border border-gray-500 bg-transparent focus:border-white focus:outline-none"
+              placeholder="Title"
+              className="w-full resize-none overflow-hidden rounded-lg border-b border-slate-700 bg-transparent px-3 py-2 text-slate-200 outline-none transition-all duration-500 focus:outline-none"
               onChange={(e) => {
                 const inputValue = e.target.value;
                 setTitle(inputValue);
                 setTitleCharacterCount(inputValue.length);
               }}
-              onFocus={() => setIsTitleInputFocused(true)}
-              onBlur={() => setIsTitleInputFocused(false)}
+              // onFocus={() => setIsTitleInputFocused(true)}
+              // onBlur={() => setIsTitleInputFocused(false)}
               maxLength={50}
               value={title}
               rows={1}
             />
-            {isTitleInputFocused && (
-              <p className="text-[10px] text-neutral-500">
-                {titleCharacterCount} / {50} characters
-              </p>
-            )}
           </div>
+          {/* {isTitleInputFocused && (
+            <p className="text-[10px] text-neutral-500">
+              {titleCharacterCount} / {50} characters
+            </p>
+          )} */}
           <div className="space-y-1">
-            <Label htmlFor="body">Message</Label>
+            {/* <Label htmlFor="body" className="font-light">
+              Message
+            </Label> */}
             <textarea
-              className="w-full resize-none overflow-hidden border border-gray-500 bg-transparent focus:border-white focus:outline-none"
+              className="w-full resize-none overflow-hidden rounded-lg border border-slate-700 bg-transparent p-3 text-slate-200 outline-none transition-all duration-100 focus:outline-none focus:ring"
               onChange={(e) => {
                 const inputValue = e.target.value;
                 setMessage(inputValue);
@@ -86,10 +104,10 @@ const PostForm = () => {
               onFocus={() => setIsMessageInputFocused(true)}
               onBlur={() => setIsMessageInputFocused(false)}
               maxLength={2000}
-              placeholder="Insert message here"
+              placeholder="Message"
               ref={textAreaRef}
               value={message}
-              rows={1}
+              rows={5}
             />
             {isMessageInputFocused && (
               <p className="text-[10px] text-neutral-500">
@@ -99,7 +117,7 @@ const PostForm = () => {
           </div>
           <div className="flex justify-end">
             <Button
-              className="mb-8 mt-1 rounded-full"
+              className="mt-1 w-full rounded-2xl"
               variant="gradiantNavy"
               disabled={!title || !message}
             >
@@ -113,7 +131,7 @@ const PostForm = () => {
             </Button>
           </div>
         </form>
-      </div>
+      </GradiantCard>
     </>
   );
 };
