@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import useSWR from "swr";
@@ -7,18 +8,40 @@ import { fetcher } from "@/lib/fetcher-utils";
 
 import { Post } from "@prisma/client";
 import { GradiantCard } from "@/components/shared/gradiant-card";
+import { MessagesSquare, Star } from "lucide-react";
 
 interface ProfileListProps {
   username: string;
   type: string;
+  isOwnProfile: boolean;
 }
 
-const ProfileList: React.FC<ProfileListProps> = ({ username, type }) => {
+const ProfileList: React.FC<ProfileListProps> = ({
+  username,
+  type,
+  isOwnProfile,
+}) => {
   const { data: posts } = useSWR([`/api/user/${type}`, username], fetcher);
+
+  if (!posts || posts.length === 0) {
+    return (
+      <div className="flex h-screen flex-col items-center justify-center">
+        {type === "post" && <MessagesSquare className="mb-2 h-20 w-20" />}
+        {type === "favourite" && <Star className="my-2 h-20 w-20" />}
+        <p className="text-lg mb-[560px] font-heading md:mb-96 md:ml-3 md:text-2xl">
+          {isOwnProfile && type === "post"
+            ? "You have yet to post something"
+            : isOwnProfile && type === "favourite"
+            ? "You have yet to star anything"
+            : "This user has no posts"}
+        </p>
+      </div>
+    );
+  }
 
   if (posts) {
     return (
-      <GradiantCard variant="clean" className={posts ? "" : ""}>
+      <GradiantCard variant="clean">
         <ul role="list">
           {posts?.map((post: Post, index: number) => (
             <div

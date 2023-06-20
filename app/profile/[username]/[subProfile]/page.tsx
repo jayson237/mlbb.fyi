@@ -8,6 +8,7 @@ import { TabsContent } from "@/components/shared/tabs";
 
 import Statistics from "@/components/profile/statistics";
 import ProfileList from "@/components/profile/profile-list";
+import Redirect from "@/components/redirect";
 
 async function SubProfilePage({
   params,
@@ -28,9 +29,10 @@ async function SubProfilePage({
   const isOwnProfile = currentUser?.username === isExistingUser?.username;
 
   if (
-    params.subProfile !== "statistics" &&
-    params.subProfile !== "posts" &&
-    params.subProfile !== "starred"
+    (params.subProfile !== "statistics" &&
+      params.subProfile !== "posts" &&
+      params.subProfile !== "starred") ||
+    (params.subProfile === "starred" && !isOwnProfile)
   ) {
     notFound();
   }
@@ -57,12 +59,20 @@ async function SubProfilePage({
 
       {params.subProfile === "posts" && (
         <div className="grow">
-          <ProfileList username={params.username} type="post" />
+          <ProfileList
+            username={params.username}
+            type="post"
+            isOwnProfile={isOwnProfile}
+          />
         </div>
       )}
       {params.subProfile === "starred" && (
         <div className="grow">
-          <ProfileList username={params.username} type="favourite" />
+          <ProfileList
+            username={params.username}
+            type="favourite"
+            isOwnProfile={isOwnProfile}
+          />
         </div>
       )}
     </TabsContent>

@@ -216,7 +216,6 @@ const Settings: React.FC<ISettings> = ({ currentUser, mlbbAcc }) => {
               buttonDisabled
             }
             className="mb-8 mt-1 rounded-lg"
-            variant="gradiantNavy"
             onClick={async (e) => {
               e.preventDefault();
               setLoading(true);

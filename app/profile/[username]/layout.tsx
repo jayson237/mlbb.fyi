@@ -74,7 +74,7 @@ export default async function LayoutProfile({
           />
         </div>
         <Tabs defaultValue="statistics" className="w-full">
-          <div className="no-scrollbar h-[52px] overflow-x-scroll">
+          <div className="no-scrollbar flex h-[52px] justify-center overflow-x-scroll md:justify-start">
             <TabsList
               className={`grid w-fit ${
                 !isOwnProfile ? "grid-cols-2" : "grid-cols-3"

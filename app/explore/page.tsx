@@ -8,15 +8,24 @@ import PostList from "@/components/explore/post-list";
 import PostTopBar from "@/components/explore/post-top-bar";
 
 async function getRandomUser() {
+  const currentUser = await getCurrentUser();
   const productsCount = await prisma.user.count();
   const skip = Math.floor(Math.random() * productsCount);
-  return await prisma.user.findMany({
+
+  const users = await prisma.user.findMany({
+    where: {
+      id: {
+        not: currentUser?.id,
+      },
+    },
     take: 5,
     skip: skip,
     orderBy: {
       name: "desc",
     },
   });
+
+  return users;
 }
 
 async function ExplorePage() {

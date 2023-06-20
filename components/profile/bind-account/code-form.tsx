@@ -111,7 +111,6 @@ const CodeForm: React.FC<CodeFormProps> = ({ currentUser }) => {
           className="mt-4 rounded-lg"
           type="submit"
           disabled={loadingSend}
-          variant="gradiantNavy"
         >
           {loadingSend ? <LoadingDots color="#fafafa" /> : "Bind"}
         </Button>
