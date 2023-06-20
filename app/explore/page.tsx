@@ -31,7 +31,6 @@ async function getRandomUser() {
 async function ExplorePage() {
   const currentUser = await getCurrentUser();
   const randomUser = await getRandomUser();
-  if (!currentUser) return null;
 
   return (
     <div className="relative flex w-full gap-1.5">
@@ -42,7 +41,7 @@ async function ExplorePage() {
         <PanelTopClose className="h-4 w-4" />
       </GradiantCard>
       <div className="no-scrollbar max-h-[90vh] w-full overflow-scroll md:w-[2000px]">
-        <PostContainer currUser={currentUser} />
+        {currentUser && <PostContainer currUser={currentUser} />}
         <PostList />
       </div>
       <GradiantCard
