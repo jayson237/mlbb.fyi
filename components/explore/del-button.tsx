@@ -15,41 +15,46 @@ const DeleteButton: React.FC<DeletePostProps> = ({ postId }) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   return (
-    <Button
-      onClick={async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        const fields = {
-          postId: postId,
-        };
+    <>
+      <p className="flex justify-center text-sm font-semibold">
+        Click the button below to confirm deletion
+      </p>
+      <Button
+        onClick={async (e) => {
+          e.preventDefault();
+          setLoading(true);
+          const fields = {
+            postId: postId,
+          };
 
-        const set = await fetch("/explore/stg/api/delete", {
-          method: "POST",
-          body: JSON.stringify(fields),
-        });
-        const msg = await set.json();
-        if (!set.ok) {
-          setLoading(false);
-          toast.error(msg.message);
-        } else {
-          setLoading(false);
-          toast.success(
-            "Successfully delete post! Please wait to be redirected."
-          );
-          router.replace(`/explore`);
-        }
-      }}
-      className="mb-8 mt-1 rounded-full"
-      variant="gradiantNavy"
-    >
-      {loading ? (
-        <>
-          <LoadingDots color="#FAFAFA" />
-        </>
-      ) : (
-        "Confirm"
-      )}
-    </Button>
+          const set = await fetch("/explore/stg/api/delete", {
+            method: "POST",
+            body: JSON.stringify(fields),
+          });
+          const msg = await set.json();
+          if (!set.ok) {
+            setLoading(false);
+            toast.error(msg.message);
+          } else {
+            setLoading(false);
+            toast.success(
+              "Successfully delete post! Please wait to be redirected."
+            );
+            router.replace(`/explore`);
+          }
+        }}
+        className="mx-auto w-[260px] rounded-lg"
+        variant="destructive"
+      >
+        {loading ? (
+          <>
+            <LoadingDots color="#FAFAFA" />
+          </>
+        ) : (
+          "Confirm"
+        )}
+      </Button>
+    </>
   );
 };
 

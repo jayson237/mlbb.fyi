@@ -70,14 +70,11 @@ const PostPageBox: React.FC<PostPageProp> = ({ post, user, currUser }) => {
                     )}
                   </button>
                   <DelDialog
-                    title="Delete"
+                    title="Delete Post"
                     triggerChild={
                       <Trash2 className="ease-in-out hover:text-red-400 hover:duration-300" />
                     }
                   >
-                    <p className="flex justify-center">
-                      Click the button below to confirm deletion
-                    </p>
                     <DeleteButton postId={post.id} />
                   </DelDialog>
                 </div>

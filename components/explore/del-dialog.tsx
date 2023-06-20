@@ -25,7 +25,7 @@ const DelDialog = ({
   return (
     <Dialog>
       <DialogTrigger asChild>{triggerChild}</DialogTrigger>
-      <DialogContent className="h-52">
+      <DialogContent className="h-40">
         <DialogTitle className="flex justify-center">{title}</DialogTitle>
         <DialogHeader>
           <DialogDescription>{description}</DialogDescription>
