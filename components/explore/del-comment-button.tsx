@@ -32,7 +32,7 @@ const DelCommentButton: React.FC<DelCommentProps> = ({ commentId }) => {
           window.location.reload();
         }
       }}
-      className="mb-8 mt-1 rounded-full"
+      className="mb-8 mt-1 rounded-2xl"
       variant="gradiantNavy"
     >
       {loading ? (

@@ -53,7 +53,7 @@ const Settings: React.FC<ISettings> = ({ currentUser, mlbbAcc }) => {
       <div className="mx-auto max-w-md">
         <div className="mb-4 flex justify-center">
           <Button
-            className="h-fit w-fit gap-2 rounded-full py-1"
+            className="h-fit w-fit gap-2 rounded-2xl py-1"
             onClick={() => {
               router.push("/profile/stg/bind");
             }}
@@ -215,7 +215,7 @@ const Settings: React.FC<ISettings> = ({ currentUser, mlbbAcc }) => {
                 link3 === currentUser?.links[2]) ||
               buttonDisabled
             }
-            className="mb-8 mt-1"
+            className="mb-8 mt-1 rounded-lg"
             variant="gradiantNavy"
             onClick={async (e) => {
               e.preventDefault();

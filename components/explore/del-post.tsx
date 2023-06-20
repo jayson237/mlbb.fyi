@@ -43,7 +43,7 @@ const DeletePost: React.FC<DeletePostProps> = ({ postId }) => {
             router.replace(`/explore`);
           }
         }}
-        className="mx-auto w-full rounded-lg"
+        className="w-full"
         variant="destructive"
       >
         {loading ? (

@@ -27,7 +27,7 @@ async function ExplorePage() {
   return (
     <div className="relative flex w-full gap-1.5">
       <GradiantCard
-        className="sticky top-14 h-72 w-0 max-w-[4rem] rounded-3xl md:w-full"
+        className="sticky top-14 hidden h-72 w-0 max-w-[4rem] rounded-3xl sm:block md:w-full"
         variant="clean"
       >
         <PanelTopClose className="h-4 w-4" />
@@ -37,7 +37,7 @@ async function ExplorePage() {
         <PostList />
       </div>
       <GradiantCard
-        className="sticky top-14 h-full max-h-[90vh] rounded-3xl"
+        className="sticky top-14 hidden h-full max-h-[90vh] rounded-3xl md:block"
         variant="clean"
       >
         <h2 className="font-heading text-xl font-bold tracking-wide">
@@ -52,7 +52,7 @@ async function ExplorePage() {
                 alt={user.name as string}
                 width={48}
                 height={48}
-                className="rounded-full"
+                className="h-12 w-12 rounded-full"
               />
               <div className="-space-y-1">
                 <Link

@@ -53,7 +53,7 @@ const CodeForm: React.FC<CodeFormProps> = ({ currentUser }) => {
             Please navigate back to the previous page...
           </p>
           <Button
-            className="mx-auto mt-4 w-fit rounded-full"
+            className="mx-auto mt-4 w-fit rounded-2xl"
             variant="gradiantNavySec"
           >
             <Link href="/profile/stg/bind">Back</Link>
@@ -108,7 +108,7 @@ const CodeForm: React.FC<CodeFormProps> = ({ currentUser }) => {
           required
         />
         <Button
-          className="mt-4"
+          className="mt-4 rounded-lg"
           type="submit"
           disabled={loadingSend}
           variant="gradiantNavy"

@@ -64,10 +64,10 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
             </Label> */}
           <div className="flex h-fit items-center gap-2.5 rounded-lg p-2 pt-0">
             <Image
-              src={currUser?.image as string}
+              src={(currUser?.image as string) || "/nana.jpg"}
               alt="image"
-              width={32}
-              height={32}
+              width={48}
+              height={48}
               className="h-auto w-auto rounded-full object-cover"
             />
             <textarea

@@ -26,9 +26,11 @@ const NewCommentForm: React.FC<CommentProps> = ({ postId, img }) => {
     <GradiantCard className="flex grow flex-row items-start" variant="clean">
       <Image
         src={
-          img.split("/image/upload/")[0] +
-            "/image/upload/c_fill,h_150,w_150/" +
-            img.split("/image/upload/")[1] || "/nana.jpg"
+          img !== ""
+            ? img.split("/image/upload/")[0] +
+              "/image/upload/c_fill,h_150,w_150/" +
+              img.split("/image/upload/")[1]
+            : "/nana.jpg"
         }
         alt=""
         width={48}

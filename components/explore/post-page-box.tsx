@@ -64,15 +64,15 @@ const PostPageBox: React.FC<PostPageProp> = ({ post, user, currUser }) => {
                 <div className="mt-3 flex cursor-pointer flex-row">
                   <button onClick={() => setEditActive(!editActive)}>
                     {editActive ? (
-                      <Edit3 strokeWidth={2} className="mr-5" />
+                      <Edit3 strokeWidth={2} className="mr-5 h-5 w-5" />
                     ) : (
-                      <Edit3 className="mr-5 ease-in-out hover:text-navy-400 hover:duration-300" />
+                      <Edit3 className="mr-5 h-5 w-5 ease-in-out hover:text-navy-400 hover:duration-300" />
                     )}
                   </button>
                   <DialogFit
                     title="Delete Post"
                     triggerChild={
-                      <Trash2 className="ease-in-out hover:text-red-400 hover:duration-300" />
+                      <Trash2 className="h-5 w-5 ease-in-out hover:text-red-400 hover:duration-300" />
                     }
                   >
                     <DeletePost postId={post.id} />

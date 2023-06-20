@@ -7,20 +7,19 @@ import { Post } from "@prisma/client";
 import { fetcher } from "@/lib/utils";
 
 import { GradiantCard } from "../shared/gradiant-card";
-import Loading from "../shared/loading";
 
 const PostList = () => {
   const { data: posts } = useSWR("/api/post", fetcher);
 
   if (posts) {
     return (
-      <GradiantCard variant="clean">
+      <GradiantCard variant="clean" className="mb-8">
         <ul role="list">
           {posts?.map((post: Post, index: number) => (
             <div
               key={post.id}
               className={`relative flex justify-between gap-x-6 py-5 ${
-                index + 1 < posts.length ? "pb-16" : ""
+                index + 1 < posts.length ? "pb-16" : "pb-12"
               }`}
             >
               <div className="flex min-w-0 flex-col">
@@ -47,7 +46,7 @@ const PostList = () => {
       </GradiantCard>
     );
   }
-  return <Loading />;
+  return null;
 };
 
 export default PostList;

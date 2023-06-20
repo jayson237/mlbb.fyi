@@ -45,7 +45,7 @@ export default async function Home() {
           </p>
 
           <Button
-            className="mx-auto mt-4 w-fit rounded-lg"
+            className="mx-auto mt-4 w-fit rounded-3xl"
             variant="gradiantNavySec"
           >
             <Link href="/wiki/heroes">Get Started</Link>

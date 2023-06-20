@@ -133,20 +133,19 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
             </Button>
           )}
           <ViewDialog baseInfo={baseInfo} />
+          {!mlbbAcc && isOwnProfile && (
+            <Button
+              className="mt-4 h-8 w-full rounded-2xl px-[10px] py-2"
+              variant="gradiantNavySec"
+            >
+              <Link href="/profile/stg/bind" className="text-[12px]">
+                Bind account
+              </Link>
+            </Button>
+          )}
         </GradiantCard>
 
         <ProfileDesc user={user} mlbbAcc={mlbbAcc} />
-
-        {!mlbbAcc && isOwnProfile && (
-          <Button
-            className="mt-4 h-8 w-full rounded-lg px-[10px] py-2"
-            variant="gradiantNavySec"
-          >
-            <Link href="/profile/stg/bind" className="text-[12px]">
-              Bind account
-            </Link>
-          </Button>
-        )}
       </div>
     </>
   );

@@ -41,9 +41,6 @@ const Statistics: React.FC<StatisticsProps> = ({
     ((viewMatchPlayed && viewMatchPlayed[1]?.total) || 0);
   const heroes = (viewOwnedHero && viewOwnedHero?.total) || 0;
 
-  console.log(viewMatchPlayed[1]?.winrate);
-  console.log(viewMatchPlayed[1]?.total);
-
   return (
     <div className="flex w-full flex-col gap-1.5 xl:flex-row">
       <div className="flex w-full max-w-lg flex-col gap-y-1.5 md:w-fit">
@@ -93,7 +90,7 @@ const Statistics: React.FC<StatisticsProps> = ({
         />
         {!isBound && (
           <>
-            <p className="mb-4 px-2 text-justify text-[12px] text-neutral-500">
+            <p className="my-4 px-2 text-justify text-[12px] text-neutral-500">
               mlbb.fyi, an offspring of the audacious 2023 Orbital project,
               emerges as an independent entity, untethered from the endorsement
               of Moonton or Mobile Legends: Bang Bang. Its existence stands

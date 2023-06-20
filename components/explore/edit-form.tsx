@@ -47,7 +47,7 @@ const EditForm: React.FC<editPostProps> = ({ post, onCancel }) => {
   }, [activate]);
 
   const handleCancel = () => {
-    onCancel(); 
+    onCancel();
   };
 
   return (
@@ -125,14 +125,19 @@ const EditForm: React.FC<editPostProps> = ({ post, onCancel }) => {
             )}
           </div>
           <div className="flex justify-end">
-            <Button className="mb-8 mr-4 mt-1 w-24 rounded-full" onClick={handleCancel}>Cancel</Button>
+            <Button
+              className="mb-8 mr-4 mt-1 w-24 rounded-2xl"
+              onClick={handleCancel}
+            >
+              Cancel
+            </Button>
             <Button
               disabled={
                 (post.title === title && post.body === message) ||
                 !title ||
                 !message
               }
-              className="mb-8 mt-1 w-24 rounded-full"
+              className="mb-8 mt-1 w-24 rounded-2xl"
               variant="gradiantNavy"
             >
               {loading ? (

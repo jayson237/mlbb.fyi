@@ -87,7 +87,7 @@ const EditCommentForm: React.FC<EditCommentProps> = ({
           )}
           <div className="flex justify-end">
             <Button
-              className="mb-8 mt-1 rounded-full"
+              className="mb-8 mt-1 rounded-2xl"
               variant="gradiantNavy"
               disabled={!value || value === commentBody}
             >

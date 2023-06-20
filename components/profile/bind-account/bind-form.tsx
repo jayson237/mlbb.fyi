@@ -80,7 +80,7 @@ const BindForm: React.FC<BindFormProps> = ({ currentUser }) => {
         required
       />
       <Button
-        className="mt-4"
+        className="mt-4 rounded-lg"
         type="submit"
         disabled={loadingSend}
         variant="gradiantNavy"
