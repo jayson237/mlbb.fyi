@@ -23,7 +23,6 @@ const NewCommentForm: React.FC<CommentProps> = ({ postId, img }) => {
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const { data: comments } = useSWR(["/api/comment/list", postId], fetcher);
-  console.log(comments && comments.length);
 
   useAutosizeTextArea(textAreaRef.current, value);
 

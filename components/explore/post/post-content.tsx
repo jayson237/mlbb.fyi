@@ -1,11 +1,13 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
+import useSWR from "swr";
 import { toast } from "sonner";
 import Link from "next/link";
 
 import { SafeUser } from "@/types";
 import { Post, User } from "@prisma/client";
+import { fetcher } from "@/lib/utils";
 
 import { Edit3, Star, Trash2 } from "lucide-react";
 
@@ -22,10 +24,11 @@ interface PostContentProp {
 }
 
 const PostContent: React.FC<PostContentProp> = ({ post, user, currUser }) => {
-  const isCurrUserFollowing = currUser?.favourite.includes(post.id as string);
+  const isStarred = currUser?.favourite.includes(post.id as string);
+  const { data: comments } = useSWR(["/api/comment/list", post.id], fetcher);
 
   const [editActive, setEditActive] = useState<boolean>(false);
-  const [favourite, setFavourite] = useState(isCurrUserFollowing);
+  const [favourite, setFavourite] = useState(isStarred);
   const [loading, setLoading] = useState(false);
 
   const [expanded, setExpanded] = useState(false);
@@ -172,6 +175,13 @@ const PostContent: React.FC<PostContentProp> = ({ post, user, currUser }) => {
                 </button>
               )}
             </span>
+          </div>
+
+          <div className="my-4 flex flex-row gap-x-1">
+            <p className="text-lg font-sat font-semibold">
+              {comments && comments.length ? comments.length : 0}
+            </p>
+            <p className="text-lg mt-[2px] font-heading">Comments</p>
           </div>
         </>
       )}

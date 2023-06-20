@@ -2,7 +2,6 @@
 
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import { Progress } from "@/components/shared/progress";
-import { cn } from "@/lib/utils";
 
 interface MatchInsightsProps {
   title: string;
