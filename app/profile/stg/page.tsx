@@ -1,4 +1,4 @@
-import SettingsForm from "@/components/profile/settings-form";
+import Settings from "@/components/profile/settings";
 import getCurrentUser from "@/lib/actions/getCurrentUser";
 import getMlbbAcc from "@/lib/actions/getMlbbAcc";
 
@@ -10,7 +10,7 @@ async function SettingsPage() {
 
   return (
     <main>
-      <SettingsForm currentUser={currentUser} mlbbAcc={mlbbAcc} />
+      <Settings currentUser={currentUser} mlbbAcc={mlbbAcc} />
     </main>
   );
 }

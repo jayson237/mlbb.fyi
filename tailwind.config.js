@@ -17,9 +17,13 @@ module.exports = {
     },
     extend: {
       colors: {
-        bgblack: "#151515",
-        pblack: "#232323",
-        sblack: "#2C2C2C",
+        // bgblack: "#151515",
+        bgblack: "#121212",
+        // bgblack: "#2a2a2a",
+        pblack: "#1e1e1e",
+        // pblack: "#232323",
+        // sblack: "#2C2C2C",
+        sblack: "#232323",
         pwhite: "#FAFAFA",
         softGray: "#E9EEF2",
         softBlue: "#74BDE0",
@@ -39,6 +43,7 @@ module.exports = {
       },
       fontFamily: {
         heading: ["var(--font-heading)", ...fontFamily.sans],
+        sat: ["var(--font-satoshi)", ...fontFamily.sans],
       },
     },
   },

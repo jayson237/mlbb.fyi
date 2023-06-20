@@ -88,6 +88,9 @@ export async function POST(request: Request) {
       `${process.env.BE_API_URL}/data/sync?accId=${accId}`,
       {
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${process.env.BE_API_SECRET}`,
+        },
       }
     );
     // console.log(upt.status);

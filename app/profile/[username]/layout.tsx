@@ -1,8 +1,8 @@
 import getCurrentUser from "@/lib/actions/getCurrentUser";
-import getMlbbAcc from "@/lib/actions/getMlbbAcc";
+import getUser from "@/lib/actions/getUser";
+import isUserBound from "@/lib/actions/isUserBound";
 
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prismadb";
 import Link from "next/link";
 import { Tabs, TabsList, TabsTrigger } from "@/components/shared/tabs";
 import ProfileBio from "@/components/profile/bio";
@@ -11,28 +11,6 @@ export const metadata = {
   title: "Profile - mlbb.fyi",
   description: "Your mlbb.fyi profile",
 };
-
-async function acc(username: string) {
-  try {
-    const get = await prisma.user.findFirst({
-      where: {
-        username,
-      },
-    });
-    const mlbbAcc = await getMlbbAcc(get?.email || "");
-    return mlbbAcc;
-  } catch (error) {
-    return null;
-  }
-}
-
-async function getUser(username: string) {
-  return await prisma.user.findFirst({
-    where: {
-      username,
-    },
-  });
-}
 
 const ProfileTabList = [
   {
@@ -68,7 +46,7 @@ export default async function LayoutProfile({
   const profileUsername = params.username;
   const isExistingUser = await getUser(profileUsername);
 
-  let isBoundProfile = await acc(profileUsername);
+  let isBoundProfile = await isUserBound(profileUsername);
   if (!isBoundProfile) {
     isBoundProfile = null;
   }
@@ -77,15 +55,17 @@ export default async function LayoutProfile({
   if (!isExistingUser) {
     return (
       <div className="flex h-screen items-center justify-center">
-        <p className="mb-48 text-2xl md:ml-3">Profile does not exist...</p>
+        <p className="mb-48 font-heading text-2xl md:ml-3">
+          Profile does not exist...
+        </p>
       </div>
     );
   }
 
   return (
     <main className="max-w-[1280px] xl:mx-auto">
-      <div className="flex flex-1 flex-col gap-5 md:flex-row">
-        <div className="mx-auto flex gap-5 text-softGray">
+      <div className="flex flex-1 flex-col gap-1.5 md:flex-row">
+        <div className="mx-auto flex gap-1.5 text-softGray">
           <ProfileBio
             currentUser={currentUser}
             user={isExistingUser}
@@ -94,8 +74,12 @@ export default async function LayoutProfile({
           />
         </div>
         <Tabs defaultValue="statistics" className="w-full">
-          <div className="no-scrollbar h-[52px] overflow-x-scroll">
-            <TabsList>
+          <div className="no-scrollbar flex h-[52px] justify-center overflow-x-scroll md:justify-start">
+            <TabsList
+              className={`grid w-fit ${
+                !isOwnProfile ? "grid-cols-2" : "grid-cols-3"
+              } space-x-4`}
+            >
               {ProfileTabList.map((item, i) =>
                 !isOwnProfile && item.name === "Starred" ? null : (
                   <Link

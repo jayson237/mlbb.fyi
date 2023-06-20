@@ -18,11 +18,7 @@ const WikiTabList = [
   },
   {
     name: "Patch",
-    href: "/wiki/patch",
-  },
-  {
-    name: "META",
-    href: "/wiki/meta",
+    href: "/wiki/patches",
   },
 ];
 
@@ -33,7 +29,7 @@ export interface LayoutWikiProps {
 export default async function LayoutWiki({ children }: LayoutWikiProps) {
   return (
     <main>
-      <h1 className="ml-0 max-w-4xl font-heading text-4xl leading-10 md:ml-3">
+      <h1 className="ml-3 max-w-4xl font-heading  text-2xl leading-10  md:text-4xl">
         mlbb.fyi wiki, your latest and greatest Mobile Legends information in
         one place
       </h1>

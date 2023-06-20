@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment, useEffect, useState } from "react";
-
+import { useRouter } from "next/navigation";
 import { Hero } from "@prisma/client";
 import useHeroFilter from "@/lib/state/useHeroFilter";
 import HeroesFilter from "./heroes-filter";
@@ -12,6 +12,7 @@ interface IHeroesContainer {
 }
 
 const HeroesContainer = ({ heroes }: IHeroesContainer) => {
+  const router = useRouter();
   const heroFilter = useHeroFilter();
   const [hero, setHero] = useState<Hero[]>();
 
@@ -20,6 +21,7 @@ const HeroesContainer = ({ heroes }: IHeroesContainer) => {
       const filtered: Hero[] = [];
       heroFilter.type.map((item, i) => {
         heroes.filter((hero) => {
+          // @ts-ignore
           if (hero.details.heroType === heroFilter.type[i]) filtered.push(hero);
         });
       });
@@ -27,7 +29,7 @@ const HeroesContainer = ({ heroes }: IHeroesContainer) => {
     } else {
       setHero(undefined);
     }
-  }, [heroFilter, hero, heroes]);
+  }, [heroFilter, heroes]);
 
   return (
     <>
@@ -37,34 +39,23 @@ const HeroesContainer = ({ heroes }: IHeroesContainer) => {
           ? heroes?.map((hero, i) => {
               return (
                 <div key={hero.id}>
-                  <HeroCard hero={hero} />
-                  {/* <GradiantCard className="w-fit cursor-pointer p-1.5"> */}
-                  {/* <Image
-                        src={
-                          hero.img.split("/image/upload")[0] +
-                            "/image/upload/c_fill,h_256,w_192,g_north" +
-                            hero.img.split("/image/upload")[1] || "/nana.jpg"
-                        }
-                        alt={hero.name}
-                        width={96}
-                        height={128}
-                        // className="h-[128px] w-[96px] overflow-hidden rounded-lg bg-cover bg-top bg-no-repeat"
-                        // loading="lazy"
-                      /> */}
-                  {/* </GradiantCard> */}
-                  {/* <Image
-                      src={hero.img}
-                      width={96}
-                      height={128}
-                      alt={hero.name}
-                      loading="lazy"
-                    /> */}
+                  <HeroCard
+                    hero={hero}
+                    onClick={() => {
+                      router.push(`/wiki/heroes/${hero.name.toLowerCase()}`);
+                    }}
+                  />
                 </div>
               );
             })
           : hero?.map((hero) => (
               <Fragment key={hero.id}>
-                <HeroCard hero={hero} />
+                <HeroCard
+                  hero={hero}
+                  onClick={() => {
+                    router.push(`/wiki/heroes/${hero.name.toLowerCase()}`);
+                  }}
+                />
               </Fragment>
             ))}
       </div>
