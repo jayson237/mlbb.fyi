@@ -17,7 +17,6 @@ const InfoCard: React.FC<InfoCardProps> = ({ className, title, value }) => {
       <p className="mt-1 font-sat text-3xl font-bold">
         {value}
         <span className="text-base/[0px] font-semibold">
-          {"    "}
           {title === "Heroes" ? "  owned" : "  matches"}
         </span>
       </p>

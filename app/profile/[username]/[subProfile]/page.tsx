@@ -2,7 +2,6 @@ import getCurrentUser from "@/lib/actions/getCurrentUser";
 import getUser from "@/lib/actions/getUser";
 import getMlbbData from "@/lib/actions/getMlbbData";
 import isUserBound from "@/lib/actions/isUserBound";
-import { NextResponse } from "next/server";
 
 import { notFound } from "next/navigation";
 import { TabsContent } from "@/components/shared/tabs";
@@ -27,6 +26,8 @@ async function SubProfilePage({
     dataAcc = await getMlbbData(isBoundProfile.accId);
   }
   const isOwnProfile = currentUser?.username === isExistingUser?.username;
+  const hasPosts = isExistingUser?.posts.length !== 0;
+  const hasFavs = isExistingUser?.favourite.length !== 0;
 
   if (
     (params.subProfile !== "statistics" &&
@@ -63,6 +64,7 @@ async function SubProfilePage({
             username={params.username}
             type="post"
             isOwnProfile={isOwnProfile}
+            hasPosts={hasPosts}
           />
         </div>
       )}
@@ -73,6 +75,7 @@ async function SubProfilePage({
             username={params.username}
             type="favourite"
             isOwnProfile={isOwnProfile}
+            hasPosts={hasFavs}
           />
         </div>
       )}

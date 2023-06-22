@@ -40,8 +40,13 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
   const pathname = usePathname();
 
   const [collapse, setCollapse] = useState(false);
-
-  const active = pathname?.split("/")[1];
+  const isOwnProfile =
+    pathname?.split("/")[1] === "profile" &&
+    pathname?.split("/")[2] === currentUser?.username;
+  const active =
+    isOwnProfile || pathname?.split("/")[1] === "wiki"
+      ? pathname?.split("/")[1]
+      : "explore";
 
   return (
     <>
