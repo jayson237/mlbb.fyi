@@ -29,6 +29,10 @@ export default function PatchContainer({ patches }: IPatch) {
   );
   const latestYear = sortedYears[0];
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="mb-8 mt-4 flex w-full flex-col">
       <div className="flex flex-col">
