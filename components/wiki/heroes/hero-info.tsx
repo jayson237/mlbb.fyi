@@ -58,7 +58,7 @@ export default function HeroFyi({
         const data = await heroStrongAgainst;
         setStrongAgainstData(data);
       } catch (error) {
-        // Handle error if needed
+        return null;
       }
     };
     fetchData();
