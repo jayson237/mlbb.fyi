@@ -23,25 +23,9 @@ const ProfileList: React.FC<ProfileListProps> = ({
 }) => {
   const { data: posts } = useSWR([`/api/user/${type}`, username], fetcher);
 
-  if (!posts || posts.length === 0) {
-    return (
-      <div className="flex h-screen flex-col items-center justify-center">
-        {type === "post" && <MessagesSquare className="mb-2 h-20 w-20" />}
-        {type === "favourite" && <Star className="my-2 h-20 w-20" />}
-        <p className="text-lg mb-[560px] font-heading md:mb-96 md:ml-3 md:text-2xl">
-          {isOwnProfile && type === "post"
-            ? "You have yet to post something"
-            : isOwnProfile && type === "favourite"
-            ? "You have yet to star anything"
-            : "This user has no posts"}
-        </p>
-      </div>
-    );
-  }
-
   if (posts) {
     return (
-      <GradiantCard variant="clean">
+      <GradiantCard variant="clean" className="mb-8">
         <ul role="list">
           {posts?.map((post: Post, index: number) => (
             <div
@@ -72,6 +56,20 @@ const ProfileList: React.FC<ProfileListProps> = ({
           ))}
         </ul>
       </GradiantCard>
+    );
+  } else if (!posts || posts.length === 0) {
+    return (
+      <div className="flex h-screen flex-col items-center justify-center">
+        {type === "post" && <MessagesSquare className="mb-2 h-20 w-20" />}
+        {type === "favourite" && <Star className="my-2 h-20 w-20" />}
+        <p className="text-lg mb-[560px] font-heading md:mb-96 md:ml-3 md:text-2xl">
+          {isOwnProfile && type === "post"
+            ? "You have yet to post something"
+            : isOwnProfile && type === "favourite"
+            ? "You have yet to star anything"
+            : "This user has no posts"}
+        </p>
+      </div>
     );
   }
   return null;

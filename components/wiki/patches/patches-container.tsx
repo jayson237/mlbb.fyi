@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Patch } from "@prisma/client";
 import { GradiantCard } from "@/components/shared/gradiant-card";
@@ -11,6 +11,10 @@ interface IPatch {
 
 export default function PatchContainer({ patches }: IPatch) {
   const router = useRouter();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const groupedPatches = (patches || []).reduce((acc, patch) => {
     const year = patch.release.split("-")[0];

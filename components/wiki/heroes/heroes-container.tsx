@@ -17,6 +17,10 @@ const HeroesContainer = ({ heroes }: IHeroesContainer) => {
   const [hero, setHero] = useState<Hero[]>();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (heroes !== null && heroFilter.type.length > 0) {
       const filtered: Hero[] = [];
       heroFilter.type.map((item, i) => {
@@ -38,7 +42,7 @@ const HeroesContainer = ({ heroes }: IHeroesContainer) => {
         {hero?.length === undefined
           ? heroes?.map((hero, i) => {
               return (
-                <div key={hero.id}>
+                <div key={hero.id} className="mx-auto">
                   <HeroCard
                     hero={hero}
                     onClick={() => {

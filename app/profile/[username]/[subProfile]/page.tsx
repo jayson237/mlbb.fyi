@@ -2,13 +2,13 @@ import getCurrentUser from "@/lib/actions/getCurrentUser";
 import getUser from "@/lib/actions/getUser";
 import getMlbbData from "@/lib/actions/getMlbbData";
 import isUserBound from "@/lib/actions/isUserBound";
+import { NextResponse } from "next/server";
 
 import { notFound } from "next/navigation";
 import { TabsContent } from "@/components/shared/tabs";
 
 import Statistics from "@/components/profile/statistics";
 import ProfileList from "@/components/profile/profile-list";
-import Redirect from "@/components/redirect";
 
 async function SubProfilePage({
   params,
@@ -58,7 +58,7 @@ async function SubProfilePage({
       )}
 
       {params.subProfile === "posts" && (
-        <div className="grow">
+        <div className="no-scrollbar max-h-[90vh] w-full grow overflow-scroll">
           <ProfileList
             username={params.username}
             type="post"
@@ -66,8 +66,9 @@ async function SubProfilePage({
           />
         </div>
       )}
+
       {params.subProfile === "starred" && (
-        <div className="grow">
+        <div className="no-scrollbar max-h-[90vh] w-full grow overflow-scroll">
           <ProfileList
             username={params.username}
             type="favourite"
