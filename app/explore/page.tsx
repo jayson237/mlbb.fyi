@@ -68,9 +68,9 @@ export default async function ExplorePage() {
                   href={`/profile/${user.username}`}
                   target="_blank"
                 >
-                  {user.name}
+                  {user.username}
                 </Link>
-                <p className="text-gray-500">@{user.username}</p>
+                <p className="text-gray-500">{user.name}</p>
               </div>
             </li>
           ))}
