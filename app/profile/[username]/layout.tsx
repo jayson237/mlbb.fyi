@@ -39,7 +39,7 @@ export default async function LayoutProfile({
 
   const currentUser = await getCurrentUser();
 
-  if (!currentUser?.username) {
+  if (currentUser && !currentUser.username) {
     return NextResponse.redirect(
       new URL(`${process.env.NEXT_PUBLIC_BASE_URL}/profile/stg`)
     );
