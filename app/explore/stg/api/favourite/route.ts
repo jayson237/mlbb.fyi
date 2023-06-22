@@ -52,7 +52,7 @@ export async function POST(req: Request) {
 
   return NextResponse.json(
     {
-      message: "Post has been set to starred",
+      message: "Post has been set to favourites",
     },
     {
       status: 200,

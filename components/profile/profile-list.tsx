@@ -69,12 +69,14 @@ const ProfileList: React.FC<ProfileListProps> = ({
     <div className="flex h-screen flex-col items-center justify-center">
       {type === "post" && <MessagesSquare className="mb-2 h-20 w-20" />}
       {type === "favourite" && <Star className="my-2 h-20 w-20" />}
-      <p className="text-lg mb-[560px] font-heading md:mb-96 md:ml-3 md:text-2xl">
+      <p className="text-md mb-[560px] font-heading md:mb-96 md:ml-3 md:text-2xl">
         {isOwnProfile && type === "post"
           ? "You have yet to post something"
           : isOwnProfile && type === "favourite"
           ? "You have yet to star anything"
-          : "This user has no posts"}
+          : type === "post"
+          ? "This user has no posts"
+          : "This user has no favourite posts"}
       </p>
     </div>
   );

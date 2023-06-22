@@ -30,10 +30,9 @@ async function SubProfilePage({
   const hasFavs = isExistingUser?.favourite.length !== 0;
 
   if (
-    (params.subProfile !== "statistics" &&
-      params.subProfile !== "posts" &&
-      params.subProfile !== "starred") ||
-    (params.subProfile === "starred" && !isOwnProfile)
+    params.subProfile !== "statistics" &&
+    params.subProfile !== "posts" &&
+    params.subProfile !== "favourites"
   ) {
     notFound();
   }
@@ -69,7 +68,7 @@ async function SubProfilePage({
         </div>
       )}
 
-      {params.subProfile === "starred" && (
+      {params.subProfile === "favourites" && (
         <div className="no-scrollbar max-h-[90vh] w-full grow overflow-scroll">
           <ProfileList
             username={params.username}

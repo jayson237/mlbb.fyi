@@ -21,8 +21,8 @@ const ProfileTabList = [
     href: "/posts",
   },
   {
-    name: "Starred",
-    href: "/starred",
+    name: "Favourites",
+    href: "/favourites",
   },
 ];
 
@@ -76,20 +76,18 @@ export default async function LayoutProfile({
         </div>
         <Tabs defaultValue="statistics" className="w-full">
           <div className="no-scrollbar flex h-[52px] justify-center overflow-x-scroll md:justify-start">
-            <TabsList className="flex shrink-0 space-x-4">
-              {ProfileTabList.map((item, i) =>
-                !isOwnProfile && item.name === "Starred" ? null : (
-                  <Link
-                    href={`/profile/${isExistingUser?.username + item.href}`}
-                    key={i}
-                    scroll={false}
-                  >
-                    <TabsTrigger value={item.name.toLowerCase()}>
-                      {item.name}
-                    </TabsTrigger>
-                  </Link>
-                )
-              )}
+            <TabsList className="flex shrink-0 space-x-2">
+              {ProfileTabList.map((item, i) => (
+                <Link
+                  href={`/profile/${isExistingUser?.username + item.href}`}
+                  key={i}
+                  scroll={false}
+                >
+                  <TabsTrigger value={item.name.toLowerCase()}>
+                    {item.name}
+                  </TabsTrigger>
+                </Link>
+              ))}
             </TabsList>
           </div>
           {children}

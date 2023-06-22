@@ -17,7 +17,7 @@ const MatchInsights: React.FC<MatchInsightsProps> = ({
   return (
     <GradiantCard variant="clean">
       <p className="font-light">{title}</p>
-      <p className="mt-1 font-sat text-3xl font-bold">
+      <p className="mt-1 font-sat text-2xl font-bold xl:text-3xl">
         {((winrate * totalMatches) / 100).toFixed(0)}{" "}
         <span className="text-base/[0px]">/ {totalMatches} match</span>
       </p>
