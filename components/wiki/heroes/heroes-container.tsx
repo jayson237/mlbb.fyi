@@ -17,10 +17,6 @@ const HeroesContainer = ({ heroes }: IHeroesContainer) => {
   const [hero, setHero] = useState<Hero[]>();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
     if (heroes !== null && heroFilter.type.length > 0) {
       const filtered: Hero[] = [];
       heroFilter.type.map((item, i) => {

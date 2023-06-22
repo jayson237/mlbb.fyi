@@ -12,10 +12,6 @@ interface IPatch {
 export default function PatchContainer({ patches }: IPatch) {
   const router = useRouter();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   const groupedPatches = (patches || []).reduce((acc, patch) => {
     const year = patch.release.split("-")[0];
 

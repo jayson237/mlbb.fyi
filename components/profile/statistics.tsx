@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 
 import InfoCard from "./profile-stats/player-info";
@@ -36,6 +36,10 @@ const Statistics: React.FC<StatisticsProps> = ({
   viewOwnedHero,
   isBound,
 }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const totalMatchPlayed =
     ((viewMatchPlayed && viewMatchPlayed[0]?.total) || 0) +
     ((viewMatchPlayed && viewMatchPlayed[1]?.total) || 0);

@@ -8,6 +8,7 @@ import { TabsContent } from "@/components/shared/tabs";
 
 import Statistics from "@/components/profile/statistics";
 import ProfileList from "@/components/profile/profile-list";
+import { Link, Link2 } from "lucide-react";
 
 async function SubProfilePage({
   params,
@@ -44,16 +45,20 @@ async function SubProfilePage({
     >
       {params.subProfile === "statistics" && (
         <div className="flex w-full flex-col gap-1.5">
-          {!isOwnProfile && !isBoundProfile && (
-            <p className="pl-2 text-sm">
-              This user&apos;s Mobile Legends account hasn&apos;t been bound yet
-            </p>
+          {isBoundProfile ? (
+            <Statistics
+              viewMatchPlayed={dataAcc?.matchPlayed}
+              viewOwnedHero={dataAcc?.heroOwned}
+              isBound={isBoundProfile ? true : false}
+            />
+          ) : (
+            <div className="mt-4 flex h-screen flex-col items-center justify-center">
+              <Link2 className="h-20 w-20" />
+              <p className="text-md mb-[560px] px-20 text-center font-heading md:mb-96 md:ml-3 md:text-2xl">
+                Mobile Legends account hasn&apos;t been bound yet
+              </p>
+            </div>
           )}
-          <Statistics
-            viewMatchPlayed={dataAcc?.matchPlayed}
-            viewOwnedHero={dataAcc?.heroOwned}
-            isBound={isBoundProfile ? true : false}
-          />
         </div>
       )}
 
