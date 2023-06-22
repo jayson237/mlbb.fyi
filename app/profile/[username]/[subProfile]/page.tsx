@@ -8,7 +8,7 @@ import { TabsContent } from "@/components/shared/tabs";
 
 import Statistics from "@/components/profile/statistics";
 import ProfileList from "@/components/profile/profile-list";
-import { Link, Link2 } from "lucide-react";
+import { Link2 } from "lucide-react";
 
 async function SubProfilePage({
   params,
