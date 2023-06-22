@@ -43,9 +43,12 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
   const isOwnProfile =
     pathname?.split("/")[1] === "profile" &&
     pathname?.split("/")[2] === currentUser?.username;
+  const pathArray = pathname?.split("/");
   const active =
-    isOwnProfile || pathname?.split("/")[1] === "wiki"
-      ? pathname?.split("/")[1]
+    pathArray?.[1] === "" || pathArray?.[1] === "wiki"
+      ? pathArray?.[1]
+      : isOwnProfile
+      ? pathArray?.[1]
       : "explore";
 
   return (

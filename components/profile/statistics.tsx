@@ -73,6 +73,15 @@ const Statistics: React.FC<StatisticsProps> = ({
                 (viewMatchPlayed && viewMatchPlayed[1]?.winrate * 100) || 0
               }
             />
+            {isBound && (
+              <p className="mt-2 px-2 text-justify text-[10px] text-neutral-500">
+                mlbb.fyi, an offspring of the audacious 2023 Orbital project,
+                emerges as an independent entity, untethered from the
+                endorsement of Moonton or Mobile Legends: Bang Bang. Its
+                existence stands separate from the perspectives and voices
+                officially associated with the illustrious Mobile Legends realm.
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -90,15 +99,12 @@ const Statistics: React.FC<StatisticsProps> = ({
         />
         {!isBound && (
           <>
-            <p className="my-4 px-2 text-justify text-[12px] text-neutral-500">
+            <p className="my-4 px-2 text-justify text-[15px] text-neutral-500">
               mlbb.fyi, an offspring of the audacious 2023 Orbital project,
               emerges as an independent entity, untethered from the endorsement
               of Moonton or Mobile Legends: Bang Bang. Its existence stands
               separate from the perspectives and voices officially associated
-              with the illustrious Mobile Legends realm. As you delve into the
-              depths of mlbb.fyi, remember that its contents and features do not
-              align with the sanctioned views or opinions of Moonton or those
-              involved in the creation and management of Mobile Legends.
+              with the illustrious Mobile Legends realm.
             </p>
             <Image
               className="mr-auto pb-16 pl-[10px]"
