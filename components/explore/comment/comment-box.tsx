@@ -33,8 +33,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
       const conth = containerRef.current.clientHeight;
       const parah = parseInt(getComputedStyle(paragraphRef.current).lineHeight);
       const lineCount = conth / parah;
-      if (lineCount >= 2) return true;
-      else false;
+      return lineCount > 2;
     }
   }
   useEffect(() => {
@@ -108,7 +107,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
         <>
           <div className="mb-8 ml-16 flex flex-col" ref={containerRef}>
             <p
-              className={`${expanded ? "" : "line-clamp-2"}`}
+              className={`${expanded || !expandedable ? "" : "line-clamp-2"}`}
               ref={paragraphRef}
             >
               {comment.body}
