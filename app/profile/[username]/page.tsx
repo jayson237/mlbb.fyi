@@ -11,7 +11,6 @@ export default function ProfilePage({
   const profileUsername = params.username;
 
   if (typeof window !== "undefined") {
-    // Code inside this block will only execute on the client-side
     router.push(`/profile/${profileUsername}/statistics`);
   }
 

@@ -1,7 +1,6 @@
 import getCurrentUser from "@/lib/actions/getCurrentUser";
 import getUser from "@/lib/actions/getUser";
 import isUserBound from "@/lib/actions/isUserBound";
-
 import { NextResponse } from "next/server";
 import Link from "next/link";
 import { Tabs, TabsList, TabsTrigger } from "@/components/shared/tabs";
@@ -22,8 +21,8 @@ const ProfileTabList = [
     href: "/posts",
   },
   {
-    name: "Starred",
-    href: "/starred",
+    name: "Favourites",
+    href: "/favourites",
   },
 ];
 
@@ -36,17 +35,19 @@ export default async function LayoutProfile({
   params,
   children,
 }: LayoutProfileProps) {
+  const { username } = params;
+
   const currentUser = await getCurrentUser();
-  if (!currentUser?.username) {
-    NextResponse.redirect(
+
+  if (currentUser && !currentUser.username) {
+    return NextResponse.redirect(
       new URL(`${process.env.NEXT_PUBLIC_BASE_URL}/profile/stg`)
     );
   }
 
-  const profileUsername = params.username;
-  const isExistingUser = await getUser(profileUsername);
+  const isExistingUser = await getUser(username);
 
-  let isBoundProfile = await isUserBound(profileUsername);
+  let isBoundProfile = await isUserBound(username);
   if (!isBoundProfile) {
     isBoundProfile = null;
   }
@@ -75,24 +76,18 @@ export default async function LayoutProfile({
         </div>
         <Tabs defaultValue="statistics" className="w-full">
           <div className="no-scrollbar flex h-[52px] justify-center overflow-x-scroll md:justify-start">
-            <TabsList
-              className={`grid w-fit ${
-                !isOwnProfile ? "grid-cols-2" : "grid-cols-3"
-              } space-x-4`}
-            >
-              {ProfileTabList.map((item, i) =>
-                !isOwnProfile && item.name === "Starred" ? null : (
-                  <Link
-                    href={`/profile/${isExistingUser?.username + item.href}`}
-                    key={i}
-                    scroll={false}
-                  >
-                    <TabsTrigger value={item.name.toLowerCase()}>
-                      {item.name}
-                    </TabsTrigger>
-                  </Link>
-                )
-              )}
+            <TabsList className="flex shrink-0 space-x-2">
+              {ProfileTabList.map((item, i) => (
+                <Link
+                  href={`/profile/${isExistingUser?.username + item.href}`}
+                  key={i}
+                  scroll={false}
+                >
+                  <TabsTrigger value={item.name.toLowerCase()}>
+                    {item.name}
+                  </TabsTrigger>
+                </Link>
+              ))}
             </TabsList>
           </div>
           {children}

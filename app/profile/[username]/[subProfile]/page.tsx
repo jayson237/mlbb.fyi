@@ -8,7 +8,7 @@ import { TabsContent } from "@/components/shared/tabs";
 
 import Statistics from "@/components/profile/statistics";
 import ProfileList from "@/components/profile/profile-list";
-import Redirect from "@/components/redirect";
+import { Link2 } from "lucide-react";
 
 async function SubProfilePage({
   params,
@@ -27,12 +27,13 @@ async function SubProfilePage({
     dataAcc = await getMlbbData(isBoundProfile.accId);
   }
   const isOwnProfile = currentUser?.username === isExistingUser?.username;
+  const hasPosts = isExistingUser?.posts.length !== 0;
+  const hasFavs = isExistingUser?.favourite.length !== 0;
 
   if (
-    (params.subProfile !== "statistics" &&
-      params.subProfile !== "posts" &&
-      params.subProfile !== "starred") ||
-    (params.subProfile === "starred" && !isOwnProfile)
+    params.subProfile !== "statistics" &&
+    params.subProfile !== "posts" &&
+    params.subProfile !== "favourites"
   ) {
     notFound();
   }
@@ -44,34 +45,41 @@ async function SubProfilePage({
     >
       {params.subProfile === "statistics" && (
         <div className="flex w-full flex-col gap-1.5">
-          {!isOwnProfile && !isBoundProfile && (
-            <p className="pl-2 text-sm">
-              This user&apos;s Mobile Legends account hasn&apos;t been bound yet
-            </p>
+          {isBoundProfile ? (
+            <Statistics
+              viewMatchPlayed={dataAcc?.matchPlayed}
+              viewOwnedHero={dataAcc?.heroOwned}
+              isBound={isBoundProfile ? true : false}
+            />
+          ) : (
+            <div className="mt-4 flex h-screen flex-col items-center justify-center">
+              <Link2 className="h-20 w-20" />
+              <p className="text-md mb-[560px] px-20 text-center font-heading md:mb-96 md:ml-3 md:text-2xl">
+                Mobile Legends account hasn&apos;t been bound yet
+              </p>
+            </div>
           )}
-          <Statistics
-            viewMatchPlayed={dataAcc?.matchPlayed}
-            viewOwnedHero={dataAcc?.heroOwned}
-            isBound={isBoundProfile ? true : false}
-          />
         </div>
       )}
 
       {params.subProfile === "posts" && (
-        <div className="grow">
+        <div className="no-scrollbar max-h-[90vh] w-full grow overflow-scroll">
           <ProfileList
             username={params.username}
             type="post"
             isOwnProfile={isOwnProfile}
+            hasPosts={hasPosts}
           />
         </div>
       )}
-      {params.subProfile === "starred" && (
-        <div className="grow">
+
+      {params.subProfile === "favourites" && (
+        <div className="no-scrollbar max-h-[90vh] w-full grow overflow-scroll">
           <ProfileList
             username={params.username}
             type="favourite"
             isOwnProfile={isOwnProfile}
+            hasPosts={hasFavs}
           />
         </div>
       )}

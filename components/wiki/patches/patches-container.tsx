@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Patch } from "@prisma/client";
 import { GradiantCard } from "@/components/shared/gradiant-card";
@@ -28,6 +28,10 @@ export default function PatchContainer({ patches }: IPatch) {
     b.localeCompare(a)
   );
   const latestYear = sortedYears[0];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="mb-8 mt-4 flex w-full flex-col">

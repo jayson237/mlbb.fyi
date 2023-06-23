@@ -28,7 +28,7 @@ async function getRandomUser() {
   return users;
 }
 
-async function ExplorePage() {
+export default async function ExplorePage() {
   const currentUser = await getCurrentUser();
   const randomUser = await getRandomUser();
 
@@ -68,9 +68,9 @@ async function ExplorePage() {
                   href={`/profile/${user.username}`}
                   target="_blank"
                 >
-                  {user.name}
+                  {user.username}
                 </Link>
-                <p className="text-stone-600">@{user.username}</p>
+                <p className="text-gray-500">{user.name}</p>
               </div>
             </li>
           ))}
@@ -79,5 +79,3 @@ async function ExplorePage() {
     </div>
   );
 }
-
-export default ExplorePage;

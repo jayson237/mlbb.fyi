@@ -34,27 +34,18 @@ const Favourites: React.FC<FavouritesProps> = ({
       </div>
 
       {data.slice(0, 5).map((item, i) => (
-        <div key={i} className="relative mt-2 flex gap-2">
+        <div key={i} className="mt-2 font-sat text-[12px] font-semibold">
+          <div className="flex justify-between">
+            <p>
+              {item.name} - {item.total}
+            </p>
+            <p>{((item.win * 100) / item.total).toFixed(2)}%</p>
+          </div>
           <Progress
             value={(item.win * 100) / item.total}
             max={100}
-            className="absolute -left-4 top-5 h-3 w-12 -rotate-90"
+            className="mb-2"
           />
-          <div className="ml-6 flex items-center gap-2">
-            <div className="">
-              <p className="">{item.name}</p>
-              <div className="flex items-center gap-1">
-                <Trophy className="h-4 w-4" />
-                <p className="text-[12px]">
-                  <span className="font-sat text-xl font-semibold">
-                    {item.win}
-                  </span>{" "}
-                  / {item.total} matches
-                  {/* {((item.win * 100) / item.total).toFixed(2)}% */}
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
       ))}
     </GradiantCard>

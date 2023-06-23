@@ -5,5 +5,8 @@ export default async function getUser(username: string) {
     where: {
       username,
     },
+    include: {
+      posts: true,
+    },
   });
 }
