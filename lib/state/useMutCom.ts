@@ -1,12 +1,12 @@
 import { create } from "zustand";
 
-interface HeroFilterStore {
+interface MutateComment {
   toogleMutate: boolean;
   togMut: () => void;
   clamMut: () => void;
 }
 
-const useMutCom = create<HeroFilterStore>((set) => ({
+const useMutCom = create<MutateComment>((set) => ({
   toogleMutate: false,
   togMut: () => set({ toogleMutate: true }),
   clamMut: () => set({ toogleMutate: false }),
