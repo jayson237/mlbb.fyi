@@ -25,12 +25,17 @@ Import trace for requested module:
 ./app/profile/stg/api/cdn-sign/route.ts
 
 info  - Linting and checking validity of types...
+
+./components/wiki/heroes/heroes-container.tsx
+22:6  Warning: React Hook useEffect has a missing dependency: 'heroFilter'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
 info  - Collecting page data...
 info  - Generating static pages (0/39)
 info  - Generating static pages (9/39)
 info  - Generating static pages (19/39)
 warn  - Entire page /auth/signin deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /auth/signin
-(node:14948) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
+(node:14996) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
 (Use `node --trace-warnings ...` to show where the warning was created)
 [next-auth][error][CLIENT_FETCH_ERROR] 
 https://next-auth.js.org/errors#client_fetch_error fetch failed {
@@ -46,8 +51,8 @@ https://next-auth.js.org/errors#client_fetch_error fetch failed {
 }
 info  - Generating static pages (29/39)
 
-
 warn  - metadata.metadataBase is not set for resolving social open graph or twitter images, fallbacks to "http://localhost:3000". See https://beta.nextjs.org/docs/api-reference/metadata#metadatabase
+
 
 
 warn  - Entire page /profile/stg deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /profile/stg
@@ -96,7 +101,7 @@ Route (app)                                Size     First Load JS
 ├ λ /profile/stg/bind                      1.83 kB        98.3 kB
 ├ λ /profile/stg/bind/verify               2.14 kB        98.6 kB
 ├ λ /wiki                                  156 B          77.1 kB
-├ λ /wiki/heroes                           5.06 kB        99.5 kB
+├ λ /wiki/heroes                           5.08 kB        99.5 kB
 ├ λ /wiki/heroes/[hero]                    8.07 kB        97.8 kB
 ├ λ /wiki/patches                          2.09 kB        91.4 kB
 └ λ /wiki/patches/[patch]                  2.91 kB        79.9 kB
