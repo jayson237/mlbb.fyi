@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Hero } from "@prisma/client";
 import useHeroFilter from "@/lib/state/useHeroFilter";
@@ -14,40 +14,55 @@ interface IHeroesContainer {
 const HeroesContainer = ({ heroes }: IHeroesContainer) => {
   const router = useRouter();
   const heroFilter = useHeroFilter();
-  const [filteredHeroes, setFilteredHeroes] = useState<Hero[] | null>(null);
+  const [hero, setHero] = useState<Hero[]>();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    setHero(undefined);
+    heroFilter.type = [];
   }, []);
 
   useEffect(() => {
     if (heroes !== null && heroFilter.type.length > 0) {
-      const filtered = heroes.filter((hero) =>
-        // @ts-ignore
-        heroFilter.type.includes(hero.details.heroType)
-      );
-      setFilteredHeroes(filtered);
+      const filtered: Hero[] = [];
+      heroFilter.type.map((item, i) => {
+        heroes.filter((hero) => {
+          // @ts-ignore
+          if (hero.details.heroType === heroFilter.type[i]) filtered.push(hero);
+        });
+      });
+      setHero(filtered);
     } else {
-      setFilteredHeroes(null);
+      setHero(undefined);
     }
-  }, [heroFilter.type, heroes]);
-
-  const displayedHeroes = filteredHeroes || heroes;
+  }, [heroFilter, heroes]);
 
   return (
     <>
       <HeroesFilter />
       <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7">
-        {displayedHeroes?.map((hero) => (
-          <div key={hero.id} className="mx-auto">
-            <HeroCard
-              hero={hero}
-              onClick={() => {
-                router.push(`/wiki/heroes/${hero.name.toLowerCase()}`);
-              }}
-            />
-          </div>
-        ))}
+        {hero?.length === undefined
+          ? heroes?.map((hero, i) => {
+              return (
+                <div key={hero.id}>
+                  <HeroCard
+                    hero={hero}
+                    onClick={() => {
+                      router.push(`/wiki/heroes/${hero.name.toLowerCase()}`);
+                    }}
+                  />
+                </div>
+              );
+            })
+          : hero?.map((hero) => (
+              <Fragment key={hero.id}>
+                <HeroCard
+                  hero={hero}
+                  onClick={() => {
+                    router.push(`/wiki/heroes/${hero.name.toLowerCase()}`);
+                  }}
+                />
+              </Fragment>
+            ))}
       </div>
     </>
   );
