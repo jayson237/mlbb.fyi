@@ -45,9 +45,7 @@ const PostContent: React.FC<PostContentProp> = ({
       const parah = parseInt(getComputedStyle(paragraphRef.current).lineHeight);
 
       const lineCount = conth / parah;
-      console.log(lineCount);
-      if (lineCount >= 3) return true;
-      else false;
+      return lineCount > 3;
     }
   }
   useEffect(() => {
@@ -171,7 +169,7 @@ const PostContent: React.FC<PostContentProp> = ({
 
           <div className="mb-8 mt-4 flex flex-col" ref={containerRef}>
             <p
-              className={`${expanded ? "" : "line-clamp-3"}`}
+              className={`${expanded || !expandedable ? "" : "line-clamp-3"}`}
               ref={paragraphRef}
             >
               {post.body}

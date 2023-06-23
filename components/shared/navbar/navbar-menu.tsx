@@ -94,6 +94,7 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
                 }
                 onClick={() => {
                   setCollapse(false);
+                  sessionStorage.clear();
                 }}
                 key={menu.name}
                 prefetch={false}
