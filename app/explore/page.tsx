@@ -15,7 +15,15 @@ async function getRandomUser() {
   const users = await prisma.user.findMany({
     where: {
       id: {
-        not: currentUser?.id,
+        not: {
+          in: [
+            ...(currentUser?.id ? [currentUser.id] : []),
+            ...(currentUser?.following || []),
+          ],
+        },
+      },
+      username: {
+        not: null,
       },
     },
     take: 5,

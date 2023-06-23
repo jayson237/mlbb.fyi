@@ -2,9 +2,8 @@ import getCurrentUser from "@/lib/actions/getCurrentUser";
 import getUser from "@/lib/actions/getUser";
 import isUserBound from "@/lib/actions/isUserBound";
 import { NextResponse } from "next/server";
-import Link from "next/link";
-import { Tabs, TabsList, TabsTrigger } from "@/components/shared/tabs";
 import ProfileBio from "@/components/profile/bio";
+import ProfileTab from "@/components/profile/profile-tab";
 
 export const metadata = {
   title: "Profile - mlbb.fyi",
@@ -74,24 +73,12 @@ export default async function LayoutProfile({
             isOwnProfile={isOwnProfile}
           />
         </div>
-        <Tabs defaultValue="statistics" className="w-full">
-          <div className="no-scrollbar flex h-[52px] justify-center overflow-x-scroll md:justify-start">
-            <TabsList className="flex shrink-0 space-x-2">
-              {ProfileTabList.map((item, i) => (
-                <Link
-                  href={`/profile/${isExistingUser?.username + item.href}`}
-                  key={i}
-                  scroll={false}
-                >
-                  <TabsTrigger value={item.name.toLowerCase()}>
-                    {item.name}
-                  </TabsTrigger>
-                </Link>
-              ))}
-            </TabsList>
-          </div>
+        <ProfileTab
+          ProfileTabList={ProfileTabList}
+          isExistingUser={isExistingUser}
+        >
           {children}
-        </Tabs>
+        </ProfileTab>
       </div>
     </main>
   );
