@@ -17,19 +17,24 @@ const ProfileTab: React.FC<ProfileTabProps> = ({
   isExistingUser,
   children,
 }) => {
-  const [selectedTab, setSelectedTab] = useState("");
+  const [selectedProfileTab, setSelectedProfileTab] = useState("");
 
   useEffect(() => {
-    const storedTab = window.sessionStorage.getItem("selectedTab");
-    setSelectedTab(storedTab || "statistics");
+    const storedProfileTab =
+      window.sessionStorage.getItem("selectedProfileTab");
+    setSelectedProfileTab(storedProfileTab || "statistics");
   }, []);
 
   useEffect(() => {
-    window.sessionStorage.setItem("selectedTab", selectedTab);
-  }, [selectedTab]);
+    window.sessionStorage.setItem("selectedProfileTab", selectedProfileTab);
+  }, [selectedProfileTab]);
 
   return (
-    <Tabs defaultValue="statistics" value={selectedTab} className="w-full">
+    <Tabs
+      defaultValue="statistics"
+      value={selectedProfileTab}
+      className="w-full"
+    >
       <div className="no-scrollbar flex h-[52px] justify-center overflow-x-scroll md:justify-start">
         <TabsList className="flex shrink-0 space-x-2">
           {ProfileTabList.map((item, i) => (
@@ -40,7 +45,7 @@ const ProfileTab: React.FC<ProfileTabProps> = ({
             >
               <TabsTrigger
                 value={item.name.toLowerCase()}
-                onClick={() => setSelectedTab(item.name.toLowerCase())}
+                onClick={() => setSelectedProfileTab(item.name.toLowerCase())}
               >
                 {item.name}
               </TabsTrigger>
