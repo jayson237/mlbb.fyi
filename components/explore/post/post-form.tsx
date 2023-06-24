@@ -59,9 +59,6 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
             }
           }}
         >
-          {/* <Label htmlFor="title" className="font-light">
-              Title
-            </Label> */}
           <div className="flex h-fit items-center gap-2.5 rounded-lg p-2 pt-0">
             <Image
               src={(currUser?.image as string) || "/nana.jpg"}
@@ -78,22 +75,13 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
                 setTitle(inputValue);
                 setTitleCharacterCount(inputValue.length);
               }}
-              // onFocus={() => setIsTitleInputFocused(true)}
-              // onBlur={() => setIsTitleInputFocused(false)}
               maxLength={50}
               value={title}
               rows={1}
             />
           </div>
-          {/* {isTitleInputFocused && (
-            <p className="text-[10px] text-neutral-500">
-              {titleCharacterCount} / {50} characters
-            </p>
-          )} */}
+
           <div className="space-y-1">
-            {/* <Label htmlFor="body" className="font-light">
-              Message
-            </Label> */}
             <textarea
               className="w-full resize-none overflow-hidden rounded-lg border border-slate-700 bg-transparent p-3 text-slate-200 outline-none transition-all duration-100 focus:outline-none focus:ring"
               onChange={(e) => {

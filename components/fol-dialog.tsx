@@ -26,10 +26,9 @@ const FolDialog = ({
     <Dialog>
       <DialogTrigger asChild>{triggerChild}</DialogTrigger>
       <DialogContent className="h-96">
-          <DialogTitle>{title}</DialogTitle>
+        <DialogTitle>{title}</DialogTitle>
         <DialogHeader>
           <DialogDescription>{description}</DialogDescription>
-          {/* <div className="overflow-auto h-fit">{children}</div> */}
           {children}
         </DialogHeader>
       </DialogContent>

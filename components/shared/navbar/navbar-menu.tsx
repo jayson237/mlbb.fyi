@@ -125,7 +125,6 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
                 <span className="stroke-[3] text-[16px] text-softGray">
                   Sign In
                 </span>
-                {/* <LogInIcon className="stroke-[3] text-softGray" /> */}
               </Button>
             </li>
           ) : (

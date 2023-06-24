@@ -29,7 +29,6 @@ const DialogFit = ({
         <DialogTitle className="flex justify-center">{title}</DialogTitle>
         <DialogHeader>
           <DialogDescription>{description}</DialogDescription>
-          {/* <div className="overflow-auto h-fit">{children}</div> */}
           {children}
         </DialogHeader>
       </DialogContent>
