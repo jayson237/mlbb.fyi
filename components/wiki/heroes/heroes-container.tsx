@@ -75,7 +75,7 @@ const HeroesContainer = ({ heroes }: IHeroesContainer) => {
 
   return (
     <>
-      <GradiantCard className="w-full px-6 md:w-[200px]" variant="clean">
+      <GradiantCard className="h-fit w-full px-6 md:w-[200px]" variant="clean">
         <Input
           type="text"
           placeholder="Search heroes..."
