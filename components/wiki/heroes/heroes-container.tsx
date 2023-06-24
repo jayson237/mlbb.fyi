@@ -81,7 +81,7 @@ const HeroesContainer = ({ heroes }: IHeroesContainer) => {
           placeholder="Search heroes..."
           value={searchTerm}
           onChange={handleSearch}
-          className="h-8 rounded-2xl"
+          className="h-7 rounded-xl"
         />
         <HeroesFilter />
       </GradiantCard>
