@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import { useEffect, useState } from "react";
@@ -23,21 +24,41 @@ const HeroesContainer = ({ heroes }: IHeroesContainer) => {
   useEffect(() => {
     setFilteredHeroes(null);
     heroFilter.type = [];
+    heroFilter.role = [];
   }, []);
 
   useEffect(() => {
-    if (heroes !== null && heroFilter.type.length > 0) {
-      const filtered = heroes.filter((hero) =>
-        heroFilter.type.every((type) =>
-          // @ts-ignore
-          hero.details.heroType.includes(type)
-        )
-      );
+    if (heroes !== null) {
+      const filtered = heroes.filter((hero) => {
+        const isTypeFilterEmpty = heroFilter.type.length === 0;
+        const isRoleFilterEmpty = heroFilter.role.length === 0;
+
+        if (isTypeFilterEmpty && isRoleFilterEmpty) {
+          return true;
+        }
+
+        if (isTypeFilterEmpty) {
+          return heroFilter.role.every((role) => hero.role.includes(role));
+        }
+
+        if (isRoleFilterEmpty) {
+          return heroFilter.type.every((type) =>
+            hero.details.heroType.includes(type)
+          );
+        }
+
+        return (
+          heroFilter.type.every((type) =>
+            hero.details.heroType.includes(type)
+          ) && heroFilter.role.every((role) => hero.role.includes(role))
+        );
+      });
+
       setFilteredHeroes(filtered);
     } else {
       setFilteredHeroes(null);
     }
-  }, [heroFilter.type, heroes]);
+  }, [heroFilter.type, heroFilter.role, heroes]);
 
   const displayedHeroes = filteredHeroes || heroes;
 
