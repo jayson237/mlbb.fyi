@@ -7,6 +7,7 @@ import { Hero } from "@prisma/client";
 import useHeroFilter from "@/lib/state/useHeroFilter";
 import HeroesFilter from "./heroes-filter";
 import HeroCard from "./hero-card";
+import { Input } from "@/components/shared/input";
 
 interface IHeroesContainer {
   heroes: Hero[] | null;
@@ -16,6 +17,7 @@ const HeroesContainer = ({ heroes }: IHeroesContainer) => {
   const router = useRouter();
   const heroFilter = useHeroFilter();
   const [filteredHeroes, setFilteredHeroes] = useState<Hero[] | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -60,13 +62,30 @@ const HeroesContainer = ({ heroes }: IHeroesContainer) => {
     }
   }, [heroFilter.type, heroFilter.role, heroes]);
 
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
   const displayedHeroes = filteredHeroes || heroes;
+
+  const filteredDisplayedHeroes = displayedHeroes?.filter((hero) =>
+    hero.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <>
-      <HeroesFilter />
+      <div className="flex flex-col gap-1.5">
+        <Input
+          type="text"
+          placeholder="Search heroes..."
+          value={searchTerm}
+          onChange={handleSearch}
+          className="h-fit rounded-xl"
+        />
+        <HeroesFilter />
+      </div>
       <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7">
-        {displayedHeroes?.map((hero) => (
+        {filteredDisplayedHeroes?.map((hero) => (
           <div key={hero.id} className="mx-auto">
             <HeroCard
               hero={hero}
