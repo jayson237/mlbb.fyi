@@ -8,6 +8,7 @@ import useHeroFilter from "@/lib/state/useHeroFilter";
 import HeroesFilter from "./heroes-filter";
 import HeroCard from "./hero-card";
 import { Input } from "@/components/shared/input";
+import { GradiantCard } from "@/components/shared/gradiant-card";
 
 interface IHeroesContainer {
   heroes: Hero[] | null;
@@ -74,16 +75,16 @@ const HeroesContainer = ({ heroes }: IHeroesContainer) => {
 
   return (
     <>
-      <div className="flex flex-col gap-1.5">
+      <GradiantCard className="w-full px-6 md:w-[200px]" variant="clean">
         <Input
           type="text"
           placeholder="Search heroes..."
           value={searchTerm}
           onChange={handleSearch}
-          className="h-fit rounded-xl"
+          className="h-8 rounded-2xl"
         />
         <HeroesFilter />
-      </div>
+      </GradiantCard>
       <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7">
         {filteredDisplayedHeroes?.map((hero) => (
           <div key={hero.id} className="mx-auto">
