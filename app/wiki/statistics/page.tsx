@@ -9,7 +9,7 @@ async function StatisticsPage() {
   const heroes: Hero[] | null = await getHeroes();
   return (
     <TabsContent
-      value="heroes"
+      value="statistics"
       className="flex w-full flex-col gap-5 md:flex-row"
     >
       <StatsContainer heroes={heroes} />
