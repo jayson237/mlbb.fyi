@@ -9,7 +9,7 @@ import { fetcher } from "@/lib/fetcher-utils";
 import { GradiantCard } from "@/components/shared/gradiant-card";
 
 const PostList = () => {
-  const { data: posts } = useSWR(["/api/post", "s"], fetcher);
+  const { data: posts } = useSWR(["/api/post", ""], fetcher);
 
   if (posts) {
     return (

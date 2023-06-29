@@ -6,6 +6,7 @@ import { GradiantCard } from "@/components/shared/gradiant-card";
 import { PanelTopClose } from "lucide-react";
 import PostList from "@/components/explore/post/post-list";
 import PostContainer from "@/components/explore/post/post-container";
+import PostListContainer from "@/components/explore/post-list-container";
 
 async function getRandomUser() {
   const currentUser = await getCurrentUser();
@@ -42,10 +43,7 @@ export default async function ExplorePage() {
 
   return (
     <div className="relative flex w-full gap-1.5">
-      <div className="no-scrollbar max-h-[90vh] w-full overflow-scroll md:w-[2000px]">
-        {currentUser && <PostContainer currUser={currentUser} />}
-        <PostList />
-      </div>
+      <PostListContainer currentUser={currentUser} />
       <GradiantCard
         className="sticky top-14 hidden h-full max-h-[90vh] rounded-3xl md:block"
         variant="clean"
