@@ -8,8 +8,12 @@ import { fetcher } from "@/lib/fetcher-utils";
 
 import { GradiantCard } from "@/components/shared/gradiant-card";
 
-const PostList = () => {
-  const { data: posts } = useSWR(["/api/post", ""], fetcher);
+interface PostListProps {
+  filter: string;
+}
+
+const PostList: React.FC<PostListProps> = ({ filter }) => {
+  const { data: posts } = useSWR(["/api/post", filter], fetcher);
 
   if (posts) {
     return (
