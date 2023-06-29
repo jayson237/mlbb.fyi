@@ -3,9 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import prisma from "@/lib/prismadb";
 import { GradiantCard } from "@/components/shared/gradiant-card";
-import { PanelTopClose } from "lucide-react";
-import PostList from "@/components/explore/post/post-list";
-import PostContainer from "@/components/explore/post/post-container";
+import PostListContainer from "@/components/explore/post/post-list-container";
 
 async function getRandomUser() {
   const currentUser = await getCurrentUser();
@@ -42,16 +40,7 @@ export default async function ExplorePage() {
 
   return (
     <div className="relative flex w-full gap-1.5">
-      <GradiantCard
-        className="sticky top-14 hidden h-72 w-0 max-w-[4rem] rounded-3xl sm:block md:w-full"
-        variant="clean"
-      >
-        <PanelTopClose className="h-4 w-4" />
-      </GradiantCard>
-      <div className="no-scrollbar max-h-[90vh] w-full overflow-scroll md:w-[2000px]">
-        {currentUser && <PostContainer currUser={currentUser} />}
-        <PostList />
-      </div>
+      <PostListContainer currentUser={currentUser} />
       <GradiantCard
         className="sticky top-14 hidden h-full max-h-[90vh] rounded-3xl md:block"
         variant="clean"
@@ -59,7 +48,6 @@ export default async function ExplorePage() {
         <h2 className="font-heading text-xl font-bold tracking-wide">
           Connect with other players
         </h2>
-
         <ul className="mt-3 flex flex-col gap-3">
           {randomUser.map((user) => (
             <li key={user.id} className="flex gap-3">
