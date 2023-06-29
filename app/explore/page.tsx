@@ -3,9 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import prisma from "@/lib/prismadb";
 import { GradiantCard } from "@/components/shared/gradiant-card";
-import { PanelTopClose } from "lucide-react";
-import PostList from "@/components/explore/post/post-list";
-import PostContainer from "@/components/explore/post/post-container";
 import PostListContainer from "@/components/explore/post/post-list-container";
 
 async function getRandomUser() {
