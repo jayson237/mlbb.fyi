@@ -42,12 +42,6 @@ export default async function ExplorePage() {
 
   return (
     <div className="relative flex w-full gap-1.5">
-      <GradiantCard
-        className="sticky top-14 hidden h-72 w-0 max-w-[4rem] rounded-3xl sm:block md:w-full"
-        variant="clean"
-      >
-        <PanelTopClose className="h-4 w-4" />
-      </GradiantCard>
       <div className="no-scrollbar max-h-[90vh] w-full overflow-scroll md:w-[2000px]">
         {currentUser && <PostContainer currUser={currentUser} />}
         <PostList />
@@ -59,7 +53,6 @@ export default async function ExplorePage() {
         <h2 className="font-heading text-xl font-bold tracking-wide">
           Connect with other players
         </h2>
-
         <ul className="mt-3 flex flex-col gap-3">
           {randomUser.map((user) => (
             <li key={user.id} className="flex gap-3">
