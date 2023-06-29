@@ -6,7 +6,7 @@ import { GradiantCard } from "@/components/shared/gradiant-card";
 import { PanelTopClose } from "lucide-react";
 import PostList from "@/components/explore/post/post-list";
 import PostContainer from "@/components/explore/post/post-container";
-import PostListContainer from "@/components/explore/post-list-container";
+import PostListContainer from "@/components/explore/post/post-list-container";
 
 async function getRandomUser() {
   const currentUser = await getCurrentUser();
