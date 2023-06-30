@@ -10,7 +10,7 @@ interface PostContainerProps {
 const PostContainer: React.FC<PostContainerProps> = ({ currUser }) => {
   return (
     <>
-      <div className="mb-1.5 flex flex-row gap-6">
+      <div className="my-1.5 flex flex-row gap-6">
         {currUser && <PostForm currUser={currUser} />}
       </div>
     </>

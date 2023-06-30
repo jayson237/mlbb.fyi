@@ -39,7 +39,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
             className="h-7 rounded-xl"
           />
           <button>
-            <Search />
+            <Search className="mb-1 transition-all hover:text-navy-300 hover:duration-300" />
           </button>
         </form>
       </GradiantCard>
