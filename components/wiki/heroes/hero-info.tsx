@@ -377,7 +377,7 @@ export default function HeroFyi({
                     alt={counter.name}
                     width={96}
                     height={96}
-                    className="h-[48px] w-[48px] rounded-full md:h-[96px] md:w-[96px]"
+                    className="h-[96px] w-[96px] rounded-full"
                     loading="lazy"
                   />
                   <div className="bg-opacity/75 absolute bottom-0 left-0 h-[96px] w-[96px] items-center rounded-full bg-black/80 py-1 text-center text-sm font-medium text-white opacity-0 transition-opacity duration-200">
