@@ -4,7 +4,16 @@ import React from "react";
 import { Hero } from "@prisma/client";
 import { GradiantCard } from "@/components/shared/gradiant-card";
 
-export default function StatsContainer({ heroes }: { heroes: Hero[] | null }) {
+interface IStats {
+  heroes: {
+    name: string;
+    use: string;
+    ban: string;
+    win: string;
+  }[];
+}
+
+export default function StatsContainer({ heroes }: IStats) {
   return (
     <GradiantCard className="mb-8 grid grid-cols-4 gap-4" variant="clean">
       <div className="mb-4 font-heading text-xl">Hero</div>

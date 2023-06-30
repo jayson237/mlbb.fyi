@@ -11,6 +11,7 @@ import MatchInsights from "@/components/profile/profile-stats/match-insights";
 
 interface HeroFyiContainer {
   hero: Hero | null;
+  heroStats: { name: string; use: string; ban: string; win: string };
   heroBuild: Object[] | null;
   heroSpell: Object[] | null;
   heroEmblem: Object[] | null;
@@ -35,6 +36,7 @@ interface HeroFyiContainer {
 
 export default function HeroFyi({
   hero,
+  heroStats,
   heroBuild,
   heroSpell,
   heroEmblem,
@@ -152,7 +154,7 @@ export default function HeroFyi({
                     Winrate
                   </p>
                   <p className="font-sat text-[12px] font-semibold sm:text-[20px]">
-                    {hero?.win}
+                    {heroStats.win}
                   </p>
                 </div>
                 <div className="flex flex-col">
@@ -160,13 +162,13 @@ export default function HeroFyi({
                     Pick
                   </p>
                   <p className="font-sat text-[12px] font-semibold sm:text-[20px]">
-                    {hero?.use}
+                    {heroStats.use}
                   </p>
                 </div>
                 <div className="flex flex-col">
                   <p className="font-heading text-[12px] sm:text-[16px]">Ban</p>
                   <p className="font-sat text-[12px] font-semibold sm:text-[20px]">
-                    {hero?.ban}
+                    {heroStats.ban}
                   </p>
                 </div>
               </div>

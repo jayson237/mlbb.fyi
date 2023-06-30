@@ -1,4 +1,4 @@
-import getHeroes from "@/lib/actions/getHeroes";
+import getHeroStats from "@/lib/actions/getHeroStats";
 
 import { Hero } from "@prisma/client";
 
@@ -6,7 +6,8 @@ import { TabsContent } from "@/components/shared/tabs";
 import StatsContainer from "@/components/wiki/statistics/stats-container";
 
 async function StatisticsPage() {
-  const heroes: Hero[] | null = await getHeroes();
+  const heroes = await getHeroStats();
+
   return (
     <TabsContent
       value="statistics"
