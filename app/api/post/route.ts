@@ -11,15 +11,23 @@ export async function POST(req: Request) {
       },
     });
 
-    let filteredPosts = posts;
-
     if (data) {
-      filteredPosts = posts?.filter((post) =>
+      const filteredPosts = posts?.filter((post) =>
         post.title.toLowerCase().includes(data.toLowerCase())
       );
+
+      if (filteredPosts.length !== 0) {
+        return NextResponse.json(filteredPosts, {
+          status: 200,
+        });
+      }
+
+      return NextResponse.json("empty", {
+        status: 200,
+      });
     }
 
-    return NextResponse.json(filteredPosts, {
+    return NextResponse.json(posts, {
       status: 200,
     });
   } catch (error: any) {

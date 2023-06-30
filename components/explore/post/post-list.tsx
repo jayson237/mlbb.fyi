@@ -15,6 +15,16 @@ interface PostListProps {
 const PostList: React.FC<PostListProps> = ({ filter }) => {
   const { data: posts } = useSWR(["/api/post", filter], fetcher);
 
+  if (posts === "empty") {
+    return (
+      <div className="grid justify-items-center">
+        <h2 className="mt-10 font-heading text-xl font-bold tracking-wide">
+          No such post exist yet
+        </h2>
+      </div>
+    );
+  }
+
   if (posts) {
     return (
       <>
@@ -52,6 +62,7 @@ const PostList: React.FC<PostListProps> = ({ filter }) => {
       </>
     );
   }
+
   return null;
 };
 
