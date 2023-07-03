@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Hero } from "@prisma/client";
 import { GradiantCard } from "@/components/shared/gradiant-card";
+import { TourneyStats } from "@prisma/client";
 
 interface IStats {
   heroes: {
@@ -11,9 +11,10 @@ interface IStats {
     ban: string;
     win: string;
   }[];
+  tourneyStats: TourneyStats[];
 }
 
-export default function StatsContainer({ heroes }: IStats) {
+export default function StatsContainer({ heroes, tourneyStats }: IStats) {
   return (
     <GradiantCard className="mb-8 grid grid-cols-4 gap-4" variant="clean">
       <div className="mb-4 font-heading text-xl">Hero</div>
