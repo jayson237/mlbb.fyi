@@ -104,7 +104,7 @@ export async function POST(req: Request) {
 
       return NextResponse.json(
         {
-          message: "Post has been set been upvotted",
+          message: "Post has been set been upvotted. Please refresh",
         },
         {
           status: 200,
@@ -135,7 +135,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       {
-        message: "Post has been set been upvotted",
+        message: "Post has been set been upvotted. Please refresh",
       },
       {
         status: 200,
@@ -198,7 +198,7 @@ export async function POST(req: Request) {
 
   return NextResponse.json(
     {
-      message: "Upvote has been removed",
+      message: "Upvote has been removed. Please refresh",
     },
     {
       status: 200,

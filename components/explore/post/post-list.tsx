@@ -7,6 +7,8 @@ import { GradiantCard } from "@/components/shared/gradiant-card";
 import PostBox from "./post-box";
 import { Post } from "@prisma/client";
 import { SafeUser } from "@/types";
+import useMutCom from "@/lib/state/useMutCom";
+import { useEffect } from "react";
 
 interface PostListProps {
   filter: string;
@@ -14,7 +16,12 @@ interface PostListProps {
 }
 
 const PostList: React.FC<PostListProps> = ({ filter, currUser }) => {
-  const { data: posts } = useSWR(["/api/post", filter], fetcher);
+  const togMut = useMutCom();
+  const { data: posts, mutate } = useSWR(["/api/post", filter], fetcher);
+
+  useEffect(() => {
+    togMut.toogleMutate && mutate();
+  }, [mutate, togMut]);
 
   if (posts === "empty") {
     return (
