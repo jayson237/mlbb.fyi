@@ -70,6 +70,9 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
               } else {
                 setLoading(false);
                 setLike(true);
+                if (dislike) {
+                  setDislike(false);
+                }
                 toast.success(msg.message);
               }
             }}
@@ -115,9 +118,68 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
           </button>
         )}
         <p>0</p>
-        <button>
-          <ArrowBigDown size={40} strokeWidth={0.5} />
-        </button>
+        {!dislike && (
+          <button
+            onClick={async () => {
+              setLoading(true);
+              const fields = {
+                postId: post.id,
+              };
+              const set = await fetch("/explore/stg/api/dislike", {
+                method: "POST",
+                body: JSON.stringify(fields),
+              });
+              const msg = await set.json();
+              if (!set.ok) {
+                toast.error(msg.message);
+                setLoading(false);
+              } else {
+                setLoading(false);
+                setDislike(true);
+                toast.success(msg.message);
+              }
+            }}
+          >
+            {loading ? (
+              <LoadingDots color="#FAFAFA" />
+            ) : (
+              <ArrowBigDown size={40} strokeWidth={0.5} />
+            )}
+          </button>
+        )}
+        {dislike && (
+          <button
+            onClick={async () => {
+              setLoading(true);
+              const fields = {
+                postId: post.id,
+              };
+              const set = await fetch("/explore/stg/api/dislike", {
+                method: "POST",
+                body: JSON.stringify(fields),
+              });
+              const msg = await set.json();
+              if (!set.ok) {
+                toast.error(msg.message);
+                setLoading(false);
+              } else {
+                setLoading(false);
+                setDislike(false);
+                toast.success(msg.message);
+              }
+            }}
+          >
+            {loading ? (
+              <LoadingDots color="#FAFAFA" />
+            ) : (
+              <ArrowBigDown
+                size={40}
+                strokeWidth={0.5}
+                className="fill-red-600"
+              />
+            )}
+          </button>
+        )}
       </div>
       {index !== posts.length - 1 && (
         <div className="absolute inset-x-0 bottom-0 mx-[-23px] h-0.5 bg-navy-400/30"></div>
