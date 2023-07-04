@@ -19,9 +19,10 @@ interface PostBoxProps {
 
 const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
   const isLiked = post?.likes.includes(currUser?.id as string);
+  const isDisliked = post?.dislikes.includes(currUser?.id as string);
 
   const [like, setLike] = useState<boolean>(isLiked);
-  const [dislike, setDislike] = useState<boolean>(false);
+  const [dislike, setDislike] = useState<boolean>(isDisliked);
   const [loading, setLoading] = useState(false);
 
   return (
@@ -52,7 +53,12 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
         </div>
       </div>
       <div className="flex min-w-0 flex-col items-center">
-        {!like && (
+        {loading && (
+          <div className="mr-3 mt-10 flex">
+            <LoadingDots color="#FAFAFA" />
+          </div>
+        )}
+        {!loading && !like && (
           <button
             onClick={async () => {
               setLoading(true);
@@ -77,14 +83,10 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
               }
             }}
           >
-            {loading ? (
-              <LoadingDots color="#FAFAFA" />
-            ) : (
-              <ArrowBigUp size={40} strokeWidth={0.5} />
-            )}
+            <ArrowBigUp size={40} strokeWidth={0.5} />
           </button>
         )}
-        {like && (
+        {!loading && like && (
           <button
             onClick={async () => {
               setLoading(true);
@@ -106,19 +108,11 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
               }
             }}
           >
-            {loading ? (
-              <LoadingDots color="#FAFAFA" />
-            ) : (
-              <ArrowBigUp
-                size={40}
-                strokeWidth={0.5}
-                className="fill-red-600"
-              />
-            )}
+            <ArrowBigUp size={40} strokeWidth={0.5} className="fill-red-600" />
           </button>
         )}
-        <p>0</p>
-        {!dislike && (
+        {!loading && <p>0</p>}
+        {!loading && !dislike && (
           <button
             onClick={async () => {
               setLoading(true);
@@ -136,18 +130,17 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
               } else {
                 setLoading(false);
                 setDislike(true);
+                if (like) {
+                  setLike(false);
+                }
                 toast.success(msg.message);
               }
             }}
           >
-            {loading ? (
-              <LoadingDots color="#FAFAFA" />
-            ) : (
-              <ArrowBigDown size={40} strokeWidth={0.5} />
-            )}
+            <ArrowBigDown size={40} strokeWidth={0.5} />
           </button>
         )}
-        {dislike && (
+        {!loading && dislike && (
           <button
             onClick={async () => {
               setLoading(true);
@@ -169,15 +162,11 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
               }
             }}
           >
-            {loading ? (
-              <LoadingDots color="#FAFAFA" />
-            ) : (
-              <ArrowBigDown
-                size={40}
-                strokeWidth={0.5}
-                className="fill-red-600"
-              />
-            )}
+            <ArrowBigDown
+              size={40}
+              strokeWidth={0.5}
+              className="fill-red-600"
+            />
           </button>
         )}
       </div>

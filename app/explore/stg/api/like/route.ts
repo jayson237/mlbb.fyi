@@ -50,7 +50,30 @@ export async function POST(req: Request) {
     if (!set)
       return NextResponse.json(
         {
-          message: "Error upvotting post. Please try again",
+          message: "Error upvoting post. Please try again",
+        },
+        {
+          status: 400,
+        }
+      );
+
+    const updatedDislikes = hasLiked.dislikes.filter(
+      (id) => id !== currentUser.id
+    );
+
+    const setCurrentDislikes = await prisma.post.update({
+      where: {
+        id: postId,
+      },
+      data: {
+        dislikes: updatedDislikes,
+      },
+    });
+
+    if (!setCurrentDislikes)
+      return NextResponse.json(
+        {
+          message: "Error occurred. Please try again",
         },
         {
           status: 400,

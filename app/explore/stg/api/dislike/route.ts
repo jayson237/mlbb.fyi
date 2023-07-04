@@ -50,7 +50,41 @@ export async function POST(req: Request) {
     if (!set)
       return NextResponse.json(
         {
-          message: "Error downvotting post. Please try again",
+          message: "Error downvoting post. Please try again",
+        },
+        {
+          status: 400,
+        }
+      );
+
+    const updatedLikes = hasDisliked?.likes.filter(
+      (id) => id !== currentUser.id
+    );
+
+    if (!updatedLikes) {
+      return NextResponse.json(
+        {
+          message: "Error occured. Please try again",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
+    const setCurrentLikes = await prisma.post.update({
+      where: {
+        id: postId,
+      },
+      data: {
+        likes: updatedLikes,
+      },
+    });
+
+    if (!setCurrentLikes)
+      return NextResponse.json(
+        {
+          message: "Error occured. Please try again",
         },
         {
           status: 400,
@@ -59,7 +93,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       {
-        message: "Post has been set been downvotted",
+        message: "Post has been set been downvoted",
       },
       {
         status: 200,
