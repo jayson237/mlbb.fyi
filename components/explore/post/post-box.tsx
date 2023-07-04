@@ -6,16 +6,23 @@ import { Post } from "@prisma/client";
 
 import { ArrowBigDown, ArrowBigUp, MessageCircle, Star } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
+import LoadingDots from "@/components/shared/icons/loading-dots";
+import { SafeUser } from "@/types";
 
 interface PostBoxProps {
   post: Post;
   posts: Post[];
   index: number;
+  currUser?: SafeUser | null;
 }
 
-const PostBox: React.FC<PostBoxProps> = ({ post, posts, index }) => {
-  const [like, setLike] = useState<boolean>(false);
+const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
+  const isLiked = post?.likes.includes(currUser?.id as string);
+
+  const [like, setLike] = useState<boolean>(isLiked);
   const [dislike, setDislike] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
 
   return (
     <div
@@ -45,9 +52,68 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index }) => {
         </div>
       </div>
       <div className="flex min-w-0 flex-col items-center">
-        <button>
-          <ArrowBigUp size={40} strokeWidth={0.5} />
-        </button>
+        {!like && (
+          <button
+            onClick={async () => {
+              setLoading(true);
+              const fields = {
+                postId: post.id,
+              };
+              const set = await fetch("/explore/stg/api/like", {
+                method: "POST",
+                body: JSON.stringify(fields),
+              });
+              const msg = await set.json();
+              if (!set.ok) {
+                toast.error(msg.message);
+                setLoading(false);
+              } else {
+                setLoading(false);
+                setLike(true);
+                toast.success(msg.message);
+              }
+            }}
+          >
+            {loading ? (
+              <LoadingDots color="#FAFAFA" />
+            ) : (
+              <ArrowBigUp size={40} strokeWidth={0.5} />
+            )}
+          </button>
+        )}
+        {like && (
+          <button
+            onClick={async () => {
+              setLoading(true);
+              const fields = {
+                postId: post.id,
+              };
+              const set = await fetch("/explore/stg/api/like", {
+                method: "POST",
+                body: JSON.stringify(fields),
+              });
+              const msg = await set.json();
+              if (!set.ok) {
+                toast.error(msg.message);
+                setLoading(false);
+              } else {
+                setLoading(false);
+                setLike(false);
+                toast.success(msg.message);
+              }
+            }}
+          >
+            {loading ? (
+              <LoadingDots color="#FAFAFA" />
+            ) : (
+              <ArrowBigUp
+                size={40}
+                strokeWidth={0.5}
+                className="fill-red-600"
+              />
+            )}
+          </button>
+        )}
         <p>0</p>
         <button>
           <ArrowBigDown size={40} strokeWidth={0.5} />

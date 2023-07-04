@@ -44,7 +44,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
         </form>
       </GradiantCard>
       {currentUser && <PostContainer currUser={currentUser} />}
-      <PostList filter={filter} />
+      <PostList filter={filter} currUser={currentUser} />
     </div>
   );
 };
