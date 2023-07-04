@@ -60,30 +60,25 @@ export default async function HeroPage({
   const parseHero = decodedString.replace(/\b\w/g, (c) => c.toUpperCase());
   const isExistingHero = await getHero(parseHero);
 
-  if (!isExistingHero) {
+  const overallStats: any[] | null = await getHeroStats();
+
+  if (!isExistingHero || overallStats === null) {
     return <Redirect destination="not-found" />;
   }
 
-  const [
-    overallStats,
-    heroBuild,
-    heroSpell,
-    heroEmblem,
-    heroWeakAgainst,
-    heroStrongAgainst,
-  ] = await Promise.all([
-    getHeroStats(),
-    getHeroBuild(isExistingHero.id),
-    getHeroSpell(isExistingHero.id),
-    getHeroEmblem(isExistingHero.id),
-    getHeroCounter(isExistingHero.id),
-    getHeroCorr(isExistingHero.id),
-  ]);
-
   const currHeroStats = await getCurrHeroStats(
-    overallStats,
+    overallStats[0],
     isExistingHero.name
   );
+
+  const [heroBuild, heroSpell, heroEmblem, heroWeakAgainst, heroStrongAgainst] =
+    await Promise.all([
+      getHeroBuild(isExistingHero.id),
+      getHeroSpell(isExistingHero.id),
+      getHeroEmblem(isExistingHero.id),
+      getHeroCounter(isExistingHero.id),
+      getHeroCorr(isExistingHero.id),
+    ]);
 
   const strongAgainst = heroStrongAgainst.data
     ? handleStrongAgainst(heroStrongAgainst.data)
@@ -97,11 +92,11 @@ export default async function HeroPage({
   if (currentUser && isBoundProfile) {
     dataAcc = await getMlbbData(isBoundProfile.accId);
     classicIndex = await findIndexById(
-      dataAcc?.matchPlayed[0].data,
+      dataAcc.matchPlayed[0].data,
       isExistingHero.heroId.toString()
     );
     rankedIndex = await findIndexById(
-      dataAcc?.matchPlayed[1].data,
+      dataAcc.matchPlayed[1].data,
       isExistingHero.heroId.toString()
     );
   }
@@ -117,7 +112,7 @@ export default async function HeroPage({
           heroEmblem={heroEmblem.data.emblems}
           heroWeakAgainst={heroWeakAgainst.data.counters}
           heroStrongAgainst={strongAgainst}
-          matches={dataAcc?.matchPlayed}
+          matches={dataAcc.matchPlayed}
           classicIndex={classicIndex || 0}
           rankedIndex={rankedIndex || 0}
           showWR={true}

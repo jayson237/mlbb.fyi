@@ -19,7 +19,7 @@ const PostList: React.FC<PostListProps> = ({ filter }) => {
     return (
       <div className="grid justify-items-center">
         <h2 className="mt-10 font-heading text-xl font-bold tracking-wide">
-          No such post exist yet
+          There is no such post
         </h2>
       </div>
     );
