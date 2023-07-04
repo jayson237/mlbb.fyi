@@ -18,7 +18,13 @@ export async function POST(req: Request) {
     );
   }
 
-  if (!postId) {
+  const hasLiked = await prisma.post.findFirst({
+    where: {
+      id: postId,
+    },
+  });
+
+  if (!postId || !hasLiked) {
     return NextResponse.json(
       {
         message: "Post not found",
@@ -28,12 +34,6 @@ export async function POST(req: Request) {
       }
     );
   }
-
-  const hasLiked = await prisma.post.findFirst({
-    where: {
-      id: postId,
-    },
-  });
 
   if (hasLiked && !hasLiked.likes.includes(currentUser.id as string)) {
     const set = await prisma.post.update({
@@ -80,6 +80,27 @@ export async function POST(req: Request) {
         }
       );
 
+    const addVotes = await prisma.post.update({
+      where: {
+        id: postId,
+      },
+      data: {
+        totalVotes: {
+          increment: 1,
+        },
+      },
+    });
+
+    if (!addVotes)
+      return NextResponse.json(
+        {
+          message: "Error occured. Please try again",
+        },
+        {
+          status: 400,
+        }
+      );
+
     return NextResponse.json(
       {
         message: "Post has been set been upvotted",
@@ -116,6 +137,27 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         message: "Error removing upvote. Please try again",
+      },
+      {
+        status: 400,
+      }
+    );
+
+  const decreaseVotes = await prisma.post.update({
+    where: {
+      id: postId,
+    },
+    data: {
+      totalVotes: {
+        decrement: 1,
+      },
+    },
+  });
+
+  if (!decreaseVotes)
+    return NextResponse.json(
+      {
+        message: "Error occured. Please try again",
       },
       {
         status: 400,

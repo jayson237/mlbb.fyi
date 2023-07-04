@@ -111,7 +111,7 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
             <ArrowBigUp size={40} strokeWidth={0.5} className="fill-red-600" />
           </button>
         )}
-        {!loading && <p>0</p>}
+        {!loading && <p>{post.totalVotes}</p>}
         {!loading && !dislike && (
           <button
             onClick={async () => {
