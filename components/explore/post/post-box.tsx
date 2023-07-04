@@ -9,8 +9,6 @@ import { useState } from "react";
 import { toast } from "sonner";
 import LoadingDots from "@/components/shared/icons/loading-dots";
 import { SafeUser } from "@/types";
-import useSWR from "swr";
-import { fetcher } from "@/lib/fetcher-utils";
 
 interface PostBoxProps {
   post: Post;

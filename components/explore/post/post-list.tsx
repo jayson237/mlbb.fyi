@@ -44,6 +44,7 @@ const PostList: React.FC<PostListProps> = ({ filter, currUser }) => {
                 posts={posts}
                 index={index}
                 currUser={currUser}
+                key={post.id}
               />
             ))}
           </ul>
