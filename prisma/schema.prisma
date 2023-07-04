@@ -176,6 +176,8 @@ model Post {
   userId    String   @db.ObjectId
   createdBy String
   image     String?
+  likes     String[]
+  dislikes  String[]
 
   user User @relation(fields: [userId, createdBy], references: [id, username], onDelete: Cascade)
 

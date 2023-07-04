@@ -7,6 +7,7 @@ import { Post } from "@prisma/client";
 import { fetcher } from "@/lib/fetcher-utils";
 
 import { GradiantCard } from "@/components/shared/gradiant-card";
+import { ArrowBigDown, ArrowBigUp, MessageCircle, Star } from "lucide-react";
 
 interface PostListProps {
   filter: string;
@@ -39,7 +40,7 @@ const PostList: React.FC<PostListProps> = ({ filter }) => {
               >
                 <div className="flex min-w-0 flex-col">
                   <Link href={`/explore/${post.id}`}>
-                    <p className="text-white-500 text-xl font-semibold leading-6 ease-in-out hover:text-navy-200 hover:duration-300">
+                    <p className="text-white-500 mt-2 flex text-xl font-semibold leading-6 ease-in-out hover:text-navy-200 hover:duration-300">
                       {post.title}
                     </p>
                   </Link>
@@ -50,8 +51,18 @@ const PostList: React.FC<PostListProps> = ({ filter }) => {
                       </p>
                     </Link>
                   </div>
+                  <div className="mt-4 flex flex-row items-center">
+                    <Star size={16} strokeWidth={0.5} />
+                    <p className="ml-2 mr-8 flex">0</p>
+                    <MessageCircle size={16} strokeWidth={0.5} />
+                    <p className="ml-2 flex">0</p>
+                  </div>
                 </div>
-
+                <div className="flex min-w-0 flex-col items-center">
+                  <ArrowBigUp size={40} strokeWidth={0.5} />
+                  <p>0</p>
+                  <ArrowBigDown size={40} strokeWidth={0.5} />
+                </div>
                 {index !== posts.length - 1 && (
                   <div className="absolute inset-x-0 bottom-0 mx-[-23px] h-0.5 bg-navy-400/30"></div>
                 )}
