@@ -115,7 +115,7 @@ export default function StatsContainer({ serverStats, tourneyStats }: IStats) {
         >
           <ArrowUpDown className="h-4 w-4" />
           <p className="ml-2 font-sat text-sm font-semibold">
-            {ascendingOrder ? "DESCEND" : "ASCEND"}
+            {ascendingOrder ? "ASCEND" : "DESCEND"}
           </p>
         </button>
       </div>
