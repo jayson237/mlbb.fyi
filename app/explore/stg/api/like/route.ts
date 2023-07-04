@@ -57,28 +57,60 @@ export async function POST(req: Request) {
         }
       );
 
-    const updatedDislikes = hasLiked.dislikes.filter(
-      (id) => id !== currentUser.id
-    );
+    if (hasLiked.dislikes.includes(currentUser?.id as string)) {
+      const updatedDislikes = hasLiked.dislikes.filter(
+        (id) => id !== currentUser.id
+      );
 
-    const setCurrentDislikes = await prisma.post.update({
-      where: {
-        id: postId,
-      },
-      data: {
-        dislikes: updatedDislikes,
-      },
-    });
+      const setCurrentDislikes = await prisma.post.update({
+        where: {
+          id: postId,
+        },
+        data: {
+          dislikes: updatedDislikes,
+        },
+      });
 
-    if (!setCurrentDislikes)
+      if (!setCurrentDislikes)
+        return NextResponse.json(
+          {
+            message: "Error occurred. Please try again",
+          },
+          {
+            status: 400,
+          }
+        );
+
+      const addVotes = await prisma.post.update({
+        where: {
+          id: postId,
+        },
+        data: {
+          totalVotes: {
+            increment: 2,
+          },
+        },
+      });
+
+      if (!addVotes)
+        return NextResponse.json(
+          {
+            message: "Error occured. Please try again",
+          },
+          {
+            status: 400,
+          }
+        );
+
       return NextResponse.json(
         {
-          message: "Error occurred. Please try again",
+          message: "Post has been set been upvotted",
         },
         {
-          status: 400,
+          status: 200,
         }
       );
+    }
 
     const addVotes = await prisma.post.update({
       where: {

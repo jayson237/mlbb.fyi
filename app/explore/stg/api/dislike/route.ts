@@ -57,39 +57,71 @@ export async function POST(req: Request) {
         }
       );
 
-    const updatedLikes = hasDisliked?.likes.filter(
-      (id) => id !== currentUser.id
-    );
+    if (hasDisliked.likes.includes(currentUser?.id as string)) {
+      const updatedLikes = hasDisliked?.likes.filter(
+        (id) => id !== currentUser.id
+      );
 
-    if (!updatedLikes) {
+      if (!updatedLikes) {
+        return NextResponse.json(
+          {
+            message: "Error occured. Please try again",
+          },
+          {
+            status: 400,
+          }
+        );
+      }
+
+      const setCurrentLikes = await prisma.post.update({
+        where: {
+          id: postId,
+        },
+        data: {
+          likes: updatedLikes,
+        },
+      });
+
+      if (!setCurrentLikes)
+        return NextResponse.json(
+          {
+            message: "Error occured. Please try again",
+          },
+          {
+            status: 400,
+          }
+        );
+
+      const decreaseVotes = await prisma.post.update({
+        where: {
+          id: postId,
+        },
+        data: {
+          totalVotes: {
+            decrement: 2,
+          },
+        },
+      });
+
+      if (!decreaseVotes)
+        return NextResponse.json(
+          {
+            message: "Error occured. Please try again",
+          },
+          {
+            status: 400,
+          }
+        );
+
       return NextResponse.json(
         {
-          message: "Error occured. Please try again",
+          message: "Post has been set to be downvoted",
         },
         {
-          status: 400,
+          status: 200,
         }
       );
     }
-
-    const setCurrentLikes = await prisma.post.update({
-      where: {
-        id: postId,
-      },
-      data: {
-        likes: updatedLikes,
-      },
-    });
-
-    if (!setCurrentLikes)
-      return NextResponse.json(
-        {
-          message: "Error occured. Please try again",
-        },
-        {
-          status: 400,
-        }
-      );
 
     const decreaseVotes = await prisma.post.update({
       where: {
@@ -114,7 +146,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       {
-        message: "Post has been set been downvoted",
+        message: "Post has been set to be downvoted",
       },
       {
         status: 200,
