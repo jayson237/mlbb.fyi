@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import useTabStore from "@/lib/state/useTabStore";
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import { Hero } from "@prisma/client";
 import { Progress } from "@/components/shared/progress";
@@ -49,6 +50,11 @@ export default function HeroFyi({
 }: HeroFyiContainer) {
   const router = useRouter();
   const [strongAgainstData, setStrongAgainstData] = useState([]);
+  const { selectedTab, setSelectedTab } = useTabStore();
+
+  useEffect(() => {
+    setSelectedTab("heroes");
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);

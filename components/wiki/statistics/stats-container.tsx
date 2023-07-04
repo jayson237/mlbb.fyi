@@ -6,6 +6,7 @@ import { TourneyStats } from "@prisma/client";
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { ArrowUpDown } from "lucide-react";
 
 interface IStats {
   serverStats: any[] | null;
@@ -17,6 +18,7 @@ export default function StatsContainer({ serverStats, tourneyStats }: IStats) {
   const [selectedTourneyIndex, setSelectedTourneyIndex] = useState<number>(-3);
   const [selectedSortingOption, setSelectedSortingOption] =
     useState<string>("alphabet");
+  const [ascendingOrder, setAscendingOrder] = useState<boolean>(true);
 
   const handleTourneyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedTourneyIndex = Number(event.target.value);
@@ -28,6 +30,10 @@ export default function StatsContainer({ serverStats, tourneyStats }: IStats) {
   ) => {
     const selectedSortingOption = event.target.value;
     setSelectedSortingOption(selectedSortingOption);
+  };
+
+  const handleReverseList = () => {
+    setAscendingOrder(!ascendingOrder);
   };
 
   const selectedTourney = tourneyStats[selectedTourneyIndex] || null;
@@ -72,11 +78,15 @@ export default function StatsContainer({ serverStats, tourneyStats }: IStats) {
       break;
   }
 
+  const sortedListCopy = ascendingOrder
+    ? [...sortedList]
+    : [...sortedList].reverse();
+
   return (
     <GradiantCard className="mb-8" variant="clean">
       <div className="mb-8 flex gap-4">
         <select
-          className="h-10 w-1/2 rounded-xl border border-navy-300/50 bg-navy-900 p-2 shadow-sm focus:border-navy-600 focus:outline-none focus:ring-1 focus:ring-navy-600"
+          className="h-10 w-1/2 rounded-xl border border-navy-300/50 bg-black p-2 shadow-sm focus:border-navy-600 focus:outline-none focus:ring-1 focus:ring-navy-600"
           value={selectedTourneyIndex}
           onChange={handleTourneyChange}
         >
@@ -90,7 +100,7 @@ export default function StatsContainer({ serverStats, tourneyStats }: IStats) {
           ))}
         </select>
         <select
-          className="h-10 w-1/2 rounded-xl border border-navy-300/50 bg-navy-900 p-2 shadow-sm focus:border-navy-600 focus:outline-none focus:ring-1 focus:ring-navy-600"
+          className="h-10 w-1/2 rounded-xl border border-navy-300/50 bg-black p-2 shadow-sm focus:border-navy-600 focus:outline-none focus:ring-1 focus:ring-navy-600"
           value={selectedSortingOption}
           onChange={handleSortingOptionChange}
         >
@@ -99,9 +109,18 @@ export default function StatsContainer({ serverStats, tourneyStats }: IStats) {
           <option value="ban">Ban</option>
           <option value="winrate">Win Rate</option>
         </select>
+        <button
+          className="flex flex-row items-center transition-all duration-300 hover:text-navy-300"
+          onClick={handleReverseList}
+        >
+          <ArrowUpDown className="h-4 w-4" />
+          <p className="ml-2 font-sat text-sm font-semibold">
+            {ascendingOrder ? "DESCEND" : "ASCEND"}
+          </p>
+        </button>
       </div>
 
-      {sortedList.length !== 0 ? (
+      {sortedListCopy.length !== 0 ? (
         <div className="grid grid-cols-4 gap-4">
           <div className="mb-4 font-heading text-xl">Hero</div>
           <div className="text-lg mb-4 text-end font-heading md:text-xl">
@@ -114,7 +133,7 @@ export default function StatsContainer({ serverStats, tourneyStats }: IStats) {
             Ban (%)
           </div>
 
-          {sortedList.map((hero, i) => (
+          {sortedListCopy.map((hero, i) => (
             <React.Fragment key={i}>
               <div className="text-start font-sat text-sm md:text-[16px]">
                 <div
@@ -154,7 +173,7 @@ export default function StatsContainer({ serverStats, tourneyStats }: IStats) {
               <div className="flex items-center justify-end font-sat text-sm md:text-[16px]">
                 {hero.ban?.slice(0, -1) || hero.banPresence.slice(0, -1)}
               </div>
-              {i + 1 !== sortedList.length && (
+              {i + 1 !== sortedListCopy.length && (
                 <div
                   className="inset-x-0 h-0.5 w-full bg-navy-400/30"
                   style={{ gridColumn: "1 / -1" }}
