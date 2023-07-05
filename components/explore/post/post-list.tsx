@@ -1,19 +1,27 @@
 "use client";
 
-import Link from "next/link";
 import useSWR from "swr";
-
-import { Post } from "@prisma/client";
 import { fetcher } from "@/lib/fetcher-utils";
 
 import { GradiantCard } from "@/components/shared/gradiant-card";
+import PostBox from "./post-box";
+import { Post } from "@prisma/client";
+import { SafeUser } from "@/types";
+import useMutCom from "@/lib/state/useMutCom";
+import { useEffect } from "react";
 
 interface PostListProps {
   filter: string;
+  currUser?: SafeUser | null;
 }
 
-const PostList: React.FC<PostListProps> = ({ filter }) => {
-  const { data: posts } = useSWR(["/api/post", filter], fetcher);
+const PostList: React.FC<PostListProps> = ({ filter, currUser }) => {
+  const togMut = useMutCom();
+  const { data: posts, mutate } = useSWR(["/api/post", filter], fetcher);
+
+  useEffect(() => {
+    togMut.toogleMutate && mutate();
+  }, [mutate, togMut]);
 
   if (posts === "empty") {
     return (
@@ -31,31 +39,13 @@ const PostList: React.FC<PostListProps> = ({ filter }) => {
         <GradiantCard variant="clean" className="mb-8">
           <ul role="list">
             {posts?.map((post: Post, index: number) => (
-              <div
+              <PostBox
+                post={post}
+                posts={posts}
+                index={index}
+                currUser={currUser}
                 key={post.id}
-                className={`relative flex justify-between gap-x-6 py-5 ${
-                  index + 1 < posts.length ? "pb-16" : "pb-12"
-                }`}
-              >
-                <div className="flex min-w-0 flex-col">
-                  <Link href={`/explore/${post.id}`}>
-                    <p className="text-white-500 text-xl font-semibold leading-6 ease-in-out hover:text-navy-200 hover:duration-300">
-                      {post.title}
-                    </p>
-                  </Link>
-                  <div className="flex items-center">
-                    <Link href={`/profile/${post.createdBy}/statistics`}>
-                      <p className="text-xs mt-2 truncate leading-5 text-gray-500 ease-in-out hover:text-navy-300 hover:underline">
-                        {post.createdBy}
-                      </p>
-                    </Link>
-                  </div>
-                </div>
-
-                {index !== posts.length - 1 && (
-                  <div className="absolute inset-x-0 bottom-0 mx-[-23px] h-0.5 bg-navy-400/30"></div>
-                )}
-              </div>
+              />
             ))}
           </ul>
         </GradiantCard>
