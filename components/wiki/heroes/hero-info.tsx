@@ -141,7 +141,9 @@ export default function HeroFyi({
               </div>
               <div className="mb-1 flex flex-row items-center">
                 <Image
-                  src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1685987710/mlbb.fyi/heroType/${heroDetails.heroType}.webp`}
+                  src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1685987710/mlbb.fyi/heroType/${
+                    heroDetails.heroType.split("/")[0]
+                  }.webp`}
                   alt={heroDetails.heroType || ""}
                   width={20}
                   height={20}
