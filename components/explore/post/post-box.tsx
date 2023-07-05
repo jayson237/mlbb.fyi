@@ -61,9 +61,22 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
         </div>
         <div className="mt-4 flex flex-row items-center">
           <Star size={16} strokeWidth={0.5} />
-          <p className="ml-2 mr-8 flex">0</p>
+          <p className="ml-2 mr-8 flex">
+            {post.favourites.length >= 1000
+              ? `${
+                  (post.favourites.length - (post.favourites.length % 100)) /
+                  1000
+                }k`
+              : post.favourites.length}
+          </p>
           <MessageCircle size={16} strokeWidth={0.5} />
-          {comments && <p className="ml-2 flex">{comments.length}</p>}
+          {comments && (
+            <p className="ml-2 flex">
+              {comments.length >= 1000
+                ? `${(comments.length - (comments.length % 100)) / 1000}k`
+                : comments.length}
+            </p>
+          )}
         </div>
       </div>
       <div className="flex min-w-0 flex-col items-center">
@@ -130,7 +143,13 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
             <ArrowBigUp size={32} strokeWidth={0} className="fill-green-600" />
           </button>
         )}
-        {!loading && <p>{totalVotes}</p>}
+        {!loading && (
+          <p>
+            {totalVotes >= 1000
+              ? `${(totalVotes - (totalVotes % 100)) / 1000}k`
+              : totalVotes}
+          </p>
+        )}
         {!loading && !dislike && (
           <button
             onClick={async () => {
