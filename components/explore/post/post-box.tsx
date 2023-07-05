@@ -5,10 +5,13 @@ import Link from "next/link";
 import { Post } from "@prisma/client";
 
 import { ArrowBigDown, ArrowBigUp, MessageCircle, Star } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import LoadingDots from "@/components/shared/icons/loading-dots";
 import { SafeUser } from "@/types";
+import { fetcher } from "@/lib/fetcher-utils";
+import useSWR from "swr";
+import useMutCom from "@/lib/state/useMutCom";
 
 interface PostBoxProps {
   post: Post;
@@ -18,11 +21,22 @@ interface PostBoxProps {
 }
 
 const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
+  const togMut = useMutCom();
+  const { data: comments, mutate } = useSWR(
+    ["/api/comment/list", post.id],
+    fetcher
+  );
+
+  useEffect(() => {
+    togMut.toogleMutate && mutate();
+  }, [mutate, togMut]);
+
   const isLiked = post?.likes.includes(currUser?.id as string);
   const isDisliked = post?.dislikes.includes(currUser?.id as string);
 
   const [like, setLike] = useState<boolean>(isLiked);
   const [dislike, setDislike] = useState<boolean>(isDisliked);
+  const [totalVotes, setTotalVotes] = useState<number>(post.totalVotes);
   const [loading, setLoading] = useState(false);
 
   return (
@@ -34,7 +48,7 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
     >
       <div className="flex min-w-0 flex-col">
         <Link href={`/explore/${post.id}`}>
-          <p className="text-white-500 mt-2 flex text-xl font-semibold leading-6 ease-in-out hover:text-navy-200 hover:duration-300">
+          <p className="text-white-500 flex text-xl font-semibold leading-6 ease-in-out hover:text-navy-200 hover:duration-300">
             {post.title}
           </p>
         </Link>
@@ -47,9 +61,22 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
         </div>
         <div className="mt-4 flex flex-row items-center">
           <Star size={16} strokeWidth={0.5} />
-          <p className="ml-2 mr-8 flex">0</p>
+          <p className="ml-2 mr-8 flex">
+            {post.favourites.length >= 1000
+              ? `${
+                  (post.favourites.length - (post.favourites.length % 100)) /
+                  1000
+                }k`
+              : post.favourites.length}
+          </p>
           <MessageCircle size={16} strokeWidth={0.5} />
-          <p className="ml-2 flex">0</p>
+          {comments && (
+            <p className="ml-2 flex">
+              {comments.length >= 1000
+                ? `${(comments.length - (comments.length % 100)) / 1000}k`
+                : comments.length}
+            </p>
+          )}
         </div>
       </div>
       <div className="flex min-w-0 flex-col items-center">
@@ -78,12 +105,16 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
                 setLike(true);
                 if (dislike) {
                   setDislike(false);
+                  setTotalVotes(totalVotes + 2);
+                  toast.success(msg.message);
+                } else {
+                  setTotalVotes(totalVotes + 1);
+                  toast.success(msg.message);
                 }
-                toast.success(msg.message);
               }
             }}
           >
-            <ArrowBigUp size={40} strokeWidth={0.5} />
+            <ArrowBigUp size={32} strokeWidth={0.5} />
           </button>
         )}
         {!loading && like && (
@@ -104,14 +135,21 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
               } else {
                 setLoading(false);
                 setLike(false);
+                setTotalVotes(totalVotes - 1);
                 toast.success(msg.message);
               }
             }}
           >
-            <ArrowBigUp size={40} strokeWidth={0.5} className="fill-red-600" />
+            <ArrowBigUp size={32} strokeWidth={0} className="fill-green-600" />
           </button>
         )}
-        {!loading && <p>{post.totalVotes}</p>}
+        {!loading && (
+          <p>
+            {totalVotes >= 1000
+              ? `${(totalVotes - (totalVotes % 100)) / 1000}k`
+              : totalVotes}
+          </p>
+        )}
         {!loading && !dislike && (
           <button
             onClick={async () => {
@@ -132,12 +170,16 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
                 setDislike(true);
                 if (like) {
                   setLike(false);
+                  setTotalVotes(totalVotes - 2);
+                  toast.success(msg.message);
+                } else {
+                  setTotalVotes(totalVotes - 1);
+                  toast.success(msg.message);
                 }
-                toast.success(msg.message);
               }
             }}
           >
-            <ArrowBigDown size={40} strokeWidth={0.5} />
+            <ArrowBigDown size={32} strokeWidth={0.5} />
           </button>
         )}
         {!loading && dislike && (
@@ -158,15 +200,12 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
               } else {
                 setLoading(false);
                 setDislike(false);
+                setTotalVotes(totalVotes + 1);
                 toast.success(msg.message);
               }
             }}
           >
-            <ArrowBigDown
-              size={40}
-              strokeWidth={0.5}
-              className="fill-red-600"
-            />
+            <ArrowBigDown size={32} strokeWidth={0} className="fill-red-600" />
           </button>
         )}
       </div>

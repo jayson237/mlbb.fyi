@@ -50,6 +50,27 @@ export async function POST(req: Request) {
       }
     );
 
+  const setPost = await prisma.post.update({
+    where: {
+      id: postId,
+    },
+    data: {
+      favourites: {
+        push: currentUser.id,
+      },
+    },
+  });
+
+  if (!setPost)
+    return NextResponse.json(
+      {
+        message: "Error editing post. Please try again",
+      },
+      {
+        status: 400,
+      }
+    );
+
   return NextResponse.json(
     {
       message: "Post has been set to favourites",
