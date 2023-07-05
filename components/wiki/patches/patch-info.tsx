@@ -118,6 +118,7 @@ export default function PatchFyi({ patch, patches }: IPatch) {
                         } ${
                           update.startsWith("A.") ||
                           update.startsWith("B.") ||
+                          update.startsWith("C.") ||
                           dateFormat.test(update)
                             ? "mt-8 font-bold text-white"
                             : ""

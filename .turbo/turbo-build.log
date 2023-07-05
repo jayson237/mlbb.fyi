@@ -41,7 +41,7 @@ info  - Generating static pages (0/42)
 info  - Generating static pages (10/42)
 info  - Generating static pages (20/42)
 warn  - Entire page /auth/signin deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /auth/signin
-(node:19496) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
+(node:5596) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
 (Use `node --trace-warnings ...` to show where the warning was created)
 [next-auth][error][CLIENT_FETCH_ERROR] 
 https://next-auth.js.org/errors#client_fetch_error fetch failed {
@@ -57,11 +57,11 @@ https://next-auth.js.org/errors#client_fetch_error fetch failed {
 }
 info  - Generating static pages (31/42)
 
+
 warn  - metadata.metadataBase is not set for resolving social open graph or twitter images, fallbacks to "http://localhost:3000". See https://beta.nextjs.org/docs/api-reference/metadata#metadatabase
 
 
-
-(node:9316) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
+(node:5624) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
 (Use `node --trace-warnings ...` to show where the warning was created)
 warn  - Entire page /profile/stg deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /profile/stg
 info  - Generating static pages (42/42)
@@ -97,7 +97,7 @@ Route (app)                                Size     First Load JS
 ├ λ /explore/stg/api/unfavourite           0 B                0 B
 ├ ○ /favicon.ico                           0 B                0 B
 ├ λ /not-found                             1.48 kB        91.8 kB
-├ λ /profile                               156 B          77.1 kB
+├ λ /profile                               161 B          77.1 kB
 ├ λ /profile/[username]                    306 B          77.3 kB
 ├ λ /profile/[username]/[subProfile]       4.62 kB         109 kB
 ├ λ /profile/[username]/api                0 B                0 B
@@ -110,7 +110,7 @@ Route (app)                                Size     First Load JS
 ├ λ /profile/stg/api/update                0 B                0 B
 ├ λ /profile/stg/bind                      1.83 kB        98.3 kB
 ├ λ /profile/stg/bind/verify               2.14 kB        98.6 kB
-├ λ /wiki                                  156 B          77.1 kB
+├ λ /wiki                                  161 B          77.1 kB
 ├ λ /wiki/heroes                           5.76 kB         100 kB
 ├ λ /wiki/heroes/[hero]                    9.29 kB        99.1 kB
 ├ λ /wiki/patches                          2.1 kB         91.4 kB

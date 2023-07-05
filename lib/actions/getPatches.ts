@@ -9,6 +9,7 @@ export default async function getPatches() {
     });
     return patches;
   } catch (error) {
-    throw new Error("Failed to fetch patches");
+    console.log("Error", error);
+    return null;
   }
 }
