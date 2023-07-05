@@ -6,7 +6,7 @@ import { TourneyStats } from "@prisma/client";
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowDown, ArrowUp } from "lucide-react";
 
 interface IStats {
   serverStats: any[] | null;
@@ -113,10 +113,11 @@ export default function StatsContainer({ serverStats, tourneyStats }: IStats) {
           className="flex flex-row items-center transition-all duration-300 hover:text-navy-300"
           onClick={handleReverseList}
         >
-          <ArrowUpDown className="h-4 w-4" />
-          <p className="ml-2 font-sat text-sm font-semibold">
-            {ascendingOrder ? "ASCEND" : "DESCEND"}
-          </p>
+          {ascendingOrder ? (
+            <ArrowUp className="h-6 w-6" />
+          ) : (
+            <ArrowDown className="h-6 w-6" />
+          )}
         </button>
       </div>
 
