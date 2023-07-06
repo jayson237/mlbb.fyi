@@ -9,6 +9,8 @@ import { Post } from "@prisma/client";
 import { SafeUser } from "@/types";
 import useMutCom from "@/lib/state/useMutCom";
 import { useEffect } from "react";
+import Loading from "@/components/shared/loading";
+import { AlertTriangle } from "lucide-react";
 
 interface PostListProps {
   filter: string;
@@ -25,10 +27,11 @@ const PostList: React.FC<PostListProps> = ({ filter, currUser }) => {
 
   if (posts === "empty") {
     return (
-      <div className="grid justify-items-center">
-        <h2 className="mt-10 font-heading text-xl font-bold tracking-wide">
+      <div className="mt-4 flex h-screen flex-col items-center justify-center">
+        <AlertTriangle className="mb-2 h-20 w-20" />
+        <p className="text-md mb-[560px] text-center font-heading md:mb-96 md:ml-3 md:text-2xl">
           There is no such post
-        </h2>
+        </p>
       </div>
     );
   }
@@ -53,7 +56,11 @@ const PostList: React.FC<PostListProps> = ({ filter, currUser }) => {
     );
   }
 
-  return null;
+  return (
+    <div>
+      <Loading />
+    </div>
+  );
 };
 
 export default PostList;
