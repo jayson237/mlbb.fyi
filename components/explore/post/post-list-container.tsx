@@ -8,7 +8,7 @@ import { GradiantCard } from "../../shared/gradiant-card";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import UserList from "./user-list";
-import { Input } from "@/components/shared/search-box";
+import { Input } from "@/components/shared/input";
 
 interface PostListContainerProps {
   currentUser?: SafeUser | null;
@@ -28,7 +28,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
 
   return (
     <div className="no-scrollbar max-h-[90vh] w-full overflow-scroll md:w-[2000px]">
-      <GradiantCard>
+      <div className="mb-2">
         <div className="flex flex-row items-center gap-2">
           <form
             className="flex flex-grow flex-row items-center gap-2"
@@ -48,7 +48,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
                   const inputValue = e.target.value;
                   setSearchTerm(inputValue);
                 }}
-                className="flex h-9 rounded-l-xl border-hidden"
+                className="flex h-9 rounded-l-xl border-r border-hidden"
               />
               <button>
                 <Search className="mr-2 transition-all hover:text-navy-300 hover:duration-300" />
@@ -56,7 +56,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
             </div>
           </form>
           <select
-            className="h-9 w-24 rounded-xl border border-navy-300/50 bg-black p-2 shadow-sm focus:border-navy-600 focus:outline-none focus:ring-1 focus:ring-navy-600"
+            className="h-[2.45rem] w-24 rounded-xl border border-navy-300/50 bg-black p-2 shadow-sm focus:border-navy-600 focus:outline-none focus:ring-1 focus:ring-navy-600"
             value={selectedIndex}
             onChange={handleChange}
           >
@@ -64,7 +64,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
             <option value={-1}>User</option>
           </select>
         </div>
-      </GradiantCard>
+      </div>
       {selectedIndex === -2 && currentUser && (
         <PostContainer currUser={currentUser} />
       )}
