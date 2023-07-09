@@ -12,6 +12,8 @@ import { SafeUser } from "@/types";
 import { fetcher } from "@/lib/fetcher-utils";
 import useSWR from "swr";
 import useMutCom from "@/lib/state/useMutCom";
+import { useRouter } from "next/navigation";
+import DateContainer from "./data-container";
 
 interface PostBoxProps {
   post: Post;
@@ -21,6 +23,8 @@ interface PostBoxProps {
 }
 
 const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
+  const router = useRouter();
+
   const togMut = useMutCom();
   const { data: comments, mutate } = useSWR(
     ["/api/comment/list", post.id],
@@ -39,10 +43,14 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
   const [totalVotes, setTotalVotes] = useState<number>(post.totalVotes);
   const [loading, setLoading] = useState(false);
 
+  const dateTime = post.createdAt.toString().split("T");
+  const date = dateTime[0];
+  const time = dateTime[1].split(".")[0];
+
   return (
     <div
       key={post.id}
-      className={`relative flex justify-between gap-x-6 py-5 ${
+      className={`relative flex flex-grow justify-between gap-x-6 py-5 ${
         index + 1 < posts.length ? "pb-16" : "pb-12"
       }`}
     >
@@ -52,7 +60,8 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
             {post.title}
           </p>
         </Link>
-        <div className="flex items-center">
+        <div className="flex flex-row items-center gap-1">
+          <DateContainer date={date.split("-")} time={time.split(":")} />
           <Link href={`/profile/${post.createdBy}/statistics`}>
             <p className="text-xs mt-2 truncate leading-5 text-gray-500 ease-in-out hover:text-navy-300 hover:underline">
               {post.createdBy}
