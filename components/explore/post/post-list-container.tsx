@@ -31,13 +31,13 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
       <div className="mb-2">
         <div className="flex flex-row items-center gap-2">
           <form
-            className="flex flex-grow flex-row items-center gap-2"
+            className="flex grow flex-row items-center gap-2"
             onSubmit={(e) => {
               e.preventDefault();
               setFilter(searchTerm);
             }}
           >
-            <div className="flex flex-grow flex-row items-center gap-2 rounded-xl border border-navy-300 bg-transparent">
+            <div className="flex grow flex-row items-center gap-2 rounded-xl border border-navy-300 bg-transparent">
               <Input
                 type="text"
                 placeholder={

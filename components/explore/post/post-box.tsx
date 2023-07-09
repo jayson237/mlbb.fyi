@@ -123,7 +123,11 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
               }
             }}
           >
-            <ArrowBigUp size={32} strokeWidth={0.5} />
+            <ArrowBigUp
+              size={32}
+              strokeWidth={0.5}
+              className="transition-all ease-in-out hover:text-green-600 hover:duration-300"
+            />
           </button>
         )}
         {!loading && like && (
@@ -188,7 +192,11 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
               }
             }}
           >
-            <ArrowBigDown size={32} strokeWidth={0.5} />
+            <ArrowBigDown
+              size={32}
+              strokeWidth={0.5}
+              className="transition-all ease-in-out hover:text-red-600 hover:duration-300"
+            />
           </button>
         )}
         {!loading && dislike && (
