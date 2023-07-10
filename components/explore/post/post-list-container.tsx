@@ -3,6 +3,7 @@
 import { SafeUser } from "@/types";
 import PostContainer from "./post-container";
 import PostList from "./post-list";
+import { Tabs, TabsList, TabsTrigger } from "@/components/shared/tabs";
 
 import { Search } from "lucide-react";
 import { useState } from "react";
@@ -13,6 +14,21 @@ interface PostListContainerProps {
   currentUser?: SafeUser | null;
 }
 
+const ExploreTabList = [
+  {
+    name: "Top Votes",
+    mode: "top",
+  },
+  {
+    name: "Recent",
+    mode: "recent",
+  },
+  {
+    name: "Following Only",
+    mode: "follow",
+  },
+];
+
 const PostListContainer: React.FC<PostListContainerProps> = ({
   currentUser,
 }) => {
@@ -20,6 +36,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(-2);
   const [selectedSortMode, setSelectedSortMode] = useState("top");
+  const [selectedTab, setSelectedTab] = useState("Top Votes");
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedIndex = Number(event.target.value);
@@ -76,15 +93,26 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
       {selectedIndex === -2 && (
         <div className="mt-5 flex flex-col gap-2">
           <div>
-            <select
-              className="h-[2.45rem] w-36 rounded-xl border border-navy-300/50 bg-black p-2 shadow-sm focus:border-navy-600 focus:outline-none focus:ring-1 focus:ring-navy-600"
-              value={selectedSortMode}
-              onChange={handleSortChange}
+            <Tabs
+              value={selectedTab}
+              defaultValue="heroes"
+              className="mt-4 flex w-full flex-row-reverse"
             >
-              <option value="top">Top Votes</option>
-              {currentUser && <option value="follow">Following Only</option>}
-              <option value="recent">Recent</option>
-            </select>
+              <TabsList className="flex shrink-0 space-x-4">
+                {ExploreTabList.map((item, i) => (
+                  <TabsTrigger
+                    value={item.name}
+                    onClick={() => {
+                      setSelectedTab(item.name);
+                      setSelectedSortMode(item.mode);
+                    }}
+                    key={i}
+                  >
+                    {item.name}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
           </div>
           <PostList
             filter={filter}
