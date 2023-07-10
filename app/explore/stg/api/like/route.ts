@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   if (!currentUser) {
     return NextResponse.json(
       {
-        message: "User not found",
+        message: "Please log in first",
       },
       {
         status: 400,
