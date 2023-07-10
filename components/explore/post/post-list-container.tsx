@@ -4,7 +4,6 @@ import { SafeUser } from "@/types";
 import PostContainer from "./post-container";
 import PostList from "./post-list";
 import { Tabs, TabsList, TabsTrigger } from "@/components/shared/tabs";
-
 import { Search } from "lucide-react";
 import { useState } from "react";
 import UserList from "./user-list";
@@ -24,7 +23,7 @@ const ExploreTabList = [
     mode: "recent",
   },
   {
-    name: "Following Only",
+    name: "Following",
     mode: "follow",
   },
 ];
@@ -92,28 +91,26 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
       )}
       {selectedIndex === -2 && (
         <div className="mt-5 flex flex-col gap-2">
-          <div>
-            <Tabs
-              value={selectedTab}
-              defaultValue="heroes"
-              className="mt-4 flex w-full flex-row-reverse"
-            >
-              <TabsList className="flex shrink-0 space-x-4">
-                {ExploreTabList.map((item, i) => (
-                  <TabsTrigger
-                    value={item.name}
-                    onClick={() => {
-                      setSelectedTab(item.name);
-                      setSelectedSortMode(item.mode);
-                    }}
-                    key={i}
-                  >
-                    {item.name}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-            </Tabs>
-          </div>
+          {currentUser && (
+            <div>
+              <Tabs value={selectedTab} className="mt-4 flex w-full">
+                <TabsList className="flex shrink-0 space-x-4">
+                  {ExploreTabList.map((item, i) => (
+                    <TabsTrigger
+                      value={item.name}
+                      onClick={() => {
+                        setSelectedTab(item.name);
+                        setSelectedSortMode(item.mode);
+                      }}
+                      key={i}
+                    >
+                      {item.name}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </Tabs>
+            </div>
+          )}
           <PostList
             filter={filter}
             sortMode={selectedSortMode}
