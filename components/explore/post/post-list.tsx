@@ -1,7 +1,7 @@
 "use client";
 
 import useSWR from "swr";
-import { fetcher } from "@/lib/fetcher-utils";
+// import { fetcher } from "@/lib/fetcher-utils";
 
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import PostBox from "./post-box";
@@ -14,12 +14,28 @@ import { AlertTriangle } from "lucide-react";
 
 interface PostListProps {
   filter: string;
+  sortMode: string;
   currUser?: SafeUser | null;
 }
 
-const PostList: React.FC<PostListProps> = ({ filter, currUser }) => {
+export const fetcher = async (data: string) => {
+  const fields = {
+    filter: data[1],
+    sortMode: data[2],
+  };
+
+  return await fetch(data[0], {
+    method: "POST",
+    body: JSON.stringify(fields),
+  }).then((res) => res.json());
+};
+
+const PostList: React.FC<PostListProps> = ({ filter, sortMode, currUser }) => {
   const togMut = useMutCom();
-  const { data: posts, mutate } = useSWR(["/api/post", filter], fetcher);
+  const { data: posts, mutate } = useSWR(
+    ["/api/post", filter, sortMode],
+    fetcher
+  );
 
   useEffect(() => {
     togMut.toogleMutate && mutate();

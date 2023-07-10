@@ -23,8 +23,6 @@ interface PostBoxProps {
 }
 
 const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
-  const router = useRouter();
-
   const togMut = useMutCom();
   const { data: comments, mutate } = useSWR(
     ["/api/comment/list", post.id],
@@ -50,7 +48,7 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
   return (
     <div
       key={post.id}
-      className={`relative flex flex-grow justify-between gap-x-6 py-5 ${
+      className={`relative flex grow justify-between gap-x-6 py-5 ${
         index + 1 < posts.length ? "pb-16" : "pb-12"
       }`}
     >
