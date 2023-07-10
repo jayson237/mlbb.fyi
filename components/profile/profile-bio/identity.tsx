@@ -23,9 +23,13 @@ const IdentityHolder: React.FC<IdentityHolderProps> = ({ user, baseInfo }) => {
           src={
             user?.image === ""
               ? "/nana.jpg"
-              : user?.image?.split("/image/upload/")[0] +
-                "/image/upload/c_fill,h_150,w_150/" +
-                user?.image?.split("/image/upload/")[1]
+              : user?.image?.includes("/image/upload")
+              ? `${
+                  user?.image?.split("/image/upload/")[0]
+                }/image/upload/c_fill,h_150,w_150/${
+                  user?.image?.split("/image/upload/")[1]
+                }`
+              : user?.image || "/nana.jpg"
           }
           alt=""
           width={150}
