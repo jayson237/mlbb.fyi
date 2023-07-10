@@ -82,7 +82,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
               onChange={handleSortChange}
             >
               <option value="top">Top Votes</option>
-              <option value="follow">Following Only</option>
+              {currentUser && <option value="follow">Following Only</option>}
               <option value="recent">Recent</option>
             </select>
           </div>
