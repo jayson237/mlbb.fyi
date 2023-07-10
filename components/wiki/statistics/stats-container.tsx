@@ -150,15 +150,16 @@ export default function StatsContainer({ serverStats, tourneyStats }: IStats) {
                   }
                 >
                   <Image
-                    src={`https://res.cloudinary.com/dvm5vog2j/image/upload/c_fill,h_192,w_192,g_north//v1686210606/mlbb.fyi/hero/${(hero.name
+                    src={`https://res.cloudinary.com/dvm5vog2j/image/upload/c_fill,h_192,w_192,g_north/v1686210606/mlbb.fyi/hero/${(hero.name
                       ? hero.name
                       : hero.hero
                     ).replace(/[ '\s]/g, "_")}
                     .webp`}
-                    alt={""}
+                    alt={hero.name || hero.hero}
                     width={48}
                     height={48}
                     className="mr-2 h-[24px] w-[24px] rounded-full md:mr-4 md:h-[48px] md:w-[48px]"
+                    loading="lazy"
                   />
                   <p className=" hover:underline">{hero.name || hero.hero}</p>
                 </div>
