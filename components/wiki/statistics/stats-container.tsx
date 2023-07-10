@@ -137,9 +137,19 @@ export default function StatsContainer({ serverStats, tourneyStats }: IStats) {
           {sortedListCopy.map((hero, i) => {
             return (
               <React.Fragment key={i}>
-                <div className="text-start font-sat text-sm md:text-[16px]">
-                  <div
-                    className="flex flex-row items-center hover:cursor-pointer "
+                <div className="flex flex-row text-start font-sat text-sm md:text-[16px]">
+                  <Image
+                    src={`https://res.cloudinary.com/dvm5vog2j/image/upload/c_fill,h_192,w_192,g_north/v1686210606/mlbb.fyi/hero/${(
+                      hero.name || hero.hero
+                    ).replace(/[ '\s]/g, "_")}.webp`}
+                    alt={hero.name || hero.hero}
+                    width={48}
+                    height={48}
+                    className="mr-2 h-[24px] w-[24px] rounded-full md:mr-4 md:h-[48px] md:w-[48px]"
+                    loading="lazy"
+                  />
+                  <p
+                    className="flex flex-row items-center hover:cursor-pointer hover:underline"
                     onClick={() =>
                       router.push(
                         `wiki/heroes/${
@@ -150,18 +160,8 @@ export default function StatsContainer({ serverStats, tourneyStats }: IStats) {
                       )
                     }
                   >
-                    <Image
-                      src={`https://res.cloudinary.com/dvm5vog2j/image/upload/c_fill,h_192,w_192,g_north/v1686210606/mlbb.fyi/hero/${(
-                        hero.name || hero.hero
-                      ).replace(/[ '\s]/g, "_")}.webp`}
-                      alt={hero.name || hero.hero}
-                      width={48}
-                      height={48}
-                      className="mr-2 h-[24px] w-[24px] rounded-full md:mr-4 md:h-[48px] md:w-[48px]"
-                      loading="lazy"
-                    />
-                    <p className=" hover:underline">{hero.name || hero.hero}</p>
-                  </div>
+                    {hero.name || hero.hero}
+                  </p>
                 </div>
 
                 <div className="flex items-center justify-end font-sat text-sm md:text-[16px]">
