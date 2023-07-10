@@ -139,7 +139,7 @@ export default function StatsContainer({ serverStats, tourneyStats }: IStats) {
               `https://res.cloudinary.com/dvm5vog2j/image/upload/c_fill,h_192,w_192,g_north/v1686210606/mlbb.fyi/hero/${(hero.name
                 ? hero.name
                 : hero.hero
-              ).replace(/[ '\s]/g, "_")}`
+              ).replace(/[ '\s]/g, "_")}.webp`
             );
             return (
               <React.Fragment key={i}>
