@@ -27,7 +27,7 @@ Import trace for requested module:
 info  - Linting and checking validity of types...
 
 ./app/wiki/layout.tsx
-37:6  Warning: React Hook useEffect has a missing dependency: 'setSelectedTab'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+41:6  Warning: React Hook useEffect has a missing dependency: 'setSelectedTab'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
 
 ./components/explore/post/post-box.tsx
 53:7  Warning: Classname 'flex-grow' should be updated to 'grow' in Tailwind CSS v3!  tailwindcss/migration-from-tailwind-2
@@ -40,11 +40,11 @@ info  - Linting and checking validity of types...
 
 info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
 info  - Collecting page data...
-info  - Generating static pages (0/43)
-info  - Generating static pages (10/43)
-info  - Generating static pages (21/43)
+info  - Generating static pages (0/44)
+info  - Generating static pages (11/44)
+info  - Generating static pages (22/44)
 warn  - Entire page /auth/signin deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /auth/signin
-(node:7692) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
+(node:17836) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
 (Use `node --trace-warnings ...` to show where the warning was created)
 [next-auth][error][CLIENT_FETCH_ERROR] 
 https://next-auth.js.org/errors#client_fetch_error fetch failed {
@@ -58,14 +58,14 @@ https://next-auth.js.org/errors#client_fetch_error fetch failed {
   url: 'http://localhost:3010/api/auth/csrf',
   message: 'fetch failed'
 }
-info  - Generating static pages (32/43)
+info  - Generating static pages (33/44)
 
 warn  - metadata.metadataBase is not set for resolving social open graph or twitter images, fallbacks to "http://localhost:3000". See https://beta.nextjs.org/docs/api-reference/metadata#metadatabase
 
 
 
 warn  - Entire page /profile/stg deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /profile/stg
-info  - Generating static pages (43/43)
+info  - Generating static pages (44/44)
 info  - Finalizing page optimization...
 
 Route (app)                                Size     First Load JS
@@ -99,7 +99,7 @@ Route (app)                                Size     First Load JS
 ├ λ /explore/stg/api/unfavourite           0 B                0 B
 ├ ○ /favicon.ico                           0 B                0 B
 ├ λ /not-found                             1.48 kB        91.8 kB
-├ λ /profile                               161 B          77.1 kB
+├ λ /profile                               162 B          77.1 kB
 ├ λ /profile/[username]                    306 B          77.3 kB
 ├ λ /profile/[username]/[subProfile]       4.62 kB         109 kB
 ├ λ /profile/[username]/api                0 B                0 B
@@ -112,12 +112,13 @@ Route (app)                                Size     First Load JS
 ├ λ /profile/stg/api/update                0 B                0 B
 ├ λ /profile/stg/bind                      1.83 kB        98.3 kB
 ├ λ /profile/stg/bind/verify               2.14 kB        98.6 kB
-├ λ /wiki                                  161 B          77.1 kB
+├ λ /wiki                                  162 B          77.1 kB
 ├ λ /wiki/heroes                           5.76 kB         100 kB
 ├ λ /wiki/heroes/[hero]                    9.29 kB        99.1 kB
 ├ λ /wiki/patches                          2.1 kB         91.4 kB
 ├ λ /wiki/patches/[patch]                  2.91 kB        79.9 kB
-└ λ /wiki/statistics                       2.85 kB        97.3 kB
+├ λ /wiki/statistics                       2.85 kB        97.3 kB
+└ λ /wiki/tier-list                        922 B          90.3 kB
 + First Load JS shared by all              77 kB
   ├ chunks/139-234d5cd1a6980f36.js         24.4 kB
   ├ chunks/2443530c-f0ae597f67f7c78e.js    50.5 kB
@@ -125,7 +126,7 @@ Route (app)                                Size     First Load JS
   └ chunks/webpack-36593994fd6f24aa.js     1.81 kB
 
 Route (pages)                              Size     First Load JS
-┌ ○ /404                                   178 B          86.3 kB
+┌ ○ /404                                   179 B          86.3 kB
 ├ λ /api/auth/[...nextauth]                0 B            86.1 kB
 ├ λ /api/build                             0 B            86.1 kB
 ├ λ /api/build/create                      0 B            86.1 kB
@@ -137,8 +138,8 @@ Route (pages)                              Size     First Load JS
 ├ λ /api/spell                             0 B            86.1 kB
 └ λ /api/spell/create                      0 B            86.1 kB
 + First Load JS shared by all              86.1 kB
-  ├ chunks/main-514acd2833015787.js        84.1 kB
-  ├ chunks/pages/_app-c544d6df833bfd4a.js  192 B
+  ├ chunks/main-a18549af4092ef9a.js        84.1 kB
+  ├ chunks/pages/_app-41eecff5619c9bfb.js  192 B
   └ chunks/webpack-36593994fd6f24aa.js     1.81 kB
 
 ƒ Middleware                               214 kB
