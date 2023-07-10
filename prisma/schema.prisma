@@ -8,88 +8,152 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-type HerosDetails {
-  ability        String
-  coverPicture   String
-  difficulty     String
-  durability     String
-  galleryPicture String
-  heroName       String
-  heroType       String
-  offense        String
-  
-  skill          HerosDetailsSkill[]
+model Emblem {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  attribute String[]
+  img       String
 }
 
-type HerosDetailsSkill {
-  description String
-  icon        String
+model Spell {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  desc    String
+  img     String
+  cd      String
+  details String[]
+  variant String[]
+}
+
+model Item {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  desc      String
+  img       String
+  category  String
+  attribute String[]
+}
+
+type HeroDetailsSkills {
   name        String
+  icon        String
+  description String
   tips        String
+}
+
+model HeroDetails {
+  id             String              @id @default(auto()) @map("_id") @db.ObjectId
+  heroId         String              @unique @db.ObjectId
+  heroType       String
+  heroName       String
+  coverPicture   String
+  galleryPicture String
+  ability        String
+  offense        String
+  durability     String
+  difficulty     String
+  skill          HeroDetailsSkills[]
+  hero           Hero                @relation(fields: [heroId], references: [id])
 }
 
 model Hero {
   id      String       @id @default(auto()) @map("_id") @db.ObjectId
-  v       Int          @map("__v")
-  //details HerosDetails
-  heroId  Int @unique
+  name    String       @unique
   img     String
-  name    String @unique
+  heroId  Int          @unique
+  role    String[]
+  details HeroDetails?
 }
 
 model MlbbAcc {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  accId     String?   @unique
-  accServer String?  
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  accId     String? @unique
+  accServer String?
   nickname  String?
-  userId    String?   @db.ObjectId
+  userId    String? @db.ObjectId
 
-  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+type PickStats {
+  picks    String
+  win      String
+  lose     String
+  winRate  String
+  presence String?
+}
+
+type PickedHero {
+  id                 String
+  hero               String
+  picks              PickStats
+  blueSide           PickStats
+  redSide            PickStats
+  totalBans          String
+  banPresence        String
+  pickAndBan         String
+  pickAndBanPresence String
+}
+
+model TourneyStats {
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  tournament String
+  data       PickedHero[]
 }
 
 model Account {
-  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId             String   @db.ObjectId
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  
-  access_token       String? 
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? 
-  session_state      String?
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
 
-  user               User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
 
 model User {
-  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
   username      String?
-  email         String     @unique
+  desc          String?
+  email         String    @unique
   emailVerified DateTime?
-  image         String?
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  image         String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  followers     String[]  @db.ObjectId
+  following     String[]  @db.ObjectId
+  links         String[]
+  favourite     String[]  @db.ObjectId
 
-  accounts      Account[]
-  mlbbaccs      MlbbAcc[]
-  sessions      Session[]
+  accounts Account[]
+  mlbbaccs MlbbAcc[]
+  sessions Session[]
+
+  posts    Post[]
+  comments Comment[]
+
+  @@unique([id, username])
 }
 
 model Session {
-  id           String     @id @default(auto()) @map("_id") @db.ObjectId
-  userId       String     @db.ObjectId
-  sessionToken String     @unique
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String   @db.ObjectId
+  sessionToken String   @unique
   expires      DateTime
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
@@ -101,4 +165,55 @@ model VerificationToken {
   updatedAt  DateTime @updatedAt
 
   @@unique([identifier, token])
+}
+
+model Post {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  title      String
+  body       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  userId     String   @db.ObjectId
+  createdBy  String
+  image      String?
+  likes      String[]
+  dislikes   String[]
+  totalVotes Int      @default(0)
+  favourites String[]
+
+  user User @relation(fields: [userId, createdBy], references: [id, username], onDelete: Cascade)
+
+  comments Comment[]
+}
+
+model Comment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  body      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String   @db.ObjectId
+  postId    String   @db.ObjectId
+  createdBy String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+type Field {
+  name       String?  @map("name")
+  subheading String?  @map("subheading")
+  updates    String[]
+}
+
+type Heading {
+  name   String
+  fields Field[]
+}
+
+model Patch {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  version  String
+  release  String
+  intro    String[]
+  headings Heading[]
 }

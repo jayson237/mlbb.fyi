@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import { LogInIcon, LogOutIcon, Settings } from "lucide-react";
+import { LogOutIcon, Settings } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { SafeUser } from "@/types";
@@ -11,6 +11,7 @@ import Close from "../icons/close";
 import Burger from "../icons/burger";
 import { Button } from "../button";
 import { signOut } from "next-auth/react";
+import getCurrentUser from "@/lib/actions/getCurrentUser";
 
 interface NavMenuProps {
   currentUser?: SafeUser | null;
@@ -20,7 +21,7 @@ const MenuList = [
   {
     name: "Wiki",
     active: false,
-    href: "/wiki",
+    href: "/wiki/heroes",
   },
   {
     name: "Explore",
@@ -30,7 +31,7 @@ const MenuList = [
   {
     name: "Profile",
     active: false,
-    href: "/profile",
+    href: `/profile`,
   },
 ];
 
@@ -39,8 +40,16 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
   const pathname = usePathname();
 
   const [collapse, setCollapse] = useState(false);
-
-  const active = pathname?.split("/")[1];
+  const isOwnProfile =
+    pathname?.split("/")[1] === "profile" &&
+    pathname?.split("/")[2] === currentUser?.username;
+  const pathArray = pathname?.split("/");
+  const active =
+    pathArray?.[1] === "" || pathArray?.[1] === "wiki"
+      ? pathArray?.[1]
+      : isOwnProfile
+      ? pathArray?.[1]
+      : "explore";
 
   return (
     <>
@@ -59,7 +68,7 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
         className={cn(
           "md:static md:flex md:h-auto md:bg-transparent",
           collapse
-            ? "fixed inset-0 top-[54px] z-10 h-screen bg-bgblack"
+            ? "fixed inset-0 top-[54px] z-10 h-screen bg-bgblack/80"
             : "hidden"
         )}
       >
@@ -80,11 +89,12 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
                   menu.href === "/profile"
                     ? currentUser?.username
                       ? `/profile/${currentUser?.username}`
-                      : "/profile"
+                      : "/profile/stg"
                     : menu.href
                 }
                 onClick={() => {
                   setCollapse(false);
+                  sessionStorage.clear();
                 }}
                 key={menu.name}
                 prefetch={false}
@@ -109,13 +119,12 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
                   router.push("/auth/signin");
                   setCollapse(!collapse);
                 }}
-                className="flex h-6 w-[72px] rounded-xl p-2"
+                className="flex h-6 w-[72px] rounded-2xl p-2"
                 variant="gradiantNavy"
               >
                 <span className="stroke-[3] text-[16px] text-softGray">
                   Sign In
                 </span>
-                {/* <LogInIcon className="stroke-[3] text-softGray" /> */}
               </Button>
             </li>
           ) : (

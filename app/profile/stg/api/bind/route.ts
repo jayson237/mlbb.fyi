@@ -59,7 +59,7 @@ export async function POST(request: Request) {
         nickname: bind?.data?.nickname,
       },
     });
-    console.log(create);
+    // console.log(create);
 
     const update = await prisma?.user.update({
       where: {
@@ -73,7 +73,7 @@ export async function POST(request: Request) {
         },
       },
     });
-    console.log(update);
+    // console.log(update);
 
     if (!bind.data) {
       return NextResponse.json(
@@ -88,9 +88,12 @@ export async function POST(request: Request) {
       `${process.env.BE_API_URL}/data/sync?accId=${accId}`,
       {
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${process.env.BE_API_SECRET}`,
+        },
       }
     );
-    console.log(upt.status);
+    // console.log(upt.status);
     if (upt.ok) {
       return NextResponse.json(
         {

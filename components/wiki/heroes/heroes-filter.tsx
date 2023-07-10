@@ -1,41 +1,77 @@
+// @ts-nocheck
+"use client";
+
+import React, { useState } from "react";
 import { Checkbox } from "@/components/shared/checkbox";
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import { Label } from "@/components/shared/label";
-import { HeroType } from "@/lib/const";
+import { HeroType } from "@/lib/hero-type";
 import useHeroFilter from "@/lib/state/useHeroFilter";
-import { useEffect } from "react";
+import { HeroRole } from "@/lib/hero-role";
+import { Input } from "@/components/shared/input";
 
 const HeroesFilter = () => {
+  const [query, setQuery] = useState("");
   const heroFilter = useHeroFilter();
 
-  const addOrRemove = (type: string) => {
-    const newArr = [...heroFilter.type];
-    const index = newArr.indexOf(type);
-    if (index === -1) {
-      newArr.push(type);
+  const addOrRemove = (value: string, filterKey: "type" | "role") => {
+    const filterIndex = heroFilter[filterKey].indexOf(value);
+    if (filterIndex === -1) {
+      heroFilter.change({
+        ...heroFilter,
+        [filterKey]: [...heroFilter[filterKey], value],
+      });
     } else {
-      newArr.splice(index, 1);
+      const updatedFilters = heroFilter[filterKey].filter(
+        (filter) => filter !== value
+      );
+      heroFilter.change({ ...heroFilter, [filterKey]: updatedFilters });
     }
-    heroFilter.change(newArr);
+  };
+
+  const handleSearch = (e) => {
+    setQuery(e.target.value);
   };
 
   return (
     <>
       <form action="">
-        <GradiantCard className="max-w-[200px] px-6 md:w-[200px]">
-          <h3 className="font-semibold">Filters</h3>
-          <ul className="mt-2.5 flex w-full flex-col gap-2">
+        <h3 className="mt-2.5 font-semibold">Filter by</h3>
+
+        <div className="flex flex-row md:flex-col">
+          <ul className="flex w-full flex-col gap-2 md:mt-2.5">
+            <p className="text-medium mt-1 text-sm">Type</p>
             {HeroType.map((type, i) => (
-              <li key={i} className="flex w-full items-center gap-1.5">
-                <Checkbox
-                  id={type.name}
-                  onClick={() => addOrRemove(type.name)}
-                />
-                <Label htmlFor={type.name}>{type.name}</Label>
-              </li>
+              <React.Fragment key={i}>
+                <li className="flex w-full items-center gap-1.5">
+                  <Checkbox
+                    id={type.name}
+                    onClick={() => addOrRemove(type.name, "type")}
+                  />
+                  <Label htmlFor={type.name} className="mt-[1px]">
+                    {type.name}
+                  </Label>
+                </li>
+              </React.Fragment>
             ))}
           </ul>
-        </GradiantCard>
+          <ul className="flex w-full flex-col gap-2 md:mt-2.5">
+            <p className="text-medium mt-1 text-sm">Role</p>
+            {HeroRole.map((role, i) => (
+              <React.Fragment key={i}>
+                <li className="flex w-full items-center gap-1.5">
+                  <Checkbox
+                    id={role.name}
+                    onClick={() => addOrRemove(role.name, "role")}
+                  />
+                  <Label htmlFor={role.name} className="mt-[1px]">
+                    {role.name}
+                  </Label>
+                </li>
+              </React.Fragment>
+            ))}
+          </ul>
+        </div>
       </form>
     </>
   );

@@ -6,11 +6,26 @@ type PayloadType = {
   code?: string;
 };
 
+export const fetcher = async (url: string) => {
+  return await fetch(url, {
+    method: "GET",
+  }).then((res) => res.json());
+};
+
 export async function sendVerificationCode(payload: PayloadType) {
-  const response = await axios.post(`${process.env.BE_API_URL}/mlbbacc/vc`, {
-    id: payload.accId,
-    server: payload.accServer,
-  });
+  const response = await axios.post(
+    `${process.env.BE_API_URL}/mlbbacc/vc`,
+    {
+      id: payload.accId,
+      server: payload.accServer,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.BE_API_SECRET}`,
+      },
+    }
+  );
+  // console.log(response);
   return response;
 }
 
@@ -19,6 +34,7 @@ export async function bindAcc(payload: PayloadType) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.BE_API_SECRET}`,
     },
     body: JSON.stringify({
       id: payload.accId,
@@ -34,7 +50,7 @@ export async function bindAcc(payload: PayloadType) {
       nickname: string;
     };
   } = await res.json();
-  console.log(response);
+  // console.log(response);
 
   // const response = await axios.post<{
   //   message: string;

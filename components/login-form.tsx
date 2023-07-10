@@ -60,7 +60,7 @@ export default function LoginForm({ csrfToken }: { csrfToken?: string }) {
           required
           disabled={loading}
         />
-        <Button className="w-full" type="submit" disabled={loading}>
+        <Button className="w-full rounded-lg" type="submit" disabled={loading}>
           {loading ? <LoadingDots color="#fafafa" /> : <p>Login</p>}
         </Button>
       </form>
@@ -76,7 +76,7 @@ export default function LoginForm({ csrfToken }: { csrfToken?: string }) {
       </div>
       <div className="mt-4 flex justify-center gap-2">
         <Button
-          className="w-full"
+          className="w-full rounded-lg"
           onClick={() => {
             signIn("google", {
               callbackUrl: "/profile/stg?ref=signin",
@@ -93,7 +93,7 @@ export default function LoginForm({ csrfToken }: { csrfToken?: string }) {
           Google
         </Button>
         <Button
-          className="w-full"
+          className="w-full rounded-lg"
           onClick={() => {
             signIn("discord", {
               callbackUrl: "/profile/stg?ref=signin",

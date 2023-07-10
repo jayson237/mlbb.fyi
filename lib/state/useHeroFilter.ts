@@ -1,14 +1,16 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 interface HeroFilterStore {
   type: string[];
-  change: (data: string[]) => void
+  role: string[];
+  change: (data: { type: string[]; role: string[] }) => void;
 }
 
 const useHeroFilter = create<HeroFilterStore>((set) => ({
   type: [],
-  change: (data: string[]) => set(() => ({ type: data })),
+  role: [],
+  change: (data: { type: string[]; role: string[] }) =>
+    set(() => ({ type: data.type, role: data.role })),
 }));
-
 
 export default useHeroFilter;
