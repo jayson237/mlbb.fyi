@@ -3,7 +3,6 @@
 import { SafeUser } from "@/types";
 import PostContainer from "./post-container";
 import PostList from "./post-list";
-import { GradiantCard } from "../../shared/gradiant-card";
 
 import { Search } from "lucide-react";
 import { useState } from "react";
@@ -20,10 +19,16 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
   const [filter, setFilter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(-2);
+  const [selectedSortMode, setSelectedSortMode] = useState("top");
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedIndex = Number(event.target.value);
     setSelectedIndex(selectedIndex);
+  };
+
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedSort = event.target.value;
+    setSelectedSortMode(selectedSort);
   };
 
   return (
@@ -69,7 +74,24 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
         <PostContainer currUser={currentUser} />
       )}
       {selectedIndex === -2 && (
-        <PostList filter={filter} currUser={currentUser} />
+        <div className="mt-5 flex flex-col gap-2">
+          <div>
+            <select
+              className="h-[2.45rem] w-36 rounded-xl border border-navy-300/50 bg-black p-2 shadow-sm focus:border-navy-600 focus:outline-none focus:ring-1 focus:ring-navy-600"
+              value={selectedSortMode}
+              onChange={handleSortChange}
+            >
+              <option value="top">Top Votes</option>
+              <option value="follow">Following Only</option>
+              <option value="recent">Recent</option>
+            </select>
+          </div>
+          <PostList
+            filter={filter}
+            sortMode={selectedSortMode}
+            currUser={currentUser}
+          />
+        </div>
       )}
       {selectedIndex === -1 && <UserList filter={filter} />}
     </div>
