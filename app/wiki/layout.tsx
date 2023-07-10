@@ -11,13 +11,17 @@ const WikiTabList = [
     href: "/wiki/heroes",
   },
   {
+    name: "Tier List",
+    href: "/wiki/tier-list",
+  },
+  {
     name: "Statistics",
     href: "/wiki/statistics",
   },
-  {
-    name: "Draft Pick",
-    href: "/wiki/draft-pick",
-  },
+  // {
+  //   name: "Draft Pick",
+  //   href: "/wiki/draft-pick",
+  // },
   {
     name: "Patch",
     href: "/wiki/patches",
