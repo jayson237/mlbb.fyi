@@ -1,9 +1,7 @@
 "use client";
 
-import { Star, Trophy } from "lucide-react";
 import { GradiantCard } from "../../shared/gradiant-card";
 import { Progress } from "../../shared/progress";
-import Image from "next/image";
 
 interface FavouritesProps {
   title: string;
