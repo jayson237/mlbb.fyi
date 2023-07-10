@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import useTabStore from "@/lib/state/useTabStore";
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import { Hero } from "@prisma/client";
 import { Progress } from "@/components/shared/progress";
@@ -11,6 +12,7 @@ import MatchInsights from "@/components/profile/profile-stats/match-insights";
 
 interface HeroFyiContainer {
   hero: Hero | null;
+  heroStats: { name: string; use: string; ban: string; win: string };
   heroBuild: Object[] | null;
   heroSpell: Object[] | null;
   heroEmblem: Object[] | null;
@@ -35,6 +37,7 @@ interface HeroFyiContainer {
 
 export default function HeroFyi({
   hero,
+  heroStats,
   heroBuild,
   heroSpell,
   heroEmblem,
@@ -47,6 +50,11 @@ export default function HeroFyi({
 }: HeroFyiContainer) {
   const router = useRouter();
   const [strongAgainstData, setStrongAgainstData] = useState([]);
+  const { selectedTab, setSelectedTab } = useTabStore();
+
+  useEffect(() => {
+    setSelectedTab("heroes");
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -133,7 +141,9 @@ export default function HeroFyi({
               </div>
               <div className="mb-1 flex flex-row items-center">
                 <Image
-                  src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1685987710/mlbb.fyi/heroType/${heroDetails.heroType}.webp`}
+                  src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1685987710/mlbb.fyi/heroType/${
+                    heroDetails.heroType.split("/")[0]
+                  }.webp`}
                   alt={heroDetails.heroType || ""}
                   width={20}
                   height={20}
@@ -152,7 +162,7 @@ export default function HeroFyi({
                     Winrate
                   </p>
                   <p className="font-sat text-[12px] font-semibold sm:text-[20px]">
-                    {hero?.win}
+                    {heroStats.win}
                   </p>
                 </div>
                 <div className="flex flex-col">
@@ -160,13 +170,13 @@ export default function HeroFyi({
                     Pick
                   </p>
                   <p className="font-sat text-[12px] font-semibold sm:text-[20px]">
-                    {hero?.use}
+                    {heroStats.use}
                   </p>
                 </div>
                 <div className="flex flex-col">
                   <p className="font-heading text-[12px] sm:text-[16px]">Ban</p>
                   <p className="font-sat text-[12px] font-semibold sm:text-[20px]">
-                    {hero?.ban}
+                    {heroStats.ban}
                   </p>
                 </div>
               </div>

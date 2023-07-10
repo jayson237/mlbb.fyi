@@ -29,9 +29,11 @@ const GradiantCard = ({
 } & VariantProps<typeof cardVariants>) => {
   return (
     <div className={cardVariants({ className, variant })}>
-      <h1 className="text-sm/[10px] font-bold tracking-[-3%] md:text-base/[16px]">
-        {title}
-      </h1>
+      {title && (
+        <h1 className="text-sm/[10px] font-bold tracking-[-3%] md:text-base/[16px]">
+          {title}
+        </h1>
+      )}
       {children}
     </div>
   );

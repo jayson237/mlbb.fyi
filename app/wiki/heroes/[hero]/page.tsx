@@ -1,3 +1,4 @@
+import getHeroStats from "@/lib/actions/getHeroStats";
 import getHeroBuild from "@/lib/actions/getHeroBuild";
 import getHeroSpell from "@/lib/actions/getHeroSpell";
 import getHeroEmblem from "@/lib/actions/getHeroEmblem";
@@ -27,6 +28,15 @@ async function getHero(name: string) {
   }
 }
 
+async function getCurrHeroStats(arr: any[], name: string) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].name === name) {
+      return arr[i];
+    }
+  }
+  return null;
+}
+
 async function findIndexById(arr: any[], targetId: string): Promise<number> {
   for (let i = 0; i < arr.length; i++) {
     if (arr[i].id === targetId) {
@@ -50,9 +60,16 @@ export default async function HeroPage({
   const parseHero = decodedString.replace(/\b\w/g, (c) => c.toUpperCase());
   const isExistingHero = await getHero(parseHero);
 
-  if (!isExistingHero) {
+  const overallStats: any[] | null = await getHeroStats();
+
+  if (!isExistingHero || overallStats === null) {
     return <Redirect destination="not-found" />;
   }
+
+  const currHeroStats = await getCurrHeroStats(
+    overallStats[0],
+    isExistingHero.name
+  );
 
   const [heroBuild, heroSpell, heroEmblem, heroWeakAgainst, heroStrongAgainst] =
     await Promise.all([
@@ -75,11 +92,11 @@ export default async function HeroPage({
   if (currentUser && isBoundProfile) {
     dataAcc = await getMlbbData(isBoundProfile.accId);
     classicIndex = await findIndexById(
-      dataAcc?.matchPlayed[0].data,
+      dataAcc.matchPlayed[0].data,
       isExistingHero.heroId.toString()
     );
     rankedIndex = await findIndexById(
-      dataAcc?.matchPlayed[1].data,
+      dataAcc.matchPlayed[1].data,
       isExistingHero.heroId.toString()
     );
   }
@@ -89,12 +106,13 @@ export default async function HeroPage({
       {isBoundProfile && currentUser ? (
         <HeroFyi
           hero={isExistingHero}
+          heroStats={currHeroStats}
           heroBuild={heroBuild.data.items}
           heroSpell={heroSpell.data.spells}
           heroEmblem={heroEmblem.data.emblems}
           heroWeakAgainst={heroWeakAgainst.data.counters}
           heroStrongAgainst={strongAgainst}
-          matches={dataAcc?.matchPlayed}
+          matches={dataAcc.matchPlayed}
           classicIndex={classicIndex || 0}
           rankedIndex={rankedIndex || 0}
           showWR={true}
@@ -102,6 +120,7 @@ export default async function HeroPage({
       ) : (
         <HeroFyi
           hero={isExistingHero}
+          heroStats={currHeroStats}
           heroBuild={heroBuild.data.items}
           heroSpell={heroSpell.data.spells}
           heroEmblem={heroEmblem.data.emblems}

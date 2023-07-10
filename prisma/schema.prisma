@@ -61,9 +61,6 @@ model Hero {
   name    String       @unique
   img     String
   heroId  Int          @unique
-  use     String
-  win     String
-  ban     String
   role    String[]
   details HeroDetails?
 }
@@ -76,6 +73,32 @@ model MlbbAcc {
   userId    String? @db.ObjectId
 
   user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+type PickStats {
+  picks    String
+  win      String
+  lose     String
+  winRate  String
+  presence String?
+}
+
+type PickedHero {
+  id                 String
+  hero               String
+  picks              PickStats
+  blueSide           PickStats
+  redSide            PickStats
+  totalBans          String
+  banPresence        String
+  pickAndBan         String
+  pickAndBanPresence String
+}
+
+model TourneyStats {
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  tournament String
+  data       PickedHero[]
 }
 
 model Account {
@@ -145,14 +168,18 @@ model VerificationToken {
 }
 
 model Post {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  title     String
-  body      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  userId    String   @db.ObjectId
-  createdBy String
-  image     String?
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  title      String
+  body       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  userId     String   @db.ObjectId
+  createdBy  String
+  image      String?
+  likes      String[]
+  dislikes   String[]
+  totalVotes Int      @default(0)
+  favourites String[]
 
   user User @relation(fields: [userId, createdBy], references: [id, username], onDelete: Cascade)
 
