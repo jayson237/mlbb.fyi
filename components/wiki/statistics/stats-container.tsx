@@ -134,56 +134,63 @@ export default function StatsContainer({ serverStats, tourneyStats }: IStats) {
             Ban (%)
           </div>
 
-          {sortedListCopy.map((hero, i) => (
-            <React.Fragment key={i}>
-              <div className="text-start font-sat text-sm md:text-[16px]">
-                <div
-                  className="flex flex-row items-center hover:cursor-pointer "
-                  onClick={() =>
-                    router.push(
-                      `wiki/heroes/${
-                        hero.name
-                          ? hero.name.toLowerCase()
-                          : hero.hero.toLowerCase()
-                      }`
-                    )
-                  }
-                >
-                  <Image
-                    src={`https://res.cloudinary.com/dvm5vog2j/image/upload/c_fill,h_192,w_192,g_north/v1686210606/mlbb.fyi/hero/${(hero.name
-                      ? hero.name
-                      : hero.hero
-                    ).replace(/[ '\s]/g, "_")}
+          {sortedListCopy.map((hero, i) => {
+            console.log(`https://res.cloudinary.com/dvm5vog2j/image/upload/c_fill,h_192,w_192,g_north/v1686210606/mlbb.fyi/hero/${(hero.name
+              ? hero.name
+              : hero.hero
+            ).replace(/[ '\s]/g, "_")}
+        .webp`);
+            return (
+              <React.Fragment key={i}>
+                <div className="text-start font-sat text-sm md:text-[16px]">
+                  <div
+                    className="flex flex-row items-center hover:cursor-pointer "
+                    onClick={() =>
+                      router.push(
+                        `wiki/heroes/${
+                          hero.name
+                            ? hero.name.toLowerCase()
+                            : hero.hero.toLowerCase()
+                        }`
+                      )
+                    }
+                  >
+                    <Image
+                      src={`https://res.cloudinary.com/dvm5vog2j/image/upload/c_fill,h_192,w_192,g_north/v1686210606/mlbb.fyi/hero/${(hero.name
+                        ? hero.name
+                        : hero.hero
+                      ).replace(/[ '\s]/g, "_")}
                     .webp`}
-                    alt={hero.name || hero.hero}
-                    width={48}
-                    height={48}
-                    className="mr-2 h-[24px] w-[24px] rounded-full md:mr-4 md:h-[48px] md:w-[48px]"
-                    loading="lazy"
-                  />
-                  <p className=" hover:underline">{hero.name || hero.hero}</p>
+                      alt={hero.name || hero.hero}
+                      width={48}
+                      height={48}
+                      className="mr-2 h-[24px] w-[24px] rounded-full md:mr-4 md:h-[48px] md:w-[48px]"
+                      loading="lazy"
+                    />
+                    <p className=" hover:underline">{hero.name || hero.hero}</p>
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex items-center justify-end font-sat text-sm md:text-[16px]">
-                {hero.win?.slice(0, -1) ||
-                  hero.picks?.winRate.slice(0, -1) ||
-                  (0.0).toFixed(2)}
-              </div>
-              <div className="flex items-center justify-end font-sat text-sm md:text-[16px]">
-                {hero.use?.slice(0, -1) || hero.picks?.presence.slice(0, -1)}
-              </div>
-              <div className="flex items-center justify-end font-sat text-sm md:text-[16px]">
-                {hero.ban?.slice(0, -1) || hero.banPresence.slice(0, -1)}
-              </div>
-              {i + 1 !== sortedListCopy.length && (
-                <div
-                  className="inset-x-0 h-0.5 w-full bg-navy-400/30"
-                  style={{ gridColumn: "1 / -1" }}
-                ></div>
-              )}
-            </React.Fragment>
-          ))}
+                <div className="flex items-center justify-end font-sat text-sm md:text-[16px]">
+                  {hero.win?.slice(0, -1) ||
+                    hero.picks?.winRate.slice(0, -1) ||
+                    (0.0).toFixed(2)}
+                </div>
+                <div className="flex items-center justify-end font-sat text-sm md:text-[16px]">
+                  {hero.use?.slice(0, -1) || hero.picks?.presence.slice(0, -1)}
+                </div>
+                <div className="flex items-center justify-end font-sat text-sm md:text-[16px]">
+                  {hero.ban?.slice(0, -1) || hero.banPresence.slice(0, -1)}
+                </div>
+                {i + 1 !== sortedListCopy.length && (
+                  <div
+                    className="inset-x-0 h-0.5 w-full bg-navy-400/30"
+                    style={{ gridColumn: "1 / -1" }}
+                  ></div>
+                )}
+              </React.Fragment>
+            );
+          })}
         </div>
       ) : (
         <p className="font-heading text-sm md:text-xl">
