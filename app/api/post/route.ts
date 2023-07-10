@@ -41,7 +41,7 @@ export async function POST(req: Request) {
 
       for (const x of currentUser?.following as string[]) {
         temp = followingPosts.filter((post) => post.userId.includes(x));
-        console.log(temp);
+        //console.log(temp);
         posts = [...posts, ...temp];
       }
 
