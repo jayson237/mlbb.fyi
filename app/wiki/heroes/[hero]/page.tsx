@@ -46,7 +46,7 @@ async function findIndexById(arr: any[], targetId: string): Promise<number> {
   return -1;
 }
 
-async function handleStrongAgainst(arr: any[]): Promise<Object[]> {
+async function handleStrongAgainst(arr: any[]) {
   return arr.map((item) => item.heroId);
 }
 
@@ -81,7 +81,7 @@ export default async function HeroPage({
     ]);
 
   const strongAgainst = heroStrongAgainst.data
-    ? handleStrongAgainst(heroStrongAgainst.data)
+    ? await handleStrongAgainst(heroStrongAgainst.data)
     : [];
 
   let isBoundProfile = await isUserBound(currentUser?.username || "");
