@@ -48,7 +48,6 @@ function getTimeDiff(
   // difference between minutes
   let minDiff = Number(minute2) + (60 - Number(minute1));
 
-  console.log(hourDiff, minDiff);
   if (minDiff >= 60) {
     hourDiff++;
     minDiff = minDiff - 60;
@@ -57,18 +56,26 @@ function getTimeDiff(
   return [hourDiff, minDiff];
 }
 
-const DateContainer: React.FC<DateContainerProps> = ({ date, time }) => {
-  time[0] = String(Number(time[0]) + 7);
+function handleTimeZone(time: string[], region: string) {
+  if (region[3] === "+") {
+    const diff = region.split("+");
+    return String(Number(time[0]) + Number(diff[1]) / 100);
+  }
 
+  const diff = region.split("-");
+  return String(Number(time[0]) - Number(diff[1]) / 100);
+}
+
+const DateContainer: React.FC<DateContainerProps> = ({ date, time }) => {
   const currDate = new Date().toLocaleDateString().split("/");
   const currTime = new Date().toTimeString().split(":");
+  const region = currTime[2].split(" ");
+  time[0] = handleTimeZone(time, region[1]);
 
   const diff = getDifference(date, currDate);
 
   if (diff === 0) {
     const timeDiff = getTimeDiff(time[0], currTime[0], time[1], currTime[1]);
-    // console.log(timeDiff);
-    // console.log(timeDiff[1]);
 
     return (
       <div>
