@@ -59,11 +59,21 @@ function getTimeDiff(
 function handleTimeZone(time: string[], region: string) {
   if (region[3] === "+") {
     const diff = region.split("+");
-    return String(Number(time[0]) + Number(diff[1]) / 100);
+    const result = Number(time[0]) + Number(diff[1]) / 100;
+
+    if (result >= 24) {
+      return String(result - 24);
+    }
+    return String(result);
   }
 
   const diff = region.split("-");
-  return String(Number(time[0]) - Number(diff[1]) / 100);
+  const result = Number(time[0]) - Number(diff[1]) / 100;
+
+  if (result < 0) {
+    return String(result + 24);
+  }
+  return String(result);
 }
 
 const DateContainer: React.FC<DateContainerProps> = ({ date, time }) => {
