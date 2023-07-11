@@ -35,18 +35,12 @@ export interface LayoutWikiProps {
 
 export default function LayoutWiki({ children }: LayoutWikiProps) {
   const pathname = usePathname();
-  const active = pathname?.split("/")[2];
-  const [selectedTab, setSelectedTab] = useState(active);
-  // const { selectedTab, setSelectedTab } = useTabStore();
+  const active = pathname?.split("/")[2] || "";
+  const { selectedTab, setSelectedTab } = useTabStore();
 
-  // useEffect(() => {
-  //   const storedTab = window.sessionStorage.getItem("selectedTab");
-  //   setSelectedTab(storedTab || "heroes");
-  // }, []);
-
-  // useEffect(() => {
-  //   window.sessionStorage.setItem("selectedTab", selectedTab);
-  // }, [selectedTab]);
+  useEffect(() => {
+    setSelectedTab(active);
+  }, [active, setSelectedTab]);
 
   return (
     <main>
