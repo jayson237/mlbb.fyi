@@ -54,7 +54,7 @@ export default function HeroFyi({
 
   useEffect(() => {
     setSelectedTab("heroes");
-  }, []);
+  }, [setSelectedTab]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
