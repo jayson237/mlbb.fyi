@@ -43,3 +43,7 @@ next-env.d.ts
 #turborepo
 # + .turbo
 + .turbo
+
+# tierlist model
+tierlist-model.py
+index.json

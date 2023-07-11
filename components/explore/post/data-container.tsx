@@ -42,7 +42,8 @@ function getTimeDiff(
   minute1: string,
   minute2: string
 ) {
-  let hourDiff = Number(hour2) - Number(hour1);
+  console.log(hour1, hour2, minute1, minute2);
+  let hourDiff = Number(hour2) - Number(hour1) - 1;
 
   // difference between minutes
   let minDiff = Number(minute2) + (60 - Number(minute1));
@@ -55,24 +56,46 @@ function getTimeDiff(
   return [hourDiff, minDiff];
 }
 
-const DateContainer: React.FC<DateContainerProps> = ({ date, time }) => {
-  time[0] = String(Number(time[0]) + 7);
+function handleTimeZone(time: string[], region: string) {
+  if (region[3] === "+") {
+    const diff = region.split("+");
+    const result = Number(time[0]) + Number(diff[1]) / 100;
 
+    if (result >= 24) {
+      return String(result - 24);
+    }
+    return String(result);
+  }
+
+  const diff = region.split("-");
+  const result = Number(time[0]) - Number(diff[1]) / 100;
+
+  if (result < 0) {
+    return String(result + 24);
+  }
+  return String(result);
+}
+
+const DateContainer: React.FC<DateContainerProps> = ({ date, time }) => {
   const currDate = new Date().toLocaleDateString().split("/");
   const currTime = new Date().toTimeString().split(":");
+  const region = currTime[2].split(" ");
+  time[0] = handleTimeZone(time, region[1]);
 
   const diff = getDifference(date, currDate);
 
   if (diff === 0) {
-    const timeDiff = getTimeDiff(currTime[0], time[0], currTime[1], time[1]);
+    const timeDiff = getTimeDiff(time[0], currTime[0], time[1], currTime[1]);
+
     return (
       <div>
         <p className="text-xs mt-2 truncate leading-5 text-gray-500 ease-in-out">
           {timeDiff[0] > 0 &&
             `${timeDiff[0]} ${timeDiff[0] === 1 ? "hour" : "hours"} ago by`}
-          {timeDiff[0] === 0 &&
-            `${timeDiff[1]} ${timeDiff[1] === 1 ? "minute" : "minutes"} ago by`}
           {timeDiff[0] === 0 && timeDiff[1] === 0 && "Recently by"}
+          {timeDiff[0] === 0 &&
+            timeDiff[1] !== 0 &&
+            `${timeDiff[1]} ${timeDiff[1] === 1 ? "minute" : "minutes"} ago by`}
         </p>
       </div>
     );

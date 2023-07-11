@@ -11,6 +11,7 @@ import { SafeUser } from "@/types";
 import { Button } from "@/components/shared/button";
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import LoadingDots from "@/components/shared/icons/loading-dots";
+import { Paperclip } from "lucide-react";
 
 const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
   const [title, setTitle] = useState<string>("");
@@ -103,7 +104,10 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
               </p>
             )}
           </div>
-          <div className="flex justify-end">
+          <div className="flex items-center justify-end gap-2">
+            <button>
+              <Paperclip className="mr-1 mt-1 transition-all ease-in-out hover:text-navy-200 hover:duration-300 " />
+            </button>
             <Button
               className="mt-1 w-full rounded-2xl"
               variant="gradiantNavy"
