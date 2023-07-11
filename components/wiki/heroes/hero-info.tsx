@@ -50,11 +50,6 @@ export default function HeroFyi({
 }: HeroFyiContainer) {
   const router = useRouter();
   const [strongAgainstData, setStrongAgainstData] = useState([]);
-  const { selectedTab, setSelectedTab } = useTabStore();
-
-  useEffect(() => {
-    setSelectedTab("heroes");
-  }, [setSelectedTab]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 import { User } from "@prisma/client";
@@ -17,17 +18,19 @@ const ProfileTab: React.FC<ProfileTabProps> = ({
   isExistingUser,
   children,
 }) => {
-  const [selectedProfileTab, setSelectedProfileTab] = useState("");
+  const pathname = usePathname();
+  const active = pathname?.split("/")[3];
+  const [selectedProfileTab, setSelectedProfileTab] = useState(active);
 
-  useEffect(() => {
-    const storedProfileTab =
-      window.sessionStorage.getItem("selectedProfileTab");
-    setSelectedProfileTab(storedProfileTab || "statistics");
-  }, []);
+  // useEffect(() => {
+  //   const storedProfileTab =
+  //     window.sessionStorage.getItem("selectedProfileTab");
+  //   setSelectedProfileTab(storedProfileTab || "statistics");
+  // }, []);
 
-  useEffect(() => {
-    window.sessionStorage.setItem("selectedProfileTab", selectedProfileTab);
-  }, [selectedProfileTab]);
+  // useEffect(() => {
+  //   window.sessionStorage.setItem("selectedProfileTab", selectedProfileTab);
+  // }, [selectedProfileTab]);
 
   return (
     <Tabs
