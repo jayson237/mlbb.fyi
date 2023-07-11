@@ -17,6 +17,7 @@
 
 # production
 /build
+app/cms/
 
 # misc
 .DS_Store
