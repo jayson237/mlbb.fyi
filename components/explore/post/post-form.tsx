@@ -106,7 +106,7 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
           </div>
           <div className="flex items-center justify-end gap-2">
             <button>
-              <Paperclip className="mr-1 mt-[1px] " />
+              <Paperclip className="mr-1 mt-1 transition-all ease-in-out hover:text-navy-200 hover:duration-300 " />
             </button>
             <Button
               className="mt-1 w-full rounded-2xl"
