@@ -91,26 +91,28 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
       )}
       {selectedIndex === -2 && (
         <div className="mt-5 flex flex-col gap-2">
-          {currentUser && (
-            <div>
-              <Tabs value={selectedTab} className="mt-4 flex w-full">
-                <TabsList className="flex shrink-0 space-x-4">
-                  {ExploreTabList.map((item, i) => (
-                    <TabsTrigger
-                      value={item.name}
-                      onClick={() => {
-                        setSelectedTab(item.name);
-                        setSelectedSortMode(item.mode);
-                      }}
-                      key={i}
-                    >
-                      {item.name}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-              </Tabs>
-            </div>
-          )}
+          <Tabs value={selectedTab} className="mt-4 flex w-full">
+            <TabsList className="flex shrink-0 space-x-4">
+              {ExploreTabList.map((item, i) => {
+                if (item.name === "Following" && !currentUser) {
+                  return null;
+                }
+                return (
+                  <TabsTrigger
+                    value={item.name}
+                    onClick={() => {
+                      setSelectedTab(item.name);
+                      setSelectedSortMode(item.mode);
+                    }}
+                    key={i}
+                  >
+                    {item.name}
+                  </TabsTrigger>
+                );
+              })}
+            </TabsList>
+          </Tabs>
+
           <PostList
             filter={filter}
             sortMode={selectedSortMode}
