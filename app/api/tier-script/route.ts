@@ -12,7 +12,7 @@ export async function GET(request: Request) {
       }
       return NextResponse.json(
         {
-          msg: "Script executed successfully",
+          message: "Script executed successfully",
         },
         { status: 200 }
       );
@@ -20,7 +20,7 @@ export async function GET(request: Request) {
   } catch (error) {
     return NextResponse.json(
       {
-        msg: "An error occurred",
+        message: "An error occurred",
       },
       { status: 400 }
     );
