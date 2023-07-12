@@ -35,7 +35,6 @@ const RandomUser: React.FC<RandomUserProps> = ({ randomUsers }) => {
               onClick={async (e) => {
                 e.preventDefault();
                 setLoading(true);
-
                 const set = await fetch("/explore/stg/api/getRandomUser", {
                   method: "GET",
                 });
@@ -44,7 +43,8 @@ const RandomUser: React.FC<RandomUserProps> = ({ randomUsers }) => {
                   setLoading(false);
                 } else {
                   setLoading(false);
-                  setRandomUsers(newRandomUsers);
+                  console.log(newRandomUsers);
+                  setRandomUsers(newRandomUsers.users);
                 }
               }}
             />

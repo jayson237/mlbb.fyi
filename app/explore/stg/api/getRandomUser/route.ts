@@ -28,8 +28,11 @@ export async function GET(req: Request) {
         name: "desc",
       },
     });
-    // console.log(users);
-    return NextResponse.json(users, {
+    const debug = {
+      users: users,
+      skip: skip,
+    };
+    return NextResponse.json(debug, {
       status: 200,
     });
   } catch (error) {
