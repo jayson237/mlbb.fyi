@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function GET(req: Request) {
   const currentUser = await getCurrentUser();
   const usersCount = await prisma.user.count();
-  const skip = Math.floor(Math.random() * (usersCount / 2));
+  const skip = Math.floor((Math.random() * usersCount) / 2);
 
   try {
     const users = await prisma.user.findMany({

@@ -6,7 +6,8 @@ import PostListContainer from "@/components/explore/post/post-list-container";
 
 async function getRandomUser() {
   const currentUser = await getCurrentUser();
-  // const productsCount = await prisma.user.count();
+  const productsCount = await prisma.user.count();
+  const skip = Math.floor((Math.random() * productsCount) / 2);
 
   const users = await prisma.user.findMany({
     where: {
@@ -23,7 +24,7 @@ async function getRandomUser() {
       },
     },
     take: 5,
-    skip: 5,
+    skip: skip,
     orderBy: {
       name: "desc",
     },
