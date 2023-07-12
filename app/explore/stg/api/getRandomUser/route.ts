@@ -4,8 +4,8 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   const currentUser = await getCurrentUser();
-  const productsCount = await prisma.user.count();
-  const skip = Math.floor(Math.random() * Math.min(productsCount, 10));
+  const usersCount = await prisma.user.count();
+  const skip = Math.floor((Math.random() * usersCount) / 2);
 
   try {
     const users = await prisma.user.findMany({
@@ -28,8 +28,11 @@ export async function GET(req: Request) {
         name: "desc",
       },
     });
-    // console.log(users);
-    return NextResponse.json(users, {
+    const debug = {
+      users: users,
+      skip: skip,
+    };
+    return NextResponse.json(debug, {
       status: 200,
     });
   } catch (error) {
