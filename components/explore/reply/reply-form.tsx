@@ -1,14 +1,12 @@
 "use client";
 
-import useAutosizeTextArea from "@/lib/useAutosizeTextArea";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
-import Image from "next/image";
 
-import { GradiantCard } from "@/components/shared/gradiant-card";
 import { SendIcon } from "lucide-react";
 import LoadingDots from "@/components/shared/icons/loading-dots";
 import useMutCom from "@/lib/state/useMutCom";
+import useAutosizeTextArea from "@/lib/state/useAutosizeTextArea";
 
 interface CommentProps {
   postId: string;
