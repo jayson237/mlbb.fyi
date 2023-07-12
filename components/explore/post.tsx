@@ -8,9 +8,9 @@ import { fetcher } from "@/lib/fetcher-utils";
 import { SafeUser } from "@/types";
 import { Post, User } from "@prisma/client";
 
-import CommentForm from "@/components/explore/comment/comment-form";
-import CommentList from "@/components/explore/comment/comment-list";
 import PostContent from "@/components/explore/post/post-content";
+import CommentList from "./comment/comment-list";
+import CommentForm from "./comment/comment-form";
 
 interface PostProps {
   currentUser: SafeUser | null;

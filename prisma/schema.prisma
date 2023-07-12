@@ -141,6 +141,7 @@ model User {
 
   posts    Post[]
   comments Comment[]
+  Reply    Reply[]
 
   @@unique([id, username])
 }
@@ -184,6 +185,7 @@ model Post {
   user User @relation(fields: [userId, createdBy], references: [id, username], onDelete: Cascade)
 
   comments Comment[]
+  replies  Reply[]
 }
 
 model Comment {
@@ -197,6 +199,23 @@ model Comment {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  replies Reply[]
+}
+
+model Reply {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  body      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String   @db.ObjectId
+  commentId String   @db.ObjectId
+  postId    String   @db.ObjectId
+  createdBy String?
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  Post    Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
 
 type Field {
