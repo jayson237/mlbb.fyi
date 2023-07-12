@@ -1,6 +1,6 @@
 "use client";
 
-import useAutosizeTextArea from "@/lib/useAutosizeTextArea";
+import useAutosizeTextArea from "@/lib/state/useAutosizeTextArea";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 

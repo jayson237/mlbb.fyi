@@ -1,13 +1,13 @@
 import getCurrentUser from "@/lib/actions/getCurrentUser";
 import prisma from "@/lib/prismadb";
 
-import RandomUserContainer from "@/components/explore/random-user";
+import RandomUserContainer from "@/components/explore/random-user-container";
 import PostListContainer from "@/components/explore/post/post-list-container";
 
 async function getRandomUser() {
   const currentUser = await getCurrentUser();
   const productsCount = await prisma.user.count();
-  const skip = Math.floor(Math.random() * productsCount);
+  const skip = Math.floor((Math.random() * productsCount) / 2);
 
   const users = await prisma.user.findMany({
     where: {
