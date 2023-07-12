@@ -11,6 +11,7 @@ Critical dependency: the request of a dependency is an expression
 
 Import trace for requested module:
 ./node_modules/cloudinary/lib-es5/utils/index.js
+./node_modules/cloudinary/lib-es5/utils/srcsetUtils.js
 ./node_modules/cloudinary/lib-es5/cloudinary.js
 ./node_modules/cloudinary/cloudinary.js
 ./app/profile/stg/api/cdn-sign/route.ts
@@ -20,6 +21,7 @@ Critical dependency: the request of a dependency is an expression
 
 Import trace for requested module:
 ./node_modules/cloudinary/lib/utils/index.js
+./node_modules/cloudinary/lib/utils/srcsetUtils.js
 ./node_modules/cloudinary/lib/cloudinary.js
 ./node_modules/cloudinary/cloudinary.js
 ./app/profile/stg/api/cdn-sign/route.ts
@@ -34,11 +36,11 @@ info  - Linting and checking validity of types...
 
 info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
 info  - Collecting page data...
-info  - Generating static pages (0/45)
-info  - Generating static pages (11/45)
-info  - Generating static pages (22/45)
+info  - Generating static pages (0/46)
+info  - Generating static pages (11/46)
+info  - Generating static pages (22/46)
 warn  - Entire page /auth/signin deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /auth/signin
-(node:14160) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
+(node:2748) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
 (Use `node --trace-warnings ...` to show where the warning was created)
 [next-auth][error][CLIENT_FETCH_ERROR] 
 https://next-auth.js.org/errors#client_fetch_error fetch failed {
@@ -52,14 +54,16 @@ https://next-auth.js.org/errors#client_fetch_error fetch failed {
   url: 'http://localhost:3010/api/auth/csrf',
   message: 'fetch failed'
 }
-info  - Generating static pages (33/45)
 
 warn  - metadata.metadataBase is not set for resolving social open graph or twitter images, fallbacks to "http://localhost:3000". See https://beta.nextjs.org/docs/api-reference/metadata#metadatabase
 
 
 
+info  - Generating static pages (34/46)
 warn  - Entire page /profile/stg deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /profile/stg
-info  - Generating static pages (45/45)
+(node:8060) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+info  - Generating static pages (46/46)
 info  - Finalizing page optimization...
 
 Route (app)                                Size     First Load JS
@@ -69,6 +73,7 @@ Route (app)                                Size     First Load JS
 ├ λ /api/comment/pic                       0 B                0 B
 ├ λ /api/post                              0 B                0 B
 ├ λ /api/test                              0 B                0 B
+├ λ /api/tier-script                       0 B                0 B
 ├ λ /api/user/basic-info                   0 B                0 B
 ├ λ /api/user/favourite                    0 B                0 B
 ├ λ /api/user/fol-info                     0 B                0 B
@@ -133,7 +138,7 @@ Route (pages)                              Size     First Load JS
 ├ λ /api/spell                             0 B            86.1 kB
 └ λ /api/spell/create                      0 B            86.1 kB
 + First Load JS shared by all              86.1 kB
-  ├ chunks/main-93d03f2067e4c565.js        84.1 kB
+  ├ chunks/main-1be4df7957ae41c6.js        84.1 kB
   ├ chunks/pages/_app-41eecff5619c9bfb.js  192 B
   └ chunks/webpack-39ccdd9e39da7479.js     1.81 kB
 
