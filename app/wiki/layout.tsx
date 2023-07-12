@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger } from "@/components/shared/tabs";
 import useTabStore from "@/lib/state/useTabStore";
 import Link from "next/link";
@@ -33,16 +34,13 @@ export interface LayoutWikiProps {
 }
 
 export default function LayoutWiki({ children }: LayoutWikiProps) {
+  const pathname = usePathname();
+  const active = pathname?.split("/")[2] || "";
   const { selectedTab, setSelectedTab } = useTabStore();
 
   useEffect(() => {
-    const storedTab = window.sessionStorage.getItem("selectedTab");
-    setSelectedTab(storedTab || "heroes");
-  }, []);
-
-  useEffect(() => {
-    window.sessionStorage.setItem("selectedTab", selectedTab);
-  }, [selectedTab]);
+    setSelectedTab(active);
+  }, [active, setSelectedTab]);
 
   return (
     <main>

@@ -17,7 +17,7 @@ interface HeroFyiContainer {
   heroSpell: Object[] | null;
   heroEmblem: Object[] | null;
   heroWeakAgainst?: Object[] | null;
-  heroStrongAgainst?: Promise<Object[]> | never[];
+  heroStrongAgainst?: Object[] | null;
   matches?: {
     mode: string;
     total: number;
@@ -49,28 +49,15 @@ export default function HeroFyi({
   showWR,
 }: HeroFyiContainer) {
   const router = useRouter();
-  const [strongAgainstData, setStrongAgainstData] = useState([]);
   const { selectedTab, setSelectedTab } = useTabStore();
 
   useEffect(() => {
     setSelectedTab("heroes");
-  }, [setSelectedTab]);
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await heroStrongAgainst;
-        setStrongAgainstData(data);
-      } catch (error) {
-        return null;
-      }
-    };
-    fetchData();
-  }, [heroStrongAgainst]);
 
   const uniqueSpells = Array.from(
     new Set(heroSpell?.map((spell) => spell.name))
@@ -320,12 +307,12 @@ export default function HeroFyi({
       )}
 
       <GradiantCard className="mt-1.5 h-fit w-full" variant="clean">
-        {strongAgainstData.length !== 0 && (
+        {heroStrongAgainst.length !== 0 && (
           <>
             <p className="font-heading text-xl md:text-3xl">Strong against</p>
             <div className="my-4">
               <div className="grid grid-cols-3 flex-row gap-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7">
-                {strongAgainstData.map((hero, i) => (
+                {heroStrongAgainst.map((hero, i) => (
                   <div
                     key={i}
                     onClick={() => {
