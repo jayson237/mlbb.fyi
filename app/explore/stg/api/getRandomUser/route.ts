@@ -4,8 +4,13 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   const currentUser = await getCurrentUser();
-  const productsCount = await prisma.user.count();
-  const skip = Math.floor(Math.random() * Math.min(productsCount - 1, 10));
+  const usersCount = await prisma.user.count();
+  const maxSkipValue = Math.max(usersCount - 1, 0);
+  let skip = Math.floor(Math.random() * Math.min(maxSkipValue, 10));
+
+  if (skip >= usersCount) {
+    skip = 5;
+  }
 
   try {
     const users = await prisma.user.findMany({
