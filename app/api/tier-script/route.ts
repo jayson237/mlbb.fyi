@@ -7,7 +7,6 @@ export async function GET(request: Request) {
   try {
     exec(`py ${scriptPath}`, (error, stdout, stderr) => {
       if (error) {
-        console.log(error);
         return NextResponse.json(error, { status: 500 });
       }
       return NextResponse.json(
