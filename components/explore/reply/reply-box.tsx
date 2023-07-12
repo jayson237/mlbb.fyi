@@ -1,38 +1,20 @@
-"use client";
-
-import { useState, useRef, useEffect } from "react";
+import { fetcher } from "@/lib/fetcher-utils";
+import { useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 import Image from "next/image";
 import Link from "next/link";
-
-import { Comment } from "@prisma/client";
-import { fetcher } from "@/lib/fetcher-utils";
-
-import { Edit3, MessagesSquare, Reply, Trash2 } from "lucide-react";
-import DelComment from "./del-comment";
-import EditCommentForm from "./edit-comment-form";
+import { Reply } from "@prisma/client";
+import { Edit3, Trash2 } from "lucide-react";
 import DialogFit from "@/components/shared/dialog-fit";
-import ReplyForm from "../reply/reply-form";
-import useMutCom from "@/lib/state/useMutCom";
-import ReplyList from "../reply/reply-list";
 
-interface CommentBoxProps {
-  comment: Comment;
-  postId: string;
+interface ReplyBoxProps {
+  reply: Reply;
+  commentId: string;
   userId?: string;
 }
-
-const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
-  const { data: image } = useSWR(["/api/comment/pic", comment.userId], fetcher);
-
-  const togMut = useMutCom();
-  const { data: replies, mutate } = useSWR(
-    ["/api/reply/list", comment.id],
-    fetcher
-  );
-  useEffect(() => {
-    togMut.toogleMutate && mutate();
-  }, [mutate, togMut]);
+const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
+  console.log(reply);
+  const { data: image } = useSWR(["/api/comment/pic", userId], fetcher);
 
   const [editActive, setEditActive] = useState<boolean>(false);
   const [isAddingReply, setIsAddingReply] = useState<boolean>(false);
@@ -51,16 +33,13 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
       return lineCount > 2;
     }
   }
+
   useEffect(() => {
     isExpandable() === true ? setExpandedable(true) : setExpandedable(false);
   }, []);
 
   const toggleExpand = () => {
     setExpanded(!expanded);
-  };
-
-  const closeEdit = () => {
-    setEditActive(false);
   };
 
   return (
@@ -86,11 +65,11 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
               }
             />
           )}
-          <Link href={`/profile/${comment.createdBy}/statistics`}>
-            <p className="font-heading text-xl">{comment?.createdBy}</p>
+          <Link href={`/profile/${reply.createdBy}/statistics`}>
+            <p className="font-heading text-xl">{reply?.createdBy}</p>
           </Link>
         </div>
-        {userId === comment.userId && (
+        {userId === reply.userId && (
           <div className="mt-3 flex flex-row">
             <button onClick={() => setEditActive(!editActive)}>
               {editActive ? (
@@ -105,18 +84,19 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
                 <Trash2 className="h-5 w-5 ease-in-out hover:text-red-400 hover:duration-300" />
               }
             >
-              <DelComment commentId={comment.id} />
+              {/* <DelComment commentId={comment.id} /> */} Coming soon
             </DialogFit>
           </div>
         )}
       </div>
       {editActive ? (
         <div className="mb-8 ml-16 grow">
-          <EditCommentForm
+          {/* <EditCommentForm
             commentId={comment.id}
             commentBody={comment?.body}
             onCancel={closeEdit}
-          />
+          /> */}{" "}
+          Edit Coming Soon
         </div>
       ) : (
         <>
@@ -125,7 +105,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
               className={`${expanded || !expandedable ? "" : "line-clamp-2"}`}
               ref={paragraphRef}
             >
-              {comment.body}
+              {reply.body}
             </p>
             <span>
               {expandedable && (
@@ -140,40 +120,8 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
           </div>
         </>
       )}
-      <div className="flex flex-row gap-5">
-        <div>
-          <button
-            className="flex flex-row items-center"
-            onClick={() => setIsEnableReplyList(!isEnableReplyList)}
-          >
-            <MessagesSquare className="mr-2 h-5 w-5" />
-            {replies && (
-              <p className="text-sm">
-                Show {replies[1]} {replies[1] === 1 ? "reply" : "replies"}
-              </p>
-            )}
-          </button>
-        </div>
-        <div>
-          <button
-            className="flex flex-row items-center"
-            onClick={() => setIsAddingReply(!isAddingReply)}
-          >
-            <Reply className="mr-2 h-5 w-5" />
-            {<p className="text-sm">Reply</p>}
-          </button>
-        </div>
-      </div>
-      {isAddingReply && (
-        <div className="mt-2">
-          <ReplyForm postId={postId} commentId={comment.id} />
-        </div>
-      )}
-      {isEnableReplyList && replies && (
-        <ReplyList userId={comment.userId} replies={replies[0]} />
-      )}
     </>
   );
 };
 
-export default CommentBox;
+export default ReplyBox;
