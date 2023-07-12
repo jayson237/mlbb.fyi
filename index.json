@@ -5,7 +5,7 @@
   },
   {
     "name": "Akai",
-    "tier": "A"
+    "tier": "B"
   },
   {
     "name": "Aldous",
@@ -61,7 +61,7 @@
   },
   {
     "name": "Barats",
-    "tier": "D"
+    "tier": "S"
   },
   {
     "name": "Baxia",
@@ -77,7 +77,7 @@
   },
   {
     "name": "Benedetta",
-    "tier": "B"
+    "tier": "C"
   },
   {
     "name": "Brody",
@@ -201,7 +201,7 @@
   },
   {
     "name": "Harith",
-    "tier": "B"
+    "tier": "D"
   },
   {
     "name": "Harley",
@@ -277,7 +277,7 @@
   },
   {
     "name": "Lancelot",
-    "tier": "D"
+    "tier": "S"
   },
   {
     "name": "Lapu-Lapu",
@@ -293,11 +293,11 @@
   },
   {
     "name": "Lesley",
-    "tier": "D"
+    "tier": "SS"
   },
   {
     "name": "Ling",
-    "tier": "D"
+    "tier": "Unknown"
   },
   {
     "name": "Lolita",
@@ -321,7 +321,7 @@
   },
   {
     "name": "Masha",
-    "tier": "B"
+    "tier": "C"
   },
   {
     "name": "Mathilda",
@@ -357,7 +357,7 @@
   },
   {
     "name": "Natan",
-    "tier": "B"
+    "tier": "C"
   },
   {
     "name": "Novaria",
@@ -389,7 +389,7 @@
   },
   {
     "name": "Roger",
-    "tier": "B"
+    "tier": "C"
   },
   {
     "name": "Ruby",
@@ -413,7 +413,7 @@
   },
   {
     "name": "Terizla",
-    "tier": "D"
+    "tier": "S"
   },
   {
     "name": "Thamuz",
@@ -425,7 +425,7 @@
   },
   {
     "name": "Uranus",
-    "tier": "D"
+    "tier": "S"
   },
   {
     "name": "Vale",
