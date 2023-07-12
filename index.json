@@ -1,15 +1,15 @@
 [
   {
     "name": "Aamon",
-    "tier": "B"
+    "tier": "C"
   },
   {
     "name": "Akai",
-    "tier": "A"
+    "tier": "B"
   },
   {
     "name": "Aldous",
-    "tier": "C"
+    "tier": "B"
   },
   {
     "name": "Alice",
@@ -41,7 +41,7 @@
   },
   {
     "name": "Aulus",
-    "tier": "C"
+    "tier": "D"
   },
   {
     "name": "Aurora",
@@ -61,7 +61,7 @@
   },
   {
     "name": "Barats",
-    "tier": "D"
+    "tier": "S"
   },
   {
     "name": "Baxia",
@@ -73,11 +73,11 @@
   },
   {
     "name": "Belerick",
-    "tier": "C"
+    "tier": "D"
   },
   {
     "name": "Benedetta",
-    "tier": "B"
+    "tier": "C"
   },
   {
     "name": "Brody",
@@ -133,11 +133,11 @@
   },
   {
     "name": "Estes",
-    "tier": "C"
+    "tier": "B"
   },
   {
     "name": "Eudora",
-    "tier": "D"
+    "tier": "C"
   },
   {
     "name": "Fanny",
@@ -185,7 +185,7 @@
   },
   {
     "name": "Guinevere",
-    "tier": "C"
+    "tier": "D"
   },
   {
     "name": "Gusion",
@@ -201,7 +201,7 @@
   },
   {
     "name": "Harith",
-    "tier": "A"
+    "tier": "D"
   },
   {
     "name": "Harley",
@@ -209,7 +209,7 @@
   },
   {
     "name": "Hayabusa",
-    "tier": "S"
+    "tier": "A"
   },
   {
     "name": "Helcurt",
@@ -217,7 +217,7 @@
   },
   {
     "name": "Hilda",
-    "tier": "C"
+    "tier": "B"
   },
   {
     "name": "Hylos",
@@ -249,7 +249,7 @@
   },
   {
     "name": "Kagura",
-    "tier": "B"
+    "tier": "C"
   },
   {
     "name": "Kaja",
@@ -289,15 +289,15 @@
   },
   {
     "name": "Leomord",
-    "tier": "B"
+    "tier": "C"
   },
   {
     "name": "Lesley",
-    "tier": "D"
+    "tier": "SS"
   },
   {
     "name": "Ling",
-    "tier": "SS"
+    "tier": "Unknown"
   },
   {
     "name": "Lolita",
@@ -309,11 +309,11 @@
   },
   {
     "name": "Luo Yi",
-    "tier": "D"
+    "tier": "C"
   },
   {
     "name": "Lylia",
-    "tier": "A"
+    "tier": "B"
   },
   {
     "name": "Martis",
@@ -341,7 +341,7 @@
   },
   {
     "name": "Miya",
-    "tier": "C"
+    "tier": "D"
   },
   {
     "name": "Moskov",
@@ -389,11 +389,11 @@
   },
   {
     "name": "Roger",
-    "tier": "D"
+    "tier": "C"
   },
   {
     "name": "Ruby",
-    "tier": "B"
+    "tier": "A"
   },
   {
     "name": "Saber",
@@ -413,7 +413,7 @@
   },
   {
     "name": "Terizla",
-    "tier": "D"
+    "tier": "S"
   },
   {
     "name": "Thamuz",
@@ -461,7 +461,7 @@
   },
   {
     "name": "Yin",
-    "tier": "D"
+    "tier": "C"
   },
   {
     "name": "Yu Zhong",
