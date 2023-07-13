@@ -59,6 +59,17 @@ export default function HeroFyi({
     window.scrollTo(0, 0);
   }, []);
 
+  const tier = () => {
+    for (let i = 0; i < tiers.length; i++) {
+      if (hero?.tiers === tiers[i].tier) {
+        return i;
+      } else if (hero?.tiers === "SS") {
+        return 0;
+      }
+    }
+    return -1;
+  };
+
   const uniqueSpells = Array.from(
     new Set(heroSpell?.map((spell) => spell.name))
   );
@@ -105,26 +116,31 @@ export default function HeroFyi({
             />
 
             <div className="flex w-full flex-col gap-x-1.5 ">
-              <div className="flex flex-row items-center gap-2">
-                <p className="font-heading text-xl md:text-3xl">
-                  {heroDetails.heroName}
-                </p>
-                <Image
-                  src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1686042255/mlbb.fyi/heroRole/${hero?.role[0]}.webp`}
-                  alt={hero?.role[0] || ""}
-                  width={25}
-                  height={25}
-                  className="mb-[5px] h-[25px] w-[25px]"
-                />
-                {hero?.role[1] && (
+              <div className="flex items-center justify-between">
+                <div className="flex flex-row items-center gap-2">
+                  <p className="font-heading text-xl md:text-3xl">
+                    {heroDetails.heroName}
+                  </p>
                   <Image
-                    src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1686042255/mlbb.fyi/heroRole/${hero?.role[1]}.webp`}
-                    alt={hero?.role[1] || ""}
+                    src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1686042255/mlbb.fyi/heroRole/${hero?.role[0]}.webp`}
+                    alt={hero?.role[0] || ""}
                     width={25}
-                    height={20}
+                    height={25}
                     className="mb-[5px] h-[25px] w-[25px]"
                   />
-                )}
+                  {hero?.role[1] && (
+                    <Image
+                      src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1686042255/mlbb.fyi/heroRole/${hero?.role[1]}.webp`}
+                      alt={hero?.role[1] || ""}
+                      width={25}
+                      height={20}
+                      className="mb-[5px] h-[25px] w-[25px]"
+                    />
+                  )}
+                </div>
+                <div className="text-md mb-2 rounded-full bg-navy-600 px-2 font-semibold ">
+                  <p>{hero?.tier}</p>
+                </div>
               </div>
               <div className="mb-1 flex flex-row items-center">
                 <Image

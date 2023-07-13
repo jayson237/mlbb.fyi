@@ -12,7 +12,7 @@ const WikiTabList = [
     href: "/wiki/heroes",
   },
   {
-    name: "Tiers",
+    name: "Tier List",
     href: "/wiki/tier-list",
   },
   {
