@@ -42,12 +42,12 @@ export default function TierContainer({ heroes }: TierListProps) {
           return (
             <div
               key={i}
-              className="flex w-full flex-row items-center rounded-xl border border-navy-600/50 pl-4"
+              className="flex w-full flex-row items-center rounded-xl  pl-4"
               style={{ background: item.color }}
             >
               <p className="font-heading">{item.tier}</p>
               <div className="ml-4 h-fit w-full rounded-r-lg bg-black py-8">
-                <div className="ml-4 grid grid-cols-3 flex-row gap-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7">
+                <div className="mx-4 grid grid-cols-3 flex-row gap-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7">
                   {filteredHeroes?.map((hero, j) => (
                     <div
                       key={j}
