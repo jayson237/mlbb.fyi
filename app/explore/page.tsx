@@ -7,7 +7,7 @@ import PostListContainer from "@/components/explore/post/post-list-container";
 async function getInitialRandomUsers() {
   const currentUser = await getCurrentUser();
   const productsCount = await prisma.user.count();
-  const skip = Math.floor((Math.random() * productsCount) / 2);
+  const skip = Math.floor((Math.random() * productsCount) / 2) + 1;
 
   const users = await prisma.user.findMany({
     where: {
