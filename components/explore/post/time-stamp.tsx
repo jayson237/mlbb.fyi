@@ -1,4 +1,4 @@
-interface DateContainerProps {
+interface TimeStampProps {
   date: string[];
   time: string[];
 }
@@ -76,7 +76,7 @@ function handleTimeZone(time: string[], region: string) {
   return String(result);
 }
 
-const DateContainer: React.FC<DateContainerProps> = ({ date, time }) => {
+const TimeStamp: React.FC<TimeStampProps> = ({ date, time }) => {
   const currDate = new Date().toLocaleDateString().split("/");
   const currTime = new Date().toTimeString().split(":");
   const region = currTime[2].split(" ");
@@ -133,4 +133,4 @@ const DateContainer: React.FC<DateContainerProps> = ({ date, time }) => {
   );
 };
 
-export default DateContainer;
+export default TimeStamp;
