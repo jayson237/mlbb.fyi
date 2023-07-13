@@ -37,7 +37,8 @@ const RandomUser: React.FC<RandomUserProps> = ({ randomUsers }) => {
                 setLoading(true);
                 const set = await fetch("/explore/stg/api/getRandomUser", {
                   method: "GET",
-                  cache: "no-cache",
+                  cache: "no-store",
+                  next: { revalidate: 0 },
                 });
                 const newRandomUsers = await set.json();
                 if (!set.ok) {
