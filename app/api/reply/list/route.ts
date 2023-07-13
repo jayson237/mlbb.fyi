@@ -10,7 +10,7 @@ export async function POST(req: Request) {
         commentId: data,
       },
       orderBy: {
-        createdAt: "desc",
+        createdAt: "asc",
       },
     });
 
