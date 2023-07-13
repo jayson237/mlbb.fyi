@@ -57,7 +57,14 @@ export default async function HeroPage({
 }) {
   const currentUser = await getCurrentUser();
   const decodedString = decodeURIComponent(params?.hero.replace(/\+/g, " "));
-  const parseHero = decodedString.replace(/\b\w/g, (c) => c.toUpperCase());
+  const parseHero =
+    decodedString === "popol and kupa"
+      ? "Popol and Kupa"
+      : decodedString === "yi sun-shin"
+      ? "Yi Sun-shin"
+      : decodedString === "chang'e"
+      ? "Chang'e"
+      : decodedString.replace(/\b\w/g, (c) => c.toUpperCase());
   const isExistingHero = await getHero(parseHero);
 
   const overallStats: any[] | null = await getHeroStats();
