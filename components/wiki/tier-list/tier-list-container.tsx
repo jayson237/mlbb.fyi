@@ -54,7 +54,7 @@ export default function TierContainer({ heroes }: TierListProps) {
                       onClick={() => {
                         router.push(`/wiki/heroes/${hero.name.toLowerCase()}`);
                       }}
-                      className="cursor-pointer"
+                      className="mx-auto cursor-pointer"
                     >
                       <div className="relative">
                         <Image
@@ -66,7 +66,7 @@ export default function TierContainer({ heroes }: TierListProps) {
                           alt={hero.name}
                           width={96}
                           height={96}
-                          className="h-[96px] w-[96px] rounded-full"
+                          className="h-[48px] w-[48px] rounded-full md:h-[96px] md:w-[96px]"
                           loading="lazy"
                         />
 
