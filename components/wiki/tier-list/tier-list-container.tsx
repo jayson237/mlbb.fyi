@@ -70,8 +70,8 @@ export default function TierContainer({ heroes }: TierListProps) {
                           loading="lazy"
                         />
 
-                        <div className="bg-opacity/75 absolute bottom-0 left-0 h-[96px] w-[96px] items-center rounded-full bg-black/80 py-1 text-center text-sm font-medium text-white opacity-0 transition-opacity duration-200">
-                          <p className="mt-3 justify-center text-[10px] md:mt-8 md:text-[14px]">
+                        <div className="bg-opacity/75 absolute bottom-0 left-0 h-[48px] w-[48px] items-center rounded-full bg-black/80 py-1 text-center text-sm font-medium text-white opacity-0 transition-opacity duration-200 md:h-[96px] md:w-[96px]">
+                          <p className="mt-4 justify-center text-[10px] md:mt-8 md:text-[14px]">
                             {hero?.name}
                           </p>
                         </div>
