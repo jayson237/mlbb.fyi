@@ -8,7 +8,7 @@ export async function GET(req: Request) {
   const skipGenerator = () => {
     return Math.floor((Math.random() * usersCount) / 2) + 1;
   };
-  const skip = skipGenerator();
+  let skip = skipGenerator();
 
   try {
     const users = await prisma.user.findMany({
