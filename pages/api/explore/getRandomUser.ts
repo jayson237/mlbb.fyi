@@ -11,7 +11,7 @@ export default async function GET(req: NextApiRequest, res: NextApiResponse) {
     const currentUser = await getCurrentUser();
     const usersCount = await prisma.user.count();
 
-    const skip = skipGenerator(22);
+    const skip = skipGenerator(usersCount);
     const users = await prisma.user.findMany({
       where: {
         id: {
