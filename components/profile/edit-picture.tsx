@@ -1,7 +1,7 @@
 // @ts-nocheck
 "use client";
 
-import { useRef, useState, useCallback, ChangeEvent } from "react";
+import { useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { FileRejection, useDropzone } from "react-dropzone";
 import { toast } from "sonner";

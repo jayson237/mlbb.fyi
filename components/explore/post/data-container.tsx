@@ -42,7 +42,7 @@ function getTimeDiff(
   minute1: string,
   minute2: string
 ) {
-  console.log(hour1, hour2, minute1, minute2);
+  // console.log(hour1, hour2, minute1, minute2);
   let hourDiff = Number(hour2) - Number(hour1) - 1;
 
   // difference between minutes
