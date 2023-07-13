@@ -60,20 +60,20 @@ export default function TierContainer({ heroes }: TierListProps) {
                         <Image
                           src={
                             hero?.img?.split("/image/upload/")[0] +
-                            "/image/upload/c_fill,h_192,w_192,g_north/" +
+                            "/image/upload/c_fill,h_220,w_220,g_north/" +
                             hero?.img?.split("/image/upload/")[1]
                           }
                           alt={hero.name}
-                          width={96}
-                          height={96}
-                          className="h-[48px] w-[48px] rounded-full md:h-[96px] md:w-[96px]"
+                          width={110}
+                          height={110}
+                          className="h-[55px] w-[55px] rounded-full sm:h-[110px] sm:w-[110px]"
                           loading="lazy"
                         />
 
-                        <div className="bg-opacity/75 absolute bottom-0 left-0 h-[48px] w-[48px] items-center rounded-full bg-black/80 py-1 text-center text-sm font-medium text-white opacity-0 transition-opacity duration-200 md:h-[96px] md:w-[96px]">
-                          <p className="mt-4 justify-center text-[10px] md:mt-8 md:text-[14px]">
+                        <div className="bg-opacity/75 absolute bottom-0 left-0 h-[55px] w-[55px] items-center rounded-full bg-black/80 py-1 text-center text-sm font-medium text-white opacity-0 transition-opacity duration-200 sm:h-[110px] sm:w-[110px]">
+                          {/* <p className="mt-3 justify-center text-[10px] md:mt-11 md:text-[14px]">
                             {hero?.name}
-                          </p>
+                          </p> */}
                         </div>
                       </div>
                       <style jsx>{`
@@ -81,6 +81,9 @@ export default function TierContainer({ heroes }: TierListProps) {
                           opacity: 1;
                         }
                       `}</style>
+                      <p className="mt-2 text-center text-[10px]  md:text-[14px]">
+                        {hero?.name}
+                      </p>
                     </div>
                   ))}
                 </div>
