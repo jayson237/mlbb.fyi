@@ -1,5 +1,4 @@
 import getCurrentUser from "@/lib/actions/getCurrentUser";
-import prisma from "@/lib/prismadb";
 
 import RandomUserContainer from "@/components/explore/random-user-container";
 import PostListContainer from "@/components/explore/post/post-list-container";
@@ -10,6 +9,7 @@ async function getInitialRandomUser() {
     {
       method: "GET",
       cache: "no-store",
+      next: { revalidate: 0 },
     }
   );
   return res.json();
