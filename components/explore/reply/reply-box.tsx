@@ -17,7 +17,7 @@ interface ReplyBoxProps {
 }
 const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
   console.log(reply);
-  const { data: image } = useSWR(["/api/comment/pic", userId], fetcher);
+  const { data: image } = useSWR(["/api/comment/pic", reply.userId], fetcher);
 
   const [editActive, setEditActive] = useState<boolean>(false);
 
