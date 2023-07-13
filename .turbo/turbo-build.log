@@ -36,15 +36,9 @@ info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/d
 info  - Collecting page data...
 info  - Generating static pages (0/47)
 info  - Generating static pages (11/47)
-
-warn  - metadata.metadataBase is not set for resolving social open graph or twitter images, fallbacks to "http://localhost:3000". See https://beta.nextjs.org/docs/api-reference/metadata#metadatabase
-
-
-
 info  - Generating static pages (23/47)
-info  - Generating static pages (35/47)
 warn  - Entire page /auth/signin deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /auth/signin
-(node:11652) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
+(node:23164) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
 (Use `node --trace-warnings ...` to show where the warning was created)
 [next-auth][error][CLIENT_FETCH_ERROR] 
 https://next-auth.js.org/errors#client_fetch_error fetch failed {
@@ -58,7 +52,13 @@ https://next-auth.js.org/errors#client_fetch_error fetch failed {
   url: 'http://localhost:3010/api/auth/csrf',
   message: 'fetch failed'
 }
+info  - Generating static pages (35/47)
 warn  - Entire page /profile/stg deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /profile/stg
+
+warn  - metadata.metadataBase is not set for resolving social open graph or twitter images, fallbacks to "http://localhost:3000". See https://beta.nextjs.org/docs/api-reference/metadata#metadatabase
+
+
+
 info  - Generating static pages (47/47)
 info  - Finalizing page optimization...
 
@@ -81,8 +81,8 @@ Route (app)                                Size     First Load JS
 ├ λ /cms/counter                           1.09 kB        78.1 kB
 ├ λ /cms/emblem                            920 B          90.1 kB
 ├ λ /cms/spell                             918 B          90.1 kB
-├ λ /explore                               7.91 kB         136 kB
-├ λ /explore/[postId]                      8.2 kB          124 kB
+├ λ /explore                               8.38 kB         136 kB
+├ λ /explore/[postId]                      8.21 kB         124 kB
 ├ λ /explore/stg/api/comDelete             0 B                0 B
 ├ λ /explore/stg/api/comEdit               0 B                0 B
 ├ λ /explore/stg/api/delete                0 B                0 B
@@ -96,7 +96,7 @@ Route (app)                                Size     First Load JS
 ├ λ /explore/stg/api/unfavourite           0 B                0 B
 ├ ○ /favicon.ico                           0 B                0 B
 ├ λ /not-found                             1.48 kB        91.8 kB
-├ λ /profile                               170 B          77.2 kB
+├ λ /profile                               171 B          77.2 kB
 ├ λ /profile/[username]                    310 B          77.3 kB
 ├ λ /profile/[username]/[subProfile]       4.95 kB         109 kB
 ├ λ /profile/[username]/api                0 B                0 B
@@ -107,11 +107,11 @@ Route (app)                                Size     First Load JS
 ├ ○ /profile/stg/api/cdn-sign              0 B                0 B
 ├ λ /profile/stg/api/edit-picture          0 B                0 B
 ├ λ /profile/stg/api/update                0 B                0 B
-├ λ /profile/stg/bind                      1.84 kB        98.3 kB
-├ λ /profile/stg/bind/verify               2.16 kB        98.6 kB
+├ λ /profile/stg/bind                      1.85 kB        98.3 kB
+├ λ /profile/stg/bind/verify               2.17 kB        98.6 kB
 ├ λ /wiki                                  170 B          77.2 kB
 ├ λ /wiki/heroes                           6.13 kB         100 kB
-├ λ /wiki/heroes/[hero]                    9.55 kB          99 kB
+├ λ /wiki/heroes/[hero]                    9.62 kB        99.1 kB
 ├ λ /wiki/patches                          2.1 kB         91.5 kB
 ├ λ /wiki/patches/[patch]                  2.92 kB        79.9 kB
 ├ λ /wiki/statistics                       3.19 kB        97.3 kB
@@ -120,7 +120,7 @@ Route (app)                                Size     First Load JS
   ├ chunks/2443530c-ea3be2629419fdf0.js    50.5 kB
   ├ chunks/8139-4854361d949ffce7.js        24.4 kB
   ├ chunks/main-app-671a7bc1bd9da827.js    216 B
-  └ chunks/webpack-b5782bdf0555a561.js     1.82 kB
+  └ chunks/webpack-fdd2ec4a814372ec.js     1.82 kB
 
 Route (pages)                              Size     First Load JS
 ┌ ○ /404                                   181 B          86.3 kB
@@ -138,7 +138,7 @@ Route (pages)                              Size     First Load JS
 + First Load JS shared by all              86.1 kB
   ├ chunks/main-ca1d2daced4d99d8.js        84.1 kB
   ├ chunks/pages/_app-749d53c4cd4de805.js  193 B
-  └ chunks/webpack-b5782bdf0555a561.js     1.82 kB
+  └ chunks/webpack-fdd2ec4a814372ec.js     1.82 kB
 
 ƒ Middleware                               214 kB
 
