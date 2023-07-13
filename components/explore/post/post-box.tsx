@@ -13,7 +13,7 @@ import { fetcher } from "@/lib/fetcher-utils";
 import useSWR from "swr";
 import useMutCom from "@/lib/state/useMutCom";
 import { useRouter } from "next/navigation";
-import DateContainer from "./data-container";
+import TimeStamp from "./time-stamp";
 
 interface PostBoxProps {
   post: Post;
@@ -59,7 +59,7 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
           </p>
         </Link>
         <div className="flex flex-row items-center gap-1">
-          <DateContainer date={date.split("-")} time={time.split(":")} />
+          <TimeStamp date={date.split("-")} time={time.split(":")} />
           <Link href={`/profile/${post.createdBy}/statistics`}>
             <p className="text-xs mt-2 truncate leading-5 text-gray-500 ease-in-out hover:text-navy-300 hover:underline">
               {post.createdBy}
