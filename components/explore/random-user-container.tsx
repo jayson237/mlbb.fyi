@@ -15,6 +15,22 @@ interface RandomUserProps {
 const RandomUser: React.FC<RandomUserProps> = ({ randomUsers }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [newRandomUsers, setRandomUsers] = useState(randomUsers);
+
+  async function handleGenerateRandom(
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>
+  ) {
+    e.preventDefault();
+    setLoading(true);
+    const get = await fetch("/api/explore/getRandomUser");
+    const json = await get.json();
+    if (!get.ok) {
+      setLoading(false);
+    } else {
+      setLoading(false);
+      setRandomUsers(json.users);
+    }
+  }
+
   return (
     <GradiantCard
       className="sticky top-14 hidden h-full max-h-[90vh] rounded-3xl md:block"
@@ -24,7 +40,7 @@ const RandomUser: React.FC<RandomUserProps> = ({ randomUsers }) => {
         <h2 className="font-heading text-xl font-bold tracking-wide">
           Connect with others
         </h2>
-        <button>
+        <button disabled={loading}>
           {loading ? (
             <>
               <LoadingDots color="#FAFAFA" />
@@ -33,21 +49,7 @@ const RandomUser: React.FC<RandomUserProps> = ({ randomUsers }) => {
             <RotateCcw
               className="transition-all ease-in-out hover:text-navy-200 hover:duration-300 "
               onClick={async (e) => {
-                e.preventDefault();
-                setLoading(true);
-                const set = await fetch("/explore/stg/api/getRandomUser", {
-                  method: "GET",
-                  cache: "no-store",
-                  next: { revalidate: 0 },
-                });
-                const newRandomUsers = await set.json();
-                if (!set.ok) {
-                  setLoading(false);
-                } else {
-                  setLoading(false);
-                  console.log(newRandomUsers);
-                  setRandomUsers(newRandomUsers.users);
-                }
+                handleGenerateRandom(e);
               }}
             />
           )}

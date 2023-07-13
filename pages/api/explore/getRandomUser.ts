@@ -1,16 +1,17 @@
 import prisma from "@/lib/prismadb";
 import getCurrentUser from "@/lib/actions/getCurrentUser";
-import { NextResponse } from "next/server";
+import { NextApiRequest, NextApiResponse } from "next";
 
-export async function GET(req: Request) {
-  const currentUser = await getCurrentUser();
-  const usersCount = await prisma.user.count();
-  const skipGenerator = () => {
-    return Math.floor((Math.random() * usersCount) / 2) + 1;
-  };
-  let skip = skipGenerator();
+const skipGenerator = (total: number) => {
+  return Math.floor((Math.random() * total) / 2) + 1;
+};
 
+export default async function GET(req: NextApiRequest, res: NextApiResponse) {
   try {
+    const currentUser = await getCurrentUser();
+    const usersCount = await prisma.user.count();
+
+    const skip = skipGenerator(22);
     const users = await prisma.user.findMany({
       where: {
         id: {
@@ -35,18 +36,12 @@ export async function GET(req: Request) {
       users: users,
       skip: skip,
     };
-    return NextResponse.json(debug, {
-      status: 200,
-    });
+
+    return res.status(200).json(debug);
   } catch (error) {
-    return NextResponse.json(
-      {
-        message: "Unable to generate random users",
-        error,
-      },
-      {
-        status: 400,
-      }
-    );
+    return res.status(400).json({
+      message: "Unable to generate random users",
+      error,
+    });
   }
 }
