@@ -60,7 +60,7 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
 
   return (
     <>
-      <GradiantCard className="mb-8 ml-5 mr-14 mt-4 flex-auto">
+      <div className="mb-8 ml-5 mr-2 mt-4 flex-auto rounded-lg bg-gray-400/5 px-4 py-2">
         <div className="flex flex-row items-center justify-between">
           <div className="mb-3 mt-8 flex flex-row items-center">
             {image && (
@@ -284,7 +284,7 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
             )}
           </div>
         </div>
-      </GradiantCard>
+      </div>
     </>
   );
 };
