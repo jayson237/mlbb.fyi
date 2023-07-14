@@ -8,11 +8,11 @@ import ToasterProvider from "@/components/providers/toaster-provider";
 import Navbar from "@/components/shared/navbar/navbar";
 import { Metadata } from "next";
 
-// export const metadata: Metadata = {
-//   icons: {
-//     icon: `${process.env.NEXTAUTH_URL}/favicon.ico}`,
-//   },
-// };
+export const metadata: Metadata = {
+  icons: {
+    icon: `${process.env.NEXTAUTH_URL}/favicon.ico}`,
+  },
+};
 
 const inter = Inter({ subsets: ["latin"] });
 
