@@ -8,13 +8,22 @@ import Link from "next/link";
 import { Comment } from "@prisma/client";
 import { fetcher } from "@/lib/fetcher-utils";
 
-import { Edit3, MessagesSquare, Reply, Trash2 } from "lucide-react";
+import {
+  ArrowBigDown,
+  ArrowBigUp,
+  Edit3,
+  MessagesSquare,
+  Reply,
+  Trash2,
+} from "lucide-react";
 import DelComment from "./del-comment";
 import EditCommentForm from "./edit-comment-form";
 import DialogFit from "@/components/shared/dialog-fit";
 import ReplyForm from "../reply/reply-form";
 import useMutCom from "@/lib/state/useMutCom";
 import ReplyList from "../reply/reply-list";
+import { toast } from "sonner";
+import LoadingDots from "@/components/shared/icons/loading-dots";
 
 interface CommentBoxProps {
   comment: Comment;
@@ -33,6 +42,15 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
   useEffect(() => {
     togMut.toogleMutate && mutate();
   }, [mutate, togMut]);
+
+  const isLiked = comment?.likes.includes(userId as string);
+  const isDisliked = comment?.dislikes.includes(userId as string);
+
+  const [like, setLike] = useState<boolean>(isLiked);
+  const [dislike, setDislike] = useState<boolean>(isDisliked);
+
+  const [totalVotes, setTotalVotes] = useState<number>(comment.totalVotes);
+  const [loading, setLoading] = useState(false);
 
   const [editActive, setEditActive] = useState<boolean>(false);
   const [isAddingReply, setIsAddingReply] = useState<boolean>(false);
@@ -140,7 +158,153 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
           </div>
         </>
       )}
-      <div className="flex flex-row gap-5">
+      <div className="flex flex-row items-center gap-5">
+        <div className="flex flex-row items-center gap-2">
+          {loading && (
+            <div className="flex">
+              <LoadingDots color="#FAFAFA" />
+            </div>
+          )}
+          {!loading && !like && (
+            <button
+              onClick={async () => {
+                setLoading(true);
+                const fields = {
+                  commentId: comment.id,
+                };
+                const set = await fetch("/explore/stg/api/comLike", {
+                  method: "POST",
+                  body: JSON.stringify(fields),
+                });
+                const msg = await set.json();
+                if (!set.ok) {
+                  toast.error(msg.message);
+                  setLoading(false);
+                } else {
+                  setLoading(false);
+                  setLike(true);
+                  if (dislike) {
+                    setDislike(false);
+                    setTotalVotes(totalVotes + 2);
+                    toast.success(msg.message);
+                  } else {
+                    setTotalVotes(totalVotes + 1);
+                    toast.success(msg.message);
+                  }
+                }
+              }}
+            >
+              <ArrowBigUp
+                size={32}
+                strokeWidth={0.5}
+                className="transition-all ease-in-out hover:text-green-600 hover:duration-300"
+              />
+            </button>
+          )}
+          {!loading && like && (
+            <button
+              onClick={async () => {
+                setLoading(true);
+                const fields = {
+                  commentId: comment.id,
+                };
+                const set = await fetch("/explore/stg/api/comLike", {
+                  method: "POST",
+                  body: JSON.stringify(fields),
+                });
+                const msg = await set.json();
+                if (!set.ok) {
+                  toast.error(msg.message);
+                  setLoading(false);
+                } else {
+                  setLoading(false);
+                  setLike(false);
+                  setTotalVotes(totalVotes - 1);
+                  toast.success(msg.message);
+                }
+              }}
+            >
+              <ArrowBigUp
+                size={32}
+                strokeWidth={0}
+                className="fill-green-600"
+              />
+            </button>
+          )}
+          {!loading && (
+            <p>
+              {totalVotes >= 1000
+                ? `${(totalVotes - (totalVotes % 100)) / 1000}k`
+                : totalVotes}
+            </p>
+          )}
+          {!loading && !dislike && (
+            <button
+              onClick={async () => {
+                setLoading(true);
+                const fields = {
+                  commentId: comment.id,
+                };
+                const set = await fetch("/explore/stg/api/comDislike", {
+                  method: "POST",
+                  body: JSON.stringify(fields),
+                });
+                const msg = await set.json();
+                if (!set.ok) {
+                  toast.error(msg.message);
+                  setLoading(false);
+                } else {
+                  setLoading(false);
+                  setDislike(true);
+                  if (like) {
+                    setLike(false);
+                    setTotalVotes(totalVotes - 2);
+                    toast.success(msg.message);
+                  } else {
+                    setTotalVotes(totalVotes - 1);
+                    toast.success(msg.message);
+                  }
+                }
+              }}
+            >
+              <ArrowBigDown
+                size={32}
+                strokeWidth={0.5}
+                className="transition-all ease-in-out hover:text-red-600 hover:duration-300"
+              />
+            </button>
+          )}
+          {!loading && dislike && (
+            <button
+              onClick={async () => {
+                setLoading(true);
+                const fields = {
+                  commentId: comment.id,
+                };
+                const set = await fetch("/explore/stg/api/comDislike", {
+                  method: "POST",
+                  body: JSON.stringify(fields),
+                });
+                const msg = await set.json();
+                if (!set.ok) {
+                  toast.error(msg.message);
+                  setLoading(false);
+                } else {
+                  setLoading(false);
+                  setDislike(false);
+                  setTotalVotes(totalVotes + 1);
+                  toast.success(msg.message);
+                }
+              }}
+            >
+              <ArrowBigDown
+                size={32}
+                strokeWidth={0}
+                className="fill-red-600"
+              />
+            </button>
+          )}
+        </div>
         <div>
           <button
             className="flex flex-row items-center"
