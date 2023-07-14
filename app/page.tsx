@@ -20,6 +20,7 @@ export const metadata = {
     ],
     locale: "en-US",
     type: "website",
+    icon: "/mlbb.fyi.svg",
   },
   twitter: {
     card: "summary_large_image",
