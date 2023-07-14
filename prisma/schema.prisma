@@ -190,13 +190,16 @@ model Post {
 }
 
 model Comment {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  body      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  userId    String   @db.ObjectId
-  postId    String   @db.ObjectId
-  createdBy String?
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  body       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  userId     String   @db.ObjectId
+  postId     String   @db.ObjectId
+  createdBy  String?
+  likes      String[]
+  dislikes   String[]
+  totalVotes Int      @default(0)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
@@ -205,14 +208,17 @@ model Comment {
 }
 
 model Reply {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  body      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  userId    String   @db.ObjectId
-  commentId String   @db.ObjectId
-  postId    String   @db.ObjectId
-  createdBy String?
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  body       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  userId     String   @db.ObjectId
+  commentId  String   @db.ObjectId
+  postId     String   @db.ObjectId
+  createdBy  String?
+  likes      String[]
+  dislikes   String[]
+  totalVotes Int      @default(0)
 
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)

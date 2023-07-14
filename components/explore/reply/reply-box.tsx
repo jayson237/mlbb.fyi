@@ -4,11 +4,13 @@ import useSWR from "swr";
 import Image from "next/image";
 import Link from "next/link";
 import { Reply } from "@prisma/client";
-import { Edit3, Trash2 } from "lucide-react";
+import { ArrowBigDown, ArrowBigUp, Edit3, Trash2 } from "lucide-react";
 import DialogFit from "@/components/shared/dialog-fit";
 import EditReplyForm from "./edit-reply-form";
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import DelReplyButton from "./del-reply";
+import { toast } from "sonner";
+import LoadingDots from "@/components/shared/icons/loading-dots";
 
 interface ReplyBoxProps {
   reply: Reply;
@@ -20,6 +22,15 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
   const { data: image } = useSWR(["/api/comment/pic", reply.userId], fetcher);
 
   const [editActive, setEditActive] = useState<boolean>(false);
+
+  const isLiked = reply?.likes.includes(userId as string);
+  const isDisliked = reply?.dislikes.includes(userId as string);
+
+  const [like, setLike] = useState<boolean>(isLiked);
+  const [dislike, setDislike] = useState<boolean>(isDisliked);
+
+  const [totalVotes, setTotalVotes] = useState<number>(reply.totalVotes);
+  const [loading, setLoading] = useState(false);
 
   const [expanded, setExpanded] = useState(false);
   const [expandedable, setExpandedable] = useState(false);
@@ -125,6 +136,154 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
             </div>
           </>
         )}
+        <div className="flex flex-row items-center gap-5">
+          <div className="flex flex-row items-center gap-2">
+            {loading && (
+              <div className="flex">
+                <LoadingDots color="#FAFAFA" />
+              </div>
+            )}
+            {!loading && !like && (
+              <button
+                onClick={async () => {
+                  setLoading(true);
+                  const fields = {
+                    replyId: reply.id,
+                  };
+                  const set = await fetch("/explore/stg/api/repLike", {
+                    method: "POST",
+                    body: JSON.stringify(fields),
+                  });
+                  const msg = await set.json();
+                  if (!set.ok) {
+                    toast.error(msg.message);
+                    setLoading(false);
+                  } else {
+                    setLoading(false);
+                    setLike(true);
+                    if (dislike) {
+                      setDislike(false);
+                      setTotalVotes(totalVotes + 2);
+                      toast.success(msg.message);
+                    } else {
+                      setTotalVotes(totalVotes + 1);
+                      toast.success(msg.message);
+                    }
+                  }
+                }}
+              >
+                <ArrowBigUp
+                  size={32}
+                  strokeWidth={0.5}
+                  className="transition-all ease-in-out hover:text-green-600 hover:duration-300"
+                />
+              </button>
+            )}
+            {!loading && like && (
+              <button
+                onClick={async () => {
+                  setLoading(true);
+                  const fields = {
+                    replyId: reply.id,
+                  };
+                  const set = await fetch("/explore/stg/api/repLike", {
+                    method: "POST",
+                    body: JSON.stringify(fields),
+                  });
+                  const msg = await set.json();
+                  if (!set.ok) {
+                    toast.error(msg.message);
+                    setLoading(false);
+                  } else {
+                    setLoading(false);
+                    setLike(false);
+                    setTotalVotes(totalVotes - 1);
+                    toast.success(msg.message);
+                  }
+                }}
+              >
+                <ArrowBigUp
+                  size={32}
+                  strokeWidth={0}
+                  className="fill-green-600"
+                />
+              </button>
+            )}
+            {!loading && (
+              <p>
+                {totalVotes >= 1000
+                  ? `${(totalVotes - (totalVotes % 100)) / 1000}k`
+                  : totalVotes}
+              </p>
+            )}
+            {!loading && !dislike && (
+              <button
+                onClick={async () => {
+                  setLoading(true);
+                  const fields = {
+                    replyId: reply.id,
+                  };
+                  const set = await fetch("/explore/stg/api/repDislike", {
+                    method: "POST",
+                    body: JSON.stringify(fields),
+                  });
+                  const msg = await set.json();
+                  if (!set.ok) {
+                    toast.error(msg.message);
+                    setLoading(false);
+                  } else {
+                    setLoading(false);
+                    setDislike(true);
+                    if (like) {
+                      setLike(false);
+                      setTotalVotes(totalVotes - 2);
+                      toast.success(msg.message);
+                    } else {
+                      setTotalVotes(totalVotes - 1);
+                      toast.success(msg.message);
+                    }
+                  }
+                }}
+              >
+                <ArrowBigDown
+                  size={32}
+                  strokeWidth={0.5}
+                  className="transition-all ease-in-out hover:text-red-600 hover:duration-300"
+                />
+              </button>
+            )}
+            {!loading && dislike && (
+              <button
+                onClick={async () => {
+                  setLoading(true);
+                  const fields = {
+                    replyId: reply.id,
+                  };
+                  const set = await fetch("/explore/stg/api/repDislike", {
+                    method: "POST",
+                    body: JSON.stringify(fields),
+                  });
+                  const msg = await set.json();
+                  if (!set.ok) {
+                    toast.error(msg.message);
+                    setLoading(false);
+                  } else {
+                    setLoading(false);
+                    setDislike(false);
+                    setTotalVotes(totalVotes + 1);
+                    toast.success(msg.message);
+                  }
+                }}
+              >
+                <ArrowBigDown
+                  size={32}
+                  strokeWidth={0}
+                  className="fill-red-600"
+                />
+              </button>
+            )}
+          </div>
+        </div>
       </GradiantCard>
     </>
   );
