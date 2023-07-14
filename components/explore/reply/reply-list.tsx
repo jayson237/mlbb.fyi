@@ -16,7 +16,7 @@ const ReplyList: React.FC<CommentListProps> = ({ userId, replies }) => {
     return null;
   }
 
-  console.log(replies);
+  console.log(userId);
   if (replies) {
     return (
       <ul role="list">
@@ -27,9 +27,6 @@ const ReplyList: React.FC<CommentListProps> = ({ userId, replies }) => {
               commentId={reply.commentId}
               userId={userId}
             />
-            {index !== replies.length - 1 && (
-              <div className="absolute inset-x-[1px] h-0.5 w-full bg-navy-400/30"></div>
-            )}
           </React.Fragment>
         ))}
       </ul>

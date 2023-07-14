@@ -5,8 +5,11 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   const currentUser = await getCurrentUser();
 
-  const { title, message }: { title: string; message: string } =
-    await req.json();
+  const {
+    title,
+    message,
+    image,
+  }: { title: string; message: string; image: string } = await req.json();
 
   const currentPost = await prisma.post.findFirst({
     where: {
@@ -35,6 +38,7 @@ export async function POST(req: Request) {
         create: {
           title: title,
           body: message,
+          image: image,
         },
       },
     },

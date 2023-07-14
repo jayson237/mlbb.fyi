@@ -170,7 +170,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
         </div>
       )}
       {isEnableReplyList && replies && (
-        <ReplyList userId={comment.userId} replies={replies[0]} />
+        <ReplyList userId={userId} replies={replies[0]} />
       )}
     </>
   );

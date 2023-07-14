@@ -2,11 +2,17 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/react";
-import { NextRequest, NextResponse } from "next/server";
 
 import getCurrentUser from "@/lib/actions/getCurrentUser";
 import ToasterProvider from "@/components/providers/toaster-provider";
 import Navbar from "@/components/shared/navbar/navbar";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  icons: {
+    icon: `${process.env.NEXTAUTH_URL}/icon.svg}`,
+  },
+};
 
 const inter = Inter({ subsets: ["latin"] });
 
