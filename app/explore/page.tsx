@@ -4,10 +4,10 @@ import prisma from "@/lib/prismadb";
 import RandomUserContainer from "@/components/explore/random-user-container";
 import PostListContainer from "@/components/explore/post/post-list-container";
 
-async function getRandomUser() {
+async function getInitialRandomUsers() {
   const currentUser = await getCurrentUser();
   const productsCount = await prisma.user.count();
-  const skip = Math.floor((Math.random() * productsCount) / 2);
+  const skip = Math.floor((Math.random() * productsCount) / 2) + 1;
 
   const users = await prisma.user.findMany({
     where: {
@@ -35,7 +35,7 @@ async function getRandomUser() {
 
 export default async function ExplorePage() {
   const currentUser = await getCurrentUser();
-  const randomUsers = await getRandomUser();
+  const randomUsers = await getInitialRandomUsers();
 
   return (
     <div className="relative flex w-full gap-1.5">

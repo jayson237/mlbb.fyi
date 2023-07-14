@@ -24,7 +24,7 @@ const WikiTabList = [
   //   href: "/wiki/draft-pick",
   // },
   {
-    name: "Patch",
+    name: "Patches",
     href: "/wiki/patches",
   },
 ];

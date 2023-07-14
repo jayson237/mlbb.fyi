@@ -19,14 +19,38 @@ def get_tournament_stats():
     except Exception as e:
         print(f"Failed to fetch tournament stats: {e}")
 
-tournament_stats = get_tournament_stats()
+def get_heroes():
+    try:
+        client = MongoClient('mongodb+srv://dev:ApT8FJOOl9W4FLLF@mlbbfyi.egxz5i5.mongodb.net/mlbb?retryWrites=true&w=majority')
+        db = client['mlbb']     
+        stats = db['Hero'].find()
+        return list(stats)
+    except Exception as e:
+        print(f"Failed to fetch tournament stats: {e}")
 
-# Read the "index.json" file to obtain hero tiers
-with open("index.json") as file:
-    data = json.load(file)
+
+def update_heroes():
+    try:
+        client = MongoClient('mongodb+srv://dev:ApT8FJOOl9W4FLLF@mlbbfyi.egxz5i5.mongodb.net/mlbb?retryWrites=true&w=majority')
+        db = client['mlbb']
+        for entry in filtered_data:
+            hero_name = entry['name']
+            tier = entry['tier']
+            db['Hero'].update_one(
+                {'name': hero_name},
+                {'$set': {'tier': tier}}
+            )
+        print("Hero tiers updated successfully.")
+        
+    except Exception as e:
+        print(f"Failed to update hero tiers: {e}")
+
+
+tournament_stats = get_tournament_stats()
+heroes = get_heroes()
 
 hero_tiers = {}
-for entry in data:
+for entry in heroes:
     hero_name = entry["name"]
     tier = entry["tier"]
     hero_tiers[hero_name] = tier
@@ -182,8 +206,11 @@ for hero, tier in filtered_tier_list.items():
 
 filtered_data = [{"name": hero, "tier": tier} for hero, tier in tier_list.items() if hero != "Yi Sun-Shin"]
 
-with open('index.json', 'w') as file:
-    json.dump(filtered_data, file, indent=2)
+# Call the update_heroes function to update the Hero collection
+update_heroes()
+
+# with open('index.json', 'w') as file:
+#     json.dump(filtered_data, file, indent=2)
 
 # Calculate evaluation metrics
 accuracy = accuracy_score(y_test, y_pred)

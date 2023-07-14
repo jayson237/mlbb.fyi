@@ -1,4 +1,4 @@
-interface DateContainerProps {
+interface TimeStampProps {
   date: string[];
   time: string[];
 }
@@ -31,7 +31,6 @@ function getDifference(date: string[], currDate: string[]) {
     n2 += monthDays[i];
   }
   n2 += countLeapYears(Number(currDate[0]), Number(currDate[2]));
-
   return n2 - n1;
 }
 
@@ -42,7 +41,7 @@ function getTimeDiff(
   minute1: string,
   minute2: string
 ) {
-  console.log(hour1, hour2, minute1, minute2);
+  // console.log(hour1, hour2, minute1, minute2);
   let hourDiff = Number(hour2) - Number(hour1) - 1;
 
   // difference between minutes
@@ -76,8 +75,13 @@ function handleTimeZone(time: string[], region: string) {
   return String(result);
 }
 
-const DateContainer: React.FC<DateContainerProps> = ({ date, time }) => {
-  const currDate = new Date().toLocaleDateString().split("/");
+const TimeStamp: React.FC<TimeStampProps> = ({ date, time }) => {
+  const currentDate = new Date();
+  const currDate = [
+    (currentDate.getMonth() + 1).toString(),
+    currentDate.getDate().toString(),
+    currentDate.getFullYear().toString(),
+  ];
   const currTime = new Date().toTimeString().split(":");
   const region = currTime[2].split(" ");
   time[0] = handleTimeZone(time, region[1]);
@@ -133,4 +137,4 @@ const DateContainer: React.FC<DateContainerProps> = ({ date, time }) => {
   );
 };
 
-export default DateContainer;
+export default TimeStamp;

@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/tier-script",
+      "schedule": "0 0 * * *"
+    }
+  ]
+}
