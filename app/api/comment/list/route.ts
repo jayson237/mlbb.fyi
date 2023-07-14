@@ -10,7 +10,7 @@ export async function POST(req: Request) {
         postId: data,
       },
       orderBy: {
-        createdAt: "desc",
+        totalVotes: "desc",
       },
     });
 
