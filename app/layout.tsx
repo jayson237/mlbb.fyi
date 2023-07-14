@@ -10,7 +10,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   icons: {
-    icon: `${process.env.NEXTAUTH_URL}/icon.png}`,
+    icon: `${process.env.NEXTAUTH_URL}/favicon.ico}`,
   },
 };
 
