@@ -56,6 +56,9 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
   const [isAddingReply, setIsAddingReply] = useState<boolean>(false);
   const [isEnableReplyList, setIsEnableReplyList] = useState<boolean>(false);
 
+  const [isAddReplyHovered, setIsAddReplyHovered] = useState(false);
+  const [isReplyListShowedHovered, setReplyListShowedHovered] = useState(false);
+
   const [expanded, setExpanded] = useState(false);
   const [expandedable, setExpandedable] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -79,6 +82,14 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
 
   const closeEdit = () => {
     setEditActive(false);
+  };
+
+  const handleAddReplyHover = () => {
+    setIsAddReplyHovered(!isAddReplyHovered);
+  };
+
+  const handleReplyListShowedHover = () => {
+    setReplyListShowedHovered(!isReplyListShowedHovered);
   };
 
   return (
@@ -309,11 +320,22 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
           <button
             className="flex flex-row items-center"
             onClick={() => setIsEnableReplyList(!isEnableReplyList)}
+            onMouseEnter={handleReplyListShowedHover}
+            onMouseLeave={handleReplyListShowedHover}
           >
-            <MessagesSquare className="mr-2 h-5 w-5" />
+            <MessagesSquare
+              className={`mr-2 h-5 w-5 ${
+                isReplyListShowedHovered ? "text-navy-400" : ""
+              }`}
+            />
             {replies && (
-              <p className="text-sm">
-                Show {replies[1]} {replies[1] === 1 ? "reply" : "replies"}
+              <p
+                className={`text-sm ${
+                  isReplyListShowedHovered ? "text-navy-400" : ""
+                }`}
+              >
+                {isEnableReplyList ? "Unshow" : "Show"} {replies[1]}{" "}
+                {replies[1] === 1 ? "reply" : "replies"}
               </p>
             )}
           </button>
@@ -322,9 +344,19 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
           <button
             className="flex flex-row items-center"
             onClick={() => setIsAddingReply(!isAddingReply)}
+            onMouseEnter={handleAddReplyHover}
+            onMouseLeave={handleAddReplyHover}
           >
-            <Reply className="mr-2 h-5 w-5" />
-            {<p className="text-sm">Reply</p>}
+            <Reply
+              className={`mr-2 h-5 w-5 ${
+                isAddReplyHovered ? "text-navy-400" : ""
+              }`}
+            />
+            <p
+              className={`text-sm ${isAddReplyHovered ? "text-navy-400" : ""}`}
+            >
+              Reply
+            </p>
           </button>
         </div>
       </div>
