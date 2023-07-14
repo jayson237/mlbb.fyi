@@ -17,6 +17,7 @@ export default async function getHeroStats() {
     }
     return data;
   } catch (error) {
+    console.log("Error", error);
     return null;
   }
 }

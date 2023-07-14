@@ -165,7 +165,7 @@ export default function HeroFyi({
                     Winrate
                   </p>
                   <p className="font-sat text-[12px] font-semibold sm:text-[20px]">
-                    {heroStats.win}
+                    {heroStats.win || "0.00%"}
                   </p>
                 </div>
                 <div className="flex flex-col">
@@ -173,13 +173,13 @@ export default function HeroFyi({
                     Pick
                   </p>
                   <p className="font-sat text-[12px] font-semibold sm:text-[20px]">
-                    {heroStats.use}
+                    {heroStats.use || "0.00%"}
                   </p>
                 </div>
                 <div className="flex flex-col">
                   <p className="font-heading text-[12px] sm:text-[16px]">Ban</p>
                   <p className="font-sat text-[12px] font-semibold sm:text-[20px]">
-                    {heroStats.ban}
+                    {heroStats.ban || "0.00%"}
                   </p>
                 </div>
               </div>
