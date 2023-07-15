@@ -56,6 +56,18 @@ model HeroDetails {
   hero           Hero                @relation(fields: [heroId], references: [id])
 }
 
+type Stats {
+  win String?
+  use String?
+  ban String?
+}
+
+type HeroStats {
+  all    Stats
+  mythic Stats
+  glory  Stats
+}
+
 model Hero {
   id      String       @id @default(auto()) @map("_id") @db.ObjectId
   name    String       @unique
@@ -63,17 +75,8 @@ model Hero {
   heroId  Int          @unique
   tier    String
   role    String[]
+  stats   HeroStats
   details HeroDetails?
-}
-
-model MlbbAcc {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  accId     String? @unique
-  accServer String?
-  nickname  String?
-  userId    String? @db.ObjectId
-
-  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 type PickStats {
@@ -100,6 +103,16 @@ model TourneyStats {
   id         String       @id @default(auto()) @map("_id") @db.ObjectId
   tournament String
   data       PickedHero[]
+}
+
+model MlbbAcc {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  accId     String? @unique
+  accServer String?
+  nickname  String?
+  userId    String? @db.ObjectId
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Account {
@@ -190,13 +203,16 @@ model Post {
 }
 
 model Comment {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  body      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  userId    String   @db.ObjectId
-  postId    String   @db.ObjectId
-  createdBy String?
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  body       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  userId     String   @db.ObjectId
+  postId     String   @db.ObjectId
+  createdBy  String?
+  likes      String[]
+  dislikes   String[]
+  totalVotes Int      @default(0)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
@@ -205,14 +221,17 @@ model Comment {
 }
 
 model Reply {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  body      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  userId    String   @db.ObjectId
-  commentId String   @db.ObjectId
-  postId    String   @db.ObjectId
-  createdBy String?
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  body       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  userId     String   @db.ObjectId
+  commentId  String   @db.ObjectId
+  postId     String   @db.ObjectId
+  createdBy  String?
+  likes      String[]
+  dislikes   String[]
+  totalVotes Int      @default(0)
 
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)

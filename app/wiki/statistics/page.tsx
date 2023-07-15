@@ -1,11 +1,11 @@
-import getHeroStats from "@/lib/actions/getHeroStats";
 import getTournamentStats from "@/lib/actions/getTournamentStats";
+import getHeroes from "@/lib/actions/getHeroes";
 
 import { TabsContent } from "@/components/shared/tabs";
 import StatsContainer from "@/components/wiki/statistics/stats-container";
 
 async function StatisticsPage() {
-  const allStats = await getHeroStats();
+  const heroes = await getHeroes();
   const tourneyStats = await getTournamentStats();
 
   return (
@@ -13,7 +13,7 @@ async function StatisticsPage() {
       value="statistics"
       className="flex w-full flex-col gap-5 md:flex-row"
     >
-      <StatsContainer serverStats={allStats} tourneyStats={tourneyStats} />
+      <StatsContainer heroes={heroes} tourneyStats={tourneyStats} />
     </TabsContent>
   );
 }

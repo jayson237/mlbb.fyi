@@ -1,4 +1,3 @@
-import getHeroStats from "@/lib/actions/getHeroStats";
 import getHeroBuild from "@/lib/actions/getHeroBuild";
 import getHeroSpell from "@/lib/actions/getHeroSpell";
 import getHeroEmblem from "@/lib/actions/getHeroEmblem";
@@ -54,11 +53,6 @@ export default async function HeroPage({
     return <Redirect destination="not-found" />;
   }
 
-  const overallStats = await getHeroStats();
-  const currHeroStats = overallStats
-    ? overallStats[0]?.find((item: any) => item.name === isExistingHero.name)
-    : [];
-
   const [heroBuild, heroSpell, heroEmblem, heroCounter, heroCorr] =
     await Promise.all([
       getHeroBuild(isExistingHero.id),
@@ -93,7 +87,6 @@ export default async function HeroPage({
   return (
     <HeroFyi
       hero={isExistingHero}
-      heroStats={currHeroStats}
       heroBuild={heroBuild.data?.items || []}
       heroSpell={heroSpell.data?.spells || []}
       heroEmblem={heroEmblem.data?.emblems || []}
