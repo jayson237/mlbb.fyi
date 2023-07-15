@@ -12,8 +12,7 @@ import { SafeUser } from "@/types";
 import { fetcher } from "@/lib/fetcher-utils";
 import useSWR from "swr";
 import useMutCom from "@/lib/state/useMutCom";
-import { useRouter } from "next/navigation";
-import TimeStamp from "./time-stamp";
+import TimeStamp from "../../shared/time-stamp";
 
 interface PostBoxProps {
   post: Post;
