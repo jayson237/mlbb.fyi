@@ -35,6 +35,7 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
 
   const isLiked = post?.likes.includes(currUser?.id as string);
   const isDisliked = post?.dislikes.includes(currUser?.id as string);
+  const isStarred = currUser?.favourite.includes(post.id as string);
 
   const [like, setLike] = useState<boolean>(isLiked);
   const [dislike, setDislike] = useState<boolean>(isDisliked);
@@ -67,7 +68,11 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
           </Link>
         </div>
         <div className="mt-4 flex flex-row items-center">
-          <Star size={16} strokeWidth={0.5} />
+          {!isStarred ? (
+            <Star size={16} strokeWidth={0.5} />
+          ) : (
+            <Star size={16} strokeWidth={0.5} className="fill-yellow-300" />
+          )}
           <p className="ml-2 mr-8 flex">
             {post.favourites.length >= 1000
               ? `${
@@ -76,6 +81,7 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
                 }k`
               : post.favourites.length}
           </p>
+
           <MessageCircle size={16} strokeWidth={0.5} />
           {comments && (
             <p className="ml-2 flex">
