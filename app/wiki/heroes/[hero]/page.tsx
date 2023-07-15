@@ -1,4 +1,3 @@
-import getHeroStats from "@/lib/actions/getHeroStats";
 import getHeroBuild from "@/lib/actions/getHeroBuild";
 import getHeroSpell from "@/lib/actions/getHeroSpell";
 import getHeroEmblem from "@/lib/actions/getHeroEmblem";
@@ -38,7 +37,7 @@ export default async function HeroPage({
 }: {
   params: { hero: string };
 }) {
-  const currentUser = await getCurrentUser();
+  // const currentUser = await getCurrentUser();
   const decodedString = decodeURIComponent(params?.hero.replace(/\+/g, " "));
   const parseHero =
     decodedString === "popol and kupa"
@@ -54,11 +53,6 @@ export default async function HeroPage({
     return <Redirect destination="not-found" />;
   }
 
-  const overallStats = await getHeroStats();
-  const currHeroStats = overallStats
-    ? overallStats[0]?.find((item: any) => item.name === isExistingHero.name)
-    : [];
-
   const [heroBuild, heroSpell, heroEmblem, heroCounter, heroCorr] =
     await Promise.all([
       getHeroBuild(isExistingHero.id),
@@ -70,39 +64,46 @@ export default async function HeroPage({
 
   const strongAgainst = heroCorr.data?.map((item: any) => item.heroId) || [];
 
-  let isBoundProfile = null;
-  let dataAcc = null;
-  let classicIndex = -1;
-  let rankedIndex = -1;
+  // let isBoundProfile = null;
+  // let dataAcc = null;
+  // let classicIndex = -1;
+  // let rankedIndex = -1;
 
-  if (currentUser) {
-    isBoundProfile = await isUserBound(currentUser.username || "");
-    if (isBoundProfile) {
-      dataAcc = await getMlbbData(isBoundProfile.accId);
-      classicIndex = await findIndexById(
-        dataAcc.matchPlayed[0]?.data || [],
-        isExistingHero.heroId.toString()
-      );
-      rankedIndex = await findIndexById(
-        dataAcc.matchPlayed[1]?.data || [],
-        isExistingHero.heroId.toString()
-      );
-    }
-  }
+  // if (currentUser) {
+  //   isBoundProfile = await isUserBound(currentUser.username || "");
+  //   if (isBoundProfile) {
+  //     dataAcc = await getMlbbData(isBoundProfile.accId);
+  //     classicIndex = await findIndexById(
+  //       dataAcc.matchPlayed[0]?.data || [],
+  //       isExistingHero.heroId.toString()
+  //     );
+  //     rankedIndex = await findIndexById(
+  //       dataAcc.matchPlayed[1]?.data || [],
+  //       isExistingHero.heroId.toString()
+  //     );
+  //   }
+  // }
 
   return (
     <HeroFyi
       hero={isExistingHero}
-      heroStats={currHeroStats}
       heroBuild={heroBuild.data?.items || []}
       heroSpell={heroSpell.data?.spells || []}
       heroEmblem={heroEmblem.data?.emblems || []}
       heroWeakAgainst={heroCounter.data?.counters || []}
       heroStrongAgainst={strongAgainst}
-      matches={dataAcc?.matchPlayed || []}
-      classicIndex={classicIndex !== -1 ? classicIndex : 0}
-      rankedIndex={rankedIndex !== -1 ? rankedIndex : 0}
-      showWR={isBoundProfile && currentUser ? true : false}
     />
+    // <HeroFyi
+    //   hero={isExistingHero}
+    //   heroBuild={heroBuild.data?.items || []}
+    //   heroSpell={heroSpell.data?.spells || []}
+    //   heroEmblem={heroEmblem.data?.emblems || []}
+    //   heroWeakAgainst={heroCounter.data?.counters || []}
+    //   heroStrongAgainst={strongAgainst}
+    //   matches={dataAcc?.matchPlayed || []}
+    //   classicIndex={classicIndex !== -1 ? classicIndex : 0}
+    //   rankedIndex={rankedIndex !== -1 ? rankedIndex : 0}
+    //   showWR={isBoundProfile && currentUser ? true : false}
+    // />
   );
 }

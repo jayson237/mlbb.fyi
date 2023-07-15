@@ -12,27 +12,26 @@ import MatchInsights from "@/components/profile/profile-stats/match-insights";
 
 interface HeroFyiContainer {
   hero: Hero | null;
-  heroStats: { name: string; use: string; ban: string; win: string };
   heroBuild: Object[] | null;
   heroSpell: Object[] | null;
   heroEmblem: Object[] | null;
   heroWeakAgainst?: Object[] | null;
   heroStrongAgainst?: Object[] | null;
-  matches?: {
-    mode: string;
-    total: number;
-    winrate: number;
-    data: {
-      id: string;
-      total: number;
-      win: number;
-      name: string;
-      _id: string;
-    }[];
-  }[];
-  classicIndex?: number;
-  rankedIndex?: number;
-  showWR: boolean;
+  // matches?: {
+  //   mode: string;
+  //   total: number;
+  //   winrate: number;
+  //   data: {
+  //     id: string;
+  //     total: number;
+  //     win: number;
+  //     name: string;
+  //     _id: string;
+  //   }[];
+  // }[];
+  // classicIndex?: number;
+  // rankedIndex?: number;
+  // showWR: boolean;
 }
 
 export default function HeroFyi({
@@ -138,7 +137,7 @@ export default function HeroFyi({
                     />
                   )}
                 </div>
-                <div className="text-md mb-2 rounded-full bg-navy-600 px-2 font-semibold ">
+                <div className="text-md mb-1 rounded-full bg-navy-600 px-2 font-semibold ">
                   <p>{hero?.tier}</p>
                 </div>
               </div>
@@ -165,7 +164,7 @@ export default function HeroFyi({
                     Winrate
                   </p>
                   <p className="font-sat text-[12px] font-semibold sm:text-[20px]">
-                    {heroStats.win || "0.00%"}
+                    {hero?.stats.all.win || "0.00%"}
                   </p>
                 </div>
                 <div className="flex flex-col">
@@ -173,13 +172,13 @@ export default function HeroFyi({
                     Pick
                   </p>
                   <p className="font-sat text-[12px] font-semibold sm:text-[20px]">
-                    {heroStats.use || "0.00%"}
+                    {hero?.stats.all.use || "0.00%"}
                   </p>
                 </div>
                 <div className="flex flex-col">
                   <p className="font-heading text-[12px] sm:text-[16px]">Ban</p>
                   <p className="font-sat text-[12px] font-semibold sm:text-[20px]">
-                    {heroStats.ban || "0.00%"}
+                    {hero?.stats.all.ban || "0.00%"}
                   </p>
                 </div>
               </div>
@@ -297,7 +296,7 @@ export default function HeroFyi({
         </GradiantCard>
       </div>
 
-      {showWR && (
+      {/* {showWR && (
         <div className="mt-1.5 flex flex-col gap-y-1.5 sm:flex-row sm:gap-x-1.5">
           <MatchInsights
             title={`Your classic ${heroDetails?.heroName} matches`}
@@ -320,7 +319,7 @@ export default function HeroFyi({
             isHorizontal={true}
           />
         </div>
-      )}
+      )} */}
 
       <GradiantCard className="mt-1.5 h-fit w-full" variant="clean">
         {heroStrongAgainst.length !== 0 && (

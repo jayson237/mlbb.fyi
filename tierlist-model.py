@@ -55,6 +55,16 @@ for entry in heroes:
     tier = entry["tier"]
     hero_tiers[hero_name] = tier
 
+# For jsons
+# with open("index.json") as file:
+#     mythic_data = json.load(file)
+
+# hero_tiers = {}
+# for entry in mythic_data:
+#     hero_name = entry["name"]
+#     tier = entry["tier"]
+#     hero_tiers[hero_name] = tier
+
 
 # Initialize empty lists to store data
 heroes = []
