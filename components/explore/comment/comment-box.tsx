@@ -152,7 +152,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
                       title="Delete Post"
                       triggerChild={
                         <div className="flex flex-row items-center gap-2 px-4 py-2 hover:text-red-400 hover:duration-300">
-                          <Trash2 className="ease-in-ou h-5 w-5" />
+                          <Trash2 className="h-5 w-5 ease-in-out" />
                           <p>Delete</p>
                         </div>
                       }
