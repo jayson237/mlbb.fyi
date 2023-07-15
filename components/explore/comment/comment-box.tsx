@@ -84,14 +84,6 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
     setEditActive(false);
   };
 
-  const handleAddReplyHover = () => {
-    setIsAddReplyHovered(!isAddReplyHovered);
-  };
-
-  const handleReplyListShowedHover = () => {
-    setReplyListShowedHovered(!isReplyListShowedHovered);
-  };
-
   return (
     <>
       <div className="flex flex-row items-center justify-between">
@@ -169,7 +161,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
           </div>
         </>
       )}
-      <div className="flex flex-row items-center gap-5">
+      <div className="mb-4 flex flex-row items-center gap-5 ">
         <div className="flex flex-row items-center gap-2">
           {loading && (
             <div className="flex">
@@ -316,47 +308,28 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
             </button>
           )}
         </div>
-        <div>
-          <button
-            className="flex flex-row items-center"
-            onClick={() => setIsEnableReplyList(!isEnableReplyList)}
-            onMouseEnter={handleReplyListShowedHover}
-            onMouseLeave={handleReplyListShowedHover}
-          >
-            <MessagesSquare
-              className={`mr-2 h-5 w-5 ${
-                isReplyListShowedHovered ? "text-navy-400" : ""
-              }`}
-            />
-            {replies && (
-              <p
-                className={`text-sm ${
-                  isReplyListShowedHovered ? "text-navy-400" : ""
-                }`}
-              >
+        {replies && replies[1] !== 0 && (
+          <div>
+            <button
+              className="flex cursor-pointer flex-row items-center transition-all ease-in-out hover:text-navy-300 hover:duration-300"
+              onClick={() => setIsEnableReplyList(!isEnableReplyList)}
+            >
+              <MessagesSquare className="mr-2 h-5 w-5" />
+
+              <p className="text-sm">
                 {isEnableReplyList ? "Unshow" : "Show"} {replies[1]}{" "}
                 {replies[1] === 1 ? "reply" : "replies"}
               </p>
-            )}
-          </button>
-        </div>
+            </button>
+          </div>
+        )}
         <div>
           <button
-            className="flex flex-row items-center"
+            className="flex cursor-pointer flex-row items-center transition-all ease-in-out hover:text-navy-300 hover:duration-300"
             onClick={() => setIsAddingReply(!isAddingReply)}
-            onMouseEnter={handleAddReplyHover}
-            onMouseLeave={handleAddReplyHover}
           >
-            <Reply
-              className={`mr-2 h-5 w-5 ${
-                isAddReplyHovered ? "text-navy-400" : ""
-              }`}
-            />
-            <p
-              className={`text-sm ${isAddReplyHovered ? "text-navy-400" : ""}`}
-            >
-              Reply
-            </p>
+            <Reply className="mr-2 h-5 w-5" />
+            <p className="text-sm">Reply</p>
           </button>
         </div>
       </div>
