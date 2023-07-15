@@ -120,7 +120,9 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
           />
         </div>
       )}
-      {selectedIndex === -1 && <UserList filter={filter} />}
+      {selectedIndex === -1 && (
+        <UserList filter={filter} currentUser={currentUser} />
+      )}
     </div>
   );
 };

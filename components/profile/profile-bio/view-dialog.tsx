@@ -45,7 +45,9 @@ const ViewDialog: React.FC<ViewDialogProps> = ({ baseInfo }) => {
           title="Following"
           triggerChild={
             <div className="flex cursor-pointer flex-col rounded-lg px-3 text-center duration-500 hover:bg-zinc-50/0">
-              <p className="text-xl">{baseInfo?.following.length}</p>
+              <p className="font-sat text-xl font-semibold">
+                {baseInfo?.following.length}
+              </p>
               <p className="text-[12px]">FOLLOWING</p>
             </div>
           }
@@ -93,8 +95,10 @@ const ViewDialog: React.FC<ViewDialogProps> = ({ baseInfo }) => {
                 setFollowers(data);
               }}
             >
-              <p className="text-xl">{baseInfo?.followers.length}</p>
-              <p className="text-[12px]">FOLLOWERS</p>
+              <p className="font-sat text-xl font-semibold">
+                {baseInfo?.followers.length}
+              </p>
+              <p className="text-[12px]">FOLLOWER</p>
             </div>
           }
         >
