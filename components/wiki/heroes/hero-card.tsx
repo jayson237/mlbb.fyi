@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const HeroCard = ({ hero, onClick }: { hero: Hero; onClick: () => void }) => {
   return (
-    <div className="w-fit cursor-pointer p-1.5" onClick={onClick}>
+    <div className="w-fit cursor-pointer p-1.5 " onClick={onClick}>
       <div className="relative h-32 w-24 overflow-hidden rounded-lg">
         <Image
           src={
@@ -16,7 +16,7 @@ const HeroCard = ({ hero, onClick }: { hero: Hero; onClick: () => void }) => {
           alt={hero.name}
           width={96}
           height={128}
-          className="h-[128px] w-[96px] overflow-hidden rounded-lg bg-cover bg-top bg-no-repeat"
+          className="h-[128px] w-[96px] overflow-hidden rounded-lg bg-cover bg-top bg-no-repeat ease-in-out hover:opacity-50 hover:duration-300"
           loading="lazy"
         />
       </div>

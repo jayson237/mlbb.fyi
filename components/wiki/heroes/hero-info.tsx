@@ -17,21 +17,21 @@ interface HeroFyiContainer {
   heroEmblem: Object[] | null;
   heroWeakAgainst?: Object[] | null;
   heroStrongAgainst?: Object[] | null;
-  matches?: {
-    mode: string;
-    total: number;
-    winrate: number;
-    data: {
-      id: string;
-      total: number;
-      win: number;
-      name: string;
-      _id: string;
-    }[];
-  }[];
-  classicIndex?: number;
-  rankedIndex?: number;
-  showWR: boolean;
+  // matches?: {
+  //   mode: string;
+  //   total: number;
+  //   winrate: number;
+  //   data: {
+  //     id: string;
+  //     total: number;
+  //     win: number;
+  //     name: string;
+  //     _id: string;
+  //   }[];
+  // }[];
+  // classicIndex?: number;
+  // rankedIndex?: number;
+  // showWR: boolean;
 }
 
 export default function HeroFyi({
@@ -296,7 +296,7 @@ export default function HeroFyi({
         </GradiantCard>
       </div>
 
-      {showWR && (
+      {/* {showWR && (
         <div className="mt-1.5 flex flex-col gap-y-1.5 sm:flex-row sm:gap-x-1.5">
           <MatchInsights
             title={`Your classic ${heroDetails?.heroName} matches`}
@@ -319,7 +319,7 @@ export default function HeroFyi({
             isHorizontal={true}
           />
         </div>
-      )}
+      )} */}
 
       <GradiantCard className="mt-1.5 h-fit w-full" variant="clean">
         {heroStrongAgainst.length !== 0 && (
