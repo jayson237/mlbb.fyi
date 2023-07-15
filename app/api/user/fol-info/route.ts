@@ -34,6 +34,7 @@ export async function GET(req: Request) {
               name: true,
               username: true,
               image: true,
+              id: true,
             },
           })
           .then((res) => {
@@ -68,6 +69,7 @@ export async function GET(req: Request) {
               name: true,
               username: true,
               image: true,
+              id: true,
             },
           })
           .then((res) => {
