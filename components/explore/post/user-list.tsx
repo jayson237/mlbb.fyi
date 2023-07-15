@@ -72,7 +72,7 @@ const UserList: React.FC<UserListProps> = ({ filter }) => {
                     alt={user.name as string}
                     width={48}
                     height={48}
-                    className="h-24 w-24 rounded-full"
+                    className="mr-2 h-24 w-24 rounded-full"
                   />
                   <div className="-space-y-1">
                     <Link
