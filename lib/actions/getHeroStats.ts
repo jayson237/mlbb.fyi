@@ -1,6 +1,7 @@
 export default async function getHeroStats() {
   try {
-    const types = [0, 1, 2];
+    // const types = [0, 1, 2];
+    const types = [0];
     const data = [];
 
     for (const type of types) {
@@ -15,6 +16,7 @@ export default async function getHeroStats() {
       const responseData = await response.json();
       data.push(responseData.data.data);
     }
+    console.log(data);
     return data;
   } catch (error) {
     console.log("Error", error);
