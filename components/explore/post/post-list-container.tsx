@@ -15,16 +15,16 @@ interface PostListContainerProps {
 
 const ExploreTabList = [
   {
-    name: "Top Votes",
-    mode: "top",
-  },
-  {
     name: "Recent",
     mode: "recent",
   },
   {
     name: "Following",
     mode: "follow",
+  },
+  {
+    name: "Top Votes",
+    mode: "top",
   },
 ];
 
@@ -34,8 +34,8 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
   const [filter, setFilter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(-2);
-  const [selectedSortMode, setSelectedSortMode] = useState("top");
-  const [selectedTab, setSelectedTab] = useState("Top Votes");
+  const [selectedSortMode, setSelectedSortMode] = useState("recent");
+  const [selectedTab, setSelectedTab] = useState("Recent");
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedIndex = Number(event.target.value);
