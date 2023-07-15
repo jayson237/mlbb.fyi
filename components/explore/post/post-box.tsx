@@ -60,6 +60,9 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
         </Link>
         <div className="flex flex-row items-center gap-1">
           <TimeStamp date={date.split("-")} time={time.split(":")} />
+          <p className="text-xs mt-2 truncate leading-5 text-gray-500 ease-in-out">
+            by
+          </p>
           <Link href={`/profile/${post.createdBy}/statistics`}>
             <p className="text-xs mt-2 truncate leading-5 text-gray-500 ease-in-out hover:text-navy-300 hover:underline">
               {post.createdBy}

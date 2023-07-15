@@ -40,7 +40,6 @@ const PostContent: React.FC<PostContentProp> = ({
   const paragraphRef = useRef<HTMLParagraphElement>(null);
 
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   function isExpandable(): boolean | undefined {
     if (containerRef.current && paragraphRef.current) {
@@ -67,23 +66,6 @@ const PostContent: React.FC<PostContentProp> = ({
     setIsOpen(!isOpen);
   };
 
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node)
-    ) {
-      setIsOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
   return (
     <GradiantCard className="mb-1.5 grow" variant="clean">
       {editActive ? (
@@ -93,54 +75,53 @@ const PostContent: React.FC<PostContentProp> = ({
           <div className="flex flex-col">
             <div className="flex flex-row items-start justify-between">
               <p className="font-heading text-3xl">{post?.title}</p>
-              {currUser && currUser.username === user?.username && (
-                <div className="mt-3 flex cursor-pointer flex-row">
-                  <div
-                    className="relative inline-block text-left"
-                    ref={dropdownRef}
-                  >
-                    <button
-                      type="button"
-                      className="flex h-5 w-5 items-center justify-center rounded-full hover:text-navy-500 focus:outline-none"
-                      onClick={handleClick}
-                    >
-                      <MoreVertical />
-                    </button>
-                    {isOpen && !editActive && (
-                      <div className="absolute right-0 mt-2 w-40 origin-top-right ">
-                        <div
-                          className="rounded-lg bg-gray-400/5 py-1"
-                          role="none"
-                        >
-                          <button
-                            className="block px-4 py-2 hover:text-navy-400 hover:duration-300"
-                            onClick={() => {
-                              setEditActive(!editActive);
-                              setIsOpen(!isOpen);
-                            }}
+              {currUser &&
+                currUser.username === user?.username &&
+                !editActive && (
+                  <div className="mt-3 flex cursor-pointer flex-row">
+                    <div className="relative inline-block text-left">
+                      <button
+                        type="button"
+                        className="flex h-5 w-5 items-center justify-center rounded-full hover:text-navy-500 focus:outline-none"
+                        onClick={handleClick}
+                      >
+                        <MoreVertical />
+                      </button>
+                      {isOpen && (
+                        <div className="absolute right-0 mt-2 w-40 origin-top-right ">
+                          <div
+                            className="rounded-lg bg-gray-400/5 py-1"
+                            role="none"
                           >
-                            <div className="flex flex-row items-center gap-2">
-                              <Edit3 strokeWidth={2} className="h-5 w-5" />
-                              <p>Edit</p>
-                            </div>
-                          </button>
-                          <DialogFit
-                            title="Delete Post"
-                            triggerChild={
-                              <div className="flex flex-row items-center gap-2 px-4 py-2 hover:text-red-400 hover:duration-300">
-                                <Trash2 className="ease-in-ou h-5 w-5" />
-                                <p>Delete</p>
+                            <button
+                              className="block px-4 py-2 hover:text-navy-400 hover:duration-300"
+                              onClick={() => {
+                                setEditActive(!editActive);
+                                setIsOpen(!isOpen);
+                              }}
+                            >
+                              <div className="flex flex-row items-center gap-2">
+                                <Edit3 strokeWidth={2} className="h-5 w-5" />
+                                <p>Edit</p>
                               </div>
-                            }
-                          >
-                            <DeletePost postId={post.id} />
-                          </DialogFit>
+                            </button>
+                            <DialogFit
+                              title="Delete Post"
+                              triggerChild={
+                                <div className="flex flex-row items-center gap-2 px-4 py-2 hover:text-red-400 hover:duration-300">
+                                  <Trash2 className="ease-in-ou h-5 w-5" />
+                                  <p>Delete</p>
+                                </div>
+                              }
+                            >
+                              <DeletePost postId={post.id} />
+                            </DialogFit>
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
               {currUser &&
                 currUser.username !== user?.username &&
                 !favourite && (

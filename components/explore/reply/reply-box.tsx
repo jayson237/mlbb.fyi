@@ -4,13 +4,20 @@ import useSWR from "swr";
 import Image from "next/image";
 import Link from "next/link";
 import { Reply } from "@prisma/client";
-import { ArrowBigDown, ArrowBigUp, Edit3, Trash2 } from "lucide-react";
+import {
+  ArrowBigDown,
+  ArrowBigUp,
+  Edit3,
+  MoreVertical,
+  Trash2,
+} from "lucide-react";
 import DialogFit from "@/components/shared/dialog-fit";
 import EditReplyForm from "./edit-reply-form";
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import DelReplyButton from "./del-reply";
 import { toast } from "sonner";
 import LoadingDots from "@/components/shared/icons/loading-dots";
+import TimeStamp from "@/components/shared/time-stamp";
 
 interface ReplyBoxProps {
   reply: Reply;
@@ -31,6 +38,8 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
 
   const [totalVotes, setTotalVotes] = useState<number>(reply.totalVotes);
   const [loading, setLoading] = useState(false);
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const [expanded, setExpanded] = useState(false);
   const [expandedable, setExpandedable] = useState(false);
@@ -57,6 +66,14 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
   const closeEdit = () => {
     setEditActive(false);
   };
+
+  const handleClick = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const dateTime = reply.createdAt.toString().split("T");
+  const date = dateTime[0];
+  const time = dateTime[1].split(".")[0];
 
   return (
     <>
@@ -85,24 +102,50 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
             <Link href={`/profile/${reply.createdBy}/statistics`}>
               <p className="font-heading text-xl">{reply?.createdBy}</p>
             </Link>
+            <div className="mb-2 ml-4">
+              <TimeStamp date={date.split("-")} time={time.split(":")} />
+            </div>
           </div>
-          {userId === reply.userId && (
-            <div className="mt-3 flex flex-row">
-              <button onClick={() => setEditActive(!editActive)}>
-                {editActive ? (
-                  <Edit3 className="mr-5 h-5 w-5" />
-                ) : (
-                  <Edit3 className="mr-5 h-5 w-5 ease-in-out hover:text-navy-400 hover:duration-300" />
+          {userId === reply.userId && !editActive && (
+            <div className="mt-3 flex cursor-pointer flex-row">
+              <div className="relative inline-block text-left">
+                <button
+                  type="button"
+                  className="flex h-5 w-5 items-center justify-center rounded-full hover:text-navy-500 focus:outline-none"
+                  onClick={handleClick}
+                >
+                  <MoreVertical />
+                </button>
+                {isOpen && (
+                  <div className="absolute right-0 mt-2 w-40 origin-top-right ">
+                    <div className="rounded-lg bg-gray-400/5 py-1" role="none">
+                      <button
+                        className="block px-4 py-2 hover:text-navy-400 hover:duration-300"
+                        onClick={() => {
+                          setEditActive(!editActive);
+                          setIsOpen(!isOpen);
+                        }}
+                      >
+                        <div className="flex flex-row items-center gap-2">
+                          <Edit3 strokeWidth={2} className="h-5 w-5" />
+                          <p>Edit</p>
+                        </div>
+                      </button>
+                      <DialogFit
+                        title="Delete Post"
+                        triggerChild={
+                          <div className="flex flex-row items-center gap-2 px-4 py-2 hover:text-red-400 hover:duration-300">
+                            <Trash2 className="ease-in-ou h-5 w-5" />
+                            <p>Delete</p>
+                          </div>
+                        }
+                      >
+                        <DelReplyButton replyId={reply.id} />
+                      </DialogFit>
+                    </div>
+                  </div>
                 )}
-              </button>
-              <DialogFit
-                title="Delete Reply"
-                triggerChild={
-                  <Trash2 className="h-5 w-5 ease-in-out hover:text-red-400 hover:duration-300" />
-                }
-              >
-                <DelReplyButton replyId={reply.id} />
-              </DialogFit>
+              </div>
             </div>
           )}
         </div>
