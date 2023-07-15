@@ -69,6 +69,7 @@ async function SubProfilePage({
             type="post"
             isOwnProfile={isOwnProfile}
             hasPosts={hasPosts}
+            currentUser={currentUser}
           />
         </div>
       )}
@@ -80,6 +81,7 @@ async function SubProfilePage({
             type="favourite"
             isOwnProfile={isOwnProfile}
             hasPosts={hasFavs}
+            currentUser={currentUser}
           />
         </div>
       )}

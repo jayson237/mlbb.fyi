@@ -10,7 +10,7 @@ export async function POST(req: Request) {
         createdBy: data,
       },
       orderBy: {
-        updatedAt: "desc",
+        createdAt: "desc",
       },
     });
 
