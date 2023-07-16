@@ -101,12 +101,13 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
           className="mt-3 flex w-full flex-col gap-3"
           onSubmit={async (e) => {
             e.preventDefault();
-            const wordsInsideQuotes = tags.replace(/'/g, "");
-            const elements = wordsInsideQuotes.split(",");
+            let array: string[] = [];
+            if (tags !== "") {
+              const wordsInsideQuotes = tags.replace(/'/g, "");
+              const elements = wordsInsideQuotes.split(",");
 
-            const array = elements.map((element) =>
-              element.trim().toLowerCase()
-            );
+              array = elements.map((element) => element.trim().toLowerCase());
+            }
 
             setLoading(true);
             const fields = {
