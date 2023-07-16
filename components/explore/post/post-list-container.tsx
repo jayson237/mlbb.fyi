@@ -85,6 +85,31 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
             <option value={-1}>User</option>
           </select>
         </div>
+        <form
+          className="mt-2  flex grow flex-row items-center gap-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            setFilter(searchTerm);
+          }}
+        >
+          <div className="flex grow flex-row items-center gap-2 rounded-xl border border-navy-300 bg-transparent">
+            <Input
+              type="text"
+              placeholder={
+                selectedIndex === -2 ? "Search posts..." : "Search users..."
+              }
+              value={searchTerm}
+              onChange={(e) => {
+                const inputValue = e.target.value;
+                setSearchTerm(inputValue);
+              }}
+              className="flex h-9 rounded-l-xl border-r border-hidden"
+            />
+            <button>
+              <Search className="mr-2 transition-all hover:text-navy-300 hover:duration-300" />
+            </button>
+          </div>
+        </form>
       </div>
       {selectedIndex === -2 && currentUser && (
         <PostContainer currUser={currentUser} />

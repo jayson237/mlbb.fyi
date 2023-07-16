@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
+import Image from "next/image";
 
 import { SafeUser } from "@/types";
 import { Post, User } from "@prisma/client";
@@ -21,6 +22,8 @@ import { GradiantCard } from "@/components/shared/gradiant-card";
 import LoadingDots from "@/components/shared/icons/loading-dots";
 import DialogFit from "@/components/shared/dialog-fit";
 import { useRouter } from "next/navigation";
+import useSWR from "swr";
+import { fetcher } from "@/lib/fetcher-utils";
 
 interface PostContentProp {
   post: Post;
@@ -37,6 +40,7 @@ const PostContent: React.FC<PostContentProp> = ({
 }) => {
   const router = useRouter();
   const isStarred = currUser?.favourite.includes(post.id as string);
+  const { data: image } = useSWR(["/api/postPic", post.id], fetcher);
 
   const [editActive, setEditActive] = useState<boolean>(false);
   const [favourite, setFavourite] = useState(isStarred);
@@ -239,6 +243,18 @@ const PostContent: React.FC<PostContentProp> = ({
                   </button>
                 )}
               </span>
+            </div>
+            <div>
+              {post.image && (
+                <Image
+                  src={post.image}
+                  alt=""
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  className="h-auto w-auto"
+                />
+              )}
             </div>
             <div className="my-4 flex flex-row gap-x-1">
               <p className="text-lg font-sat font-semibold">
