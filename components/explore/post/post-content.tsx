@@ -82,7 +82,7 @@ const PostContent: React.FC<PostContentProp> = ({
                     <div className="relative inline-block text-left">
                       <button
                         type="button"
-                        className="flex h-5 w-5 items-center justify-center rounded-full hover:text-navy-500 focus:outline-none"
+                        className="flex h-5 w-5 items-center justify-center rounded-full transition-all ease-in-out hover:text-navy-300 hover:duration-300 focus:outline-none"
                         onClick={handleClick}
                       >
                         <MoreVertical />
@@ -94,7 +94,7 @@ const PostContent: React.FC<PostContentProp> = ({
                             role="none"
                           >
                             <button
-                              className="block px-4 py-2 hover:text-navy-400 hover:duration-300"
+                              className="block px-4 py-2 hover:text-navy-300 hover:duration-300"
                               onClick={() => {
                                 setEditActive(!editActive);
                                 setIsOpen(!isOpen);
@@ -194,7 +194,7 @@ const PostContent: React.FC<PostContentProp> = ({
             <div className="flex flex-row items-center font-medium text-gray-500">
               <p className="mr-1">by</p>
               <Link href={`/profile/${post.createdBy}/statistics`}>
-                <p className="text-navy-300 hover:underline">
+                <p className="hover:text-navy-300 hover:underline">
                   {post?.createdBy}
                 </p>
               </Link>

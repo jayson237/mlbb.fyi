@@ -17,8 +17,14 @@ info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/d
 info  - Collecting page data...
 info  - Generating static pages (0/51)
 info  - Generating static pages (12/51)
+info  - Generating static pages (25/51)
+
+warn  - metadata.metadataBase is not set for resolving social open graph or twitter images, fallbacks to "http://localhost:3000". See https://beta.nextjs.org/docs/api-reference/metadata#metadatabase
+
+
+
 warn  - Entire page /auth/signin deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /auth/signin
-(node:12588) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
+(node:16040) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
 (Use `node --trace-warnings ...` to show where the warning was created)
 [next-auth][error][CLIENT_FETCH_ERROR] 
 https://next-auth.js.org/errors#client_fetch_error fetch failed {
@@ -32,14 +38,8 @@ https://next-auth.js.org/errors#client_fetch_error fetch failed {
   url: 'http://localhost:3010/api/auth/csrf',
   message: 'fetch failed'
 }
-
-warn  - metadata.metadataBase is not set for resolving social open graph or twitter images, fallbacks to "http://localhost:3000". See https://beta.nextjs.org/docs/api-reference/metadata#metadatabase
-
-
-
-info  - Generating static pages (25/51)
-info  - Generating static pages (38/51)
 warn  - Entire page /profile/stg deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /profile/stg
+info  - Generating static pages (38/51)
 info  - Generating static pages (51/51)
 info  - Finalizing page optimization...
 
@@ -60,7 +60,7 @@ Route (app)                                Size     First Load JS
 ├ λ /api/users                             0 B                0 B
 ├ λ /auth/signin                           2.03 kB         107 kB
 ├ λ /explore                               5.55 kB         137 kB
-├ λ /explore/[postId]                      8.89 kB         125 kB
+├ λ /explore/[postId]                      9.9 kB          126 kB
 ├ λ /explore/stg/api/comDelete             0 B                0 B
 ├ λ /explore/stg/api/comDislike            0 B                0 B
 ├ λ /explore/stg/api/comEdit               0 B                0 B
@@ -105,7 +105,7 @@ Route (app)                                Size     First Load JS
   ├ chunks/139-234d5cd1a6980f36.js         24.4 kB
   ├ chunks/2443530c-f0ae597f67f7c78e.js    50.5 kB
   ├ chunks/main-app-ab37dec774e15ec4.js    214 B
-  └ chunks/webpack-8a57109edafa15e1.js     1.81 kB
+  └ chunks/webpack-59e0b086abfe9aa9.js     1.81 kB
 
 Route (pages)                              Size     First Load JS
 ┌ ○ /404                                   179 B          86.3 kB
@@ -123,7 +123,7 @@ Route (pages)                              Size     First Load JS
 + First Load JS shared by all              86.1 kB
   ├ chunks/main-d044f9f23bc0a611.js        84.1 kB
   ├ chunks/pages/_app-41eecff5619c9bfb.js  192 B
-  └ chunks/webpack-8a57109edafa15e1.js     1.81 kB
+  └ chunks/webpack-59e0b086abfe9aa9.js     1.81 kB
 
 ƒ Middleware                               214 kB
 
