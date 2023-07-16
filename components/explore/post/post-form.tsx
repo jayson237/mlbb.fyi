@@ -5,6 +5,7 @@ import useAutosizeTextArea from "@/lib/state/useAutosizeTextArea";
 import { useCallback, useRef, useState } from "react";
 import { toast } from "sonner";
 import Image from "next/image";
+import { Input } from "@/components/shared/input";
 
 import { SafeUser } from "@/types";
 
@@ -25,6 +26,8 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
   const [titleCharacterCount, setTitleCharacterCount] = useState<number>(0);
   const [messageCharacterCount, setMessageCharacterCount] = useState<number>(0);
   useState<boolean>(false);
+
+  const [tags, setTags] = useState("");
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   useAutosizeTextArea(textAreaRef.current, message);
@@ -98,11 +101,19 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
           className="mt-3 flex w-full flex-col gap-3"
           onSubmit={async (e) => {
             e.preventDefault();
+            const wordsInsideQuotes = tags.replace(/'/g, "");
+            const elements = wordsInsideQuotes.split(",");
+
+            const array = elements.map((element) =>
+              element.trim().toLowerCase()
+            );
+
             setLoading(true);
             const fields = {
               title: title,
               message: message,
               image: imageUrl,
+              tags: array.slice(0, 3),
             };
 
             const set = await fetch("/explore/stg/api/post", {
@@ -163,6 +174,18 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
                 {messageCharacterCount} / {2000} characters
               </p>
             )}
+          </div>
+          <div className="space-y-1">
+            <input
+              type="text"
+              placeholder={"Insert at most 3 tags here (e.g. 'heroes', 'meta')"}
+              value={tags}
+              onChange={(e) => {
+                const inputValue = e.target.value;
+                setTags(inputValue);
+              }}
+              className="w-full resize-none overflow-hidden rounded-lg border border-slate-700 bg-transparent p-3 text-slate-200 outline-none transition-all duration-100 focus:outline-none focus:ring"
+            />
           </div>
           <div className="flex items-center justify-end gap-2">
             <DialogFit

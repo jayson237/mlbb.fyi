@@ -33,6 +33,8 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
 }) => {
   const [filter, setFilter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [tags, setTags] = useState("");
+  const [searchTags, setSearchTags] = useState<string[] | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(-2);
   const [selectedSortMode, setSelectedSortMode] = useState("recent");
   const [selectedTab, setSelectedTab] = useState("Recent");
@@ -46,6 +48,8 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
     const selectedSort = event.target.value;
     setSelectedSortMode(selectedSort);
   };
+
+  const regex = /'([^']+)'/g;
 
   return (
     <div className="no-scrollbar max-h-[90vh] w-full overflow-scroll md:w-[2000px]">
@@ -85,31 +89,37 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
             <option value={-1}>User</option>
           </select>
         </div>
-        <form
-          className="mt-2  flex grow flex-row items-center gap-2"
-          onSubmit={(e) => {
-            e.preventDefault();
-            setFilter(searchTerm);
-          }}
-        >
-          <div className="flex grow flex-row items-center gap-2 rounded-xl border border-navy-300 bg-transparent">
-            <Input
-              type="text"
-              placeholder={
-                selectedIndex === -2 ? "Search posts..." : "Search users..."
+        {selectedIndex === -2 && (
+          <form
+            className="mt-2 flex grow flex-row items-center gap-2"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const wordsInsideQuotes = tags
+                .match(regex)
+                ?.map((word) => word.slice(1, -1).toLowerCase());
+
+              if (wordsInsideQuotes) {
+                setSearchTags(wordsInsideQuotes);
               }
-              value={searchTerm}
-              onChange={(e) => {
-                const inputValue = e.target.value;
-                setSearchTerm(inputValue);
-              }}
-              className="flex h-9 rounded-l-xl border-r border-hidden"
-            />
-            <button>
-              <Search className="mr-2 transition-all hover:text-navy-300 hover:duration-300" />
-            </button>
-          </div>
-        </form>
+            }}
+          >
+            <div className="flex grow flex-row items-center gap-2 rounded-xl border border-navy-300 bg-transparent">
+              <Input
+                type="text"
+                placeholder={"Insert a tag here"}
+                value={tags}
+                onChange={(e) => {
+                  const inputValue = e.target.value;
+                  setTags(inputValue);
+                }}
+                className="flex h-9 rounded-l-xl border-r border-hidden"
+              />
+              <button>
+                <Search className="mr-2 transition-all hover:text-navy-300 hover:duration-300" />
+              </button>
+            </div>
+          </form>
+        )}
       </div>
       {selectedIndex === -2 && currentUser && (
         <PostContainer currUser={currentUser} />

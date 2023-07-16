@@ -9,7 +9,9 @@ export async function POST(req: Request) {
     title,
     message,
     image,
-  }: { title: string; message: string; image: string } = await req.json();
+    tags,
+  }: { title: string; message: string; image: string; tags: string[] } =
+    await req.json();
 
   const currentPost = await prisma.post.findFirst({
     where: {
@@ -29,6 +31,30 @@ export async function POST(req: Request) {
     );
   }
 
+  if (tags.indexOf("") !== -1) {
+    return NextResponse.json(
+      {
+        message: "Invalid tag('') spotted",
+      },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  for (const x of tags as string[]) {
+    if (x.length >= 20) {
+      return NextResponse.json(
+        {
+          message: `Tag '${x}' exceeded word count`,
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+  }
+
   const set = await prisma.user.update({
     where: {
       email: currentUser?.email,
@@ -39,6 +65,7 @@ export async function POST(req: Request) {
           title: title,
           body: message,
           image: image,
+          tags: tags,
         },
       },
     },

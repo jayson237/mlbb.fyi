@@ -69,6 +69,16 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
             </p>
           </Link>
         </div>
+        <div>
+          <ul role="list" className="flex flex-row items-center gap-1">
+            {post.tags?.map((tag: string) => (
+              <p
+                className="text-xs mt-2 truncate leading-5 text-gray-500 ease-in-out"
+                key={tag}
+              >{`#${tag}`}</p>
+            ))}
+          </ul>
+        </div>
         <div className="mt-4 flex flex-row items-center">
           {!isStarred ? (
             <Star size={16} strokeWidth={0.5} />
