@@ -99,10 +99,10 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
                 setSearchTags(tags);
               }}
             >
-              <div className="w-98 flex flex-row items-center gap-2 rounded-xl border border-navy-300 bg-transparent">
+              <div className="flex flex-row items-center gap-2 rounded-xl border border-navy-300 bg-transparent">
                 <Input
                   type="text"
-                  placeholder={"Insert a tag here"}
+                  placeholder={"Search with a tag..."}
                   value={tags}
                   onChange={(e) => {
                     const inputValue = e.target.value;
