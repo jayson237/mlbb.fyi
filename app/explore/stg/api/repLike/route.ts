@@ -104,7 +104,7 @@ export async function POST(req: Request) {
 
       return NextResponse.json(
         {
-          message: "Reply has been set to be upvotted.",
+          message: "Reply has been upvotted",
         },
         {
           status: 200,
@@ -135,7 +135,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       {
-        message: "Reply has been set been upvotted.",
+        message: "Reply has been upvotted",
       },
       {
         status: 200,

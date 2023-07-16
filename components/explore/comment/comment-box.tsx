@@ -97,29 +97,36 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
     <>
       <div className="flex flex-row items-center justify-between">
         <div className="mb-3 mt-8 flex flex-row items-center">
-          {image && (
-            <Image
-              src={
-                image?.split("/image/upload/")[0] +
-                  "/image/upload/c_fill,h_150,w_150/" +
-                  image?.split("/image/upload/")[1] || "/nana.jpg"
-              }
-              alt=""
-              width={48}
-              height={48}
-              className="mr-4 rounded-full object-none object-left"
-              placeholder="blur"
-              blurDataURL={
-                image?.split("/image/upload/")[0] +
-                "/image/upload/e_blur:400,h_100,w_100/" +
-                image?.split("/image/upload/")[1]
-              }
-            />
-          )}
+          <Image
+            src={
+              image === ""
+                ? "/nana.jpg"
+                : image?.includes("/image/upload")
+                ? `${
+                    image?.split("/image/upload/")[0]
+                  }/image/upload/c_fill,h_150,w_150/${
+                    image?.split("/image/upload/")[1]
+                  }`
+                : image || "/nana.jpg"
+            }
+            alt=""
+            width={48}
+            height={48}
+            className="mr-4 h-12 w-12 rounded-full object-none object-left"
+            placeholder="blur"
+            blurDataURL={
+              image?.split("/image/upload/")[0] +
+              "/image/upload/e_blur:400,h_100,w_100/" +
+              image?.split("/image/upload/")[1]
+            }
+          />
+
           <Link href={`/profile/${comment.createdBy}/statistics`}>
-            <p className="font-heading text-xl">{comment?.createdBy}</p>
+            <p className="text-lg mt-0.5 font-heading hover:underline">
+              {comment?.createdBy}
+            </p>
           </Link>
-          <div className="mb-2 ml-4">
+          <div className="mb-2.5 ml-4">
             <TimeStamp date={date.split("-")} time={time.split(":")} />
           </div>
         </div>
@@ -128,7 +135,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
             <div className="relative inline-block text-left">
               <button
                 type="button"
-                className="flex h-5 w-5 items-center justify-center rounded-full hover:text-navy-500 focus:outline-none"
+                className="flex h-5 w-5 items-center justify-center rounded-full transition-all ease-in-out hover:text-navy-300 hover:duration-300 focus:outline-none"
                 onClick={handleClick}
               >
                 <MoreVertical />
@@ -137,7 +144,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
                 <div className="absolute right-0 mt-2 w-40 origin-top-right ">
                   <div className="rounded-lg bg-gray-400/5 py-1" role="none">
                     <button
-                      className="block px-4 py-2 hover:text-navy-400 hover:duration-300"
+                      className="block px-4 py-2 hover:text-navy-300 hover:duration-300"
                       onClick={() => {
                         setEditActive(!editActive);
                         setIsOpen(!isOpen);

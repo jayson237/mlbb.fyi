@@ -73,7 +73,7 @@ export async function POST(req: Request) {
 
   return NextResponse.json(
     {
-      message: "Post has been set to favourites",
+      message: "Post has been saved to favourites",
     },
     {
       status: 200,
