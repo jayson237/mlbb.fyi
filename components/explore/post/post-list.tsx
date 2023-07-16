@@ -15,6 +15,7 @@ import PostBox from "./post-box";
 
 interface PostListProps {
   filter: string;
+  tag: string;
   sortMode: string;
   currUser?: SafeUser | null;
 }
@@ -23,6 +24,7 @@ export const fetcher = async (data: string) => {
   const fields = {
     filter: data[1],
     sortMode: data[2],
+    tag: data[3],
   };
 
   return await fetch(data[0], {
@@ -31,10 +33,15 @@ export const fetcher = async (data: string) => {
   }).then((res) => res.json());
 };
 
-const PostList: React.FC<PostListProps> = ({ filter, sortMode, currUser }) => {
+const PostList: React.FC<PostListProps> = ({
+  filter,
+  tag,
+  sortMode,
+  currUser,
+}) => {
   const togMut = useMutCom();
   const { data: posts, mutate } = useSWR(
-    ["/api/post", filter, sortMode],
+    ["/api/post", filter, sortMode, tag],
     fetcher
   );
 

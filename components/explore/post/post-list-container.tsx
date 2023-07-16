@@ -34,10 +34,12 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
   const [filter, setFilter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [tags, setTags] = useState("");
-  const [searchTags, setSearchTags] = useState<string[] | null>(null);
+  const [searchTags, setSearchTags] = useState<string>("");
   const [selectedIndex, setSelectedIndex] = useState(-2);
   const [selectedSortMode, setSelectedSortMode] = useState("recent");
   const [selectedTab, setSelectedTab] = useState("Recent");
+  const [tagCharacterCount, setTagCharacterCount] = useState(0);
+  const [isTagInputFocused, setIsTagInputFocused] = useState<boolean>(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedIndex = Number(event.target.value);
@@ -49,8 +51,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
     setSelectedSortMode(selectedSort);
   };
 
-  const regex = /'([^']+)'/g;
-
+  console.log(searchTags);
   return (
     <div className="no-scrollbar max-h-[90vh] w-full overflow-scroll md:w-[2000px]">
       <div className="mb-2">
@@ -90,35 +91,42 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
           </select>
         </div>
         {selectedIndex === -2 && (
-          <form
-            className="mt-2 flex grow flex-row items-center gap-2"
-            onSubmit={(e) => {
-              e.preventDefault();
-              const wordsInsideQuotes = tags
-                .match(regex)
-                ?.map((word) => word.slice(1, -1).toLowerCase());
-
-              if (wordsInsideQuotes) {
-                setSearchTags(wordsInsideQuotes);
-              }
-            }}
-          >
-            <div className="flex grow flex-row items-center gap-2 rounded-xl border border-navy-300 bg-transparent">
-              <Input
-                type="text"
-                placeholder={"Insert a tag here"}
-                value={tags}
-                onChange={(e) => {
-                  const inputValue = e.target.value;
-                  setTags(inputValue);
-                }}
-                className="flex h-9 rounded-l-xl border-r border-hidden"
-              />
-              <button>
-                <Search className="mr-2 transition-all hover:text-navy-300 hover:duration-300" />
-              </button>
+          <>
+            <form
+              className="mt-2 flex flex-row items-center gap-2"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setSearchTags(tags);
+              }}
+            >
+              <div className="w-98 flex flex-row items-center gap-2 rounded-xl border border-navy-300 bg-transparent">
+                <Input
+                  type="text"
+                  placeholder={"Insert a tag here"}
+                  value={tags}
+                  onChange={(e) => {
+                    const inputValue = e.target.value;
+                    setTags(inputValue);
+                    setTagCharacterCount(inputValue.length);
+                  }}
+                  maxLength={20}
+                  onFocus={() => setIsTagInputFocused(true)}
+                  onBlur={() => setIsTagInputFocused(false)}
+                  className="flex h-9 rounded-l-xl border-r border-hidden"
+                />
+                <button>
+                  <Search className="mr-2 transition-all hover:text-navy-300 hover:duration-300" />
+                </button>
+              </div>
+            </form>
+            <div>
+              {isTagInputFocused && (
+                <p className="text-sm text-neutral-500">
+                  {tagCharacterCount} / {20} characters
+                </p>
+              )}
             </div>
-          </form>
+          </>
         )}
       </div>
       {selectedIndex === -2 && currentUser && (
@@ -150,6 +158,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
 
           <PostList
             filter={filter}
+            tag={searchTags}
             sortMode={selectedSortMode}
             currUser={currentUser}
           />
