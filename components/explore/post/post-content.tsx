@@ -22,8 +22,6 @@ import { GradiantCard } from "@/components/shared/gradiant-card";
 import LoadingDots from "@/components/shared/icons/loading-dots";
 import DialogFit from "@/components/shared/dialog-fit";
 import { useRouter } from "next/navigation";
-import useSWR from "swr";
-import { fetcher } from "@/lib/fetcher-utils";
 
 interface PostContentProp {
   post: Post;
@@ -40,7 +38,6 @@ const PostContent: React.FC<PostContentProp> = ({
 }) => {
   const router = useRouter();
   const isStarred = currUser?.favourite.includes(post.id as string);
-  const { data: image } = useSWR(["/api/postPic", post.id], fetcher);
 
   const [editActive, setEditActive] = useState<boolean>(false);
   const [favourite, setFavourite] = useState(isStarred);
