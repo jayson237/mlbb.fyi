@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 interface TimeStampProps {
   date: string[];
   time: string[];
@@ -55,36 +57,60 @@ function getTimeDiff(
   return [hourDiff, minDiff];
 }
 
+function addOrSubtractOneDay(date: string[], diff: number) {
+  const year = Number(date[0]);
+  const month = Number(date[1]);
+  const day = Number(date[2]);
+
+  const newDate = new Date(year, month - 1, day + diff);
+  const currDate = [
+    newDate.getFullYear().toString(),
+    (newDate.getMonth() + 1).toString(),
+    newDate.getDate().toString(),
+  ];
+
+  // console.log("new", currDate);
+
+  return currDate;
+}
+
 function handleTimeZone(time: string[], region: string) {
   if (region[3] === "+") {
     const diff = region.split("+");
     const result = Number(time[0]) + Number(diff[1]) / 100;
 
     if (result >= 24) {
-      return String(result - 24);
+      return [String(result - 24), "+"];
     }
-    return String(result);
+    return [String(result), "no change"];
   }
 
   const diff = region.split("-");
   const result = Number(time[0]) - Number(diff[1]) / 100;
 
   if (result < 0) {
-    return String(result + 24);
+    return [String(result + 24), "-"];
   }
-  return String(result);
+  return [String(result), "no change"];
 }
 
 const TimeStamp: React.FC<TimeStampProps> = ({ date, time }) => {
-  const currentDate = new Date();
+  const newDate = new Date();
   const currDate = [
-    (currentDate.getMonth() + 1).toString(),
-    currentDate.getDate().toString(),
-    currentDate.getFullYear().toString(),
+    (newDate.getMonth() + 1).toString(),
+    newDate.getDate().toString(),
+    newDate.getFullYear().toString(),
   ];
   const currTime = new Date().toTimeString().split(":");
   const region = currTime[2].split(" ");
-  time[0] = handleTimeZone(time, region[1]);
+  const temp = handleTimeZone(time, region[1]);
+  time[0] = temp[0];
+
+  if (temp[1] === "+") {
+    date = addOrSubtractOneDay(date, 1);
+  } else if (temp[1] === "-") {
+    date = addOrSubtractOneDay(date, -1);
+  }
 
   const diff = getDifference(date, currDate);
 
