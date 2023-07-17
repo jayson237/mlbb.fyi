@@ -437,7 +437,9 @@ const PostContent: React.FC<PostContentProp> = ({
                     }}
                   >
                     {starLoading ? (
-                      <LoadingDots color="#FAFAFA" />
+                      <div className="mb-1.5">
+                        <LoadingDots color="#FAFAFA" />
+                      </div>
                     ) : (
                       <Star
                         color="#FACC18"
