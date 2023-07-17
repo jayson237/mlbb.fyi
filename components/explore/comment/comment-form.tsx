@@ -26,7 +26,7 @@ const NewCommentForm: React.FC<CommentProps> = ({ postId, img }) => {
 
   return (
     <GradiantCard
-      className="mb-2 flex grow flex-row items-start"
+      className="mb-1.5 flex grow flex-row items-start"
       variant="clean"
     >
       <Image

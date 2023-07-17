@@ -51,11 +51,10 @@ const PostContent: React.FC<PostContentProp> = ({
   const [dislike, setDislike] = useState<boolean>(isDisliked);
   const [totalVotes, setTotalVotes] = useState<number>(post.totalVotes);
 
-  const { data: image } = useSWR(["/api/postPic", post.id], fetcher);
-
   const [editActive, setEditActive] = useState<boolean>(false);
   const [favourite, setFavourite] = useState(isStarred);
   const [loading, setLoading] = useState(false);
+  const [starLoading, setStarLoading] = useState(false);
 
   const [expanded, setExpanded] = useState(false);
   const [expandedable, setExpandedable] = useState(false);
@@ -177,77 +176,6 @@ const PostContent: React.FC<PostContentProp> = ({
                         )}
                       </div>
                     </div>
-                  )}
-                {currUser &&
-                  currUser.username !== user?.username &&
-                  !favourite && (
-                    <button
-                      onClick={async () => {
-                        setLoading(true);
-                        const fields = {
-                          postId: post.id,
-                        };
-                        const set = await fetch("/explore/stg/api/favourite", {
-                          method: "POST",
-                          body: JSON.stringify(fields),
-                        });
-                        const msg = await set.json();
-                        if (!set.ok) {
-                          toast.error(msg.message);
-                          setLoading(false);
-                        } else {
-                          setFavourite(true);
-                          setLoading(false);
-                          window.location.reload();
-                          toast.success(msg.message);
-                        }
-                      }}
-                    >
-                      {loading ? (
-                        <LoadingDots color="#FAFAFA" />
-                      ) : (
-                        <Star className="transition-all duration-300 ease-in-out hover:fill-yellow-300 hover:text-yellow-300" />
-                      )}
-                    </button>
-                  )}
-                {currUser &&
-                  currUser.username !== user?.username &&
-                  favourite && (
-                    <button
-                      onClick={async () => {
-                        setLoading(true);
-                        const fields = {
-                          postId: post.id,
-                        };
-                        const set = await fetch(
-                          "/explore/stg/api/unfavourite",
-                          {
-                            method: "POST",
-                            body: JSON.stringify(fields),
-                          }
-                        );
-                        const msg = await set.json();
-                        if (!set.ok) {
-                          toast.error(msg.message);
-                          setLoading(false);
-                        } else {
-                          setFavourite(false);
-                          setLoading(false);
-                          window.location.reload();
-                          toast.success(msg.message);
-                        }
-                      }}
-                    >
-                      {loading ? (
-                        <LoadingDots color="#FAFAFA" />
-                      ) : (
-                        <Star
-                          color="#FACC18"
-                          strokeWidth={2}
-                          className="fill-yellow-300"
-                        />
-                      )}
-                    </button>
                   )}
               </div>
               <div className="flex flex-row items-center gap-1">
@@ -443,16 +371,83 @@ const PostContent: React.FC<PostContentProp> = ({
                   </button>
                 )}
               </div>
-              {!isStarred ? (
-                <Star size={20} strokeWidth={0.5} />
-              ) : (
-                <Star
-                  size={20}
-                  color="#FACC18"
-                  strokeWidth={2}
-                  className="fill-yellow-300"
-                />
-              )}
+              {!isStarred &&
+                currUser &&
+                currUser.username !== user?.username &&
+                !favourite && (
+                  <button
+                    onClick={async () => {
+                      setStarLoading(true);
+                      const fields = {
+                        postId: post.id,
+                      };
+                      const set = await fetch("/explore/stg/api/favourite", {
+                        method: "POST",
+                        body: JSON.stringify(fields),
+                      });
+                      const msg = await set.json();
+                      if (!set.ok) {
+                        toast.error(msg.message);
+                        setStarLoading(false);
+                      } else {
+                        setFavourite(true);
+                        setStarLoading(false);
+                        window.location.reload();
+                        toast.success(msg.message);
+                      }
+                    }}
+                  >
+                    {starLoading ? (
+                      <div className="mb-1.5">
+                        <LoadingDots color="#FAFAFA" />
+                      </div>
+                    ) : (
+                      <Star
+                        className="transition-all duration-300 ease-in-out hover:fill-yellow-300 hover:text-yellow-300"
+                        strokeWidth={0.5}
+                        size={24}
+                      />
+                    )}
+                  </button>
+                )}
+              {isStarred &&
+                currUser &&
+                currUser.username !== user?.username &&
+                favourite && (
+                  <button
+                    onClick={async () => {
+                      setStarLoading(true);
+                      const fields = {
+                        postId: post.id,
+                      };
+                      const set = await fetch("/explore/stg/api/unfavourite", {
+                        method: "POST",
+                        body: JSON.stringify(fields),
+                      });
+                      const msg = await set.json();
+                      if (!set.ok) {
+                        toast.error(msg.message);
+                        setStarLoading(false);
+                      } else {
+                        setFavourite(false);
+                        setStarLoading(false);
+                        window.location.reload();
+                        toast.success(msg.message);
+                      }
+                    }}
+                  >
+                    {starLoading ? (
+                      <LoadingDots color="#FAFAFA" />
+                    ) : (
+                      <Star
+                        color="#FACC18"
+                        size={24}
+                        strokeWidth={2}
+                        className="fill-yellow-300"
+                      />
+                    )}
+                  </button>
+                )}
               <p className="ml-2 mr-8 flex">
                 {post.favourites.length >= 1000
                   ? `${
@@ -463,7 +458,7 @@ const PostContent: React.FC<PostContentProp> = ({
                   : post.favourites.length}
               </p>
 
-              <MessageCircle size={20} strokeWidth={0.5} />
+              <MessageCircle size={24} strokeWidth={0.5} />
               {comments && (
                 <p className="ml-2 flex">
                   {comments.length >= 1000

@@ -28,7 +28,7 @@ export default function TierContainer({ heroes }: TierListProps) {
     })
   );
   return (
-    <div className="mb-8 mt-4 flex w-full flex-col gap-4">
+    <div className="mt-4 flex w-full flex-col gap-4">
       <p className="text-lg ml-2 text-gray-400">
         mlbb.fyi tier list is updated daily based on the win, pick and ban rate
         of each hero in major Mobile Legends tournament

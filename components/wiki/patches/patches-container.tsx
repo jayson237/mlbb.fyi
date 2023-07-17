@@ -34,7 +34,7 @@ export default function PatchContainer({ patches }: IPatch) {
   }, []);
 
   return (
-    <div className="mb-8 mt-4 flex w-full flex-col">
+    <div className="mt-4 flex w-full flex-col">
       <div className="flex flex-col">
         {sortedYears.map((year, i) => (
           <React.Fragment key={year}>

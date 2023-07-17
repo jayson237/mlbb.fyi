@@ -64,7 +64,7 @@ const PostList: React.FC<PostListProps> = ({
     return (
       <>
         {posts && posts.length > 0 ? (
-          <GradiantCard variant="clean" className="mb-8">
+          <GradiantCard variant="clean">
             <ul role="list">
               {posts?.map((post: Post, index: number) => (
                 <PostBox

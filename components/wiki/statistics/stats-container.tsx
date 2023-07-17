@@ -104,7 +104,7 @@ export default function StatsContainer({ heroes, tourneyStats }: IStats) {
     : [...sortedList].reverse();
 
   return (
-    <GradiantCard className="mb-8" variant="clean">
+    <GradiantCard variant="clean">
       <div className="mb-8 flex gap-4">
         <select
           className="h-10 w-1/2 rounded-xl border border-navy-300/50 bg-black p-2 shadow-sm focus:border-navy-600 focus:outline-none focus:ring-1 focus:ring-navy-600"

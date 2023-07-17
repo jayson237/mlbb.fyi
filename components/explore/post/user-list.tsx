@@ -67,7 +67,7 @@ const UserList: React.FC<UserListProps> = ({ filter, currentUser }) => {
   if (users) {
     return (
       <div>
-        <GradiantCard variant="clean" className="mb-8 mt-3">
+        <GradiantCard variant="clean" className="mt-3">
           <ul className="mt-3 flex flex-col gap-5">
             {users.map((user: SafeUser, index: number) => {
               let isOwnProfile = currentUser?.username === user?.username;

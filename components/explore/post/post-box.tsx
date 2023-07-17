@@ -85,10 +85,10 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
           } flex flex-row items-center`}
         >
           {!isStarred ? (
-            <Star size={16} strokeWidth={0.5} />
+            <Star size={24} strokeWidth={0.5} />
           ) : (
             <Star
-              size={16}
+              size={24}
               color="#FACC18"
               strokeWidth={2}
               className="fill-yellow-300"
@@ -103,7 +103,7 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
               : post.favourites.length}
           </p>
 
-          <MessageCircle size={16} strokeWidth={0.5} />
+          <MessageCircle size={24} strokeWidth={0.5} />
           {comments && (
             <p className="ml-2 flex">
               {comments.length >= 1000
@@ -113,7 +113,7 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
           )}
         </div>
       </div>
-      <div className="mb-2 flex min-w-0 flex-col items-center space-y-3.5">
+      <div className="mb-2 flex min-w-0 flex-col items-center space-y-3">
         {loading && (
           <div className="mr-3 mt-10 flex">
             <LoadingDots color="#FAFAFA" />

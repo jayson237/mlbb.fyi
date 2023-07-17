@@ -415,7 +415,7 @@ export default function HeroFyi({
         </div>
       </GradiantCard>
 
-      <GradiantCard className="mb-8 mt-1.5 h-fit w-full" variant="clean">
+      <GradiantCard className="mt-1.5 h-fit w-full" variant="clean">
         <p className="font-heading text-xl md:text-3xl">Passive</p>
         <div className="my-4">
           <div className="flex flex-row gap-2">
