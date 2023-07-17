@@ -1,7 +1,7 @@
 // @ts-nocheck
 "use client";
 
-import { fetcher } from "@/lib/fetcher-utils";
+import { postFetcher } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 import Image from "next/image";
@@ -27,7 +27,10 @@ interface ReplyBoxProps {
   userId?: string;
 }
 const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
-  const { data: image } = useSWR(["/api/comment/pic", reply.userId], fetcher);
+  const { data: image } = useSWR(
+    ["/api/comment/pic", reply.userId],
+    postFetcher
+  );
 
   const [editActive, setEditActive] = useState<boolean>(false);
 

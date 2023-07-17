@@ -4,7 +4,7 @@
 import { useEffect } from "react";
 import useSWR from "swr";
 
-import { fetcher } from "@/lib/fetcher-utils";
+import { postFetcher } from "@/lib/utils";
 import { Post } from "@prisma/client";
 
 import PostBox from "../explore/post/post-box";
@@ -31,7 +31,7 @@ const ProfileList: React.FC<ProfileListProps> = ({
     window.scrollTo(0, 0);
   }, []);
 
-  const { data: posts } = useSWR([`/api/user/${type}`, username], fetcher);
+  const { data: posts } = useSWR([`/api/user/${type}`, username], postFetcher);
 
   if (hasPosts) {
     return (

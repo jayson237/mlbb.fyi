@@ -9,9 +9,9 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import LoadingDots from "@/components/shared/icons/loading-dots";
 import { SafeUser } from "@/types";
-import { fetcher } from "@/lib/fetcher-utils";
+import { postFetcher } from "@/lib/utils";
 import useSWR from "swr";
-import useMutCom from "@/lib/state/useMutCom";
+import useMut from "@/lib/state/useMut";
 import TimeStamp from "../../shared/time-stamp";
 
 interface PostBoxProps {
@@ -22,10 +22,10 @@ interface PostBoxProps {
 }
 
 const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
-  const togMut = useMutCom();
+  const togMut = useMut();
   const { data: comments, mutate } = useSWR(
     ["/api/comment/list", post.id],
-    fetcher
+    postFetcher
   );
 
   useEffect(() => {

@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Comment } from "@prisma/client";
-import { fetcher } from "@/lib/fetcher-utils";
+import { postFetcher } from "@/lib/utils";
 
 import {
   ArrowBigDown,
@@ -22,7 +22,7 @@ import DelComment from "./del-comment";
 import EditCommentForm from "./edit-comment-form";
 import DialogFit from "@/components/shared/dialog-fit";
 import ReplyForm from "../reply/reply-form";
-import useMutCom from "@/lib/state/useMutCom";
+import useMut from "@/lib/state/useMut";
 import ReplyList from "../reply/reply-list";
 import { toast } from "sonner";
 import LoadingDots from "@/components/shared/icons/loading-dots";
@@ -35,12 +35,15 @@ interface CommentBoxProps {
 }
 
 const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
-  const { data: image } = useSWR(["/api/comment/pic", comment.userId], fetcher);
+  const { data: image } = useSWR(
+    ["/api/comment/pic", comment.userId],
+    postFetcher
+  );
 
-  const togMut = useMutCom();
+  const togMut = useMut();
   const { data: replies, mutate } = useSWR(
     ["/api/reply/list", comment.id],
-    fetcher
+    postFetcher
   );
   useEffect(() => {
     togMut.toogleMutate && mutate();

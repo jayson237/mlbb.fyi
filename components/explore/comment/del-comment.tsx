@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { Button } from "../../shared/button";
@@ -35,7 +35,7 @@ const DelCommentButton: React.FC<DelCommentProps> = ({ commentId }) => {
           } else {
             setLoading(false);
             toast.success(msg.message);
-            window.location.reload();
+            // window.location.reload();
           }
         }}
         className="w-full"

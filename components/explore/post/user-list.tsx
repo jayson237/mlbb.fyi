@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { GradiantCard } from "@/components/shared/gradiant-card";
-import { fetcher } from "@/lib/fetcher-utils";
-import useMutCom from "@/lib/state/useMutCom";
+import { postFetcher } from "@/lib/utils";
+import useMut from "@/lib/state/useMut";
 import Image from "next/image";
 import { Button } from "@/components/shared/button";
 import useSWR from "swr";
@@ -22,8 +22,11 @@ interface UserListProps {
 
 const UserList: React.FC<UserListProps> = ({ filter, currentUser }) => {
   const router = useRouter();
-  const togMut = useMutCom();
-  const { data: users, mutate } = useSWR(["/api/users", filter], fetcher);
+  const togMut = useMut();
+  const { data: users, mutate } = useSWR(
+    ["/api/search-users", filter],
+    postFetcher
+  );
   useEffect(() => {
     togMut.toogleMutate && mutate();
   }, [mutate, togMut]);

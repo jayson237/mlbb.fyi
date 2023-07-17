@@ -16,7 +16,7 @@ const ReplyList: React.FC<CommentListProps> = ({ userId, replies }) => {
     return null;
   }
 
-  console.log(userId);
+  // console.log(userId);
   if (replies) {
     return (
       <ul role="list">

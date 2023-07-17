@@ -1,9 +1,8 @@
 "use client";
 
 import useSWR from "swr";
-import useMutCom from "@/lib/state/useMutCom";
+import useMut from "@/lib/state/useMut";
 import { useEffect } from "react";
-// import { fetcher } from "@/lib/fetcher-utils";
 
 import { Post } from "@prisma/client";
 import { SafeUser } from "@/types";
@@ -39,9 +38,9 @@ const PostList: React.FC<PostListProps> = ({
   sortMode,
   currUser,
 }) => {
-  const togMut = useMutCom();
+  const togMut = useMut();
   const { data: posts, mutate } = useSWR(
-    ["/api/post", filter, sortMode, tag],
+    ["/api/post/filter", filter, sortMode, tag],
     fetcher
   );
 

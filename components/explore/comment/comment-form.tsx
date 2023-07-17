@@ -8,7 +8,7 @@ import Image from "next/image";
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import { SendIcon } from "lucide-react";
 import LoadingDots from "@/components/shared/icons/loading-dots";
-import useMutCom from "@/lib/state/useMutCom";
+import useMut from "@/lib/state/useMut";
 
 interface CommentProps {
   postId: string;
@@ -16,7 +16,7 @@ interface CommentProps {
 }
 
 const NewCommentForm: React.FC<CommentProps> = ({ postId, img }) => {
-  const togMut = useMutCom();
+  const togMut = useMut();
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
 

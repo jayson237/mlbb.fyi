@@ -6,9 +6,20 @@ type PayloadType = {
   code?: string;
 };
 
-export const fetcher = async (url: string) => {
+export const getFetcher = async (url: string) => {
   return await fetch(url, {
     method: "GET",
+  }).then((res) => res.json());
+};
+
+export const postFetcher = async (data: string) => {
+  const fields = {
+    data: data[1],
+  };
+
+  return await fetch(data[0], {
+    method: "POST",
+    body: JSON.stringify(fields),
   }).then((res) => res.json());
 };
 

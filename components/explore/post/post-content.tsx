@@ -2,17 +2,20 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import useSWR from "swr";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Link from "next/link";
 import Image from "next/image";
 
-import { ArrowBigDown } from "lucide-react";
-import { ArrowBigUp } from "lucide-react";
 import { SafeUser } from "@/types";
 import { Post, User } from "@prisma/client";
+import { getFetcher } from "@/lib/utils";
 
 import {
   ArrowLeftCircle,
+  ArrowBigDown,
+  ArrowBigUp,
   Edit3,
   MessageCircle,
   MoreVertical,
@@ -23,10 +26,9 @@ import {
 import DeletePost from "./del-post";
 import EditForm from "./edit-form";
 import TimeStamp from "@/components/shared/time-stamp";
-import { GradiantCard } from "@/components/shared/gradiant-card";
 import LoadingDots from "@/components/shared/icons/loading-dots";
 import DialogFit from "@/components/shared/dialog-fit";
-import { useRouter } from "next/navigation";
+import { GradiantCard } from "@/components/shared/gradiant-card";
 
 interface PostContentProp {
   post: Post;
@@ -41,10 +43,16 @@ const PostContent: React.FC<PostContentProp> = ({
   currUser,
   comments,
 }) => {
+  const { data: postInfo, mutate } = useSWR<{
+    likes: string[];
+    dislikes: string[];
+    favourites: string[];
+  }>(`api/post/info?postId=${post.id}`, getFetcher);
+
   const router = useRouter();
 
-  const isLiked = post?.likes.includes(currUser?.id as string);
-  const isDisliked = post?.dislikes.includes(currUser?.id as string);
+  const isLiked = postInfo?.likes.includes(currUser?.id as string);
+  const isDisliked = postInfo?.dislikes.includes(currUser?.id as string);
   const isStarred = currUser?.favourite.includes(post.id as string);
 
   const [like, setLike] = useState<boolean>(isLiked);
@@ -145,7 +153,7 @@ const PostContent: React.FC<PostContentProp> = ({
                         {isOpen && (
                           <div className="absolute right-0 mt-2 w-40 origin-top-right ">
                             <div
-                              className="rounded-lg bg-gray-400/5 py-1"
+                              className="rounded-lg bg-lblack py-1"
                               role="none"
                             >
                               <button
@@ -180,6 +188,7 @@ const PostContent: React.FC<PostContentProp> = ({
               </div>
               <div className="flex flex-row items-center gap-1">
                 <TimeStamp date={date.split("-")} time={time.split(":")} />
+
                 <p className="text-xs mt-2 truncate leading-5 text-gray-500 ease-in-out">
                   by
                 </p>
@@ -188,6 +197,16 @@ const PostContent: React.FC<PostContentProp> = ({
                     {post.createdBy}
                   </p>
                 </Link>
+              </div>
+              <div>
+                <ul role="list" className="flex flex-row items-center gap-1">
+                  {post.tags?.map((tag: string) => (
+                    <p
+                      className="text-xs mt-2 truncate leading-5 text-navy-300 ease-in-out"
+                      key={tag}
+                    >{`#${tag}`}</p>
+                  ))}
+                </ul>
               </div>
             </div>
 
@@ -217,10 +236,11 @@ const PostContent: React.FC<PostContentProp> = ({
                   width={0}
                   height={0}
                   sizes="100vw"
-                  className="h-auto w-auto"
+                  className="mt-2 h-auto  w-auto"
                 />
               )}
             </div>
+
             <div
               className={`${
                 post.tags.length === 0 ? "mt-9" : "mt-4"
@@ -237,9 +257,9 @@ const PostContent: React.FC<PostContentProp> = ({
                     onClick={async () => {
                       setLoading(true);
                       const fields = {
-                        commentId: comment.id,
+                        postId: post.id,
                       };
-                      const set = await fetch("/explore/stg/api/comLike", {
+                      const set = await fetch("/explore/stg/api/like", {
                         method: "POST",
                         body: JSON.stringify(fields),
                       });
@@ -273,9 +293,9 @@ const PostContent: React.FC<PostContentProp> = ({
                     onClick={async () => {
                       setLoading(true);
                       const fields = {
-                        commentId: comment.id,
+                        postId: post.id,
                       };
-                      const set = await fetch("/explore/stg/api/comLike", {
+                      const set = await fetch("/explore/stg/api/like", {
                         method: "POST",
                         body: JSON.stringify(fields),
                       });
@@ -310,9 +330,9 @@ const PostContent: React.FC<PostContentProp> = ({
                     onClick={async () => {
                       setLoading(true);
                       const fields = {
-                        commentId: comment.id,
+                        postId: post.id,
                       };
-                      const set = await fetch("/explore/stg/api/comDislike", {
+                      const set = await fetch("/explore/stg/api/dislike", {
                         method: "POST",
                         body: JSON.stringify(fields),
                       });
@@ -346,9 +366,9 @@ const PostContent: React.FC<PostContentProp> = ({
                     onClick={async () => {
                       setLoading(true);
                       const fields = {
-                        commentId: comment.id,
+                        postId: post.id,
                       };
-                      const set = await fetch("/explore/stg/api/comDislike", {
+                      const set = await fetch("/explore/stg/api/dislike", {
                         method: "POST",
                         body: JSON.stringify(fields),
                       });
@@ -371,93 +391,87 @@ const PostContent: React.FC<PostContentProp> = ({
                   </button>
                 )}
               </div>
-              {!isStarred &&
-                currUser &&
-                currUser.username !== user?.username &&
-                !favourite && (
-                  <button
-                    onClick={async () => {
-                      setStarLoading(true);
-                      const fields = {
-                        postId: post.id,
-                      };
-                      const set = await fetch("/explore/stg/api/favourite", {
-                        method: "POST",
-                        body: JSON.stringify(fields),
-                      });
-                      const msg = await set.json();
-                      if (!set.ok) {
-                        toast.error(msg.message);
-                        setStarLoading(false);
-                      } else {
-                        setFavourite(true);
-                        setStarLoading(false);
-                        window.location.reload();
-                        toast.success(msg.message);
-                      }
-                    }}
-                  >
-                    {starLoading ? (
-                      <div className="mb-1.5">
-                        <LoadingDots color="#FAFAFA" />
-                      </div>
-                    ) : (
-                      <Star
-                        className="transition-all duration-300 ease-in-out hover:fill-yellow-300 hover:text-yellow-300"
-                        strokeWidth={0.5}
-                        size={24}
-                      />
-                    )}
-                  </button>
-                )}
-              {isStarred &&
-                currUser &&
-                currUser.username !== user?.username &&
-                favourite && (
-                  <button
-                    onClick={async () => {
-                      setStarLoading(true);
-                      const fields = {
-                        postId: post.id,
-                      };
-                      const set = await fetch("/explore/stg/api/unfavourite", {
-                        method: "POST",
-                        body: JSON.stringify(fields),
-                      });
-                      const msg = await set.json();
-                      if (!set.ok) {
-                        toast.error(msg.message);
-                        setStarLoading(false);
-                      } else {
-                        setFavourite(false);
-                        setStarLoading(false);
-                        window.location.reload();
-                        toast.success(msg.message);
-                      }
-                    }}
-                  >
-                    {starLoading ? (
-                      <div className="mb-1.5">
-                        <LoadingDots color="#FAFAFA" />
-                      </div>
-                    ) : (
-                      <Star
-                        color="#FACC18"
-                        size={24}
-                        strokeWidth={2}
-                        className="fill-yellow-300"
-                      />
-                    )}
-                  </button>
-                )}
+              {!isStarred && currUser && !favourite && (
+                <button
+                  onClick={async () => {
+                    setStarLoading(true);
+                    const fields = {
+                      postId: post.id,
+                    };
+                    const set = await fetch("/explore/stg/api/favourite", {
+                      method: "POST",
+                      body: JSON.stringify(fields),
+                    });
+                    const msg = await set.json();
+                    if (!set.ok) {
+                      toast.error(msg.message);
+                      setStarLoading(false);
+                    } else {
+                      mutate();
+                      setFavourite(true);
+                      setStarLoading(false);
+                      toast.success(msg.message);
+                    }
+                  }}
+                >
+                  {starLoading ? (
+                    <div className="mb-1.5">
+                      <LoadingDots color="#FAFAFA" />
+                    </div>
+                  ) : (
+                    <Star
+                      className="transition-all ease-in-out  hover:text-yellow-300 hover:duration-300"
+                      strokeWidth={1}
+                      size={24}
+                    />
+                  )}
+                </button>
+              )}
+              {isStarred && currUser && favourite && (
+                <button
+                  onClick={async () => {
+                    setStarLoading(true);
+                    const fields = {
+                      postId: post.id,
+                    };
+                    const set = await fetch("/explore/stg/api/unfavourite", {
+                      method: "POST",
+                      body: JSON.stringify(fields),
+                    });
+                    const msg = await set.json();
+                    if (!set.ok) {
+                      toast.error(msg.message);
+                      setStarLoading(false);
+                    } else {
+                      mutate();
+                      setFavourite(false);
+                      setStarLoading(false);
+                      toast.success(msg.message);
+                    }
+                  }}
+                >
+                  {starLoading ? (
+                    <div className="mb-1.5">
+                      <LoadingDots color="#FAFAFA" />
+                    </div>
+                  ) : (
+                    <Star
+                      color="#FACC18"
+                      size={24}
+                      strokeWidth={2}
+                      className="fill-yellow-300"
+                    />
+                  )}
+                </button>
+              )}
               <p className="ml-2 mr-8 flex">
-                {post.favourites.length >= 1000
+                {postInfo?.favourites.length >= 1000
                   ? `${
-                      (post.favourites.length -
-                        (post.favourites.length % 100)) /
+                      (postInfo?.favourites.length -
+                        (postInfo?.favourites.length % 100)) /
                       1000
                     }k`
-                  : post.favourites.length}
+                  : postInfo?.favourites.length || 0}
               </p>
 
               <MessageCircle size={24} strokeWidth={0.5} />

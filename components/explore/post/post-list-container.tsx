@@ -79,7 +79,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
                   selectedIndex === -3
                     ? "Search posts..."
                     : selectedIndex === -2
-                    ? "Search posts with a tag..."
+                    ? "Search posts with a tag... (Up to 20 characters)"
                     : "Search users..."
                 }
                 value={searchTerm}
@@ -114,13 +114,13 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
             <option value={-1}>User</option>
           </select>
         </div>
-        <div>
+        {/* <div>
           {isTagInputFocused && (
             <p className="text-sm text-neutral-500">
               {tagCharacterCount} / {20} characters
             </p>
           )}
-        </div>
+        </div> */}
       </div>
       {(selectedIndex === -3 || selectedIndex === -2) && currentUser && (
         <PostContainer currUser={currentUser} />

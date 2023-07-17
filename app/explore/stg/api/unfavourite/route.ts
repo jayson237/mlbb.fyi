@@ -1,3 +1,4 @@
+import getCurrentPost from "@/lib/actions/getCurrentPost";
 import getCurrentUser from "@/lib/actions/getCurrentUser";
 import prisma from "@/lib/prismadb";
 import { NextResponse } from "next/server";
@@ -6,11 +7,12 @@ export async function POST(req: Request) {
   const currentUser = await getCurrentUser();
 
   const { postId }: { postId: string } = await req.json();
+  const post = await getCurrentPost(postId);
 
   if (!currentUser) {
     return NextResponse.json(
       {
-        message: "User not found",
+        message: "Please log in first",
       },
       {
         status: 400,
@@ -18,7 +20,7 @@ export async function POST(req: Request) {
     );
   }
 
-  if (!postId) {
+  if (!postId || !post) {
     return NextResponse.json(
       {
         message: "Post not found",
@@ -31,7 +33,11 @@ export async function POST(req: Request) {
 
   const updatedFavourite = currentUser.favourite.filter((id) => id !== postId);
 
-  const setCurrentFollowings = await prisma.user.update({
+  const updatedPostFavourite = post.favourites.filter(
+    (id) => id !== currentUser.id
+  );
+
+  const setCurrentFavourites = await prisma.user.update({
     where: {
       id: currentUser.id,
     },
@@ -40,7 +46,7 @@ export async function POST(req: Request) {
     },
   });
 
-  if (!setCurrentFollowings) {
+  if (!setCurrentFavourites) {
     return NextResponse.json(
       {
         message: "Failed to unfavourite, please try again",
@@ -48,6 +54,15 @@ export async function POST(req: Request) {
       { status: 400 }
     );
   }
+
+  const setPost = await prisma.post.update({
+    where: {
+      id: postId,
+    },
+    data: {
+      favourites: updatedPostFavourite,
+    },
+  });
 
   return NextResponse.json(
     {

@@ -2,8 +2,8 @@
 
 import { useEffect } from "react";
 import useSWR from "swr";
-import useMutCom from "@/lib/state/useMutCom";
-import { fetcher } from "@/lib/fetcher-utils";
+import useMut from "@/lib/state/useMut";
+import { postFetcher } from "@/lib/utils";
 
 import { SafeUser } from "@/types";
 import { Post, User } from "@prisma/client";
@@ -19,10 +19,10 @@ interface PostProps {
 }
 
 const Post: React.FC<PostProps> = ({ currentUser, post, user }) => {
-  const togMut = useMutCom();
+  const togMut = useMut();
   const { data: comments, mutate } = useSWR(
     ["/api/comment/list", post.id],
-    fetcher
+    postFetcher
   );
   useEffect(() => {
     togMut.toogleMutate && mutate();
