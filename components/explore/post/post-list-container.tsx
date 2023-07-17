@@ -45,6 +45,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
     const selectedIndex = Number(event.target.value);
     setSelectedIndex(selectedIndex);
     setSearchTerm("");
+    setSearchTags("");
     setFilter("");
   };
 
@@ -66,6 +67,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
               if (selectedIndex !== -2) {
                 setFilter(searchTerm);
               } else {
+                setFilter("");
                 setSearchTags(searchTerm);
               }
             }}
