@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import { useState, useEffect, useRef } from "react";
@@ -5,12 +6,15 @@ import { toast } from "sonner";
 import Link from "next/link";
 import Image from "next/image";
 
+import { ArrowBigDown } from "lucide-react";
+import { ArrowBigUp } from "lucide-react";
 import { SafeUser } from "@/types";
 import { Post, User } from "@prisma/client";
 
 import {
   ArrowLeftCircle,
   Edit3,
+  MessageCircle,
   MoreVertical,
   Star,
   Trash2,
@@ -18,6 +22,7 @@ import {
 
 import DeletePost from "./del-post";
 import EditForm from "./edit-form";
+import TimeStamp from "@/components/shared/time-stamp";
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import LoadingDots from "@/components/shared/icons/loading-dots";
 import DialogFit from "@/components/shared/dialog-fit";
@@ -39,7 +44,15 @@ const PostContent: React.FC<PostContentProp> = ({
   comments,
 }) => {
   const router = useRouter();
+
+  const isLiked = post?.likes.includes(currUser?.id as string);
+  const isDisliked = post?.dislikes.includes(currUser?.id as string);
   const isStarred = currUser?.favourite.includes(post.id as string);
+
+  const [like, setLike] = useState<boolean>(isLiked);
+  const [dislike, setDislike] = useState<boolean>(isDisliked);
+  const [totalVotes, setTotalVotes] = useState<number>(post.totalVotes);
+
   const { data: image } = useSWR(["/api/postPic", post.id], fetcher);
 
   const [editActive, setEditActive] = useState<boolean>(false);
@@ -50,8 +63,12 @@ const PostContent: React.FC<PostContentProp> = ({
   const [expandedable, setExpandedable] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const paragraphRef = useRef<HTMLParagraphElement>(null);
+  const optionRef = useRef();
 
   const [isOpen, setIsOpen] = useState(false);
+  const dateTime = post.createdAt.toISOString().split("T");
+  const date = dateTime[0];
+  const time = dateTime[1].split(".")[0];
 
   function isExpandable(): boolean | undefined {
     if (containerRef.current && paragraphRef.current) {
@@ -65,6 +82,22 @@ const PostContent: React.FC<PostContentProp> = ({
   useEffect(() => {
     isExpandable() === true ? setExpandedable(true) : setExpandedable(false);
   }, []);
+
+  useEffect(() => {
+    let handler = (event: MouseEvent) => {
+      if (
+        optionRef.current &&
+        !optionRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  });
 
   const toggleExpand = () => {
     setExpanded(!expanded);
@@ -95,13 +128,16 @@ const PostContent: React.FC<PostContentProp> = ({
         ) : (
           <>
             <div className="flex flex-col">
-              <div className="flex flex-row items-start justify-between">
+              <div className="flex flex-row items-center justify-between">
                 <p className="font-heading text-3xl">{post?.title}</p>
                 {currUser &&
                   currUser.username === user?.username &&
                   !editActive && (
                     <div className="mt-3 flex cursor-pointer flex-row">
-                      <div className="relative inline-block text-left">
+                      <div
+                        className="relative inline-block text-left"
+                        ref={optionRef}
+                      >
                         <button
                           type="button"
                           className="flex h-5 w-5 items-center justify-center rounded-full transition-all ease-in-out hover:text-navy-300 hover:duration-300 focus:outline-none"
@@ -216,11 +252,14 @@ const PostContent: React.FC<PostContentProp> = ({
                     </button>
                   )}
               </div>
-              <div className="flex flex-row items-center font-medium text-gray-500">
-                <p className="mr-1">by</p>
+              <div className="flex flex-row items-center gap-1">
+                <TimeStamp date={date.split("-")} time={time.split(":")} />
+                <p className="text-xs mt-2 truncate leading-5 text-gray-500 ease-in-out">
+                  by
+                </p>
                 <Link href={`/profile/${post.createdBy}/statistics`}>
-                  <p className="hover:text-navy-300 hover:underline">
-                    {post?.createdBy}
+                  <p className="text-xs mt-2 truncate leading-5 text-gray-500 ease-in-out hover:text-navy-300 hover:underline">
+                    {post.createdBy}
                   </p>
                 </Link>
               </div>
@@ -256,13 +295,184 @@ const PostContent: React.FC<PostContentProp> = ({
                 />
               )}
             </div>
-            <div className="my-4 flex flex-row gap-x-1">
-              <p className="text-lg font-sat font-semibold">
-                {comments && comments.length ? comments.length : 0}
+            <div
+              className={`${
+                post.tags.length === 0 ? "mt-9" : "mt-4"
+              } flex flex-row items-center`}
+            >
+              <div className="mr-4 flex flex-row items-center gap-2">
+                {loading && (
+                  <div className="flex">
+                    <LoadingDots color="#FAFAFA" />
+                  </div>
+                )}
+                {!loading && !like && (
+                  <button
+                    onClick={async () => {
+                      setLoading(true);
+                      const fields = {
+                        commentId: comment.id,
+                      };
+                      const set = await fetch("/explore/stg/api/comLike", {
+                        method: "POST",
+                        body: JSON.stringify(fields),
+                      });
+                      const msg = await set.json();
+                      if (!set.ok) {
+                        toast.error(msg.message);
+                        setLoading(false);
+                      } else {
+                        setLoading(false);
+                        setLike(true);
+                        if (dislike) {
+                          setDislike(false);
+                          setTotalVotes(totalVotes + 2);
+                          toast.success(msg.message);
+                        } else {
+                          setTotalVotes(totalVotes + 1);
+                          toast.success(msg.message);
+                        }
+                      }
+                    }}
+                  >
+                    <ArrowBigUp
+                      strokeWidth={0.5}
+                      className="
+                h-8 w-8 transition-all ease-in-out hover:text-green-600 hover:duration-300"
+                    />
+                  </button>
+                )}
+                {!loading && like && (
+                  <button
+                    onClick={async () => {
+                      setLoading(true);
+                      const fields = {
+                        commentId: comment.id,
+                      };
+                      const set = await fetch("/explore/stg/api/comLike", {
+                        method: "POST",
+                        body: JSON.stringify(fields),
+                      });
+                      const msg = await set.json();
+                      if (!set.ok) {
+                        toast.error(msg.message);
+                        setLoading(false);
+                      } else {
+                        setLoading(false);
+                        setLike(false);
+                        setTotalVotes(totalVotes - 1);
+                        toast.success(msg.message);
+                      }
+                    }}
+                  >
+                    <ArrowBigUp
+                      strokeWidth={0}
+                      className=" h-8
+                w-8 fill-green-600"
+                    />
+                  </button>
+                )}
+                {!loading && (
+                  <p>
+                    {totalVotes >= 1000
+                      ? `${(totalVotes - (totalVotes % 100)) / 1000}k`
+                      : totalVotes}
+                  </p>
+                )}
+                {!loading && !dislike && (
+                  <button
+                    onClick={async () => {
+                      setLoading(true);
+                      const fields = {
+                        commentId: comment.id,
+                      };
+                      const set = await fetch("/explore/stg/api/comDislike", {
+                        method: "POST",
+                        body: JSON.stringify(fields),
+                      });
+                      const msg = await set.json();
+                      if (!set.ok) {
+                        toast.error(msg.message);
+                        setLoading(false);
+                      } else {
+                        setLoading(false);
+                        setDislike(true);
+                        if (like) {
+                          setLike(false);
+                          setTotalVotes(totalVotes - 2);
+                          toast.success(msg.message);
+                        } else {
+                          setTotalVotes(totalVotes - 1);
+                          toast.success(msg.message);
+                        }
+                      }
+                    }}
+                  >
+                    <ArrowBigDown
+                      strokeWidth={0.5}
+                      className="
+                h-8 w-8 transition-all ease-in-out hover:text-red-600 hover:duration-300"
+                    />
+                  </button>
+                )}
+                {!loading && dislike && (
+                  <button
+                    onClick={async () => {
+                      setLoading(true);
+                      const fields = {
+                        commentId: comment.id,
+                      };
+                      const set = await fetch("/explore/stg/api/comDislike", {
+                        method: "POST",
+                        body: JSON.stringify(fields),
+                      });
+                      const msg = await set.json();
+                      if (!set.ok) {
+                        toast.error(msg.message);
+                        setLoading(false);
+                      } else {
+                        setLoading(false);
+                        setDislike(false);
+                        setTotalVotes(totalVotes + 1);
+                        toast.success(msg.message);
+                      }
+                    }}
+                  >
+                    <ArrowBigDown
+                      strokeWidth={0}
+                      className=" h-8 w-8 fill-red-600"
+                    />
+                  </button>
+                )}
+              </div>
+              {!isStarred ? (
+                <Star size={20} strokeWidth={0.5} />
+              ) : (
+                <Star
+                  size={20}
+                  color="#FACC18"
+                  strokeWidth={2}
+                  className="fill-yellow-300"
+                />
+              )}
+              <p className="ml-2 mr-8 flex">
+                {post.favourites.length >= 1000
+                  ? `${
+                      (post.favourites.length -
+                        (post.favourites.length % 100)) /
+                      1000
+                    }k`
+                  : post.favourites.length}
               </p>
-              <p className="text-lg mt-[2px] font-heading">
-                {comments && comments.length < 2 ? "Comment" : "Comments"}
-              </p>
+
+              <MessageCircle size={20} strokeWidth={0.5} />
+              {comments && (
+                <p className="ml-2 flex">
+                  {comments.length >= 1000
+                    ? `${(comments.length - (comments.length % 100)) / 1000}k`
+                    : comments.length}
+                </p>
+              )}
             </div>
           </>
         )}
