@@ -40,9 +40,6 @@
     mask-composite: exclude;
     pointer-events: none;
   }
-  .more-element {
-    background-color: #1a1a1c;
-  }
 
   @layer utilities {
     @layer components {

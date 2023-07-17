@@ -17,11 +17,8 @@ info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/d
 info  - Collecting page data...
 info  - Generating static pages (0/52)
 info  - Generating static pages (13/52)
-info  - Generating static pages (26/52)
-
-info  - Generating static pages (39/52)
 warn  - Entire page /auth/signin deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /auth/signin
-(node:6828) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
+(node:19072) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
 (Use `node --trace-warnings ...` to show where the warning was created)
 [next-auth][error][CLIENT_FETCH_ERROR] 
 https://next-auth.js.org/errors#client_fetch_error fetch failed {
@@ -35,9 +32,12 @@ https://next-auth.js.org/errors#client_fetch_error fetch failed {
   url: 'http://localhost:3010/api/auth/csrf',
   message: 'fetch failed'
 }
+info  - Generating static pages (26/52)
+info  - Generating static pages (39/52)
+
+
 
 warn  - metadata.metadataBase is not set for resolving social open graph or twitter images, fallbacks to "http://localhost:3000". See https://beta.nextjs.org/docs/api-reference/metadata#metadatabase
-
 
 
 warn  - Entire page /profile/stg deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /profile/stg
@@ -107,7 +107,7 @@ Route (app)                                Size     First Load JS
   ├ chunks/139-234d5cd1a6980f36.js         24.4 kB
   ├ chunks/2443530c-f0ae597f67f7c78e.js    50.5 kB
   ├ chunks/main-app-ab37dec774e15ec4.js    214 B
-  └ chunks/webpack-9cc31e0276176b9d.js     1.81 kB
+  └ chunks/webpack-77b3e89d427c0fa8.js     1.81 kB
 
 Route (pages)                              Size     First Load JS
 ┌ ○ /404                                   179 B          86.3 kB
@@ -125,7 +125,7 @@ Route (pages)                              Size     First Load JS
 + First Load JS shared by all              86.1 kB
   ├ chunks/main-37e5dd8cfe1b5943.js        84.1 kB
   ├ chunks/pages/_app-41eecff5619c9bfb.js  192 B
-  └ chunks/webpack-9cc31e0276176b9d.js     1.81 kB
+  └ chunks/webpack-77b3e89d427c0fa8.js     1.81 kB
 
 ƒ Middleware                               214 kB
 
