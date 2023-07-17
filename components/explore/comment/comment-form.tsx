@@ -25,7 +25,10 @@ const NewCommentForm: React.FC<CommentProps> = ({ postId, img }) => {
   useAutosizeTextArea(textAreaRef.current, value);
 
   return (
-    <GradiantCard className="flex grow flex-row items-start" variant="clean">
+    <GradiantCard
+      className="mb-2 flex grow flex-row items-start"
+      variant="clean"
+    >
       <Image
         src={
           img !== ""

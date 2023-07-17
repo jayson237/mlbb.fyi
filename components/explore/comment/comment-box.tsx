@@ -288,7 +288,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
               }}
             >
               <ArrowBigUp
-                strokeWidth={0.5}
+                strokeWidth={0}
                 className="h-6 w-6 fill-green-600
                 md:h-8 md:w-8"
               />
@@ -361,7 +361,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
               }}
             >
               <ArrowBigDown
-                strokeWidth={0.5}
+                strokeWidth={0}
                 className="h-6 w-6 fill-red-600 md:h-8 md:w-8"
               />
             </button>
