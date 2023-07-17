@@ -15,16 +15,11 @@ info  - Linting and checking validity of types...
 
 info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
 info  - Collecting page data...
-info  - Generating static pages (0/51)
-info  - Generating static pages (12/51)
-info  - Generating static pages (25/51)
-
-warn  - metadata.metadataBase is not set for resolving social open graph or twitter images, fallbacks to "http://localhost:3000". See https://beta.nextjs.org/docs/api-reference/metadata#metadatabase
-
-
-
+info  - Generating static pages (0/52)
+info  - Generating static pages (13/52)
+info  - Generating static pages (26/52)
 warn  - Entire page /auth/signin deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /auth/signin
-(node:16040) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
+(node:16292) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
 (Use `node --trace-warnings ...` to show where the warning was created)
 [next-auth][error][CLIENT_FETCH_ERROR] 
 https://next-auth.js.org/errors#client_fetch_error fetch failed {
@@ -34,13 +29,19 @@ https://next-auth.js.org/errors#client_fetch_error fetch failed {
       '    at Object.fetch (node:internal/deps/undici/undici:11118:11)\n' +
       '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)',
     name: 'TypeError'
+
   },
   url: 'http://localhost:3010/api/auth/csrf',
   message: 'fetch failed'
 }
+warn  - metadata.metadataBase is not set for resolving social open graph or twitter images, fallbacks to "http://localhost:3000". See https://beta.nextjs.org/docs/api-reference/metadata#metadatabase
+
+
+
+info  - Generating static pages (39/52)
+
 warn  - Entire page /profile/stg deopted into client-side rendering. https://nextjs.org/docs/messages/deopted-into-client-rendering /profile/stg
-info  - Generating static pages (38/51)
-info  - Generating static pages (51/51)
+info  - Generating static pages (52/52)
 info  - Finalizing page optimization...
 
 Route (app)                                Size     First Load JS
@@ -49,6 +50,7 @@ Route (app)                                Size     First Load JS
 ├ λ /api/comment/list                      0 B                0 B
 ├ λ /api/comment/pic                       0 B                0 B
 ├ λ /api/post                              0 B                0 B
+├ λ /api/postPic                           0 B                0 B
 ├ λ /api/reply/list                        0 B                0 B
 ├ λ /api/scrape-rank-stat                  0 B                0 B
 ├ λ /api/test                              0 B                0 B
@@ -59,8 +61,8 @@ Route (app)                                Size     First Load JS
 ├ λ /api/user/post                         0 B                0 B
 ├ λ /api/users                             0 B                0 B
 ├ λ /auth/signin                           2.03 kB         107 kB
-├ λ /explore                               5.55 kB         137 kB
-├ λ /explore/[postId]                      9.9 kB          126 kB
+├ λ /explore                               5.9 kB          138 kB
+├ λ /explore/[postId]                      10.2 kB         126 kB
 ├ λ /explore/stg/api/comDelete             0 B                0 B
 ├ λ /explore/stg/api/comDislike            0 B                0 B
 ├ λ /explore/stg/api/comEdit               0 B                0 B
@@ -87,7 +89,7 @@ Route (app)                                Size     First Load JS
 ├ λ /profile/[username]/api                0 B                0 B
 ├ λ /profile/[username]/api/follow         0 B                0 B
 ├ λ /profile/[username]/api/unfollow       0 B                0 B
-├ λ /profile/stg                           35.3 kB         148 kB
+├ λ /profile/stg                           35.2 kB         148 kB
 ├ λ /profile/stg/api/bind                  0 B                0 B
 ├ ○ /profile/stg/api/cdn-sign              0 B                0 B
 ├ λ /profile/stg/api/edit-picture          0 B                0 B
@@ -105,7 +107,7 @@ Route (app)                                Size     First Load JS
   ├ chunks/139-234d5cd1a6980f36.js         24.4 kB
   ├ chunks/2443530c-f0ae597f67f7c78e.js    50.5 kB
   ├ chunks/main-app-ab37dec774e15ec4.js    214 B
-  └ chunks/webpack-59e0b086abfe9aa9.js     1.81 kB
+  └ chunks/webpack-eaf3e92145347a82.js     1.81 kB
 
 Route (pages)                              Size     First Load JS
 ┌ ○ /404                                   179 B          86.3 kB
@@ -121,9 +123,9 @@ Route (pages)                              Size     First Load JS
 ├ λ /api/spell                             0 B            86.1 kB
 └ λ /api/spell/create                      0 B            86.1 kB
 + First Load JS shared by all              86.1 kB
-  ├ chunks/main-d044f9f23bc0a611.js        84.1 kB
+  ├ chunks/main-37e5dd8cfe1b5943.js        84.1 kB
   ├ chunks/pages/_app-41eecff5619c9bfb.js  192 B
-  └ chunks/webpack-59e0b086abfe9aa9.js     1.81 kB
+  └ chunks/webpack-eaf3e92145347a82.js     1.81 kB
 
 ƒ Middleware                               214 kB
 

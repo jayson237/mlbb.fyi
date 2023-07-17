@@ -14,7 +14,7 @@ export async function POST(req: Request) {
   if (!currentUser) {
     return NextResponse.json(
       {
-        message: "Username already exists",
+        message: "Please log in first",
       },
       {
         status: 400,

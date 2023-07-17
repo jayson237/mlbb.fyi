@@ -54,7 +54,7 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
     >
       <div className="flex min-w-0 flex-col">
         <Link href={`/explore/${post.id}`}>
-          <p className="text-white-500 flex text-xl font-semibold leading-6 ease-in-out hover:text-navy-200 hover:duration-300">
+          <p className="text-white-500 mt-0.5 flex text-xl font-semibold leading-6 ease-in-out hover:text-navy-200 hover:duration-300">
             {post.title}
           </p>
         </Link>
@@ -73,17 +73,26 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
           <ul role="list" className="flex flex-row items-center gap-1">
             {post.tags?.map((tag: string) => (
               <p
-                className="text-xs mt-2 truncate leading-5 text-gray-500 ease-in-out"
+                className="text-xs mt-2 truncate leading-5 text-navy-300 ease-in-out"
                 key={tag}
               >{`#${tag}`}</p>
             ))}
           </ul>
         </div>
-        <div className="mt-4 flex flex-row items-center">
+        <div
+          className={`${
+            post.tags.length === 0 ? "mt-9" : "mt-4"
+          } flex flex-row items-center`}
+        >
           {!isStarred ? (
             <Star size={16} strokeWidth={0.5} />
           ) : (
-            <Star size={16} strokeWidth={0.5} className="fill-yellow-300" />
+            <Star
+              size={16}
+              color="#FACC18"
+              strokeWidth={2}
+              className="fill-yellow-300"
+            />
           )}
           <p className="ml-2 mr-8 flex">
             {post.favourites.length >= 1000
@@ -104,7 +113,7 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
           )}
         </div>
       </div>
-      <div className="flex min-w-0 flex-col items-center">
+      <div className="mb-2 flex min-w-0 flex-col items-center space-y-3.5">
         {loading && (
           <div className="mr-3 mt-10 flex">
             <LoadingDots color="#FAFAFA" />

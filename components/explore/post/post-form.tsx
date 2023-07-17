@@ -15,6 +15,7 @@ import LoadingDots from "@/components/shared/icons/loading-dots";
 import { Paperclip } from "lucide-react";
 import DialogFit from "@/components/shared/dialog-fit";
 import { FileRejection, useDropzone } from "react-dropzone";
+import { Label } from "@/components/shared/label";
 
 const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
   const [title, setTitle] = useState<string>("");
@@ -178,20 +179,22 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
           </div>
           <p className="mt-2 font-heading font-bold tracking-wide">Optional</p>
           <div className="space-y-1">
+            <Label htmlFor="tags">Tags (Optional)</Label>
             <input
               type="text"
-              placeholder={"Insert at most 3 tags here (e.g. 'heroes', 'meta')"}
+              placeholder={"Enter up to 3 tags (e.g. 'heroes', 'meta')"}
               value={tags}
               onChange={(e) => {
                 const inputValue = e.target.value;
                 setTags(inputValue);
               }}
-              className="w-full resize-none overflow-hidden rounded-lg border border-slate-700 bg-transparent p-3 text-slate-200 outline-none transition-all duration-100 focus:outline-none focus:ring"
+              className="w-full resize-none overflow-hidden rounded-lg border border-slate-700 bg-transparent p-3 text-sm text-slate-200 outline-none transition-all duration-100 focus:outline-none focus:ring"
             />
           </div>
+
           <div className="flex items-center justify-end gap-2">
             <DialogFit
-              title="Choose profile picture (Max 5 MB)"
+              title="Choose image (Max 5 MB)"
               triggerChild={
                 <Paperclip className="mr-2 mt-1 cursor-pointer transition-all ease-in-out hover:text-navy-300 hover:duration-300" />
               }
