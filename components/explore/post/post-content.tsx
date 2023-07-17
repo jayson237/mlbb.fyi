@@ -27,8 +27,6 @@ import { GradiantCard } from "@/components/shared/gradiant-card";
 import LoadingDots from "@/components/shared/icons/loading-dots";
 import DialogFit from "@/components/shared/dialog-fit";
 import { useRouter } from "next/navigation";
-import useSWR from "swr";
-import { fetcher } from "@/lib/fetcher-utils";
 
 interface PostContentProp {
   post: Post;
