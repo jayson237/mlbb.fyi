@@ -83,11 +83,11 @@ const PostContent: React.FC<PostContentProp> = ({
       <div
         className="mb-4 ml-1 flex cursor-pointer flex-row items-center"
         onClick={() => {
-          router.push("explore");
+          router.push("/explore");
         }}
       >
         <ArrowLeftCircle className="mr-3 h-8 w-8 " />
-        <p className=" font-semibold">Back</p>
+        <p className=" font-semibold">Back to explore</p>
       </div>
       <GradiantCard className="mb-1.5 grow" variant="clean">
         {editActive ? (

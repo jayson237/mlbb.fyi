@@ -131,7 +131,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
           </div>
         </div>
         {userId === comment.userId && !editActive && (
-          <div className="mt-3 flex cursor-pointer flex-row">
+          <div className="mb-8 mt-3 flex cursor-pointer flex-row">
             <div className="relative inline-block text-left">
               <button
                 type="button"
@@ -141,8 +141,8 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
                 <MoreVertical />
               </button>
               {isOpen && (
-                <div className="absolute right-0 mt-2 w-40 origin-top-right ">
-                  <div className="rounded-lg bg-gray-400/5 py-1" role="none">
+                <div className="absolute right-0 z-50 mt-2 w-40 origin-top-right">
+                  <div className="more-element rounded-lg py-1" role="none">
                     <button
                       className="block px-4 py-2 hover:text-navy-300 hover:duration-300"
                       onClick={() => {
