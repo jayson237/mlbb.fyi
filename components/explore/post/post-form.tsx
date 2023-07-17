@@ -176,6 +176,7 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
               </p>
             )}
           </div>
+          <p className="mt-2 font-heading font-bold tracking-wide">Optional</p>
           <div className="space-y-1">
             <input
               type="text"
