@@ -1,3 +1,5 @@
+"use client"
+
 import { fetcher } from "@/lib/fetcher-utils";
 import { useEffect, useRef, useState } from "react";
 import useSWR from "swr";
@@ -79,7 +81,7 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
     <>
       <div className="mb-8 ml-5 mr-2 mt-4 flex-auto rounded-lg bg-gray-400/5 px-4 py-2">
         <div className="flex flex-row items-center justify-between">
-          <div className="mb-3 mt-8 flex flex-row items-center">
+          <div className="mb-3 mt-4 flex flex-row items-center">
             {image && (
               <Image
                 src={
@@ -100,9 +102,9 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
               />
             )}
             <Link href={`/profile/${reply.createdBy}/statistics`}>
-              <p className="font-heading text-xl">{reply?.createdBy}</p>
+              <p className="text-md font-heading">{reply?.createdBy}</p>
             </Link>
-            <div className="mb-2 ml-4">
+            <div className="mb-3 ml-4">
               <TimeStamp date={date.split("-")} time={time.split(":")} />
             </div>
           </div>
@@ -111,7 +113,7 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
               <div className="relative inline-block text-left">
                 <button
                   type="button"
-                  className="flex h-5 w-5 items-center justify-center rounded-full hover:text-navy-500 focus:outline-none"
+                  className="mb-12 flex h-5 w-5 items-center justify-center rounded-full transition-all ease-in-out hover:text-navy-300 hover:duration-300 focus:outline-none"
                   onClick={handleClick}
                 >
                   <MoreVertical />
@@ -120,7 +122,7 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
                   <div className="absolute right-0 mt-2 w-40 origin-top-right ">
                     <div className="rounded-lg bg-gray-400/5 py-1" role="none">
                       <button
-                        className="block px-4 py-2 hover:text-navy-400 hover:duration-300"
+                        className="block px-4 py-2 hover:text-navy-300 hover:duration-300"
                         onClick={() => {
                           setEditActive(!editActive);
                           setIsOpen(!isOpen);

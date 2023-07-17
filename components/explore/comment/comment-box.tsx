@@ -358,7 +358,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
             >
               <MessagesSquare className="mr-2 h-5 w-5" />
 
-              <p className="text-sm">
+              <p className="text-[10px] md:text-sm">
                 {isEnableReplyList ? "Unshow" : "Show"} {replies[1]}{" "}
                 {replies[1] === 1 ? "reply" : "replies"}
               </p>
@@ -371,7 +371,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
             onClick={() => setIsAddingReply(!isAddingReply)}
           >
             <Reply className="mr-2 h-5 w-5" />
-            <p className="text-sm">Reply</p>
+            <p className="text-[10px] md:text-sm">Reply</p>
           </button>
         </div>
       </div>
