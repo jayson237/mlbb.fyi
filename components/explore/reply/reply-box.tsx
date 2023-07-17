@@ -120,7 +120,7 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
                 </button>
                 {isOpen && (
                   <div className="absolute right-0 z-50 mt-2 w-40 origin-top-right">
-                    <div className="more-element rounded-lg py-1" role="none">
+                    <div className="rounded-lg bg-lblack py-1" role="none">
                       <button
                         className="block px-4 py-2 hover:text-navy-300 hover:duration-300"
                         onClick={() => {
