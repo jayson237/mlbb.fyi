@@ -15,8 +15,11 @@ function compare(a: Post, b: Post) {
 
 export async function POST(req: Request) {
   try {
-    const { filter, sortMode }: { filter: string; sortMode: string } =
-      await req.json();
+    const {
+      filter,
+      sortMode,
+      tag,
+    }: { filter: string; sortMode: string; tag: string } = await req.json();
 
     let posts: Post[] = [];
 
@@ -59,15 +62,24 @@ export async function POST(req: Request) {
         post.title.toLowerCase().includes(filter.toLowerCase())
       );
 
-      if (filteredPosts.length !== 0) {
-        return NextResponse.json(filteredPosts, {
+      if (filteredPosts.length === 0) {
+        return NextResponse.json("empty", {
           status: 200,
         });
       }
 
-      return NextResponse.json("empty", {
-        status: 200,
-      });
+      posts = filteredPosts;
+    }
+
+    let temp: Post[] = [];
+    if (tag) {
+      for (const x of posts as Post[]) {
+        if (x.tags.includes(tag)) {
+          temp = [...temp, x];
+        }
+      }
+
+      posts = temp;
     }
 
     return NextResponse.json(posts, {
