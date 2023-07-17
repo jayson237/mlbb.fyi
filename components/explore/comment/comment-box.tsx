@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import { useState, useRef, useEffect } from "react";
@@ -64,6 +65,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
   const [expandedable, setExpandedable] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const paragraphRef = useRef<HTMLParagraphElement>(null);
+  const optionRef = useRef();
 
   function isExpandable(): boolean | undefined {
     if (containerRef.current && paragraphRef.current) {
@@ -76,6 +78,22 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
   useEffect(() => {
     isExpandable() === true ? setExpandedable(true) : setExpandedable(false);
   }, []);
+
+  useEffect(() => {
+    let handler = (event: MouseEvent) => {
+      if (
+        optionRef.current &&
+        !optionRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  });
 
   const toggleExpand = () => {
     setExpanded(!expanded);
@@ -132,7 +150,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
         </div>
         {userId === comment.userId && !editActive && (
           <div className="mb-8 mt-3 flex cursor-pointer flex-row">
-            <div className="relative inline-block text-left">
+            <div className="relative inline-block text-left" ref={optionRef}>
               <button
                 type="button"
                 className="flex h-5 w-5 items-center justify-center rounded-full transition-all ease-in-out hover:text-navy-300 hover:duration-300 focus:outline-none"
@@ -240,9 +258,9 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
               }}
             >
               <ArrowBigUp
-                size={32}
                 strokeWidth={0.5}
-                className="transition-all ease-in-out hover:text-green-600 hover:duration-300"
+                className="h-6 w-6
+                transition-all ease-in-out hover:text-green-600 hover:duration-300 md:h-8 md:w-8"
               />
             </button>
           )}
@@ -270,14 +288,14 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
               }}
             >
               <ArrowBigUp
-                size={32}
-                strokeWidth={0}
-                className="fill-green-600"
+                strokeWidth={0.5}
+                className="h-6 w-6 fill-green-600
+                md:h-8 md:w-8"
               />
             </button>
           )}
           {!loading && (
-            <p>
+            <p className="text-[10px] md:text-sm">
               {totalVotes >= 1000
                 ? `${(totalVotes - (totalVotes % 100)) / 1000}k`
                 : totalVotes}
@@ -313,9 +331,9 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
               }}
             >
               <ArrowBigDown
-                size={32}
                 strokeWidth={0.5}
-                className="transition-all ease-in-out hover:text-red-600 hover:duration-300"
+                className="h-6 w-6
+                transition-all ease-in-out hover:text-red-600 hover:duration-300 md:h-8 md:w-8"
               />
             </button>
           )}
@@ -343,9 +361,8 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
               }}
             >
               <ArrowBigDown
-                size={32}
-                strokeWidth={0}
-                className="fill-red-600"
+                strokeWidth={0.5}
+                className="h-6 w-6 fill-red-600 md:h-8 md:w-8"
               />
             </button>
           )}

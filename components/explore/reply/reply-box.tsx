@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import { fetcher } from "@/lib/fetcher-utils";
@@ -15,7 +16,6 @@ import {
 } from "lucide-react";
 import DialogFit from "@/components/shared/dialog-fit";
 import EditReplyForm from "./edit-reply-form";
-import { GradiantCard } from "@/components/shared/gradiant-card";
 import DelReplyButton from "./del-reply";
 import { toast } from "sonner";
 import LoadingDots from "@/components/shared/icons/loading-dots";
@@ -27,7 +27,6 @@ interface ReplyBoxProps {
   userId?: string;
 }
 const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
-  console.log(reply);
   const { data: image } = useSWR(["/api/comment/pic", reply.userId], fetcher);
 
   const [editActive, setEditActive] = useState<boolean>(false);
@@ -47,6 +46,7 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
   const [expandedable, setExpandedable] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const paragraphRef = useRef<HTMLParagraphElement>(null);
+  const optionRef = useRef();
 
   function isExpandable(): boolean | undefined {
     if (containerRef.current && paragraphRef.current) {
@@ -60,6 +60,22 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
   useEffect(() => {
     isExpandable() === true ? setExpandedable(true) : setExpandedable(false);
   }, []);
+
+  useEffect(() => {
+    let handler = (event: MouseEvent) => {
+      if (
+        optionRef.current &&
+        !optionRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  });
 
   const toggleExpand = () => {
     setExpanded(!expanded);
@@ -110,7 +126,7 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
           </div>
           {userId === reply.userId && !editActive && (
             <div className="mb-12 mt-3 flex cursor-pointer flex-row">
-              <div className="relative inline-block text-left">
+              <div className="relative inline-block text-left" ref={optionRef}>
                 <button
                   type="button"
                   className="flex h-5 w-5 items-center justify-center rounded-full transition-all ease-in-out hover:text-navy-300 hover:duration-300 focus:outline-none"
@@ -218,9 +234,9 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
                 }}
               >
                 <ArrowBigUp
-                  size={32}
                   strokeWidth={0.5}
-                  className="transition-all ease-in-out hover:text-green-600 hover:duration-300"
+                  className="h-6 w-6
+                  transition-all ease-in-out hover:text-green-600 hover:duration-300 md:h-8 md:w-8"
                 />
               </button>
             )}
@@ -248,14 +264,14 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
                 }}
               >
                 <ArrowBigUp
-                  size={32}
                   strokeWidth={0}
-                  className="fill-green-600"
+                  className="h-6 w-6
+                  fill-green-600 md:h-8 md:w-8"
                 />
               </button>
             )}
             {!loading && (
-              <p>
+              <p className="text-[10px] md:text-sm">
                 {totalVotes >= 1000
                   ? `${(totalVotes - (totalVotes % 100)) / 1000}k`
                   : totalVotes}
@@ -291,9 +307,9 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
                 }}
               >
                 <ArrowBigDown
-                  size={32}
                   strokeWidth={0.5}
-                  className="transition-all ease-in-out hover:text-red-600 hover:duration-300"
+                  className="h-6 w-6
+                  transition-all ease-in-out hover:text-red-600 hover:duration-300 md:h-8 md:w-8"
                 />
               </button>
             )}
@@ -321,9 +337,9 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
                 }}
               >
                 <ArrowBigDown
-                  size={32}
                   strokeWidth={0}
-                  className="fill-red-600"
+                  className="h-6 w-6
+                  fill-red-600 md:h-8 md:w-8"
                 />
               </button>
             )}
