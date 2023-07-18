@@ -1,11 +1,21 @@
 import prisma from "@/lib/prismadb";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function POST(req: Request) {
   try {
-    const url = req.url as string;
-    const postId = url.split("?postId=")[1];
-    if (!postId) {
+    const { postId }: { postId: string } = await req.json();
+    const postInfo = await prisma.post.findFirst({
+      where: {
+        id: postId,
+      },
+      select: {
+        likes: true,
+        dislikes: true,
+        favourites: true,
+      },
+    });
+
+    if (!postInfo) {
       return NextResponse.json(
         {
           message: "There is no such post",
@@ -16,29 +26,32 @@ export async function GET(req: Request) {
       );
     }
 
-    const postInfo = await prisma.post.findFirst({
+    const comments = await prisma?.comment.findMany({
       where: {
-        id: postId,
+        postId: postId,
       },
-      select: {
-        likes: true,
-        dislikes: true,
-        favourites: true,
-        comments: true,
+      orderBy: {
+        totalVotes: "desc",
       },
     });
 
-    if (!postInfo) {
+    if (!comments) {
       return NextResponse.json(
         {
-          message: "Unable to retrieve post info",
+          message: "Cannot retrieve comments",
         },
         {
           status: 400,
         }
       );
     }
-    return NextResponse.json(postInfo);
+
+    const fields = {
+      info: postInfo,
+      comments: comments,
+    };
+    // console.log(fields);
+    return NextResponse.json(fields);
   } catch (error) {
     console.log("Error: ", error);
     return NextResponse.json(
@@ -51,35 +64,3 @@ export async function GET(req: Request) {
     );
   }
 }
-
-// export async function POST(req: Request) {
-//   try {
-//     const { postId }: { postId: string } = await req.json();
-
-//     const postInfo = await prisma.post.findFirst({
-//       where: {
-//         id: postId,
-//       },
-//       select: {
-//         likes: true,
-//         dislikes: true,
-//         favourites: true,
-//       },
-//     });
-
-//     if (!postInfo) {
-//       return NextResponse.json(
-//         {
-//           message: "There is no such post",
-//         },
-//         {
-//           status: 400,
-//         }
-//       );
-//     }
-//     return NextResponse.json(postInfo);
-//   } catch (error) {
-//     console.log("Error:", error);
-//     return null;
-//   }
-// }

@@ -1,7 +1,7 @@
-// @ts-nocheck
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import useMut from "@/lib/state/useMut";
 import useSWR from "swr";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -31,15 +31,7 @@ import { GradiantCard } from "@/components/shared/gradiant-card";
 
 interface PostContentProp {
   post: Post;
-  postInfo:
-    | {
-        likes: string[];
-        dislikes: string[];
-        favourites: string[];
-        comments: Comment[];
-      }
-    | undefined;
-  mutate?: () => void;
+  postInfo: any;
   user: User | null;
   currUser?: SafeUser | null;
   comments: any;
@@ -48,12 +40,12 @@ interface PostContentProp {
 const PostContent: React.FC<PostContentProp> = ({
   post,
   postInfo,
-  mutate,
   user,
   currUser,
   comments,
 }) => {
   const router = useRouter();
+  const togMut = useMut();
 
   const isLiked = postInfo?.likes.includes(currUser?.id as string);
   const isDisliked = postInfo?.dislikes.includes(currUser?.id as string);
@@ -72,7 +64,6 @@ const PostContent: React.FC<PostContentProp> = ({
   const [expandedable, setExpandedable] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const paragraphRef = useRef<HTMLParagraphElement>(null);
-  const optionRef = useRef();
 
   const [isOpen, setIsOpen] = useState(false);
   const dateTime = post.createdAt.toISOString().split("T");
@@ -92,21 +83,21 @@ const PostContent: React.FC<PostContentProp> = ({
     isExpandable() === true ? setExpandedable(true) : setExpandedable(false);
   }, []);
 
-  useEffect(() => {
-    let handler = (event: MouseEvent) => {
-      if (
-        optionRef.current &&
-        !optionRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handler);
+  // useEffect(() => {
+  //   let handler = (event: MouseEvent) => {
+  //     if (
+  //       optionRef.current &&
+  //       !optionRef.current.contains(event.target as Node)
+  //     ) {
+  //       setIsOpen(false);
+  //     }
+  //   };
+  //   document.addEventListener("mousedown", handler);
 
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    };
-  });
+  //   return () => {
+  //     document.removeEventListener("mousedown", handler);
+  //   };
+  // });
 
   const toggleExpand = () => {
     setExpanded(!expanded);
@@ -143,10 +134,7 @@ const PostContent: React.FC<PostContentProp> = ({
                   currUser.username === user?.username &&
                   !editActive && (
                     <div className="mt-3 flex cursor-pointer flex-row">
-                      <div
-                        className="relative inline-block text-left"
-                        ref={optionRef}
-                      >
+                      <div className="relative inline-block text-left">
                         <button
                           type="button"
                           className="flex h-5 w-5 items-center justify-center rounded-full transition-all ease-in-out hover:text-navy-300 hover:duration-300 focus:outline-none"
@@ -411,10 +399,13 @@ const PostContent: React.FC<PostContentProp> = ({
                       toast.error(msg.message);
                       setStarLoading(false);
                     } else {
-                      mutate;
                       setFavourite(true);
                       setStarLoading(false);
                       toast.success(msg.message);
+                      togMut.togMut();
+                      setTimeout(() => {
+                        togMut.clamMut();
+                      }, 1000);
                     }
                   }}
                 >
@@ -447,10 +438,13 @@ const PostContent: React.FC<PostContentProp> = ({
                       toast.error(msg.message);
                       setStarLoading(false);
                     } else {
-                      mutate;
                       setFavourite(false);
                       setStarLoading(false);
                       toast.success(msg.message);
+                      togMut.togMut();
+                      setTimeout(() => {
+                        togMut.clamMut();
+                      }, 1000);
                     }
                   }}
                 >
