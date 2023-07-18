@@ -1,15 +1,14 @@
+// @ts-nocheck
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import useMut from "@/lib/state/useMut";
-import useSWR from "swr";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Link from "next/link";
 import Image from "next/image";
 
 import { SafeUser } from "@/types";
-import { Post, User, Comment } from "@prisma/client";
+import { Post, User } from "@prisma/client";
 
 import {
   ArrowLeftCircle,
@@ -28,10 +27,10 @@ import TimeStamp from "@/components/shared/time-stamp";
 import LoadingDots from "@/components/shared/icons/loading-dots";
 import DialogFit from "@/components/shared/dialog-fit";
 import { GradiantCard } from "@/components/shared/gradiant-card";
+import { revalPath } from "@/lib/revalidate";
 
 interface PostContentProp {
   post: Post;
-  postInfo: any;
   user: User | null;
   currUser?: SafeUser | null;
   comments: any;
@@ -39,16 +38,14 @@ interface PostContentProp {
 
 const PostContent: React.FC<PostContentProp> = ({
   post,
-  postInfo,
   user,
   currUser,
   comments,
 }) => {
   const router = useRouter();
-  const togMut = useMut();
 
-  const isLiked = postInfo?.likes.includes(currUser?.id as string);
-  const isDisliked = postInfo?.dislikes.includes(currUser?.id as string);
+  const isLiked = post?.likes.includes(currUser?.id as string);
+  const isDisliked = post?.dislikes.includes(currUser?.id as string);
   const isStarred = currUser?.favourite.includes(post.id as string);
 
   const [like, setLike] = useState<boolean>(isLiked);
@@ -64,9 +61,10 @@ const PostContent: React.FC<PostContentProp> = ({
   const [expandedable, setExpandedable] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const paragraphRef = useRef<HTMLParagraphElement>(null);
+  const optionRef = useRef();
 
   const [isOpen, setIsOpen] = useState(false);
-  const dateTime = post.createdAt.toISOString().split("T");
+  const dateTime = new Date(post?.createdAt).toISOString().split("T");
   const date = dateTime[0];
   const time = dateTime[1].split(".")[0];
 
@@ -114,7 +112,7 @@ const PostContent: React.FC<PostContentProp> = ({
   return (
     <>
       <div
-        className="mb-4 ml-1 flex cursor-pointer flex-row items-center"
+        className="mb-4 ml-1 flex w-fit cursor-pointer flex-row items-center duration-300 hover:underline"
         onClick={() => {
           router.push("/explore");
         }}
@@ -134,7 +132,10 @@ const PostContent: React.FC<PostContentProp> = ({
                   currUser.username === user?.username &&
                   !editActive && (
                     <div className="mt-3 flex cursor-pointer flex-row">
-                      <div className="relative inline-block text-left">
+                      <div
+                        className="relative inline-block text-left"
+                        ref={optionRef}
+                      >
                         <button
                           type="button"
                           className="flex h-5 w-5 items-center justify-center rounded-full transition-all ease-in-out hover:text-navy-300 hover:duration-300 focus:outline-none"
@@ -399,13 +400,10 @@ const PostContent: React.FC<PostContentProp> = ({
                       toast.error(msg.message);
                       setStarLoading(false);
                     } else {
+                      revalPath("/explore" + post.id);
                       setFavourite(true);
                       setStarLoading(false);
                       toast.success(msg.message);
-                      togMut.togMut();
-                      setTimeout(() => {
-                        togMut.clamMut();
-                      }, 1000);
                     }
                   }}
                 >
@@ -438,13 +436,10 @@ const PostContent: React.FC<PostContentProp> = ({
                       toast.error(msg.message);
                       setStarLoading(false);
                     } else {
+                      revalPath("/explore" + post.id);
                       setFavourite(false);
                       setStarLoading(false);
                       toast.success(msg.message);
-                      togMut.togMut();
-                      setTimeout(() => {
-                        togMut.clamMut();
-                      }, 1000);
                     }
                   }}
                 >
@@ -463,13 +458,13 @@ const PostContent: React.FC<PostContentProp> = ({
                 </button>
               )}
               <p className="ml-2 mr-8 flex">
-                {postInfo?.favourites.length >= 1000
+                {post?.favourites.length >= 1000
                   ? `${
-                      (postInfo?.favourites.length -
-                        (postInfo?.favourites.length % 100)) /
+                      (post?.favourites.length -
+                        (post?.favourites.length % 100)) /
                       1000
                     }k`
-                  : postInfo?.favourites.length || 0}
+                  : post?.favourites.length || 0}
               </p>
 
               <MessageCircle size={24} strokeWidth={0.5} />

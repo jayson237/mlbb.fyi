@@ -1,21 +1,19 @@
 "use client";
 
-import useAutosizeTextArea from "@/lib/state/useAutosizeTextArea";
-
 import { useCallback, useRef, useState } from "react";
+import { FileRejection, useDropzone } from "react-dropzone";
 import { toast } from "sonner";
 import Image from "next/image";
-import { Input } from "@/components/shared/input";
 
 import { SafeUser } from "@/types";
+import useAutosizeTextArea from "@/lib/state/useAutosizeTextArea";
 
 import { Button } from "@/components/shared/button";
 import { GradiantCard } from "@/components/shared/gradiant-card";
-import LoadingDots from "@/components/shared/icons/loading-dots";
 import { Paperclip } from "lucide-react";
-import DialogFit from "@/components/shared/dialog-fit";
-import { FileRejection, useDropzone } from "react-dropzone";
 import { Label } from "@/components/shared/label";
+import DialogFit from "@/components/shared/dialog-fit";
+import LoadingDots from "@/components/shared/icons/loading-dots";
 
 const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
   const [title, setTitle] = useState<string>("");
@@ -129,6 +127,7 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
             } else {
               setLoading(false);
               toast.success("Successfully posted! Please wait.");
+              // revalPath("/explore");
               window.location.reload();
             }
           }}

@@ -185,7 +185,6 @@ const UserList: React.FC<UserListProps> = ({ filter, currentUser }) => {
                             } else {
                               setLoading(false);
                               setButtonDisabled(false);
-                              window.location.reload();
                             }
                           }}
                         >

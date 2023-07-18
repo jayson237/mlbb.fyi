@@ -1,13 +1,13 @@
-// @ts-nocheck
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { toast } from "sonner";
 import useSWR from "swr";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Comment } from "@prisma/client";
 import { postFetcher } from "@/lib/utils";
+import { IFullComment } from "@/types";
 
 import {
   ArrowBigDown,
@@ -22,14 +22,12 @@ import DelComment from "./del-comment";
 import EditCommentForm from "./edit-comment-form";
 import DialogFit from "@/components/shared/dialog-fit";
 import ReplyForm from "../reply/reply-form";
-import useMut from "@/lib/state/useMut";
 import ReplyList from "../reply/reply-list";
-import { toast } from "sonner";
 import LoadingDots from "@/components/shared/icons/loading-dots";
 import TimeStamp from "@/components/shared/time-stamp";
 
 interface CommentBoxProps {
-  comment: Comment;
+  comment: IFullComment;
   postId: string;
   userId?: string;
 }
@@ -39,15 +37,6 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
     ["/api/comment/pic", comment.userId],
     postFetcher
   );
-
-  const togMut = useMut();
-  const { data: replies, mutate } = useSWR(
-    ["/api/reply/list", comment.id],
-    postFetcher
-  );
-  useEffect(() => {
-    togMut.toogleMutate && mutate();
-  }, [mutate, togMut]);
 
   const isLiked = comment?.likes.includes(userId as string);
   const isDisliked = comment?.dislikes.includes(userId as string);
@@ -68,7 +57,6 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
   const [expandedable, setExpandedable] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const paragraphRef = useRef<HTMLParagraphElement>(null);
-  const optionRef = useRef();
 
   function isExpandable(): boolean | undefined {
     if (containerRef.current && paragraphRef.current) {
@@ -153,7 +141,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
         </div>
         {userId === comment.userId && !editActive && (
           <div className="mb-8 mt-3 flex cursor-pointer flex-row">
-            <div className="relative inline-block text-left" ref={optionRef}>
+            <div className="relative inline-block text-left">
               <button
                 type="button"
                 className="flex h-5 w-5 items-center justify-center rounded-full transition-all ease-in-out hover:text-navy-300 hover:duration-300 focus:outline-none"
@@ -197,6 +185,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
       {editActive ? (
         <div className="mb-8 ml-16 grow">
           <EditCommentForm
+            postId={postId}
             commentId={comment.id}
             commentBody={comment?.body}
             onCancel={closeEdit}
@@ -370,7 +359,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
             </button>
           )}
         </div>
-        {replies && replies[1] !== 0 && (
+        {comment.replies && comment.replies.length !== 0 && (
           <div>
             <button
               className="flex cursor-pointer flex-row items-center transition-all ease-in-out hover:text-navy-300 hover:duration-300"
@@ -379,8 +368,8 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
               <MessagesSquare className="mr-2 h-5 w-5" />
 
               <p className="text-[10px] md:text-sm">
-                {isEnableReplyList ? "Unshow" : "Show"} {replies[1]}{" "}
-                {replies[1] === 1 ? "reply" : "replies"}
+                {isEnableReplyList ? "Unshow" : "Show"} {comment.replies.length}{" "}
+                {comment.replies.length === 1 ? "reply" : "replies"}
               </p>
             </button>
           </div>
@@ -397,11 +386,15 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
       </div>
       {isAddingReply && (
         <div className="mt-2">
-          <ReplyForm postId={postId} commentId={comment.id} />
+          <ReplyForm
+            postId={postId}
+            commentId={comment.id}
+            onReplied={() => setIsAddingReply(false)}
+          />
         </div>
       )}
-      {isEnableReplyList && replies && (
-        <ReplyList userId={userId} replies={replies[0]} />
+      {isEnableReplyList && comment.replies && (
+        <ReplyList userId={userId} postId={postId} replies={comment.replies} />
       )}
     </>
   );

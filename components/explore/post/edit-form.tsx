@@ -2,13 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import React from "react";
+
+import { revalPath } from "@/lib/revalidate";
+import { Post } from "@prisma/client";
+import useAutosizeTextArea from "@/lib/state/useAutosizeTextArea";
 
 import { Button } from "@/components/shared/button";
 import { Label } from "@/components/shared/label";
 import LoadingDots from "@/components/shared/icons/loading-dots";
-import { Post } from "@prisma/client";
-import useAutosizeTextArea from "@/lib/state/useAutosizeTextArea";
-import React from "react";
 
 interface editPostProps {
   post: Post;
@@ -73,9 +75,10 @@ const EditForm: React.FC<editPostProps> = ({ post, onCancel }) => {
               setLoading(false);
               toast.error(msg.message);
             } else {
+              handleCancel();
+              revalPath("/explore/" + post.id);
               setLoading(false);
               toast.success(msg.message);
-              window.location.reload();
             }
           }}
         >

@@ -1,15 +1,16 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { Button } from "../../shared/button";
 import { toast } from "sonner";
+import { revalPath } from "@/lib/revalidate";
 import LoadingDots from "../../shared/icons/loading-dots";
 
-interface DelCommentProps {
+interface DelReplyProps {
   replyId: string;
 }
 
-const DelReplyButton: React.FC<DelCommentProps> = ({ replyId }) => {
+const DelReplyButton: React.FC<DelReplyProps> = ({ replyId }) => {
   const [loading, setLoading] = useState<boolean>(false);
   return (
     <div className="flex flex-col items-center justify-center gap-8">
@@ -35,7 +36,7 @@ const DelReplyButton: React.FC<DelCommentProps> = ({ replyId }) => {
           } else {
             setLoading(false);
             toast.success(msg.message);
-            window.location.reload();
+            revalPath("/explore" + replyId);
           }
         }}
         className="w-full"

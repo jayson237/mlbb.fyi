@@ -8,12 +8,17 @@ import LoadingDots from "@/components/shared/icons/loading-dots";
 import useMut from "@/lib/state/useMut";
 import useAutosizeTextArea from "@/lib/state/useAutosizeTextArea";
 
-interface CommentProps {
+interface ReplyProps {
   postId: string;
   commentId: string;
+  onReplied: () => void;
 }
 
-const ReplyForm: React.FC<CommentProps> = ({ postId, commentId }) => {
+const ReplyForm: React.FC<ReplyProps> = ({
+  postId,
+  commentId,
+  onReplied,
+}) => {
   const togMut = useMut();
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -43,6 +48,7 @@ const ReplyForm: React.FC<CommentProps> = ({ postId, commentId }) => {
             setLoading(false);
             toast.error(msg.message);
           } else {
+            onReplied();
             setLoading(false);
             setValue("");
             toast.success(msg.message);

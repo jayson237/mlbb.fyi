@@ -6,27 +6,23 @@ import { Reply } from "@prisma/client";
 import Loading from "@/components/shared/loading";
 import ReplyBox from "./reply-box";
 
-interface CommentListProps {
+interface ReplyListProps {
   userId?: string;
+  postId: string;
   replies: Reply[];
 }
 
-const ReplyList: React.FC<CommentListProps> = ({ userId, replies }) => {
+const ReplyList: React.FC<ReplyListProps> = ({ userId, postId, replies }) => {
   if (!replies || replies.length === 0) {
     return null;
   }
-
   // console.log(userId);
   if (replies) {
     return (
       <ul role="list">
         {replies.map((reply: Reply, index: number) => (
           <React.Fragment key={reply.id}>
-            <ReplyBox
-              reply={reply}
-              commentId={reply.commentId}
-              userId={userId}
-            />
+            <ReplyBox reply={reply} postId={postId} userId={userId} />
           </React.Fragment>
         ))}
       </ul>

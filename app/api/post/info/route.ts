@@ -1,21 +1,11 @@
 import prisma from "@/lib/prismadb";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+export async function GET(req: Request) {
   try {
-    const { postId }: { postId: string } = await req.json();
-    const postInfo = await prisma.post.findFirst({
-      where: {
-        id: postId,
-      },
-      select: {
-        likes: true,
-        dislikes: true,
-        favourites: true,
-      },
-    });
-
-    if (!postInfo) {
+    const url = req.url as string;
+    const postId = url.split("?postId=")[1];
+    if (!postId) {
       return NextResponse.json(
         {
           message: "There is no such post",
@@ -26,19 +16,26 @@ export async function POST(req: Request) {
       );
     }
 
-    const comments = await prisma?.comment.findMany({
+    const postInfo = await prisma.post.findFirst({
       where: {
-        postId: postId,
+        id: postId,
       },
-      orderBy: {
-        totalVotes: "desc",
+      include: {
+        comments: {
+          orderBy: {
+            createdAt: "desc",
+          },
+          include: {
+            replies: true,
+          },
+        },
       },
     });
 
-    if (!comments) {
+    if (!postInfo) {
       return NextResponse.json(
         {
-          message: "Cannot retrieve comments",
+          message: "Unable to retrieve post info",
         },
         {
           status: 400,
@@ -46,12 +43,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const fields = {
-      info: postInfo,
-      comments: comments,
-    };
-    // console.log(fields);
-    return NextResponse.json(fields);
+    return NextResponse.json(postInfo);
   } catch (error) {
     console.log("Error: ", error);
     return NextResponse.json(

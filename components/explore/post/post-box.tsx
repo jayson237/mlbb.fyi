@@ -1,17 +1,17 @@
 "use client";
 
-import Link from "next/link";
-
-import { Post } from "@prisma/client";
-
-import { ArrowBigDown, ArrowBigUp, MessageCircle, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import LoadingDots from "@/components/shared/icons/loading-dots";
-import { SafeUser } from "@/types";
+import Link from "next/link";
+
 import { postFetcher } from "@/lib/utils";
-import useSWR from "swr";
+import { SafeUser } from "@/types";
+import { Post } from "@prisma/client";
 import useMut from "@/lib/state/useMut";
+import useSWR from "swr";
+
+import { ArrowBigDown, ArrowBigUp, MessageCircle, Star } from "lucide-react";
+import LoadingDots from "@/components/shared/icons/loading-dots";
 import TimeStamp from "../../shared/time-stamp";
 
 interface PostBoxProps {

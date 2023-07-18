@@ -23,10 +23,10 @@ import TimeStamp from "@/components/shared/time-stamp";
 
 interface ReplyBoxProps {
   reply: Reply;
-  commentId: string;
+  postId: string;
   userId?: string;
 }
-const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
+const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, postId, userId }) => {
   const { data: image } = useSWR(
     ["/api/comment/pic", reply.userId],
     postFetcher
@@ -161,7 +161,7 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, commentId, userId }) => {
                           </div>
                         }
                       >
-                        <DelReplyButton replyId={reply.id} />
+                        <DelReplyButton postId={postId} replyId={reply.id} />
                       </DialogFit>
                     </div>
                   </div>

@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { Comment } from "@prisma/client";
+import { IFullComment } from "@/types";
+
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import CommentBox from "./comment-box";
 import Loading from "@/components/shared/loading";
@@ -9,7 +10,7 @@ import Loading from "@/components/shared/loading";
 interface CommentListProps {
   postId: string;
   userId?: string;
-  comments: any;
+  comments: IFullComment[];
 }
 
 const CommentList: React.FC<CommentListProps> = ({
@@ -25,7 +26,7 @@ const CommentList: React.FC<CommentListProps> = ({
     return (
       <GradiantCard variant="clean" className=" mt-1.5">
         <ul role="list">
-          {comments.map((comment: Comment, index: number) => (
+          {comments.map((comment: IFullComment, index: number) => (
             <React.Fragment key={comment.id}>
               <CommentBox comment={comment} postId={postId} userId={userId} />
               {index !== comments.length - 1 && (

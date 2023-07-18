@@ -1,13 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import { SafeUser } from "@/types";
+
+import { Search } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger } from "@/components/shared/tabs";
+import { Input } from "@/components/shared/input";
 import PostContainer from "./post-container";
 import PostList from "./post-list";
-import { Tabs, TabsList, TabsTrigger } from "@/components/shared/tabs";
-import { Search } from "lucide-react";
-import { useState } from "react";
-import UserList from "./user-list";
-import { Input } from "@/components/shared/input";
+import UserList from "../user-list";
 
 interface PostListContainerProps {
   currentUser?: SafeUser | null;
@@ -54,7 +55,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
     setSelectedSortMode(selectedSort);
   };
 
-  console.log(searchTags);
+  // console.log(searchTags);
   return (
     <div className="no-scrollbar max-h-[90vh] w-full overflow-scroll md:w-[2000px]">
       <div className="mb-2">
