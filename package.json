@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "npx prisma generate && next dev -p 3010",
     "build": "next build",
-    "start": "next start -p 3010",
-    "local": "next build && next start -p 3010",
+    "start": "next start",
+    "local": "next build && next start",
     "lint": "eslint ./components ./app ./lib .",
     "lint:debug": "eslint ./app --debug",
     "lint:fix": "eslint . --fix"

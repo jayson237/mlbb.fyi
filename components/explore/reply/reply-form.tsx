@@ -5,16 +5,21 @@ import { toast } from "sonner";
 
 import { SendIcon } from "lucide-react";
 import LoadingDots from "@/components/shared/icons/loading-dots";
-import useMutCom from "@/lib/state/useMutCom";
+import useMut from "@/lib/state/useMut";
 import useAutosizeTextArea from "@/lib/state/useAutosizeTextArea";
 
-interface CommentProps {
+interface ReplyProps {
   postId: string;
   commentId: string;
+  onReplied: () => void;
 }
 
-const ReplyForm: React.FC<CommentProps> = ({ postId, commentId }) => {
-  const togMut = useMutCom();
+const ReplyForm: React.FC<ReplyProps> = ({
+  postId,
+  commentId,
+  onReplied,
+}) => {
+  const togMut = useMut();
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -43,6 +48,7 @@ const ReplyForm: React.FC<CommentProps> = ({ postId, commentId }) => {
             setLoading(false);
             toast.error(msg.message);
           } else {
+            onReplied();
             setLoading(false);
             setValue("");
             toast.success(msg.message);
@@ -53,7 +59,7 @@ const ReplyForm: React.FC<CommentProps> = ({ postId, commentId }) => {
           }
         }}
       >
-        <div className="flex flex-row items-end">
+        <div className="mb-4 flex flex-row items-end">
           <textarea
             id="review-text"
             className="w-full resize-none overflow-hidden rounded-lg border-b border-slate-700 bg-transparent px-3 py-2 text-slate-200 outline-none transition-all duration-500 focus:outline-none"

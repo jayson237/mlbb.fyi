@@ -1,18 +1,20 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { toast } from "sonner";
 import useSWR from "swr";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Comment } from "@prisma/client";
-import { fetcher } from "@/lib/fetcher-utils";
+import { postFetcher } from "@/lib/utils";
+import { IFullComment } from "@/types";
 
 import {
   ArrowBigDown,
   ArrowBigUp,
   Edit3,
   MessagesSquare,
+  MoreVertical,
   Reply,
   Trash2,
 } from "lucide-react";
@@ -20,28 +22,21 @@ import DelComment from "./del-comment";
 import EditCommentForm from "./edit-comment-form";
 import DialogFit from "@/components/shared/dialog-fit";
 import ReplyForm from "../reply/reply-form";
-import useMutCom from "@/lib/state/useMutCom";
 import ReplyList from "../reply/reply-list";
-import { toast } from "sonner";
 import LoadingDots from "@/components/shared/icons/loading-dots";
+import TimeStamp from "@/components/shared/time-stamp";
 
 interface CommentBoxProps {
-  comment: Comment;
+  comment: IFullComment;
   postId: string;
   userId?: string;
 }
 
 const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
-  const { data: image } = useSWR(["/api/comment/pic", comment.userId], fetcher);
-
-  const togMut = useMutCom();
-  const { data: replies, mutate } = useSWR(
-    ["/api/reply/list", comment.id],
-    fetcher
+  const { data: image } = useSWR(
+    ["/api/comment/pic", comment.userId],
+    postFetcher
   );
-  useEffect(() => {
-    togMut.toogleMutate && mutate();
-  }, [mutate, togMut]);
 
   const isLiked = comment?.likes.includes(userId as string);
   const isDisliked = comment?.dislikes.includes(userId as string);
@@ -56,8 +51,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
   const [isAddingReply, setIsAddingReply] = useState<boolean>(false);
   const [isEnableReplyList, setIsEnableReplyList] = useState<boolean>(false);
 
-  const [isAddReplyHovered, setIsAddReplyHovered] = useState(false);
-  const [isReplyListShowedHovered, setReplyListShowedHovered] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const [expanded, setExpanded] = useState(false);
   const [expandedable, setExpandedable] = useState(false);
@@ -76,6 +70,22 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
     isExpandable() === true ? setExpandedable(true) : setExpandedable(false);
   }, []);
 
+  // useEffect(() => {
+  //   let handler = (event: MouseEvent) => {
+  //     if (
+  //       optionRef.current &&
+  //       !optionRef.current.contains(event.target as Node)
+  //     ) {
+  //       setIsOpen(false);
+  //     }
+  //   };
+  //   document.addEventListener("mousedown", handler);
+
+  //   return () => {
+  //     document.removeEventListener("mousedown", handler);
+  //   };
+  // });
+
   const toggleExpand = () => {
     setExpanded(!expanded);
   };
@@ -84,64 +94,98 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
     setEditActive(false);
   };
 
-  const handleAddReplyHover = () => {
-    setIsAddReplyHovered(!isAddReplyHovered);
+  const handleClick = () => {
+    setIsOpen(!isOpen);
   };
 
-  const handleReplyListShowedHover = () => {
-    setReplyListShowedHovered(!isReplyListShowedHovered);
-  };
+  const dateTime = comment.createdAt.toString().split("T");
+  const date = dateTime[0];
+  const time = dateTime[1].split(".")[0];
 
   return (
     <>
       <div className="flex flex-row items-center justify-between">
         <div className="mb-3 mt-8 flex flex-row items-center">
-          {image && (
-            <Image
-              src={
-                image?.split("/image/upload/")[0] +
-                  "/image/upload/c_fill,h_150,w_150/" +
-                  image?.split("/image/upload/")[1] || "/nana.jpg"
-              }
-              alt=""
-              width={48}
-              height={48}
-              className="mr-4 rounded-full object-none object-left"
-              placeholder="blur"
-              blurDataURL={
-                image?.split("/image/upload/")[0] +
-                "/image/upload/e_blur:400,h_100,w_100/" +
-                image?.split("/image/upload/")[1]
-              }
-            />
-          )}
+          <Image
+            src={
+              image === ""
+                ? "/nana.jpg"
+                : image?.includes("/image/upload")
+                ? `${
+                    image?.split("/image/upload/")[0]
+                  }/image/upload/c_fill,h_150,w_150/${
+                    image?.split("/image/upload/")[1]
+                  }`
+                : image || "/nana.jpg"
+            }
+            alt=""
+            width={48}
+            height={48}
+            className="mr-4 h-12 w-12 rounded-full object-none object-left"
+            placeholder="blur"
+            blurDataURL={
+              image?.split("/image/upload/")[0] +
+              "/image/upload/e_blur:400,h_100,w_100/" +
+              image?.split("/image/upload/")[1]
+            }
+          />
+
           <Link href={`/profile/${comment.createdBy}/statistics`}>
-            <p className="font-heading text-xl">{comment?.createdBy}</p>
+            <p className="text-lg mt-0.5 font-heading hover:underline">
+              {comment?.createdBy}
+            </p>
           </Link>
+          <div className="mb-2.5 ml-4">
+            <TimeStamp date={date.split("-")} time={time.split(":")} />
+          </div>
         </div>
-        {userId === comment.userId && (
-          <div className="mt-3 flex flex-row">
-            <button onClick={() => setEditActive(!editActive)}>
-              {editActive ? (
-                <Edit3 className="mr-5 h-5 w-5" />
-              ) : (
-                <Edit3 className="mr-5 h-5 w-5 ease-in-out hover:text-navy-400 hover:duration-300" />
+        {userId === comment.userId && !editActive && (
+          <div className="mb-8 mt-3 flex cursor-pointer flex-row">
+            <div className="relative inline-block text-left">
+              <button
+                type="button"
+                className="flex h-5 w-5 items-center justify-center rounded-full transition-all ease-in-out hover:text-navy-300 hover:duration-300 focus:outline-none"
+                onClick={handleClick}
+              >
+                <MoreVertical />
+              </button>
+              {isOpen && (
+                <div className="absolute right-0 z-50 mt-2 w-40 origin-top-right">
+                  <div className="rounded-lg bg-lblack py-1" role="none">
+                    <button
+                      className="block px-4 py-2 hover:text-navy-300 hover:duration-300"
+                      onClick={() => {
+                        setEditActive(!editActive);
+                        setIsOpen(!isOpen);
+                      }}
+                    >
+                      <div className="flex flex-row items-center gap-2">
+                        <Edit3 strokeWidth={2} className="h-5 w-5" />
+                        <p>Edit</p>
+                      </div>
+                    </button>
+                    <DialogFit
+                      title="Delete Post"
+                      triggerChild={
+                        <div className="flex flex-row items-center gap-2 px-4 py-2 hover:text-red-400 hover:duration-300">
+                          <Trash2 className="h-5 w-5 ease-in-out" />
+                          <p>Delete</p>
+                        </div>
+                      }
+                    >
+                      <DelComment commentId={comment.id} />
+                    </DialogFit>
+                  </div>
+                </div>
               )}
-            </button>
-            <DialogFit
-              title="Delete Comment"
-              triggerChild={
-                <Trash2 className="h-5 w-5 ease-in-out hover:text-red-400 hover:duration-300" />
-              }
-            >
-              <DelComment commentId={comment.id} />
-            </DialogFit>
+            </div>
           </div>
         )}
       </div>
       {editActive ? (
         <div className="mb-8 ml-16 grow">
           <EditCommentForm
+            postId={postId}
             commentId={comment.id}
             commentBody={comment?.body}
             onCancel={closeEdit}
@@ -169,7 +213,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
           </div>
         </>
       )}
-      <div className="flex flex-row items-center gap-5">
+      <div className="mb-4 flex flex-row items-center gap-5 ">
         <div className="flex flex-row items-center gap-2">
           {loading && (
             <div className="flex">
@@ -206,9 +250,9 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
               }}
             >
               <ArrowBigUp
-                size={32}
                 strokeWidth={0.5}
-                className="transition-all ease-in-out hover:text-green-600 hover:duration-300"
+                className="h-6 w-6
+                transition-all ease-in-out hover:text-green-600 hover:duration-300 md:h-8 md:w-8"
               />
             </button>
           )}
@@ -236,14 +280,14 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
               }}
             >
               <ArrowBigUp
-                size={32}
                 strokeWidth={0}
-                className="fill-green-600"
+                className="h-6 w-6 fill-green-600
+                md:h-8 md:w-8"
               />
             </button>
           )}
           {!loading && (
-            <p>
+            <p className="text-[10px] md:text-sm">
               {totalVotes >= 1000
                 ? `${(totalVotes - (totalVotes % 100)) / 1000}k`
                 : totalVotes}
@@ -279,9 +323,9 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
               }}
             >
               <ArrowBigDown
-                size={32}
                 strokeWidth={0.5}
-                className="transition-all ease-in-out hover:text-red-600 hover:duration-300"
+                className="h-6 w-6
+                transition-all ease-in-out hover:text-red-600 hover:duration-300 md:h-8 md:w-8"
               />
             </button>
           )}
@@ -309,64 +353,48 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
               }}
             >
               <ArrowBigDown
-                size={32}
                 strokeWidth={0}
-                className="fill-red-600"
+                className="h-6 w-6 fill-red-600 md:h-8 md:w-8"
               />
             </button>
           )}
         </div>
-        <div>
-          <button
-            className="flex flex-row items-center"
-            onClick={() => setIsEnableReplyList(!isEnableReplyList)}
-            onMouseEnter={handleReplyListShowedHover}
-            onMouseLeave={handleReplyListShowedHover}
-          >
-            <MessagesSquare
-              className={`mr-2 h-5 w-5 ${
-                isReplyListShowedHovered ? "text-navy-400" : ""
-              }`}
-            />
-            {replies && (
-              <p
-                className={`text-sm ${
-                  isReplyListShowedHovered ? "text-navy-400" : ""
-                }`}
-              >
-                {isEnableReplyList ? "Unshow" : "Show"} {replies[1]}{" "}
-                {replies[1] === 1 ? "reply" : "replies"}
-              </p>
-            )}
-          </button>
-        </div>
-        <div>
-          <button
-            className="flex flex-row items-center"
-            onClick={() => setIsAddingReply(!isAddingReply)}
-            onMouseEnter={handleAddReplyHover}
-            onMouseLeave={handleAddReplyHover}
-          >
-            <Reply
-              className={`mr-2 h-5 w-5 ${
-                isAddReplyHovered ? "text-navy-400" : ""
-              }`}
-            />
-            <p
-              className={`text-sm ${isAddReplyHovered ? "text-navy-400" : ""}`}
+        {comment.replies && comment.replies.length !== 0 && (
+          <div>
+            <button
+              className="flex cursor-pointer flex-row items-center transition-all ease-in-out hover:text-navy-300 hover:duration-300"
+              onClick={() => setIsEnableReplyList(!isEnableReplyList)}
             >
-              Reply
-            </p>
+              <MessagesSquare className="mr-2 h-5 w-5" />
+
+              <p className="text-[10px] md:text-sm">
+                {isEnableReplyList ? "Unshow" : "Show"} {comment.replies.length}{" "}
+                {comment.replies.length === 1 ? "reply" : "replies"}
+              </p>
+            </button>
+          </div>
+        )}
+        <div>
+          <button
+            className="flex cursor-pointer flex-row items-center transition-all ease-in-out hover:text-navy-300 hover:duration-300"
+            onClick={() => setIsAddingReply(!isAddingReply)}
+          >
+            <Reply className="mr-2 h-5 w-5" />
+            <p className="text-[10px] md:text-sm">Reply</p>
           </button>
         </div>
       </div>
       {isAddingReply && (
         <div className="mt-2">
-          <ReplyForm postId={postId} commentId={comment.id} />
+          <ReplyForm
+            postId={postId}
+            commentId={comment.id}
+            onReplied={() => setIsAddingReply(false)}
+          />
         </div>
       )}
-      {isEnableReplyList && replies && (
-        <ReplyList userId={userId} replies={replies[0]} />
+      {isEnableReplyList && comment.replies && (
+        <ReplyList userId={userId} postId={postId} replies={comment.replies} />
       )}
     </>
   );

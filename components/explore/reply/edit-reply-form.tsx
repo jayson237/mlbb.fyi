@@ -3,17 +3,18 @@
 import useAutosizeTextArea from "@/lib/state/useAutosizeTextArea";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { revalPath } from "@/lib/revalidate";
 
 import { Button } from "@/components/shared/button";
 import LoadingDots from "@/components/shared/icons/loading-dots";
 
-interface EditCommentProps {
+interface EditReplyProps {
   replyId: string;
   replyBody: string;
   onCancel: () => void;
 }
 
-const EditReplyForm: React.FC<EditCommentProps> = ({
+const EditReplyForm: React.FC<EditReplyProps> = ({
   replyId,
   replyBody,
   onCancel,
@@ -67,9 +68,10 @@ const EditReplyForm: React.FC<EditCommentProps> = ({
               setLoading(false);
               toast.error(msg.message);
             } else {
+              handleCancel();
+              revalPath("/explore" + replyId);
               setLoading(false);
               toast.success(msg.message);
-              window.location.reload();
             }
           }}
         >

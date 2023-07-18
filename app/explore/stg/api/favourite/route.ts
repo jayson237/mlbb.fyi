@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   if (!currentUser) {
     return NextResponse.json(
       {
-        message: "User not found",
+        message: "Pleese log in first",
       },
       {
         status: 400,
@@ -73,7 +73,7 @@ export async function POST(req: Request) {
 
   return NextResponse.json(
     {
-      message: "Post has been set to favourites",
+      message: "Post has been saved to favourites",
     },
     {
       status: 200,

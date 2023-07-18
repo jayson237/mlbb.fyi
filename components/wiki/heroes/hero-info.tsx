@@ -125,15 +125,15 @@ export default function HeroFyi({
                     alt={hero?.role[0] || ""}
                     width={25}
                     height={25}
-                    className="mb-[5px] h-[25px] w-[25px]"
+                    className="mb-1 h-[18px] w-[18px] md:h-[25px] md:w-[25px]"
                   />
                   {hero?.role[1] && (
                     <Image
                       src={`https://res.cloudinary.com/dvm5vog2j/image/upload/v1686042255/mlbb.fyi/heroRole/${hero?.role[1]}.webp`}
                       alt={hero?.role[1] || ""}
                       width={25}
-                      height={20}
-                      className="mb-[5px] h-[25px] w-[25px]"
+                      height={25}
+                      className="mb-1 h-[18px] w-[18px] md:h-[25px] md:w-[25px]"
                     />
                   )}
                 </div>
@@ -415,7 +415,7 @@ export default function HeroFyi({
         </div>
       </GradiantCard>
 
-      <GradiantCard className="mb-8 mt-1.5 h-fit w-full" variant="clean">
+      <GradiantCard className="mt-1.5 h-fit w-full" variant="clean">
         <p className="font-heading text-xl md:text-3xl">Passive</p>
         <div className="my-4">
           <div className="flex flex-row gap-2">

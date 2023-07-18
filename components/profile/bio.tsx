@@ -9,7 +9,7 @@ import useSWR from "swr";
 import { SafeUser } from "@/types";
 import { MlbbAcc } from "@prisma/client";
 import { User } from "@prisma/client";
-import { fetcher } from "@/lib/utils";
+import { getFetcher } from "@/lib/utils";
 
 import { GradiantCard } from "../shared/gradiant-card";
 import { Button } from "../shared/button";
@@ -38,7 +38,7 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
     followers: string[];
     name: string;
     desc: string;
-  }>(`/api/user/basic-info?username=${params?.username}`, fetcher);
+  }>(`/api/user/basic-info?username=${params?.username}`, getFetcher);
 
   const username = user?.username;
   const isCurrUserFollowing = currentUser?.following.includes(

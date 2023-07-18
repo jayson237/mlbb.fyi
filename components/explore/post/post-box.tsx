@@ -1,19 +1,18 @@
 "use client";
 
-import Link from "next/link";
-
-import { Post } from "@prisma/client";
-
-import { ArrowBigDown, ArrowBigUp, MessageCircle, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import LoadingDots from "@/components/shared/icons/loading-dots";
+import Link from "next/link";
+
+import { postFetcher } from "@/lib/utils";
 import { SafeUser } from "@/types";
-import { fetcher } from "@/lib/fetcher-utils";
+import { Post } from "@prisma/client";
+import useMut from "@/lib/state/useMut";
 import useSWR from "swr";
-import useMutCom from "@/lib/state/useMutCom";
-import { useRouter } from "next/navigation";
-import TimeStamp from "./time-stamp";
+
+import { ArrowBigDown, ArrowBigUp, MessageCircle, Star } from "lucide-react";
+import LoadingDots from "@/components/shared/icons/loading-dots";
+import TimeStamp from "../../shared/time-stamp";
 
 interface PostBoxProps {
   post: Post;
@@ -23,10 +22,10 @@ interface PostBoxProps {
 }
 
 const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
-  const togMut = useMutCom();
+  const togMut = useMut();
   const { data: comments, mutate } = useSWR(
     ["/api/comment/list", post.id],
-    fetcher
+    postFetcher
   );
 
   useEffect(() => {
@@ -35,6 +34,7 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
 
   const isLiked = post?.likes.includes(currUser?.id as string);
   const isDisliked = post?.dislikes.includes(currUser?.id as string);
+  const isStarred = currUser?.favourite.includes(post.id as string);
 
   const [like, setLike] = useState<boolean>(isLiked);
   const [dislike, setDislike] = useState<boolean>(isDisliked);
@@ -54,20 +54,46 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
     >
       <div className="flex min-w-0 flex-col">
         <Link href={`/explore/${post.id}`}>
-          <p className="text-white-500 flex text-xl font-semibold leading-6 ease-in-out hover:text-navy-200 hover:duration-300">
+          <p className="text-white-500 mt-0.5 flex text-xl font-semibold leading-6 ease-in-out hover:text-navy-200 hover:duration-300">
             {post.title}
           </p>
         </Link>
         <div className="flex flex-row items-center gap-1">
           <TimeStamp date={date.split("-")} time={time.split(":")} />
+          <p className="text-xs mt-2 truncate leading-5 text-gray-500 ease-in-out">
+            by
+          </p>
           <Link href={`/profile/${post.createdBy}/statistics`}>
             <p className="text-xs mt-2 truncate leading-5 text-gray-500 ease-in-out hover:text-navy-300 hover:underline">
               {post.createdBy}
             </p>
           </Link>
         </div>
-        <div className="mt-4 flex flex-row items-center">
-          <Star size={16} strokeWidth={0.5} />
+        <div>
+          <ul role="list" className="flex flex-row items-center gap-1">
+            {post.tags?.map((tag: string) => (
+              <p
+                className="text-xs mt-2 truncate leading-5 text-navy-300 ease-in-out"
+                key={tag}
+              >{`#${tag}`}</p>
+            ))}
+          </ul>
+        </div>
+        <div
+          className={`${
+            post.tags.length === 0 ? "mt-9" : "mt-4"
+          } flex flex-row items-center`}
+        >
+          {!isStarred ? (
+            <Star size={24} strokeWidth={0.5} />
+          ) : (
+            <Star
+              size={24}
+              color="#FACC18"
+              strokeWidth={2}
+              className="fill-yellow-300"
+            />
+          )}
           <p className="ml-2 mr-8 flex">
             {post.favourites.length >= 1000
               ? `${
@@ -76,7 +102,8 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
                 }k`
               : post.favourites.length}
           </p>
-          <MessageCircle size={16} strokeWidth={0.5} />
+
+          <MessageCircle size={24} strokeWidth={0.5} />
           {comments && (
             <p className="ml-2 flex">
               {comments.length >= 1000
@@ -86,7 +113,7 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
           )}
         </div>
       </div>
-      <div className="flex min-w-0 flex-col items-center">
+      <div className="mb-2 flex min-w-0 flex-col items-center space-y-3">
         {loading && (
           <div className="mr-3 mt-10 flex">
             <LoadingDots color="#FAFAFA" />

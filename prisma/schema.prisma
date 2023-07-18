@@ -195,6 +195,7 @@ model Post {
   dislikes   String[]
   totalVotes Int      @default(0)
   favourites String[]
+  tags       String[]
 
   user User @relation(fields: [userId, createdBy], references: [id, username], onDelete: Cascade)
 

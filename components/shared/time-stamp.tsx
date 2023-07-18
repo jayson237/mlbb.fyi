@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 interface TimeStampProps {
   date: string[];
   time: string[];
@@ -55,36 +57,60 @@ function getTimeDiff(
   return [hourDiff, minDiff];
 }
 
+function addOrSubtractOneDay(date: string[], diff: number) {
+  const year = Number(date[0]);
+  const month = Number(date[1]);
+  const day = Number(date[2]);
+
+  const newDate = new Date(year, month - 1, day + diff);
+  const currDate = [
+    newDate.getFullYear().toString(),
+    (newDate.getMonth() + 1).toString(),
+    newDate.getDate().toString(),
+  ];
+
+  // console.log("new", currDate);
+
+  return currDate;
+}
+
 function handleTimeZone(time: string[], region: string) {
   if (region[3] === "+") {
     const diff = region.split("+");
     const result = Number(time[0]) + Number(diff[1]) / 100;
 
     if (result >= 24) {
-      return String(result - 24);
+      return [String(result - 24), "+"];
     }
-    return String(result);
+    return [String(result), "no change"];
   }
 
   const diff = region.split("-");
   const result = Number(time[0]) - Number(diff[1]) / 100;
 
   if (result < 0) {
-    return String(result + 24);
+    return [String(result + 24), "-"];
   }
-  return String(result);
+  return [String(result), "no change"];
 }
 
 const TimeStamp: React.FC<TimeStampProps> = ({ date, time }) => {
-  const currentDate = new Date();
+  const newDate = new Date();
   const currDate = [
-    (currentDate.getMonth() + 1).toString(),
-    currentDate.getDate().toString(),
-    currentDate.getFullYear().toString(),
+    (newDate.getMonth() + 1).toString(),
+    newDate.getDate().toString(),
+    newDate.getFullYear().toString(),
   ];
   const currTime = new Date().toTimeString().split(":");
   const region = currTime[2].split(" ");
-  time[0] = handleTimeZone(time, region[1]);
+  const temp = handleTimeZone(time, region[1]);
+  time[0] = temp[0];
+
+  if (temp[1] === "+") {
+    date = addOrSubtractOneDay(date, 1);
+  } else if (temp[1] === "-") {
+    date = addOrSubtractOneDay(date, -1);
+  }
 
   const diff = getDifference(date, currDate);
 
@@ -95,11 +121,11 @@ const TimeStamp: React.FC<TimeStampProps> = ({ date, time }) => {
       <div>
         <p className="text-xs mt-2 truncate leading-5 text-gray-500 ease-in-out">
           {timeDiff[0] > 0 &&
-            `${timeDiff[0]} ${timeDiff[0] === 1 ? "hour" : "hours"} ago by`}
-          {timeDiff[0] === 0 && timeDiff[1] === 0 && "Recently by"}
+            `${timeDiff[0]} ${timeDiff[0] === 1 ? "hour" : "hours"} ago`}
+          {timeDiff[0] === 0 && timeDiff[1] === 0 && "Recently"}
           {timeDiff[0] === 0 &&
             timeDiff[1] !== 0 &&
-            `${timeDiff[1]} ${timeDiff[1] === 1 ? "minute" : "minutes"} ago by`}
+            `${timeDiff[1]} ${timeDiff[1] === 1 ? "minute" : "minutes"} ago`}
         </p>
       </div>
     );
@@ -110,10 +136,10 @@ const TimeStamp: React.FC<TimeStampProps> = ({ date, time }) => {
       <div>
         <p className="text-xs mt-2 truncate leading-5 text-gray-500 ease-in-out">
           {Number(currTime[0]) + 24 - Number(time[0]) > 24
-            ? "1 day ago by"
+            ? "1 day ago"
             : `${Number(currTime[0]) + 24 - Number(time[0])} ${
                 Number(currTime[0]) - Number(time[0]) === 1 ? "hour" : "hours"
-              } ago by`}
+              } ago`}
         </p>
       </div>
     );
@@ -125,13 +151,13 @@ const TimeStamp: React.FC<TimeStampProps> = ({ date, time }) => {
         {diff >= 365 &&
           `${Math.floor(diff / 365)} ${
             Math.floor(diff / 365) === 1 ? "year" : "years"
-          } ago by`}
+          } ago`}
         {Math.floor(diff * 0.032855) >= 1 &&
           `${Math.floor(diff * 0.032855)} ${
             Math.floor(diff * 0.032855) === 1 ? "month" : "months"
-          } ago by`}
+          } ago`}
         {Math.floor(diff * 0.032855) < 1 &&
-          `${diff} ${diff === 1 ? "day" : "days"} ago by`}
+          `${diff} ${diff === 1 ? "day" : "days"} ago`}
       </p>
     </div>
   );

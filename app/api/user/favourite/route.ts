@@ -2,6 +2,16 @@ import prisma from "@/lib/prismadb";
 import { Post } from "@prisma/client";
 import { NextResponse } from "next/server";
 
+function compare(a: Post, b: Post) {
+  if (a.createdAt > b.createdAt) {
+    return -1;
+  }
+  if (a.createdAt < b.createdAt) {
+    return 1;
+  }
+  return 0;
+}
+
 export async function POST(req: Request) {
   try {
     const { data }: { data: string } = await req.json();
@@ -30,7 +40,7 @@ export async function POST(req: Request) {
         });
     }
 
-    posts.reverse();
+    posts.sort(compare);
 
     return NextResponse.json(posts, {
       status: 200,

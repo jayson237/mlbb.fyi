@@ -115,7 +115,7 @@ export async function POST(req: Request) {
 
       return NextResponse.json(
         {
-          message: "Post has been set to be downvoted.",
+          message: "Post has been downvoted",
         },
         {
           status: 200,
@@ -146,7 +146,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       {
-        message: "Post has been set to be downvoted.",
+        message: "Post has been downvoted",
       },
       {
         status: 200,

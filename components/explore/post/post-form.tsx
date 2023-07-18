@@ -1,19 +1,19 @@
 "use client";
 
-import useAutosizeTextArea from "@/lib/state/useAutosizeTextArea";
-
 import { useCallback, useRef, useState } from "react";
+import { FileRejection, useDropzone } from "react-dropzone";
 import { toast } from "sonner";
 import Image from "next/image";
 
 import { SafeUser } from "@/types";
+import useAutosizeTextArea from "@/lib/state/useAutosizeTextArea";
 
 import { Button } from "@/components/shared/button";
 import { GradiantCard } from "@/components/shared/gradiant-card";
-import LoadingDots from "@/components/shared/icons/loading-dots";
 import { Paperclip } from "lucide-react";
+import { Label } from "@/components/shared/label";
 import DialogFit from "@/components/shared/dialog-fit";
-import { FileRejection, useDropzone } from "react-dropzone";
+import LoadingDots from "@/components/shared/icons/loading-dots";
 
 const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
   const [title, setTitle] = useState<string>("");
@@ -25,6 +25,8 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
   const [titleCharacterCount, setTitleCharacterCount] = useState<number>(0);
   const [messageCharacterCount, setMessageCharacterCount] = useState<number>(0);
   useState<boolean>(false);
+
+  const [tags, setTags] = useState("");
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   useAutosizeTextArea(textAreaRef.current, message);
@@ -98,11 +100,20 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
           className="mt-3 flex w-full flex-col gap-3"
           onSubmit={async (e) => {
             e.preventDefault();
+            let array: string[] = [];
+            if (tags !== "") {
+              const wordsInsideQuotes = tags.replace(/'/g, "");
+              const elements = wordsInsideQuotes.split(",");
+
+              array = elements.map((element) => element.trim().toLowerCase());
+            }
+
             setLoading(true);
             const fields = {
               title: title,
               message: message,
               image: imageUrl,
+              tags: array.slice(0, 3),
             };
 
             const set = await fetch("/explore/stg/api/post", {
@@ -116,6 +127,7 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
             } else {
               setLoading(false);
               toast.success("Successfully posted! Please wait.");
+              // revalPath("/explore");
               window.location.reload();
             }
           }}
@@ -164,9 +176,23 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
               </p>
             )}
           </div>
+          <div className="space-y-1">
+            <Label htmlFor="tags">Tags (Optional)</Label>
+            <input
+              type="text"
+              placeholder={"Enter up to 3 tags (e.g. 'heroes', 'meta')"}
+              value={tags}
+              onChange={(e) => {
+                const inputValue = e.target.value;
+                setTags(inputValue);
+              }}
+              className="w-full resize-none overflow-hidden rounded-lg border border-slate-700 bg-transparent p-3 text-sm text-slate-200 outline-none transition-all duration-100 focus:outline-none focus:ring"
+            />
+          </div>
+
           <div className="flex items-center justify-end gap-2">
             <DialogFit
-              title="Choose profile picture (Max 5 MB)"
+              title="Choose image (Max 5 MB)"
               triggerChild={
                 <Paperclip className="mr-2 mt-1 cursor-pointer transition-all ease-in-out hover:text-navy-300 hover:duration-300" />
               }
