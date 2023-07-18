@@ -9,8 +9,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { SafeUser } from "@/types";
-import { Post, User } from "@prisma/client";
-import { getFetcher } from "@/lib/utils";
+import { Post, User, Comment } from "@prisma/client";
 
 import {
   ArrowLeftCircle,
@@ -32,6 +31,15 @@ import { GradiantCard } from "@/components/shared/gradiant-card";
 
 interface PostContentProp {
   post: Post;
+  postInfo:
+    | {
+        likes: string[];
+        dislikes: string[];
+        favourites: string[];
+        comments: Comment[];
+      }
+    | undefined;
+  mutate?: () => void;
   user: User | null;
   currUser?: SafeUser | null;
   comments: any;
@@ -39,16 +47,12 @@ interface PostContentProp {
 
 const PostContent: React.FC<PostContentProp> = ({
   post,
+  postInfo,
+  mutate,
   user,
   currUser,
   comments,
 }) => {
-  const { data: postInfo, mutate } = useSWR<{
-    likes: string[];
-    dislikes: string[];
-    favourites: string[];
-  }>(`api/post/info?postId=${post.id}`, getFetcher);
-
   const router = useRouter();
 
   const isLiked = postInfo?.likes.includes(currUser?.id as string);
@@ -407,7 +411,7 @@ const PostContent: React.FC<PostContentProp> = ({
                       toast.error(msg.message);
                       setStarLoading(false);
                     } else {
-                      mutate();
+                      mutate;
                       setFavourite(true);
                       setStarLoading(false);
                       toast.success(msg.message);
@@ -443,7 +447,7 @@ const PostContent: React.FC<PostContentProp> = ({
                       toast.error(msg.message);
                       setStarLoading(false);
                     } else {
-                      mutate();
+                      mutate;
                       setFavourite(false);
                       setStarLoading(false);
                       toast.success(msg.message);

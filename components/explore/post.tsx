@@ -3,10 +3,10 @@
 import { useEffect } from "react";
 import useSWR from "swr";
 import useMut from "@/lib/state/useMut";
-import { postFetcher } from "@/lib/utils";
+import { getFetcher } from "@/lib/utils";
 
 import { SafeUser } from "@/types";
-import { Post, User } from "@prisma/client";
+import { Comment, Post, User } from "@prisma/client";
 
 import PostContent from "@/components/explore/post/post-content";
 import CommentList from "./comment/comment-list";
@@ -19,22 +19,29 @@ interface PostProps {
 }
 
 const Post: React.FC<PostProps> = ({ currentUser, post, user }) => {
-  const togMut = useMut();
-  const { data: comments, mutate } = useSWR(
-    ["/api/comment/list", post.id],
-    postFetcher
-  );
-  useEffect(() => {
-    togMut.toogleMutate && mutate();
-  }, [mutate, togMut]);
+  // const togMut = useMut();
+
+  // Mutable post info
+  const { data: postInfo, mutate } = useSWR<{
+    likes: string[];
+    dislikes: string[];
+    favourites: string[];
+    comments: Comment[];
+  }>(`api/post/info?postId=${post.id}`, getFetcher);
+
+  // useEffect(() => {
+  //   togMut.toogleMutate && mutate();
+  // }, [mutate, togMut]);
 
   return (
     <>
       <PostContent
         post={post}
+        postInfo={postInfo}
+        mutate={mutate}
         user={user}
         currUser={currentUser}
-        comments={comments}
+        comments={postInfo?.comments}
       />
       {currentUser && (
         <CommentForm postId={post?.id || ""} img={currentUser?.image || ""} />
@@ -42,7 +49,7 @@ const Post: React.FC<PostProps> = ({ currentUser, post, user }) => {
       <CommentList
         postId={post?.id || ""}
         userId={currentUser?.id}
-        comments={comments}
+        comments={postInfo?.comments}
       />
     </>
   );

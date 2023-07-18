@@ -51,7 +51,7 @@ export default function LayoutWiki({ children }: LayoutWikiProps) {
 
       <Tabs value={selectedTab} defaultValue="heroes" className="mt-4 w-full">
         <div className="no-scrollbar h-[52px] overflow-x-scroll">
-          <TabsList className="flex shrink-0 space-x-4">
+          <TabsList className="flex shrink-0 space-x-1">
             {WikiTabList.map((item, i) => (
               <Link href={item.href} key={i} scroll={false}>
                 <TabsTrigger

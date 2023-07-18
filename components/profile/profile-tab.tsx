@@ -39,7 +39,7 @@ const ProfileTab: React.FC<ProfileTabProps> = ({
       className="w-full"
     >
       <div className="no-scrollbar flex h-[52px] justify-center overflow-x-scroll md:justify-start">
-        <TabsList className="flex shrink-0 space-x-2">
+        <TabsList className="flex shrink-0 space-x-1">
           {ProfileTabList.map((item, i) => (
             <Link
               href={`/profile/${isExistingUser?.username + item.href}`}
