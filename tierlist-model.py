@@ -212,9 +212,12 @@ tier_list = {hero: tier for hero, tier in sorted_tiers}
 filtered_tier_list = {hero: tier for hero, tier in tier_list.items() if hero != "Yi Sun-Shin"}
 
 for hero, tier in filtered_tier_list.items():
-    print(f"{hero}: {tier}")
+    if tier == "Unknown":
+        existing_tier = hero_tiers.get(hero, "Unknown")
+        filtered_tier_list[hero] = existing_tier
+    print(f"{hero}: {filtered_tier_list[hero]}")
 
-filtered_data = [{"name": hero, "tier": tier} for hero, tier in tier_list.items() if hero != "Yi Sun-Shin"]
+filtered_data = [{"name": hero, "tier": tier} for hero, tier in filtered_tier_list.items() if hero != "Yi Sun-Shin"]
 
 # Call the update_heroes function to update the Hero collection
 update_heroes()
