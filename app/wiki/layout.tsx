@@ -19,10 +19,6 @@ const WikiTabList = [
     name: "Statistics",
     href: "/wiki/statistics",
   },
-  // {
-  //   name: "Draft Pick",
-  //   href: "/wiki/draft-pick",
-  // },
   {
     name: "Patches",
     href: "/wiki/patches",

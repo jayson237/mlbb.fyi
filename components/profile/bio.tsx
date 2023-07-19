@@ -132,7 +132,7 @@ const ProfileBio: React.FC<ProfileBioProps> = ({
               )}
             </Button>
           )}
-          <ViewDialog baseInfo={baseInfo} />
+          <ViewDialog baseInfo={baseInfo} currentUser={currentUser} />
           {!mlbbAcc && isOwnProfile && (
             <Button
               className="mt-4 h-8 w-full rounded-2xl px-[10px] py-2"
