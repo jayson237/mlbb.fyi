@@ -14,6 +14,7 @@ import { SafeUser } from "@/types";
 import { AlertTriangle, User } from "lucide-react";
 import Loading from "@/components/shared/loading";
 import LoadingDots from "@/components/shared/icons/loading-dots";
+import { revalPath } from "@/lib/revalidate";
 
 interface UserListProps {
   filter: string;
@@ -81,7 +82,7 @@ const UserList: React.FC<UserListProps> = ({ filter, currentUser }) => {
               return (
                 <div
                   key={user.id}
-                  className={`relative  items-start py-5 ${
+                  className={`relative items-start py-5 ${
                     index + 1 < users.length ? "pb-16" : "pb-12"
                   }`}
                 >
@@ -96,7 +97,7 @@ const UserList: React.FC<UserListProps> = ({ filter, currentUser }) => {
                     <div className="flex w-32 flex-col">
                       <Link
                         className="cursor-pointer text-2xl font-bold duration-300 hover:underline hover:decoration-white hover:underline-offset-2"
-                        href={`/profile/${user.username}`}
+                        href={`/profile/${user.username}/statistics`}
                         target="_blank"
                       >
                         <p className=" font-heading text-[18px]">
@@ -147,7 +148,7 @@ const UserList: React.FC<UserListProps> = ({ filter, currentUser }) => {
                               toast.error(msg.message);
                             } else {
                               mutate();
-                              router.push(`/profile/${username}/statistics`);
+                              revalPath("/explore");
                               setLoading(false);
                               setButtonDisabled(false);
                             }
@@ -183,6 +184,8 @@ const UserList: React.FC<UserListProps> = ({ filter, currentUser }) => {
                               setButtonDisabled(false);
                               toast.error(msg.message);
                             } else {
+                              mutate();
+                              revalPath("/explore");
                               setLoading(false);
                               setButtonDisabled(false);
                             }

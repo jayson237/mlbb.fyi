@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { SafeUser } from "@/types";
+import useOptionStore from "@/lib/state/useOptionStore";
+import useFilterStore from "@/lib/state/useFilterStore";
 
 import { Search } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/shared/tabs";
@@ -32,19 +34,39 @@ const ExploreTabList = [
 const PostListContainer: React.FC<PostListContainerProps> = ({
   currentUser,
 }) => {
-  const [filter, setFilter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [tags, setTags] = useState("");
   const [searchTags, setSearchTags] = useState<string>("");
-  const [selectedIndex, setSelectedIndex] = useState(-3);
   const [selectedSortMode, setSelectedSortMode] = useState("recent");
   const [selectedTab, setSelectedTab] = useState("Recent");
   const [tagCharacterCount, setTagCharacterCount] = useState(0);
   const [isTagInputFocused, setIsTagInputFocused] = useState<boolean>(false);
 
+  // Filter
+  const { filter, setFilter } = useFilterStore();
+  useEffect(() => {
+    const storedFilter = window.sessionStorage.getItem("filter");
+    setFilter(storedFilter || "");
+  }, []);
+
+  useEffect(() => {
+    window.sessionStorage.setItem("filter", filter);
+  }, [filter]);
+
+  // Options
+  const { selectedOption, setSelectedOption } = useOptionStore();
+  useEffect(() => {
+    const storedOption = window.sessionStorage.getItem("selectedOption");
+    setSelectedOption(Number(storedOption) || -3);
+  }, []);
+
+  useEffect(() => {
+    window.sessionStorage.setItem("selectedOption", String(selectedOption));
+  }, [selectedOption]);
+
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedIndex = Number(event.target.value);
-    setSelectedIndex(selectedIndex);
+    const selectedOption = Number(event.target.value);
+    setSelectedOption(selectedOption);
     setSearchTerm("");
     setSearchTags("");
     setFilter("");
@@ -65,7 +87,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
             onSubmit={(e) => {
               e.preventDefault();
 
-              if (selectedIndex !== -2) {
+              if (selectedOption !== -2) {
                 setFilter(searchTerm);
               } else {
                 setFilter("");
@@ -77,9 +99,9 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
               <Input
                 type="text"
                 placeholder={
-                  selectedIndex === -3
+                  selectedOption === -3
                     ? "Search posts..."
-                    : selectedIndex === -2
+                    : selectedOption === -2
                     ? "Search posts with a tag... (Up to 20 characters)"
                     : "Search users..."
                 }
@@ -87,17 +109,17 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
                 onChange={(e) => {
                   const inputValue = e.target.value;
                   setSearchTerm(inputValue);
-                  if (selectedIndex === -2) {
+                  if (selectedOption === -2) {
                     setTagCharacterCount(inputValue.length);
                   }
                 }}
                 className="flex h-9 rounded-l-xl border-r border-hidden"
-                maxLength={selectedIndex === -2 ? 20 : 50}
+                maxLength={selectedOption === -2 ? 20 : 50}
                 onFocus={() =>
-                  selectedIndex === -2 && setIsTagInputFocused(true)
+                  selectedOption === -2 && setIsTagInputFocused(true)
                 }
                 onBlur={() =>
-                  selectedIndex === -2 && setIsTagInputFocused(false)
+                  selectedOption === -2 && setIsTagInputFocused(false)
                 }
               />
               <button>
@@ -107,7 +129,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
           </form>
           <select
             className="h-[2.45rem] w-24 rounded-xl border border-navy-300/50 bg-black p-2 shadow-sm focus:border-navy-600 focus:outline-none focus:ring-1 focus:ring-navy-600"
-            value={selectedIndex}
+            value={selectedOption}
             onChange={handleChange}
           >
             <option value={-3}>Post</option>
@@ -123,10 +145,10 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
           )}
         </div> */}
       </div>
-      {(selectedIndex === -3 || selectedIndex === -2) && currentUser && (
+      {(selectedOption === -3 || selectedOption === -2) && currentUser && (
         <PostContainer currUser={currentUser} />
       )}
-      {(selectedIndex === -3 || selectedIndex === -2) && (
+      {(selectedOption === -3 || selectedOption === -2) && (
         <div className="mt-5 flex flex-col gap-2">
           <Tabs value={selectedTab} className="mt-4 flex w-full">
             <TabsList className="flex shrink-0 space-x-4">
@@ -158,7 +180,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
           />
         </div>
       )}
-      {selectedIndex === -1 && (
+      {selectedOption === -1 && (
         <UserList filter={filter} currentUser={currentUser} />
       )}
     </div>
