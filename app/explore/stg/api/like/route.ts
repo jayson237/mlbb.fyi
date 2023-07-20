@@ -18,13 +18,13 @@ export async function POST(req: Request) {
     );
   }
 
-  const hasLiked = await prisma.post.findFirst({
+  const post = await prisma.post.findFirst({
     where: {
       id: postId,
     },
   });
 
-  if (!postId || !hasLiked) {
+  if (!postId || !post) {
     return NextResponse.json(
       {
         message: "Post not found",
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
     );
   }
 
-  if (hasLiked && !hasLiked.likes.includes(currentUser.id as string)) {
+  if (post && !post.likes.includes(currentUser.id as string)) {
     const set = await prisma.post.update({
       where: {
         id: postId,
@@ -57,8 +57,8 @@ export async function POST(req: Request) {
         }
       );
 
-    if (hasLiked.dislikes.includes(currentUser?.id as string)) {
-      const updatedDislikes = hasLiked.dislikes.filter(
+    if (post.dislikes.includes(currentUser?.id as string)) {
+      const updatedDislikes = post.dislikes.filter(
         (id) => id !== currentUser.id
       );
 
@@ -143,7 +143,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const updatedLikes = hasLiked?.likes.filter((id) => id !== currentUser.id);
+  const updatedLikes = post?.likes.filter((id) => id !== currentUser.id);
 
   if (!updatedLikes) {
     return NextResponse.json(

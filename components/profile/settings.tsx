@@ -214,7 +214,7 @@ const Settings: React.FC<ISettings> = ({ currentUser, mlbbAcc }) => {
 
           <Button
             disabled={
-              (username === currentUser?.username &&
+              ((username === currentUser?.username || username.length < 4) &&
                 description === currentUser?.desc &&
                 link1 === currentUser?.links[0] &&
                 link2 === currentUser?.links[1] &&
