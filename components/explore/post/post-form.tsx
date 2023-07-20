@@ -70,6 +70,7 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
         const response = await fetch(url, {
           method: "POST",
           body: formData,
+          cache: "no-store",
         });
         const result = await response.json();
 
@@ -119,6 +120,7 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
             const set = await fetch("/explore/stg/api/post", {
               method: "POST",
               body: JSON.stringify(fields),
+              cache: "no-store",
             });
             const msg = await set.json();
             if (!set.ok) {
