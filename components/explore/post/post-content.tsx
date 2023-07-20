@@ -264,11 +264,13 @@ const PostContent: React.FC<PostContentProp> = ({
                         setLoading(false);
                         setLike(true);
                         if (dislike) {
+                          revalPath("/explore" + post.id);
                           setDislike(false);
-                          setTotalVotes(totalVotes + 2);
+                          // setTotalVotes(totalVotes + 2);
                           toast.success(msg.message);
                         } else {
-                          setTotalVotes(totalVotes + 1);
+                          revalPath("/explore" + post.id);
+                          // setTotalVotes(totalVotes + 1);
                           toast.success(msg.message);
                         }
                       }
@@ -297,9 +299,10 @@ const PostContent: React.FC<PostContentProp> = ({
                         toast.error(msg.message);
                         setLoading(false);
                       } else {
+                        revalPath("/explore" + post.id);
                         setLoading(false);
                         setLike(false);
-                        setTotalVotes(totalVotes - 1);
+                        // setTotalVotes(totalVotes - 1);
                         toast.success(msg.message);
                       }
                     }}
@@ -337,11 +340,13 @@ const PostContent: React.FC<PostContentProp> = ({
                         setLoading(false);
                         setDislike(true);
                         if (like) {
+                          revalPath("/explore" + post.id);
                           setLike(false);
-                          setTotalVotes(totalVotes - 2);
+                          // setTotalVotes(totalVotes - 2);
                           toast.success(msg.message);
                         } else {
-                          setTotalVotes(totalVotes - 1);
+                          revalPath("/explore" + post.id);
+                          // setTotalVotes(totalVotes - 1);
                           toast.success(msg.message);
                         }
                       }
@@ -370,9 +375,10 @@ const PostContent: React.FC<PostContentProp> = ({
                         toast.error(msg.message);
                         setLoading(false);
                       } else {
+                        revalPath("/explore" + post.id);
                         setLoading(false);
                         setDislike(false);
-                        setTotalVotes(totalVotes + 1);
+                        // setTotalVotes(totalVotes + 1);
                         toast.success(msg.message);
                       }
                     }}
@@ -400,10 +406,10 @@ const PostContent: React.FC<PostContentProp> = ({
                       toast.error(msg.message);
                       setStarLoading(false);
                     } else {
-                      revalPath("/explore" + post.id);
                       setFavourite(true);
                       setStarLoading(false);
                       toast.success(msg.message);
+                      revalPath("/explore" + post.id);
                     }
                   }}
                 >
