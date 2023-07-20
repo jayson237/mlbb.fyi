@@ -48,6 +48,7 @@ const EditPicture: React.FC<EditPictureProps> = ({ currentUser }) => {
     const set = await fetch("/profile/stg/api/edit-picture", {
       method: "POST",
       body: JSON.stringify({ img: imageUrl }),
+      cache: "no-store",
     });
     const msg = await set.json();
     if (!set.ok) {
@@ -82,9 +83,11 @@ const EditPicture: React.FC<EditPictureProps> = ({ currentUser }) => {
         const response = await fetch(url, {
           method: "POST",
           body: formData,
+          cache: "no-store",
         });
         const result = await response.json();
         toast.success("Profile picture uploaded");
+        console.log(result.secure_url);
         updateImage(result.secure_url);
       } else {
         setLoading(false);
