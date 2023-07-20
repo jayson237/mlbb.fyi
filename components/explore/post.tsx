@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { IFullPost, SafeUser } from "@/types";
 import { User } from "@prisma/client";
 
@@ -14,6 +15,13 @@ interface PostProps {
 }
 
 const Post: React.FC<PostProps> = ({ currentUser, post, user }) => {
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (loading) {
+      setLoading(false);
+    }
+  }, [loading]);
   return (
     <>
       <PostContent
