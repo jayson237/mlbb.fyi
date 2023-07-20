@@ -87,7 +87,7 @@ const EditPicture: React.FC<EditPictureProps> = ({ currentUser }) => {
         });
         const result = await response.json();
         toast.success("Profile picture uploaded");
-        console.log(result.secure_url);
+        // console.log(result.secure_url);
         updateImage(result.secure_url);
       } else {
         setLoading(false);
