@@ -28,6 +28,7 @@ import LoadingDots from "@/components/shared/icons/loading-dots";
 import DialogFit from "@/components/shared/dialog-fit";
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import { revalPath } from "@/lib/revalidate";
+import { cn } from "@/lib/utils";
 
 interface PostContentProp {
   post: Post;
@@ -50,6 +51,10 @@ const PostContent: React.FC<PostContentProp> = ({
 
   const [like, setLike] = useState<boolean>(isLiked);
   const [dislike, setDislike] = useState<boolean>(isDisliked);
+  useEffect(() => {
+    setLike(post?.likes.includes(currUser?.id as string));
+    setDislike(post?.dislikes.includes(currUser?.id as string));
+  }, [post]);
   const [totalVotes, setTotalVotes] = useState<number>(post.totalVotes);
 
   const [editActive, setEditActive] = useState<boolean>(false);
@@ -108,6 +113,27 @@ const PostContent: React.FC<PostContentProp> = ({
   const handleClick = () => {
     setIsOpen(!isOpen);
   };
+
+  async function handleLikeDislike(action: string) {
+    setLoading(true);
+
+    const set = await fetch("/explore/stg/api/post-action?action=" + action, {
+      method: "POST",
+      body: JSON.stringify({
+        postId: post.id,
+      }),
+    });
+    const msg = await set.json();
+
+    if (!set.ok) {
+      toast.error(msg.message);
+      setLoading(false);
+    } else {
+      setLoading(false);
+      revalPath("/explore/" + post.id);
+      toast.success(msg.message);
+    }
+  }
 
   return (
     <>
@@ -240,154 +266,38 @@ const PostContent: React.FC<PostContentProp> = ({
               } flex flex-row items-center`}
             >
               <div className="mr-4 flex flex-row items-center gap-2">
-                {loading && (
-                  <div className="flex">
+                {loading ? (
+                  <div className="mr-3 mt-10 flex">
                     <LoadingDots color="#FAFAFA" />
                   </div>
-                )}
-                {!loading && !like && (
-                  <button
-                    onClick={async () => {
-                      setLoading(true);
-                      const fields = {
-                        postId: post.id,
-                      };
-                      const set = await fetch("/explore/stg/api/like", {
-                        method: "POST",
-                        body: JSON.stringify(fields),
-                      });
-                      const msg = await set.json();
-                      if (!set.ok) {
-                        toast.error(msg.message);
-                        setLoading(false);
-                      } else {
-                        setLoading(false);
-                        setLike(true);
-                        if (dislike) {
-                          revalPath("/explore" + post.id);
-                          setDislike(false);
-                          // setTotalVotes(totalVotes + 2);
-                          toast.success(msg.message);
-                        } else {
-                          revalPath("/explore" + post.id);
-                          // setTotalVotes(totalVotes + 1);
-                          toast.success(msg.message);
-                        }
-                      }
-                    }}
-                  >
-                    <ArrowBigUp
-                      strokeWidth={0.5}
-                      className="
-                h-8 w-8 transition-all ease-in-out hover:text-green-600 hover:duration-300"
-                    />
-                  </button>
-                )}
-                {!loading && like && (
-                  <button
-                    onClick={async () => {
-                      setLoading(true);
-                      const fields = {
-                        postId: post.id,
-                      };
-                      const set = await fetch("/explore/stg/api/like", {
-                        method: "POST",
-                        body: JSON.stringify(fields),
-                      });
-                      const msg = await set.json();
-                      if (!set.ok) {
-                        toast.error(msg.message);
-                        setLoading(false);
-                      } else {
-                        revalPath("/explore" + post.id);
-                        setLoading(false);
-                        setLike(false);
-                        // setTotalVotes(totalVotes - 1);
-                        toast.success(msg.message);
-                      }
-                    }}
-                  >
-                    <ArrowBigUp
-                      strokeWidth={0}
-                      className=" h-8
-                w-8 fill-green-600"
-                    />
-                  </button>
-                )}
-                {!loading && (
-                  <p>
-                    {totalVotes >= 1000
-                      ? `${(totalVotes - (totalVotes % 100)) / 1000}k`
-                      : totalVotes}
-                  </p>
-                )}
-                {!loading && !dislike && (
-                  <button
-                    onClick={async () => {
-                      setLoading(true);
-                      const fields = {
-                        postId: post.id,
-                      };
-                      const set = await fetch("/explore/stg/api/dislike", {
-                        method: "POST",
-                        body: JSON.stringify(fields),
-                      });
-                      const msg = await set.json();
-                      if (!set.ok) {
-                        toast.error(msg.message);
-                        setLoading(false);
-                      } else {
-                        setLoading(false);
-                        setDislike(true);
-                        if (like) {
-                          revalPath("/explore" + post.id);
-                          setLike(false);
-                          // setTotalVotes(totalVotes - 2);
-                          toast.success(msg.message);
-                        } else {
-                          revalPath("/explore" + post.id);
-                          // setTotalVotes(totalVotes - 1);
-                          toast.success(msg.message);
-                        }
-                      }
-                    }}
-                  >
-                    <ArrowBigDown
-                      strokeWidth={0.5}
-                      className="
-                h-8 w-8 transition-all ease-in-out hover:text-red-600 hover:duration-300"
-                    />
-                  </button>
-                )}
-                {!loading && dislike && (
-                  <button
-                    onClick={async () => {
-                      setLoading(true);
-                      const fields = {
-                        postId: post.id,
-                      };
-                      const set = await fetch("/explore/stg/api/dislike", {
-                        method: "POST",
-                        body: JSON.stringify(fields),
-                      });
-                      const msg = await set.json();
-                      if (!set.ok) {
-                        toast.error(msg.message);
-                        setLoading(false);
-                      } else {
-                        revalPath("/explore" + post.id);
-                        setLoading(false);
-                        setDislike(false);
-                        // setTotalVotes(totalVotes + 1);
-                        toast.success(msg.message);
-                      }
-                    }}
-                  >
-                    <ArrowBigDown
-                      strokeWidth={0}
-                      className=" h-8 w-8 fill-red-600"
-                    />
-                  </button>
+                ) : (
+                  <>
+                    <button onClick={async () => handleLikeDislike("like")}>
+                      <ArrowBigUp
+                        size={32}
+                        strokeWidth={0.5}
+                        className={cn(
+                          "transition-all ease-in-out hover:duration-300",
+                          like
+                            ? "fill-green-600"
+                            : "fill-none hover:fill-green-600"
+                        )}
+                      />
+                    </button>
+                    <p>{post.likes.length - post.dislikes.length}</p>
+                    <button onClick={async () => handleLikeDislike("dislike")}>
+                      <ArrowBigDown
+                        size={32}
+                        strokeWidth={0.5}
+                        className={cn(
+                          "transition-all ease-in-out hover:duration-300",
+                          dislike
+                            ? "fill-red-600"
+                            : "fill-none hover:fill-red-600"
+                        )}
+                      />
+                    </button>
+                  </>
                 )}
               </div>
               {!isStarred && currUser && !favourite && (
@@ -406,10 +316,10 @@ const PostContent: React.FC<PostContentProp> = ({
                       toast.error(msg.message);
                       setStarLoading(false);
                     } else {
-                      revalPath("/explore" + post.id);
                       setFavourite(true);
                       setStarLoading(false);
                       toast.success(msg.message);
+                      revalPath("/explore" + post.id);
                     }
                   }}
                 >
