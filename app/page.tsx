@@ -46,7 +46,7 @@ export default async function Home() {
           </p>
 
           <Link
-            href="/wiki/heroes"
+            href="/explore"
             className={cn(
               buttonVariants({ variant: "gradiantNavySec" }),
               "mx-auto mt-4 w-fit rounded-3xl"
