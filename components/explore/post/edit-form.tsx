@@ -83,7 +83,7 @@ const EditForm: React.FC<editPostProps> = ({ post, onCancel }) => {
           }}
         >
           <div className="space-y-1">
-            <Label htmlFor="body">Title</Label>
+            <Label htmlFor="title">Title</Label>
             <textarea
               placeholder="Insert title here"
               className="w-full resize-none overflow-hidden rounded-lg border-b border-slate-700 bg-transparent px-3 py-2 text-slate-200 outline-none transition-all duration-500 focus:outline-none"
@@ -92,6 +92,7 @@ const EditForm: React.FC<editPostProps> = ({ post, onCancel }) => {
                 setTitle(inputValue);
                 setTitleCharacterCount(inputValue.length);
               }}
+              id="title"
               onFocus={() => setIsTitleInputFocused(true)}
               onBlur={() => setIsTitleInputFocused(false)}
               maxLength={50}
@@ -113,6 +114,7 @@ const EditForm: React.FC<editPostProps> = ({ post, onCancel }) => {
                 setMessage(inputValue);
                 setMessageCharacterCount(inputValue.length);
               }}
+              id="body"
               onFocus={() => setIsMessageInputFocused(true)}
               onBlur={() => setIsMessageInputFocused(false)}
               maxLength={2000}

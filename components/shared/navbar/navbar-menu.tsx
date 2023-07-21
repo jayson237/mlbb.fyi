@@ -90,31 +90,26 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
               return null;
             }
             return (
-              <Link
-                href={
-                  menu.href === "/profile"
-                    ? currentUser?.username
-                      ? `/profile/${currentUser?.username}`
-                      : "/profile/stg"
-                    : menu.href
-                }
+              <li
+                key={menu.name}
                 onClick={() => {
                   setCollapse(false);
-                  // sessionStorage.clear();
+                  router.push(
+                    menu.href === "/profile"
+                      ? currentUser?.username
+                        ? `/profile/${currentUser?.username}`
+                        : "/profile/stg"
+                      : menu.href
+                  );
                 }}
-                key={menu.name}
-                prefetch={false}
+                className={cn(
+                  "cursor-pointer font-medium hover:text-navy-300 hover:transition-all hover:duration-300",
+                  active === menu.name.toLowerCase() &&
+                    "underline:ease-in-out underline decoration-navy-300 decoration-2 underline-offset-4"
+                )}
               >
-                <li
-                  className={cn(
-                    "cursor-pointer font-medium hover:text-navy-300 hover:transition-all hover:duration-300",
-                    active === menu.name.toLowerCase() &&
-                      "underline:ease-in-out underline decoration-navy-300 decoration-2 underline-offset-4"
-                  )}
-                >
-                  {menu.name}
-                </li>
-              </Link>
+                {menu.name}
+              </li>
             );
           })}
 
