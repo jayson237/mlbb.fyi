@@ -1,4 +1,5 @@
-import { Button } from "@/components/shared/button";
+import { buttonVariants } from "@/components/shared/button";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 export const metadata = {
@@ -10,7 +11,7 @@ export const metadata = {
     description:
       "Access hero stats, optimal builds, and connect with a community of expert players.",
     url: "https://mlbb.fyi",
-    siteName: "Next.js",
+    siteName: "mlbb.fyi",
     images: [
       {
         url: "/og.jpg",
@@ -44,12 +45,15 @@ export default async function Home() {
             players.
           </p>
 
-          <Button
-            className="mx-auto mt-4 w-fit rounded-3xl"
-            variant="gradiantNavySec"
+          <Link
+            href="/wiki/heroes"
+            className={cn(
+              buttonVariants({ variant: "gradiantNavySec" }),
+              "mx-auto mt-4 w-fit rounded-3xl"
+            )}
           >
-            <Link href="/wiki/heroes">Get Started</Link>
-          </Button>
+            Get Started
+          </Link>
 
           <div className="flex flex-col items-center justify-center pt-[100px]">
             <div className="flex items-end justify-center">
