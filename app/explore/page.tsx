@@ -4,6 +4,35 @@ import prisma from "@/lib/prismadb";
 import RandomUserContainer from "@/components/explore/random-user-container";
 import PostListContainer from "@/components/explore/post/post-list-container";
 
+export const metadata = {
+  title: "Explore - mlbb.fyi",
+  description:
+    "Access hero stats, optimal builds, and connect with a community of expert players.",
+  openGraph: {
+    title: "Explore - mlbb.fyi",
+    description:
+      "Access hero stats, optimal builds, and connect with a community of expert players.",
+    url: "https://mlbb.fyi",
+    siteName: "mlbb.fyi",
+    images: [
+      {
+        url: "/og.jpg",
+        width: 1260,
+        height: 600,
+      },
+    ],
+    locale: "en-US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Explore - mlbb.fyi",
+    description:
+      "Access hero stats, optimal builds, and connect with a community of expert players.",
+    images: ["/og.jpg"],
+  },
+};
+
 async function getInitialRandomUsers() {
   const currentUser = await getCurrentUser();
   const productsCount = await prisma.user.count();

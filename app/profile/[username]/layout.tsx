@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import getCurrentUser from "@/lib/actions/getCurrentUser";
 import getUser from "@/lib/actions/getUser";
 import isUserBound from "@/lib/actions/isUserBound";
@@ -5,10 +6,40 @@ import { NextResponse } from "next/server";
 import ProfileBio from "@/components/profile/bio";
 import ProfileTab from "@/components/profile/profile-tab";
 
-export const metadata = {
-  title: "Profile - mlbb.fyi",
-  description: "Your mlbb.fyi profile",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: { username: string };
+}): Promise<Metadata> {
+  return {
+    title: `@${params.username} - mlbb.fyi`,
+    description:
+      "Access hero stats, optimal builds, and connect with a community of expert players.",
+    openGraph: {
+      title: `@${params.username} - mlbb.fyi`,
+      description:
+        "Access hero stats, optimal builds, and connect with a community of expert players.",
+      url: "https://mlbb.fyi",
+      siteName: "mlbb.fyi",
+      images: [
+        {
+          url: "/og.jpg",
+          width: 1260,
+          height: 600,
+        },
+      ],
+      locale: "en-US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `@${params.username} - mlbb.fyi`,
+      description:
+        "Access hero stats, optimal builds, and connect with a community of expert players.",
+      images: ["/og.jpg"],
+    },
+  };
+}
 
 const ProfileTabList = [
   {
