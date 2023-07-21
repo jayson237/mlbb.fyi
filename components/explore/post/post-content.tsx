@@ -267,7 +267,7 @@ const PostContent: React.FC<PostContentProp> = ({
             >
               <div className="mr-4 flex flex-row items-center gap-2">
                 {loading ? (
-                  <div className="mr-3 mt-10 flex">
+                  <div className="mr-3  flex">
                     <LoadingDots color="#FAFAFA" />
                   </div>
                 ) : (
@@ -279,8 +279,8 @@ const PostContent: React.FC<PostContentProp> = ({
                         className={cn(
                           "transition-all ease-in-out hover:duration-300",
                           like
-                            ? "fill-green-600"
-                            : "fill-none hover:fill-green-600"
+                            ? " fill-green-600"
+                            : "fill-none hover:text-green-600"
                         )}
                       />
                     </button>
@@ -293,7 +293,7 @@ const PostContent: React.FC<PostContentProp> = ({
                           "transition-all ease-in-out hover:duration-300",
                           dislike
                             ? "fill-red-600"
-                            : "fill-none hover:fill-red-600"
+                            : "fill-none hover:text-red-600"
                         )}
                       />
                     </button>
@@ -330,7 +330,7 @@ const PostContent: React.FC<PostContentProp> = ({
                   ) : (
                     <Star
                       className="transition-all ease-in-out  hover:text-yellow-300 hover:duration-300"
-                      strokeWidth={1}
+                      strokeWidth={0.5}
                       size={24}
                     />
                   )}
@@ -365,9 +365,8 @@ const PostContent: React.FC<PostContentProp> = ({
                     </div>
                   ) : (
                     <Star
-                      color="#FACC18"
                       size={24}
-                      strokeWidth={2}
+                      strokeWidth={0.5}
                       className="fill-yellow-300"
                     />
                   )}

@@ -120,12 +120,7 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
           {!isStarred ? (
             <Star size={24} strokeWidth={0.5} />
           ) : (
-            <Star
-              size={24}
-              color="#FACC18"
-              strokeWidth={2}
-              className="fill-yellow-300"
-            />
+            <Star size={24} strokeWidth={0.5} className="fill-yellow-300" />
           )}
           <p className="ml-2 mr-8 flex">
             {post.favourites.length >= 1000
@@ -150,7 +145,7 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
       {/* Like, Vote Count, and Dislike */}
       <div className="mb-2 flex min-w-0 flex-col items-center space-y-3">
         {loading ? (
-          <div className="mr-3 mt-10 flex">
+          <div className="mr-3 mt-12 flex">
             <LoadingDots color="#FAFAFA" />
           </div>
         ) : (
@@ -161,7 +156,7 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
                 strokeWidth={0.5}
                 className={cn(
                   "transition-all ease-in-out hover:duration-300",
-                  like ? "fill-green-600" : "fill-none hover:fill-green-600"
+                  like ? "fill-green-600" : "fill-none hover:text-green-600"
                 )}
               />
             </button>
@@ -172,7 +167,7 @@ const PostBox: React.FC<PostBoxProps> = ({ post, posts, index, currUser }) => {
                 strokeWidth={0.5}
                 className={cn(
                   "transition-all ease-in-out hover:duration-300",
-                  dislike ? "fill-red-600" : "fill-none hover:fill-red-600"
+                  dislike ? "fill-red-600" : "fill-none hover:text-red-600"
                 )}
               />
             </button>
