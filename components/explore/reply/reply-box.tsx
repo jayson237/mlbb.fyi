@@ -153,7 +153,7 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, postId, userId }) => {
                         </div>
                       </button>
                       <DialogFit
-                        title="Delete Post"
+                        title="Delete Reply"
                         triggerChild={
                           <div className="flex flex-row items-center gap-2 px-4 py-2 hover:text-red-400 hover:duration-300">
                             <Trash2 className="h-5 w-5 ease-in-out" />
