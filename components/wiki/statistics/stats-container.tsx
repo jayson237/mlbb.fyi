@@ -3,18 +3,37 @@
 
 import React, { useState } from "react";
 import { TourneyStats } from "@prisma/client";
+import { Hero } from "@prisma/client";
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { ArrowDown, ArrowUp } from "lucide-react";
 
 interface IStats {
-  serverStats: any[] | null;
+  heroes: Hero[];
   tourneyStats: TourneyStats[];
 }
 
-export default function StatsContainer({ serverStats, tourneyStats }: IStats) {
+export default function StatsContainer({ heroes, tourneyStats }: IStats) {
   const router = useRouter();
+  const allStats = [];
+  const mythicStats = [];
+  const gloryStats = [];
+
+  let isStatEmpty = false;
+  for (const hero of heroes) {
+    const allStat = { name: hero.name, ...hero.stats.all };
+    const mythicStat = { name: hero.name, ...hero.stats.mythic };
+    const gloryStat = { name: hero.name, ...hero.stats.glory };
+    isStatEmpty = Object.values(hero.stats.glory).every(
+      (value) => value === "0.00%"
+    );
+
+    allStats.push(allStat);
+    mythicStats.push(mythicStat);
+    gloryStats.push(gloryStat);
+  }
+
   const [selectedTourneyIndex, setSelectedTourneyIndex] = useState<number>(-3);
   const [selectedSortingOption, setSelectedSortingOption] =
     useState<string>("alphabet");
@@ -38,7 +57,9 @@ export default function StatsContainer({ serverStats, tourneyStats }: IStats) {
 
   const selectedTourney = tourneyStats[selectedTourneyIndex] || null;
   const renderList = [
-    ...serverStats,
+    allStats,
+    mythicStats,
+    gloryStats,
     ...tourneyStats.map((tourney) => tourney.data),
   ];
 
@@ -83,7 +104,7 @@ export default function StatsContainer({ serverStats, tourneyStats }: IStats) {
     : [...sortedList].reverse();
 
   return (
-    <GradiantCard className="mb-8" variant="clean">
+    <GradiantCard variant="clean">
       <div className="mb-8 flex gap-4">
         <select
           className="h-10 w-1/2 rounded-xl border border-navy-300/50 bg-black p-2 shadow-sm focus:border-navy-600 focus:outline-none focus:ring-1 focus:ring-navy-600"
@@ -121,7 +142,11 @@ export default function StatsContainer({ serverStats, tourneyStats }: IStats) {
         </button>
       </div>
 
-      {sortedListCopy.length !== 0 ? (
+      {isStatEmpty && selectedTourneyIndex === -1 ? (
+        <p className="font-heading text-sm md:text-xl">
+          There is no data available for the Mythical Glory option yet.
+        </p>
+      ) : sortedListCopy.length !== 0 ? (
         <div className="grid grid-cols-4 gap-4">
           <div className="mb-4 font-heading text-xl">Hero</div>
           <div className="text-lg mb-4 text-end font-heading md:text-xl">

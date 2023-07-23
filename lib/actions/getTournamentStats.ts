@@ -5,6 +5,7 @@ export default async function getTournamentStats() {
     const patches = await prisma.tourneyStats.findMany();
     return patches;
   } catch (error) {
+    console.log(error);
     throw new Error("Failed to fetch stats");
   }
 }

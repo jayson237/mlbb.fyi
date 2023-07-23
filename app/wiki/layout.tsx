@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger } from "@/components/shared/tabs";
 import useTabStore from "@/lib/state/useTabStore";
 import Link from "next/link";
@@ -18,12 +19,8 @@ const WikiTabList = [
     name: "Statistics",
     href: "/wiki/statistics",
   },
-  // {
-  //   name: "Draft Pick",
-  //   href: "/wiki/draft-pick",
-  // },
   {
-    name: "Patch",
+    name: "Patches",
     href: "/wiki/patches",
   },
 ];
@@ -33,16 +30,13 @@ export interface LayoutWikiProps {
 }
 
 export default function LayoutWiki({ children }: LayoutWikiProps) {
+  const pathname = usePathname();
+  const active = pathname?.split("/")[2] || "";
   const { selectedTab, setSelectedTab } = useTabStore();
 
   useEffect(() => {
-    const storedTab = window.sessionStorage.getItem("selectedTab");
-    setSelectedTab(storedTab || "heroes");
-  }, []);
-
-  useEffect(() => {
-    window.sessionStorage.setItem("selectedTab", selectedTab);
-  }, [selectedTab]);
+    setSelectedTab(active);
+  }, [active, setSelectedTab]);
 
   return (
     <main>
@@ -53,7 +47,7 @@ export default function LayoutWiki({ children }: LayoutWikiProps) {
 
       <Tabs value={selectedTab} defaultValue="heroes" className="mt-4 w-full">
         <div className="no-scrollbar h-[52px] overflow-x-scroll">
-          <TabsList className="flex shrink-0 space-x-4">
+          <TabsList className="flex shrink-0 space-x-1">
             {WikiTabList.map((item, i) => (
               <Link href={item.href} key={i} scroll={false}>
                 <TabsTrigger

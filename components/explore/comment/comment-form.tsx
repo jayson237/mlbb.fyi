@@ -1,14 +1,15 @@
 "use client";
 
-import useAutosizeTextArea from "@/lib/useAutosizeTextArea";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import Image from "next/image";
 
+import { revalPath } from "@/lib/revalidate";
+import useAutosizeTextArea from "@/lib/state/useAutosizeTextArea";
+
 import { GradiantCard } from "@/components/shared/gradiant-card";
 import { SendIcon } from "lucide-react";
 import LoadingDots from "@/components/shared/icons/loading-dots";
-import useMutCom from "@/lib/state/useMutCom";
 
 interface CommentProps {
   postId: string;
@@ -16,7 +17,6 @@ interface CommentProps {
 }
 
 const NewCommentForm: React.FC<CommentProps> = ({ postId, img }) => {
-  const togMut = useMutCom();
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -25,7 +25,10 @@ const NewCommentForm: React.FC<CommentProps> = ({ postId, img }) => {
   useAutosizeTextArea(textAreaRef.current, value);
 
   return (
-    <GradiantCard className="flex grow flex-row items-start" variant="clean">
+    <GradiantCard
+      className="mb-1.5 flex grow flex-row items-start"
+      variant="clean"
+    >
       <Image
         src={
           img !== ""
@@ -64,13 +67,14 @@ const NewCommentForm: React.FC<CommentProps> = ({ postId, img }) => {
               setLoading(false);
               toast.error(msg.message);
             } else {
+              revalPath("/explore/" + postId);
               setLoading(false);
               setValue("");
               toast.success(msg.message);
-              togMut.togMut();
-              setTimeout(() => {
-                togMut.clamMut();
-              }, 1000);
+              // togMut.togMut();
+              // setTimeout(() => {
+              //   togMut.clamMut();
+              // }, 1000);
             }
           }}
         >

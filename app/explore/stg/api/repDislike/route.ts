@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   const currentUser = await getCurrentUser();
 
-  const { postId }: { postId: string } = await req.json();
+  const { replyId }: { replyId: string } = await req.json();
 
   if (!currentUser) {
     return NextResponse.json(
@@ -18,16 +18,16 @@ export async function POST(req: Request) {
     );
   }
 
-  const hasDisliked = await prisma.post.findFirst({
+  const hasDisliked = await prisma.reply.findFirst({
     where: {
-      id: postId,
+      id: replyId,
     },
   });
 
-  if (!postId || !hasDisliked) {
+  if (!replyId || !hasDisliked) {
     return NextResponse.json(
       {
-        message: "Post not found",
+        message: "Reply not found",
       },
       {
         status: 400,
@@ -36,9 +36,9 @@ export async function POST(req: Request) {
   }
 
   if (hasDisliked && !hasDisliked.dislikes.includes(currentUser.id as string)) {
-    const set = await prisma.post.update({
+    const set = await prisma.reply.update({
       where: {
-        id: postId,
+        id: replyId,
       },
       data: {
         dislikes: {
@@ -50,7 +50,7 @@ export async function POST(req: Request) {
     if (!set)
       return NextResponse.json(
         {
-          message: "Error downvoting post. Please try again",
+          message: "Error downvoting reply. Please try again",
         },
         {
           status: 400,
@@ -73,9 +73,9 @@ export async function POST(req: Request) {
         );
       }
 
-      const setCurrentLikes = await prisma.post.update({
+      const setCurrentLikes = await prisma.reply.update({
         where: {
-          id: postId,
+          id: replyId,
         },
         data: {
           likes: updatedLikes,
@@ -92,9 +92,9 @@ export async function POST(req: Request) {
           }
         );
 
-      const decreaseVotes = await prisma.post.update({
+      const decreaseVotes = await prisma.reply.update({
         where: {
-          id: postId,
+          id: replyId,
         },
         data: {
           totalVotes: {
@@ -115,7 +115,7 @@ export async function POST(req: Request) {
 
       return NextResponse.json(
         {
-          message: "Post has been set to be downvoted.",
+          message: "Reply has been downvoted",
         },
         {
           status: 200,
@@ -123,9 +123,9 @@ export async function POST(req: Request) {
       );
     }
 
-    const decreaseVotes = await prisma.post.update({
+    const decreaseVotes = await prisma.reply.update({
       where: {
-        id: postId,
+        id: replyId,
       },
       data: {
         totalVotes: {
@@ -146,7 +146,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       {
-        message: "Post has been set to be downvoted.",
+        message: "Reply has been set to be downvoted.",
       },
       {
         status: 200,
@@ -169,9 +169,9 @@ export async function POST(req: Request) {
     );
   }
 
-  const setCurrentDislikes = await prisma.post.update({
+  const setCurrentDislikes = await prisma.reply.update({
     where: {
-      id: postId,
+      id: replyId,
     },
     data: {
       dislikes: updatedDislikes,
@@ -188,9 +188,9 @@ export async function POST(req: Request) {
       }
     );
 
-  const addVotes = await prisma.post.update({
+  const addVotes = await prisma.reply.update({
     where: {
-      id: postId,
+      id: replyId,
     },
     data: {
       totalVotes: {

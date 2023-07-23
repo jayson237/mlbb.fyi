@@ -9,7 +9,6 @@ import HeroesFilter from "./heroes-filter";
 import HeroCard from "./hero-card";
 import { Input } from "@/components/shared/input";
 import { GradiantCard } from "@/components/shared/gradiant-card";
-import useTabStore from "@/lib/state/useTabStore";
 
 interface IHeroesContainer {
   heroes: Hero[] | null;

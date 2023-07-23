@@ -5,7 +5,12 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   const currentUser = await getCurrentUser();
 
-  const { title, message }: { title: string; message: string } =
+  const {
+    title,
+    message,
+    image,
+    tags,
+  }: { title: string; message: string; image: string; tags: string[] } =
     await req.json();
 
   const currentPost = await prisma.post.findFirst({
@@ -26,6 +31,30 @@ export async function POST(req: Request) {
     );
   }
 
+  if (tags.indexOf("") !== -1) {
+    return NextResponse.json(
+      {
+        message: "Invalid tag('') spotted",
+      },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  for (const x of tags as string[]) {
+    if (x.length >= 20) {
+      return NextResponse.json(
+        {
+          message: `Tag '${x}' exceeded word count`,
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+  }
+
   const set = await prisma.user.update({
     where: {
       email: currentUser?.email,
@@ -35,6 +64,8 @@ export async function POST(req: Request) {
         create: {
           title: title,
           body: message,
+          image: image,
+          tags: tags,
         },
       },
     },

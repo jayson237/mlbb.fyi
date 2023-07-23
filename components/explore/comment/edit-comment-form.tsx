@@ -1,19 +1,23 @@
 "use client";
 
-import useAutosizeTextArea from "@/lib/useAutosizeTextArea";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+
+import { revalPath } from "@/lib/revalidate";
+import useAutosizeTextArea from "@/lib/state/useAutosizeTextArea";
 
 import { Button } from "@/components/shared/button";
 import LoadingDots from "@/components/shared/icons/loading-dots";
 
 interface EditCommentProps {
+  postId: string;
   commentId: string;
   commentBody: string;
   onCancel: () => void;
 }
 
 const EditCommentForm: React.FC<EditCommentProps> = ({
+  postId,
   commentId,
   commentBody,
   onCancel,
@@ -67,9 +71,10 @@ const EditCommentForm: React.FC<EditCommentProps> = ({
               setLoading(false);
               toast.error(msg.message);
             } else {
+              handleCancel();
+              revalPath("/explore/" + postId);
               setLoading(false);
               toast.success(msg.message);
-              window.location.reload();
             }
           }}
         >

@@ -2,13 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import React from "react";
+
+import { revalPath } from "@/lib/revalidate";
+import { Post } from "@prisma/client";
+import useAutosizeTextArea from "@/lib/state/useAutosizeTextArea";
 
 import { Button } from "@/components/shared/button";
 import { Label } from "@/components/shared/label";
 import LoadingDots from "@/components/shared/icons/loading-dots";
-import { Post } from "@prisma/client";
-import useAutosizeTextArea from "@/lib/useAutosizeTextArea";
-import React from "react";
 
 interface editPostProps {
   post: Post;
@@ -73,14 +75,15 @@ const EditForm: React.FC<editPostProps> = ({ post, onCancel }) => {
               setLoading(false);
               toast.error(msg.message);
             } else {
+              handleCancel();
+              revalPath("/explore/" + post.id);
               setLoading(false);
               toast.success(msg.message);
-              window.location.reload();
             }
           }}
         >
           <div className="space-y-1">
-            <Label htmlFor="body">Title</Label>
+            <Label htmlFor="title">Title</Label>
             <textarea
               placeholder="Insert title here"
               className="w-full resize-none overflow-hidden rounded-lg border-b border-slate-700 bg-transparent px-3 py-2 text-slate-200 outline-none transition-all duration-500 focus:outline-none"
@@ -89,6 +92,7 @@ const EditForm: React.FC<editPostProps> = ({ post, onCancel }) => {
                 setTitle(inputValue);
                 setTitleCharacterCount(inputValue.length);
               }}
+              id="title"
               onFocus={() => setIsTitleInputFocused(true)}
               onBlur={() => setIsTitleInputFocused(false)}
               maxLength={50}
@@ -110,6 +114,7 @@ const EditForm: React.FC<editPostProps> = ({ post, onCancel }) => {
                 setMessage(inputValue);
                 setMessageCharacterCount(inputValue.length);
               }}
+              id="body"
               onFocus={() => setIsMessageInputFocused(true)}
               onBlur={() => setIsMessageInputFocused(false)}
               maxLength={2000}

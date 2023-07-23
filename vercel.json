@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/tier-script",
+      "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/scrape-rank-stat",
+      "schedule": "0 10 */3 * *"
+    }
+  ]
+}

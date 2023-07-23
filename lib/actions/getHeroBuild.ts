@@ -9,6 +9,7 @@ export default async function getHeroBuild(heroId: string) {
     const res = await get.json();
     return res;
   } catch (error) {
+    console.log("Error", error);
     return null;
   }
 }

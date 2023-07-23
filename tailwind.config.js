@@ -18,12 +18,13 @@ module.exports = {
     extend: {
       colors: {
         // bgblack: "#151515",
-        bgblack: "#121212",
         // bgblack: "#2a2a2a",
-        pblack: "#1e1e1e",
         // pblack: "#232323",
         // sblack: "#2C2C2C",
+        bgblack: "#121212",
+        pblack: "#1e1e1e",
         sblack: "#232323",
+        lblack: "#1a1a1c",
         pwhite: "#FAFAFA",
         softGray: "#E9EEF2",
         softBlue: "#74BDE0",

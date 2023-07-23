@@ -1,9 +1,8 @@
 "use client";
 
 import useSWR from "swr";
-import useMutCom from "@/lib/state/useMutCom";
+import useMut from "@/lib/state/useMut";
 import { useEffect } from "react";
-// import { fetcher } from "@/lib/fetcher-utils";
 
 import { Post } from "@prisma/client";
 import { SafeUser } from "@/types";
@@ -15,6 +14,7 @@ import PostBox from "./post-box";
 
 interface PostListProps {
   filter: string;
+  tag: string;
   sortMode: string;
   currUser?: SafeUser | null;
 }
@@ -23,6 +23,7 @@ export const fetcher = async (data: string) => {
   const fields = {
     filter: data[1],
     sortMode: data[2],
+    tag: data[3],
   };
 
   return await fetch(data[0], {
@@ -31,10 +32,15 @@ export const fetcher = async (data: string) => {
   }).then((res) => res.json());
 };
 
-const PostList: React.FC<PostListProps> = ({ filter, sortMode, currUser }) => {
-  const togMut = useMutCom();
+const PostList: React.FC<PostListProps> = ({
+  filter,
+  tag,
+  sortMode,
+  currUser,
+}) => {
+  const togMut = useMut();
   const { data: posts, mutate } = useSWR(
-    ["/api/post", filter, sortMode],
+    ["/api/post/filter", filter, sortMode, tag],
     fetcher
   );
 
@@ -57,7 +63,7 @@ const PostList: React.FC<PostListProps> = ({ filter, sortMode, currUser }) => {
     return (
       <>
         {posts && posts.length > 0 ? (
-          <GradiantCard variant="clean" className="mb-8">
+          <GradiantCard variant="clean">
             <ul role="list">
               {posts?.map((post: Post, index: number) => (
                 <PostBox
