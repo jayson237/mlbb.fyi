@@ -9,11 +9,11 @@ import Navbar from "@/components/shared/navbar/navbar";
 import { Metadata } from "next";
 import { cn } from "@/lib/utils";
 
-export const metadata: Metadata = {
-  icons: {
-    icon: `${process.env.NEXTAUTH_URL}/icon.png}`,
-  },
-};
+// export const metadata: Metadata = {
+//   icons: {
+//     icon: `${process.env.NEXTAUTH_URL}/icon.png}`,
+//   },
+// };
 
 const inter = Inter({ subsets: ["latin"] });
 
