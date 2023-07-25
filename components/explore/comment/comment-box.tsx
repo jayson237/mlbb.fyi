@@ -33,11 +33,6 @@ interface CommentBoxProps {
 }
 
 const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
-  const { data: image } = useSWR(
-    ["/api/comment/pic", comment.userId],
-    postFetcher
-  );
-
   const isLiked = comment?.likes.includes(userId as string);
   const isDisliked = comment?.dislikes.includes(userId as string);
 
@@ -66,14 +61,10 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
       return lineCount > 2;
     }
   }
-  useEffect(() => {
-    isExpandable() === true ? setExpandedable(true) : setExpandedable(false);
-  }, []);
 
   // useEffect(() => {
   //   let handler = (event: MouseEvent) => {
   //     if (
-  //       optionRef.current &&
   //       !optionRef.current.contains(event.target as Node)
   //     ) {
   //       setIsOpen(false);
@@ -108,15 +99,15 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
         <div className="mb-3 mt-8 flex flex-row items-center">
           <Image
             src={
-              image === ""
+              comment.userImage === ""
                 ? "/nana.jpg"
-                : image?.includes("/image/upload")
+                : comment.userImage?.includes("/image/upload")
                 ? `${
-                    image?.split("/image/upload/")[0]
+                    comment.userImage?.split("/image/upload/")[0]
                   }/image/upload/c_fill,h_150,w_150/${
-                    image?.split("/image/upload/")[1]
+                    comment.userImage?.split("/image/upload/")[1]
                   }`
-                : image || "/nana.jpg"
+                : comment.userImage || "/nana.jpg"
             }
             alt=""
             width={48}
@@ -124,9 +115,9 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
             className="mr-4 h-12 w-12 rounded-full object-none object-left"
             placeholder="blur"
             blurDataURL={
-              image?.split("/image/upload/")[0] +
+              comment.userImage?.split("/image/upload/")[0] +
               "/image/upload/e_blur:400,h_100,w_100/" +
-              image?.split("/image/upload/")[1]
+              comment.userImage?.split("/image/upload/")[1]
             }
           />
 
