@@ -74,7 +74,7 @@ const RandomUser: React.FC<RandomUserProps> = ({ randomUsers }) => {
                 >
                   {user.username}
                 </Link>
-                <p className="text-sm text-gray-500">{user.name}</p>
+                <p className=" text-gray-500">{user.name}</p>
               </div>
             </li>
           ))

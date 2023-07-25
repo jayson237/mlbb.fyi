@@ -1,9 +1,7 @@
 // @ts-nocheck
 "use client";
 
-import { postFetcher } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
-import useSWR from "swr";
 import Image from "next/image";
 import Link from "next/link";
 import { Reply } from "@prisma/client";
@@ -27,11 +25,6 @@ interface ReplyBoxProps {
   userId?: string;
 }
 const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, postId, userId }) => {
-  const { data: image } = useSWR(
-    ["/api/comment/pic", reply.userId],
-    postFetcher
-  );
-
   const [editActive, setEditActive] = useState<boolean>(false);
 
   const isLiked = reply?.likes.includes(userId as string);
@@ -101,25 +94,23 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ reply, postId, userId }) => {
       <div className="mb-8 ml-5 mr-2 mt-4 flex-auto rounded-lg bg-gray-400/5 px-4 py-2">
         <div className="flex flex-row items-center justify-between">
           <div className="mb-3 mt-4 flex flex-row items-center">
-            {image && (
-              <Image
-                src={
-                  image?.split("/image/upload/")[0] +
-                    "/image/upload/c_fill,h_150,w_150/" +
-                    image?.split("/image/upload/")[1] || "/nana.jpg"
-                }
-                alt=""
-                width={48}
-                height={48}
-                className="mr-4 rounded-full object-none object-left"
-                placeholder="blur"
-                blurDataURL={
-                  image?.split("/image/upload/")[0] +
-                  "/image/upload/e_blur:400,h_100,w_100/" +
-                  image?.split("/image/upload/")[1]
-                }
-              />
-            )}
+            <Image
+              src={
+                reply.userImage?.split("/image/upload/")[0] +
+                  "/image/upload/c_fill,h_150,w_150/" +
+                  reply.userImage?.split("/image/upload/")[1] || "/nana.jpg"
+              }
+              alt=""
+              width={48}
+              height={48}
+              className="mr-4 rounded-full object-none object-left"
+              placeholder="blur"
+              blurDataURL={
+                reply.userImage?.split("/image/upload/")[0] +
+                "/image/upload/e_blur:400,h_100,w_100/" +
+                reply.userImage?.split("/image/upload/")[1]
+              }
+            />
             <Link href={`/profile/${reply.createdBy}/statistics`}>
               <p className="text-md font-heading">{reply?.createdBy}</p>
             </Link>

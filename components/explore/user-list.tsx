@@ -104,7 +104,7 @@ const UserList: React.FC<UserListProps> = ({ filter, currentUser }) => {
                           {user.username}
                         </p>
                       </Link>
-                      <p className="hidden text-sm text-gray-400 sm:block">
+                      <p className="hidden text-gray-400 sm:block">
                         {user.name}
                       </p>
                     </div>
