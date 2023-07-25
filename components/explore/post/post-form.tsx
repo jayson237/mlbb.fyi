@@ -117,10 +117,12 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
               tags: array.slice(0, 3),
             };
 
-            const set = await fetch("/explore/stg/api/post", {
+            const set = await fetch(`/api/explore/post?id=${currUser?.id}`, {
               method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
               body: JSON.stringify(fields),
-              cache: "no-store",
             });
             const msg = await set.json();
             if (!set.ok) {

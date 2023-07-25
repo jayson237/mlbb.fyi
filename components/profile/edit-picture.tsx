@@ -45,11 +45,16 @@ const EditPicture: React.FC<EditPictureProps> = ({ currentUser }) => {
   } = useDropzone({ onDrop, maxFiles: 1, maxSize: 5242880, multiple: false });
 
   const updateImage = async (imageUrl: string) => {
-    const set = await fetch("/profile/stg/api/edit-picture", {
-      method: "POST",
-      body: JSON.stringify({ img: imageUrl }),
-      cache: "no-store",
-    });
+    const set = await fetch(
+      `/api/profile/editProfilePicture?id=${currentUser.id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ img: imageUrl }),
+      }
+    );
     const msg = await set.json();
     if (!set.ok) {
       setLoading(false);
