@@ -62,6 +62,10 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comment, postId, userId }) => {
     }
   }
 
+  useEffect(() => {
+    isExpandable() === true ? setExpandedable(true) : setExpandedable(false);
+  }, []);
+
   // useEffect(() => {
   //   let handler = (event: MouseEvent) => {
   //     if (
