@@ -123,6 +123,7 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify(fields),
+              cache: "no-store",
             });
             const msg = await set.json();
             if (!set.ok) {
