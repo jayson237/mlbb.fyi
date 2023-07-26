@@ -53,6 +53,7 @@ const EditPicture: React.FC<EditPictureProps> = ({ currentUser }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ img: imageUrl }),
+        cache: "no-store",
       }
     );
     const msg = await set.json();
