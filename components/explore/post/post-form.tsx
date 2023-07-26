@@ -39,17 +39,23 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
       if (acceptedFiles.length > 0) {
         setSelectedImage(acceptedFiles[0]);
       }
+      rejectedFiles.forEach((file) => {
+        file.errors.forEach((err) => {
+          if (err.code === "file-too-large") {
+            toast.error(`Sorry, maximum file size is 5MB`);
+          }
+        });
+      });
     },
     []
   );
 
-  const {
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    isDragAccept,
-    isDragReject,
-  } = useDropzone({ onDrop, maxFiles: 1, maxSize: 5242880, multiple: false });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    maxFiles: 1,
+    maxSize: 5242880,
+    multiple: false,
+  });
 
   const handleUpload = async (e: any) => {
     e.preventDefault();
