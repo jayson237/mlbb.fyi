@@ -35,9 +35,12 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
   currentUser,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [tags, setTags] = useState("");
   const [searchTags, setSearchTags] = useState<string>("");
   const [selectedSortMode, setSelectedSortMode] = useState("recent");
   const [selectedTab, setSelectedTab] = useState("Recent");
+  const [tagCharacterCount, setTagCharacterCount] = useState(0);
+  const [isTagInputFocused, setIsTagInputFocused] = useState<boolean>(false);
 
   // Filter
   const { filter, setFilter } = useFilterStore();
@@ -64,14 +67,9 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedOption = Number(event.target.value);
     setSelectedOption(selectedOption);
-
-    if (selectedOption === -2) {
-      setSearchTags(searchTerm);
-      setFilter("");
-    } else {
-      setSearchTags("");
-      setFilter(searchTerm);
-    }
+    setSearchTerm("");
+    setSearchTags("");
+    setFilter("");
   };
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -79,6 +77,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
     setSelectedSortMode(selectedSort);
   };
 
+  // console.log(searchTags);
   return (
     <div className="no-scrollbar max-h-[90vh] w-full overflow-scroll md:w-[2000px]">
       <div className="mb-2">
@@ -110,9 +109,18 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
                 onChange={(e) => {
                   const inputValue = e.target.value;
                   setSearchTerm(inputValue);
+                  if (selectedOption === -2) {
+                    setTagCharacterCount(inputValue.length);
+                  }
                 }}
                 className="flex h-9 rounded-l-xl border-r border-hidden"
                 maxLength={selectedOption === -2 ? 20 : 50}
+                onFocus={() =>
+                  selectedOption === -2 && setIsTagInputFocused(true)
+                }
+                onBlur={() =>
+                  selectedOption === -2 && setIsTagInputFocused(false)
+                }
               />
               <button>
                 <Search className="mr-2 transition-all hover:text-navy-300 hover:duration-300" />

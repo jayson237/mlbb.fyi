@@ -42,7 +42,7 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
       rejectedFiles.forEach((file) => {
         file.errors.forEach((err) => {
           if (err.code === "file-too-large") {
-            toast.error(`Sorry, maximum file size is 5MB`);
+            toast.error(`Sorry, maximum file size was 5MB`);
           }
         });
       });
