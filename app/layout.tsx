@@ -49,32 +49,32 @@ export default async function RootLayout({
         <div className="">
           <div className="relative mx-auto max-w-[1080px] px-4">{children}</div>
         </div>
-        <Script
-          id="cla"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
+      </body>
+      <Script
+        id="cla"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
             (function(c,l,a,r,i,t,y){
               c[a]=c[a]function(){(c[a].q=c[a].q[]).push(arguments)};
               t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
               y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
           })(window, document, "clarity", "script", "i5eisaebyw");
           `,
-          }}
-        />
-        <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-RYMVSHE2KQ"
-          strategy="afterInteractive"
-        ></Script>
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`window.dataLayer = window.dataLayer || [];
+        }}
+      />
+      <Script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-RYMVSHE2KQ"
+        strategy="afterInteractive"
+      ></Script>
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
         gtag('config', 'G-RYMVSHE2KQ');`}
-        </Script>
-      </body>
+      </Script>
     </html>
   );
 }
