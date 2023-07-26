@@ -50,18 +50,6 @@ export default async function RootLayout({
           <div className="relative mx-auto max-w-[1080px] px-4">{children}</div>
         </div>
         <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-RYMVSHE2KQ"
-          strategy="afterInteractive"
-        ></Script>
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-RYMVSHE2KQ');`}
-        </Script>
-        <Script
           id="cla"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
@@ -74,6 +62,18 @@ export default async function RootLayout({
           `,
           }}
         />
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-RYMVSHE2KQ"
+          strategy="afterInteractive"
+        ></Script>
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-RYMVSHE2KQ');`}
+        </Script>
       </body>
     </html>
   );
