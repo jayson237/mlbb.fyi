@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import cloudinary from "cloudinary";
 import { cdn } from "@/lib/cloudinary";
+import getCurrentUser from "@/lib/actions/getCurrentUser";
 
 cdn;
 const signUploadForm = () => {
@@ -21,6 +22,15 @@ const signUploadForm = () => {
 };
 
 export async function GET() {
+  const currentUser = await getCurrentUser();
+  if (!currentUser)
+    return NextResponse.json(
+      {
+        message: "Unauthorized",
+      },
+      { status: 401 }
+    );
+
   const cloudName = cloudinary.v2.config().cloud_name;
   const apiKey = cloudinary.v2.config().api_key;
 

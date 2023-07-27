@@ -157,6 +157,7 @@ model User {
   comments Comment[]
   Reply    Reply[]
 
+  @@unique([id, username, image])
   @@unique([id, username])
 }
 
@@ -209,13 +210,14 @@ model Comment {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   userId     String   @db.ObjectId
+  userImage  String
   postId     String   @db.ObjectId
-  createdBy  String?
+  createdBy  String
   likes      String[]
   dislikes   String[]
   totalVotes Int      @default(0)
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId, createdBy, userImage], references: [id, username, image], onDelete: Cascade)
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   replies Reply[]
@@ -227,14 +229,15 @@ model Reply {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   userId     String   @db.ObjectId
+  userImage  String
   commentId  String   @db.ObjectId
   postId     String   @db.ObjectId
-  createdBy  String?
+  createdBy  String
   likes      String[]
   dislikes   String[]
   totalVotes Int      @default(0)
 
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId, createdBy, userImage], references: [id, username, image], onDelete: Cascade)
   comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
   Post    Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
 }

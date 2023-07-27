@@ -39,17 +39,23 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
       if (acceptedFiles.length > 0) {
         setSelectedImage(acceptedFiles[0]);
       }
+      rejectedFiles.forEach((file) => {
+        file.errors.forEach((err) => {
+          if (err.code === "file-too-large") {
+            toast.error(`Sorry, maximum file size was 5MB`);
+          }
+        });
+      });
     },
     []
   );
 
-  const {
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    isDragAccept,
-    isDragReject,
-  } = useDropzone({ onDrop, maxFiles: 1, maxSize: 5242880, multiple: false });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    maxFiles: 1,
+    maxSize: 5242880,
+    multiple: false,
+  });
 
   const handleUpload = async (e: any) => {
     e.preventDefault();
@@ -117,8 +123,11 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
               tags: array.slice(0, 3),
             };
 
-            const set = await fetch("/explore/stg/api/post", {
+            const set = await fetch(`/api/explore/post?id=${currUser?.id}`, {
               method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
               body: JSON.stringify(fields),
               cache: "no-store",
             });

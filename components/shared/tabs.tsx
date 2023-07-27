@@ -64,7 +64,7 @@ const TabsContent = React.forwardRef<
     ref={ref}
     className={cn(
       // "ring-offset-background focus-visible:ring-ring mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-      "mt-1.5",
+      "mt-1.5 focus-visible:outline-none focus-visible:ring-0",
       className
     )}
     {...props}
