@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { SafeUser } from "@/types";
+import { cn } from "@/lib/utils";
 import useOptionStore from "@/lib/state/useOptionStore";
 import useFilterStore from "@/lib/state/useFilterStore";
+import useSearchStore from "@/lib/state/useSearchStore";
 
-import { Search } from "lucide-react";
+import { ChevronLeft, Search, X } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/shared/tabs";
-import { Input } from "@/components/shared/input";
+import { CustomInput } from "../search-input";
 import PostContainer from "./post-container";
 import PostList from "./post-list";
 import UserList from "../user-list";
@@ -37,6 +39,17 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
   const [searchTags, setSearchTags] = useState<string>("");
   const [selectedSortMode, setSelectedSortMode] = useState("recent");
   const [selectedTab, setSelectedTab] = useState("Recent");
+  const [isInputFocused, setIsInputFocused] = useState(false);
+
+  const { searchTerm, setSearchTerm } = useSearchStore();
+  useEffect(() => {
+    const storedFilter = window.sessionStorage.getItem("searchTerm");
+    setSearchTerm(storedFilter || "");
+  }, []);
+
+  useEffect(() => {
+    window.sessionStorage.setItem("searchTerm", searchTerm);
+  }, [searchTerm]);
 
   // Search Term
   const { searchTerm, setSearchTerm } = useFilterStore();
@@ -106,31 +119,59 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
               }
             }}
           >
-            <div className="flex grow flex-row items-center gap-2 rounded-xl border border-navy-300 bg-transparent">
-              <Input
-                type="text"
-                placeholder={
-                  selectedOption === -3
-                    ? "Search posts..."
-                    : selectedOption === -2
-                    ? "Search posts with a tag... (Up to 20 characters)"
-                    : "Search users..."
-                }
-                value={searchTerm}
-                onChange={(e) => {
-                  const inputValue = e.target.value;
-                  setSearchTerm(inputValue);
+            {(filter !== "" || searchTags !== "") && (
+              <button
+                onClick={() => {
+                  setFilter("");
+                  setSearchTags("");
+                  setSearchTerm("");
+                  setSelectedOption(-3);
                 }}
-                className="flex h-9 rounded-l-xl border-r border-hidden"
-                maxLength={selectedOption === -2 ? 20 : 50}
-              />
+              >
+                <ChevronLeft className="transition-all hover:text-navy-300 hover:duration-300" />
+              </button>
+            )}
+            <div className="flex grow flex-row items-center gap-2 rounded-xl border border-navy-300 bg-transparent">
+              <div
+                className={cn(
+                  "flex grow flex-row items-center",
+                  isInputFocused
+                    ? "rounded-l-lg border focus:ring-1 focus:ring-navy-200 focus:ring-offset-0"
+                    : ""
+                )}
+              >
+                <CustomInput
+                  type="text"
+                  placeholder={
+                    selectedOption === -3
+                      ? "Search posts..."
+                      : selectedOption === -2
+                      ? "Search posts with a tag... (Up to 20 characters)"
+                      : "Search users..."
+                  }
+                  value={searchTerm}
+                  onChange={(e) => {
+                    const inputValue = e.target.value;
+                    setSearchTerm(inputValue);
+                  }}
+                  className="flex h-9 grow bg-transparent outline-none"
+                  maxLength={selectedOption === -2 ? 20 : 50}
+                  onFocus={() => setIsInputFocused(true)}
+                  onBlur={() => setIsInputFocused(false)}
+                />
+                {searchTerm.length !== 0 && (
+                  <button onClick={() => setSearchTerm("")}>
+                    <X className="mr-2 transition-all hover:text-navy-300 hover:duration-300" />
+                  </button>
+                )}
+              </div>
               <button>
                 <Search className="mr-2 transition-all hover:text-navy-300 hover:duration-300" />
               </button>
             </div>
           </form>
           <select
-            className="h-[2.45rem] w-24 rounded-xl border border-navy-300/50 bg-black p-2 shadow-sm focus:border-navy-600 focus:outline-none focus:ring-1 focus:ring-navy-600"
+            className="h-[2.45rem] w-24 rounded-xl border border-navy-300/50 bg-black p-2 shadow-sm  focus:outline-none"
             value={selectedOption}
             onChange={handleChange}
           >

@@ -80,10 +80,6 @@ export default function PatchContainer({ patches }: IPatch) {
           </React.Fragment>
         ))}
       </div>
-      <p className="text-center text-[10px] text-gray-500">
-        These patches, available from 2021, are obtained from the website
-        https://liquipedia.net/mobilelegends/Portal:Patches.
-      </p>
     </div>
   );
 }
