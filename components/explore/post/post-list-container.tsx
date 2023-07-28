@@ -108,7 +108,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
               }
             }}
           >
-            {(filter !== "" || searchTags !== "" || searchTerm !== "") && (
+            {(filter !== "" || searchTags !== "") && (
               <button
                 onClick={() => {
                   setFilter("");
