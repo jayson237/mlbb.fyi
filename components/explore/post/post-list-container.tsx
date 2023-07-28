@@ -51,17 +51,6 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
     window.sessionStorage.setItem("searchTerm", searchTerm);
   }, [searchTerm]);
 
-  // Search Term
-  const { searchTerm, setSearchTerm } = useFilterStore();
-  useEffect(() => {
-    const storedSearch = window.sessionStorage.getItem("searchTerm");
-    setSearchTerm(storedSearch || "");
-  }, []);
-
-  useEffect(() => {
-    window.sessionStorage.setItem("searchTerm", searchTerm);
-  }, [searchTerm]);
-
   // Filter
   const { filter, setFilter } = useFilterStore();
   useEffect(() => {
@@ -119,7 +108,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
               }
             }}
           >
-            {(filter !== "" || searchTags !== "") && (
+            {(filter !== "" || searchTags !== "" || searchTerm !== "") && (
               <button
                 onClick={() => {
                   setFilter("");
