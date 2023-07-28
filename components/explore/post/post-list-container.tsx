@@ -5,7 +5,7 @@ import { SafeUser } from "@/types";
 import useOptionStore from "@/lib/state/useOptionStore";
 import useFilterStore from "@/lib/state/useFilterStore";
 
-import { Search, X } from "lucide-react";
+import { ChevronLeft, Search, X } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/shared/tabs";
 import { Input } from "@/components/shared/input";
 import PostContainer from "./post-container";
@@ -99,6 +99,16 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
               }
             }}
           >
+            {(filter !== "" || searchTags !== "") && (
+              <button
+                onClick={() => {
+                  setFilter("");
+                  setSearchTags("");
+                }}
+              >
+                <ChevronLeft className="transition-all hover:text-navy-300 hover:duration-300" />
+              </button>
+            )}
             <div className="flex grow flex-row items-center gap-2 rounded-xl border border-navy-300 bg-transparent">
               <div
                 className={cn(
