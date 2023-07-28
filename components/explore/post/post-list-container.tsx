@@ -2,17 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { SafeUser } from "@/types";
+import { cn } from "@/lib/utils";
 import useOptionStore from "@/lib/state/useOptionStore";
 import useFilterStore from "@/lib/state/useFilterStore";
+import useSearchStore from "@/lib/state/useSearchStore";
 
 import { ChevronLeft, Search, X } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/shared/tabs";
-import { Input } from "@/components/shared/input";
+import { CustomInput } from "../search-input";
 import PostContainer from "./post-container";
 import PostList from "./post-list";
 import UserList from "../user-list";
-import { CustomInput } from "../custom-input";
-import { cn } from "@/lib/utils";
 
 interface PostListContainerProps {
   currentUser?: SafeUser | null;
@@ -36,11 +36,20 @@ const ExploreTabList = [
 const PostListContainer: React.FC<PostListContainerProps> = ({
   currentUser,
 }) => {
-  const [searchTerm, setSearchTerm] = useState("");
   const [searchTags, setSearchTags] = useState<string>("");
   const [selectedSortMode, setSelectedSortMode] = useState("recent");
   const [selectedTab, setSelectedTab] = useState("Recent");
   const [isInputFocused, setIsInputFocused] = useState(false);
+
+  const { searchTerm, setSearchTerm } = useSearchStore();
+  useEffect(() => {
+    const storedFilter = window.sessionStorage.getItem("searchTerm");
+    setSearchTerm(storedFilter || "");
+  }, []);
+
+  useEffect(() => {
+    window.sessionStorage.setItem("searchTerm", searchTerm);
+  }, [searchTerm]);
 
   // Filter
   const { filter, setFilter } = useFilterStore();
@@ -104,6 +113,8 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
                 onClick={() => {
                   setFilter("");
                   setSearchTags("");
+                  setSearchTerm("");
+                  setSelectedOption(-3);
                 }}
               >
                 <ChevronLeft className="transition-all hover:text-navy-300 hover:duration-300" />
@@ -132,7 +143,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
                     const inputValue = e.target.value;
                     setSearchTerm(inputValue);
                   }}
-                  className="flex h-9 flex-grow bg-transparent outline-none"
+                  className="flex h-9 grow bg-transparent outline-none"
                   maxLength={selectedOption === -2 ? 20 : 50}
                   onFocus={() => setIsInputFocused(true)}
                   onBlur={() => setIsInputFocused(false)}
@@ -149,7 +160,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
             </div>
           </form>
           <select
-            className="h-[2.45rem] w-24 rounded-xl border border-navy-300/50 bg-black p-2 shadow-sm focus:border-navy-600 focus:outline-none focus:ring-1 focus:ring-navy-600"
+            className="h-[2.45rem] w-24 rounded-xl border border-navy-300/50 bg-black p-2 shadow-sm  focus:outline-none"
             value={selectedOption}
             onChange={handleChange}
           >
