@@ -34,10 +34,20 @@ const ExploreTabList = [
 const PostListContainer: React.FC<PostListContainerProps> = ({
   currentUser,
 }) => {
-  const [searchTerm, setSearchTerm] = useState("");
   const [searchTags, setSearchTags] = useState<string>("");
   const [selectedSortMode, setSelectedSortMode] = useState("recent");
   const [selectedTab, setSelectedTab] = useState("Recent");
+
+  // Search Term
+  const { searchTerm, setSearchTerm } = useFilterStore();
+  useEffect(() => {
+    const storedSearch = window.sessionStorage.getItem("searchTerm");
+    setSearchTerm(storedSearch || "");
+  }, []);
+
+  useEffect(() => {
+    window.sessionStorage.setItem("searchTerm", searchTerm);
+  }, [searchTerm]);
 
   // Filter
   const { filter, setFilter } = useFilterStore();
