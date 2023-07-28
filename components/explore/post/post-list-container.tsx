@@ -5,12 +5,14 @@ import { SafeUser } from "@/types";
 import useOptionStore from "@/lib/state/useOptionStore";
 import useFilterStore from "@/lib/state/useFilterStore";
 
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/shared/tabs";
 import { Input } from "@/components/shared/input";
 import PostContainer from "./post-container";
 import PostList from "./post-list";
 import UserList from "../user-list";
+import { CustomInput } from "../custom-input";
+import { cn } from "@/lib/utils";
 
 interface PostListContainerProps {
   currentUser?: SafeUser | null;
@@ -38,6 +40,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
   const [searchTags, setSearchTags] = useState<string>("");
   const [selectedSortMode, setSelectedSortMode] = useState("recent");
   const [selectedTab, setSelectedTab] = useState("Recent");
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
   // Filter
   const { filter, setFilter } = useFilterStore();
@@ -97,23 +100,39 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
             }}
           >
             <div className="flex grow flex-row items-center gap-2 rounded-xl border border-navy-300 bg-transparent">
-              <Input
-                type="text"
-                placeholder={
-                  selectedOption === -3
-                    ? "Search posts..."
-                    : selectedOption === -2
-                    ? "Search posts with a tag... (Up to 20 characters)"
-                    : "Search users..."
-                }
-                value={searchTerm}
-                onChange={(e) => {
-                  const inputValue = e.target.value;
-                  setSearchTerm(inputValue);
-                }}
-                className="flex h-9 rounded-l-xl border-r border-hidden"
-                maxLength={selectedOption === -2 ? 20 : 50}
-              />
+              <div
+                className={cn(
+                  "flex grow flex-row items-center",
+                  isInputFocused
+                    ? "rounded-l-lg border focus:ring-1 focus:ring-navy-200 focus:ring-offset-0"
+                    : ""
+                )}
+              >
+                <CustomInput
+                  type="text"
+                  placeholder={
+                    selectedOption === -3
+                      ? "Search posts..."
+                      : selectedOption === -2
+                      ? "Search posts with a tag... (Up to 20 characters)"
+                      : "Search users..."
+                  }
+                  value={searchTerm}
+                  onChange={(e) => {
+                    const inputValue = e.target.value;
+                    setSearchTerm(inputValue);
+                  }}
+                  className="flex h-9 flex-grow bg-transparent outline-none"
+                  maxLength={selectedOption === -2 ? 20 : 50}
+                  onFocus={() => setIsInputFocused(true)}
+                  onBlur={() => setIsInputFocused(false)}
+                />
+                {searchTerm.length !== 0 && (
+                  <button onClick={() => setSearchTerm("")}>
+                    <X className="mr-2 transition-all hover:text-navy-300 hover:duration-300" />
+                  </button>
+                )}
+              </div>
               <button>
                 <Search className="mr-2 transition-all hover:text-navy-300 hover:duration-300" />
               </button>
