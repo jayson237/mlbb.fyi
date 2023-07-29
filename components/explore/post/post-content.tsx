@@ -300,10 +300,11 @@ const PostContent: React.FC<PostContentProp> = ({
                   </>
                 )}
               </div>
-              {!isStarred && currUser && !favourite && (
+              {!isStarred && !favourite && (
                 <button
                   onClick={async () => {
                     setStarLoading(true);
+
                     const fields = {
                       postId: post.id,
                     };
