@@ -191,7 +191,7 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
             <Label htmlFor="tags">Tags (Optional)</Label>
             <input
               type="text"
-              placeholder={"Enter up to 3 tags (e.g. heroes, 'meta, bug)"}
+              placeholder={"Enter up to 3 tags (e.g. heroes, meta, bug)"}
               value={tags}
               id="tags"
               onChange={(e) => {
