@@ -62,7 +62,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
     window.sessionStorage.setItem("filter", filter);
   }, [filter]);
 
-  //Tag
+  // Tag
   const { searchTag, setSearchTag } = useTagStore();
   useEffect(() => {
     const storedSearchTag = window.sessionStorage.getItem("searchTag");
