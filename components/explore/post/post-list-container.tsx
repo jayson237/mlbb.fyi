@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import useOptionStore from "@/lib/state/useOptionStore";
 import useFilterStore from "@/lib/state/useFilterStore";
 import useSearchStore from "@/lib/state/useSearchStore";
+import useTagStore from "@/lib/state/useTagStore";
 
 import { ChevronLeft, Search, X } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/shared/tabs";
@@ -36,7 +37,6 @@ const ExploreTabList = [
 const PostListContainer: React.FC<PostListContainerProps> = ({
   currentUser,
 }) => {
-  const [searchTags, setSearchTags] = useState<string>("");
   const [selectedSortMode, setSelectedSortMode] = useState("recent");
   const [selectedTab, setSelectedTab] = useState("Recent");
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -62,6 +62,17 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
     window.sessionStorage.setItem("filter", filter);
   }, [filter]);
 
+  //Tag
+  const { searchTag, setSearchTag } = useTagStore();
+  useEffect(() => {
+    const storedSearchTag = window.sessionStorage.getItem("searchTag");
+    setSearchTag(storedSearchTag || "");
+  }, []);
+
+  useEffect(() => {
+    window.sessionStorage.setItem("searchTag", searchTag);
+  }, [searchTag]);
+
   // Options
   const { selectedOption, setSelectedOption } = useOptionStore();
   useEffect(() => {
@@ -78,10 +89,10 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
     setSelectedOption(selectedOption);
 
     if (selectedOption === -2) {
-      setSearchTags(searchTerm);
+      setSearchTag(searchTerm);
       setFilter("");
     } else {
-      setSearchTags("");
+      setSearchTag("");
       setFilter(searchTerm);
     }
   };
@@ -104,17 +115,16 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
                 setFilter(searchTerm);
               } else {
                 setFilter("");
-                setSearchTags(searchTerm);
+                setSearchTag(searchTerm);
               }
             }}
           >
-            {(filter !== "" || searchTags !== "") && (
+            {(filter !== "" || searchTag !== "") && (
               <button
                 onClick={() => {
                   setFilter("");
-                  setSearchTags("");
+                  setSearchTag("");
                   setSearchTerm("");
-                  setSelectedOption(-3);
                 }}
               >
                 <ChevronLeft className="transition-all hover:text-navy-300 hover:duration-300" />
@@ -206,7 +216,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
 
           <PostList
             filter={filter}
-            tag={searchTags}
+            tag={searchTag}
             sortMode={selectedSortMode}
             currUser={currentUser}
           />
