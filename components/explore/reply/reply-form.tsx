@@ -2,10 +2,10 @@
 
 import { useRef, useState } from "react";
 import { toast } from "sonner";
+import { revalPath } from "@/lib/revalidate";
 
 import { SendIcon } from "lucide-react";
 import LoadingDots from "@/components/shared/icons/loading-dots";
-import useMut from "@/lib/state/useMut";
 import useAutosizeTextArea from "@/lib/state/useAutosizeTextArea";
 
 interface ReplyProps {
@@ -14,12 +14,7 @@ interface ReplyProps {
   onReplied: () => void;
 }
 
-const ReplyForm: React.FC<ReplyProps> = ({
-  postId,
-  commentId,
-  onReplied,
-}) => {
-  const togMut = useMut();
+const ReplyForm: React.FC<ReplyProps> = ({ postId, commentId, onReplied }) => {
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -51,11 +46,8 @@ const ReplyForm: React.FC<ReplyProps> = ({
             onReplied();
             setLoading(false);
             setValue("");
+            revalPath("/explore" + postId);
             toast.success(msg.message);
-            togMut.togMut();
-            setTimeout(() => {
-              togMut.clamMut();
-            }, 1000);
           }
         }}
       >
