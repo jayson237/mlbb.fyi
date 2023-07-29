@@ -7,12 +7,13 @@ import useFilterStore from "@/lib/state/useFilterStore";
 
 import { ChevronLeft, Search, X } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/shared/tabs";
-import { Input } from "@/components/shared/input";
 import PostContainer from "./post-container";
 import PostList from "./post-list";
 import UserList from "../user-list";
 import { CustomInput } from "../custom-input";
 import { cn } from "@/lib/utils";
+import useTagStore from "@/lib/state/useTagStore";
+import useSearchTermStore from "@/lib/state/useSearchTermStore";
 
 interface PostListContainerProps {
   currentUser?: SafeUser | null;
@@ -36,11 +37,31 @@ const ExploreTabList = [
 const PostListContainer: React.FC<PostListContainerProps> = ({
   currentUser,
 }) => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchTags, setSearchTags] = useState<string>("");
   const [selectedSortMode, setSelectedSortMode] = useState("recent");
   const [selectedTab, setSelectedTab] = useState("Recent");
   const [isInputFocused, setIsInputFocused] = useState(false);
+
+  // SearchTerm
+  const { searchTerm, setSearchTerm } = useSearchTermStore();
+  useEffect(() => {
+    const storedSearchTerm = window.sessionStorage.getItem("searchTerm");
+    setSearchTerm(storedSearchTerm || "");
+  }, []);
+
+  useEffect(() => {
+    window.sessionStorage.setItem("searchTerm", searchTerm);
+  }, [searchTerm]);
+
+  // SearchTag
+  const { searchTag, setSearchTag } = useTagStore();
+  useEffect(() => {
+    const storedSearchTag = window.sessionStorage.getItem("searchTag");
+    setSearchTag(storedSearchTag || "");
+  }, []);
+
+  useEffect(() => {
+    window.sessionStorage.setItem("searchTag", searchTag);
+  }, [searchTag]);
 
   // Filter
   const { filter, setFilter } = useFilterStore();
@@ -69,10 +90,10 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
     setSelectedOption(selectedOption);
 
     if (selectedOption === -2) {
-      setSearchTags(searchTerm);
+      setSearchTag(searchTerm);
       setFilter("");
     } else {
-      setSearchTags("");
+      setSearchTag("");
       setFilter(searchTerm);
     }
   };
@@ -95,15 +116,15 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
                 setFilter(searchTerm);
               } else {
                 setFilter("");
-                setSearchTags(searchTerm);
+                setSearchTag(searchTerm);
               }
             }}
           >
-            {(filter !== "" || searchTags !== "") && (
+            {(filter !== "" || searchTag !== "") && (
               <button
                 onClick={() => {
                   setFilter("");
-                  setSearchTags("");
+                  setSearchTag("");
                 }}
               >
                 <ChevronLeft className="transition-all hover:text-navy-300 hover:duration-300" />
@@ -195,7 +216,7 @@ const PostListContainer: React.FC<PostListContainerProps> = ({
 
           <PostList
             filter={filter}
-            tag={searchTags}
+            tag={searchTag}
             sortMode={selectedSortMode}
             currUser={currentUser}
           />
