@@ -245,11 +245,10 @@ const Settings: React.FC<ISettings> = ({ currentUser, mlbbAcc }) => {
                 setButtonDisabled(false);
               } else {
                 setLoading(false);
-                revalPath(`/profile/stg`);
+                revalPath("/profile/stg");
                 toast.success(
                   "Successfully updated profile, kindly wait before making any more updates"
                 );
-                router.push(`/profile/${username}`);
               }
             }}
           >
