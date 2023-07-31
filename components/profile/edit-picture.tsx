@@ -13,6 +13,7 @@ import LoadingDots from "@/components/shared/icons/loading-dots";
 import { Paperclip } from "lucide-react";
 import { Slider } from "@mui/material";
 import AvatarEditor from "react-avatar-editor";
+import { revalPath } from "@/lib/revalidate";
 
 interface EditPictureProps {
   currentUser?: SafeUser | null;
@@ -79,6 +80,9 @@ const EditPicture: React.FC<EditPictureProps> = ({ currentUser }) => {
         });
         if (upload.ok) {
           toast.success("Successfully updated profile picture");
+          revalPath(
+            `/profile/${currentUser?.username ? currentUser?.username : "stg"}`
+          );
           router.push(
             `/profile/${currentUser?.username ? currentUser?.username : "stg"}`
           );
