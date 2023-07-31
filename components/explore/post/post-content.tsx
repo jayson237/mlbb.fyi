@@ -135,7 +135,7 @@ const PostContent: React.FC<PostContentProp> = ({
     }
   }
 
-  async function handleFavouriteUnfavourite(action: string, postId: string) {
+  async function handleFavouriteUnfavourite(action: string) {
     setStarLoading(true);
 
     const set = await fetch(
@@ -162,7 +162,7 @@ const PostContent: React.FC<PostContentProp> = ({
       }
 
       toast.success(msg.message);
-      revalPath("/explore/" + postId);
+      revalPath("/explore/" + post.id);
     }
   }
 
