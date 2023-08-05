@@ -6,11 +6,11 @@ import { TabsContent } from "@/components/shared/tabs";
 import HeroesContainer from "@/components/wiki/heroes/heroes-container";
 
 export const metadata = {
-  title: "Heroes - mlbb.fyi",
+  title: "Wiki - mlbb.fyi",
   description:
     "Access hero stats, optimal builds, and connect with a community of expert players.",
   openGraph: {
-    title: "Heroes - mlbb.fyi",
+    title: "Wiki - mlbb.fyi",
     description:
       "Access hero stats, optimal builds, and connect with a community of expert players.",
     url: "https://mlbb.fyi",
@@ -27,7 +27,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Heroes - mlbb.fyi",
+    title: "Wiki - mlbb.fyi",
     description:
       "Access hero stats, optimal builds, and connect with a community of expert players.",
     images: ["/og.jpg"],
