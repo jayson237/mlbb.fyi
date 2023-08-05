@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { exec } from "child_process";
 
 export async function GET(request: Request) {
-  const scriptPath = `../rankstat-scrapper.py`;
+  const scriptPath = `rankstat-scrapper.py`;
 
   try {
     exec(`py ${scriptPath}`, (error, stdout, stderr) => {
