@@ -81,15 +81,28 @@ mythic_heroes = extract_heroes(mythic_ul_element)
 mythical_glory_button = driver.find_element(By.XPATH, '/html/body/div[2]/div/div[4]/div/div[1]/div[2]/ul/li[3]')
 mythical_glory_button.click()
 
-# Check if "no more data" message exists
-no_more_data_message_xpath = '/html/body/div[2]/div/div[4]/div/div[2]/div/div[2]/p[contains(text(), "no more data")]'
+# Define the XPath for the ul and li elements.
+ul_xpath = '/html/body/div[2]/div/div[4]/div/div[2]/div/div[2]/ul'
+li_xpath = '/html/body/div[2]/div/div[4]/div/div[2]/div/div[2]/ul/li'
+
 is_no_more_data = False
 
+# Check if the ul element is present.
 try:
-    wait.until(EC.presence_of_element_located((By.XPATH, no_more_data_message_xpath)))
-    is_no_more_data = True
+    ul_element = driver.find_element(By.XPATH, ul_xpath)
+    is_ul_present = True
 except NoSuchElementException:
-    pass
+    is_ul_present = False
+
+# Check if the li element(s) inside the ul are present.
+try:
+    li_elements = driver.find_elements(By.XPATH, li_xpath)
+    is_li_present = len(li_elements) > 0
+except NoSuchElementException:
+    is_li_present = False
+
+if is_ul_present and is_li_present:
+    is_no_more_data = True
 
 # Extract "mythical glory" heroes if "no more data" message is not present
 if not is_no_more_data:
@@ -122,12 +135,14 @@ for hero_name, all_data in all_heroes.items():
         "glory": mythical_glory_data
     })
 
+# print(combined_data)    
+
 # Insert or update the hero data in the MongoDB collection
 for hero_data in combined_data:
     hero_name = hero_data['name']
     query = {'name': hero_name}
     update = {'$set': {'stats': {'all': hero_data['all'], 'mythic': hero_data['mythic'], 'glory': hero_data['glory']}}}
-    collection.update_one(query, update)
+    db.Hero.update_one(query, update)
 
     print(hero_name)
 
