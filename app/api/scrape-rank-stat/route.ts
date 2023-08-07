@@ -5,7 +5,7 @@ export async function GET(request: Request) {
   const scriptPath = `rankstat-scrapper.py`;
 
   try {
-    exec(`py ${scriptPath}`, (error, stdout, stderr) => {
+    exec(`python ${scriptPath}`, (error, stdout, stderr) => {
       if (error) {
         console.log(error);
         return NextResponse.json(error, { status: 200 });
