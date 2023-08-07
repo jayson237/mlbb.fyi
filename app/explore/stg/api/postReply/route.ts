@@ -40,7 +40,7 @@ export async function POST(req: Request) {
       postId: postId,
       commentId: commentId,
       createdBy: currentUser.username,
-      userImage: currentUser.image,
+      userImage: currentUser.image || "",
     },
   });
 
