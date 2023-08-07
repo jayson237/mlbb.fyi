@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npx prisma generate && next dev -p 3010",
+    "flask-dev": "FLASK_DEBUG=1 pip3 install -r requirements.txt && python3 -m flask --app api/index run -p 5328",
+    "dev": "concurrently \"npx prisma generate\" \"next dev\" \"npm run flask-dev\"",
     "build": "next build",
     "start": "next start",
     "local": "next build && next start",
@@ -30,6 +31,7 @@
     "class-variance-authority": "^0.5.1",
     "cloudinary": "^1.37.0",
     "clsx": "^1.2.1",
+    "concurrently": "^8.2.0",
     "eslint-config-next": "^13.4.0",
     "lazysizes": "^5.3.2",
     "lucide-react": "^0.216.0",
