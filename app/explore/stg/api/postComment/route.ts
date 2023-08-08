@@ -36,7 +36,7 @@ export async function POST(req: Request) {
       userId: currentUser?.id,
       postId: postId,
       createdBy: currentUser.username,
-      userImage: currentUser.image,
+      userImage: currentUser.image || "",
     },
   });
 

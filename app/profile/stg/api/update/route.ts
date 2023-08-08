@@ -20,11 +20,7 @@ export async function POST(req: Request) {
     },
   });
 
-  if (
-    findUsername &&
-    description === currentUser?.desc &&
-    currentUser?.links === links
-  ) {
+  if (findUsername && findUsername?.id !== currentUser?.id) {
     return NextResponse.json(
       {
         message: "Username already exists",

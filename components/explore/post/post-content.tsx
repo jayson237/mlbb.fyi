@@ -135,6 +135,37 @@ const PostContent: React.FC<PostContentProp> = ({
     }
   }
 
+  async function handleFavouriteUnfavourite(action: string) {
+    setStarLoading(true);
+
+    const set = await fetch(
+      "/explore/stg/api/favourite-action?action=" + action,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          postId: post.id,
+        }),
+      }
+    );
+    const msg = await set.json();
+
+    if (!set.ok) {
+      toast.error(msg.message);
+      setStarLoading(false);
+    } else {
+      setStarLoading(false);
+
+      if (action === "favourite") {
+        setFavourite(true);
+      } else {
+        setFavourite(false);
+      }
+
+      toast.success(msg.message);
+      revalPath("/explore/" + post.id);
+    }
+  }
+
   return (
     <>
       <div
@@ -300,77 +331,27 @@ const PostContent: React.FC<PostContentProp> = ({
                   </>
                 )}
               </div>
-              {!isStarred && !favourite && (
+              {starLoading ? (
+                <div className="mb-1.5">
+                  <LoadingDots color="#FAFAFA" />
+                </div>
+              ) : (
                 <button
-                  onClick={async () => {
-                    setStarLoading(true);
-
-                    const fields = {
-                      postId: post.id,
-                    };
-                    const set = await fetch("/explore/stg/api/favourite", {
-                      method: "POST",
-                      body: JSON.stringify(fields),
-                    });
-                    const msg = await set.json();
-                    if (!set.ok) {
-                      toast.error(msg.message);
-                      setStarLoading(false);
-                    } else {
-                      setFavourite(true);
-                      setStarLoading(false);
-                      toast.success(msg.message);
-                      revalPath("/explore" + post.id);
-                    }
-                  }}
+                  onClick={() =>
+                    favourite
+                      ? handleFavouriteUnfavourite("unfavourite")
+                      : handleFavouriteUnfavourite("favourite")
+                  }
                 >
-                  {starLoading ? (
-                    <div className="mb-1.5">
-                      <LoadingDots color="#FAFAFA" />
-                    </div>
-                  ) : (
-                    <Star
-                      className="transition-all ease-in-out  hover:text-yellow-300 hover:duration-300"
-                      strokeWidth={0.5}
-                      size={24}
-                    />
-                  )}
-                </button>
-              )}
-              {isStarred && currUser && favourite && (
-                <button
-                  onClick={async () => {
-                    setStarLoading(true);
-                    const fields = {
-                      postId: post.id,
-                    };
-                    const set = await fetch("/explore/stg/api/unfavourite", {
-                      method: "POST",
-                      body: JSON.stringify(fields),
-                    });
-                    const msg = await set.json();
-                    if (!set.ok) {
-                      toast.error(msg.message);
-                      setStarLoading(false);
-                    } else {
-                      revalPath("/explore" + post.id);
-                      setFavourite(false);
-                      setStarLoading(false);
-                      toast.success(msg.message);
-                    }
-                  }}
-                >
-                  {starLoading ? (
-                    <div className="mb-1.5">
-                      <LoadingDots color="#FAFAFA" />
-                    </div>
-                  ) : (
-                    <Star
-                      size={24}
-                      strokeWidth={0.5}
-                      className="fill-yellow-300"
-                    />
-                  )}
+                  <Star
+                    size={24}
+                    strokeWidth={0.5}
+                    className={cn(
+                      favourite
+                        ? "fill-yellow-300"
+                        : "transition-all ease-in-out  hover:text-yellow-300 hover:duration-300"
+                    )}
+                  />
                 </button>
               )}
               <p className="ml-2 mr-8 flex">

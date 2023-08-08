@@ -17,6 +17,7 @@ import LoadingDots from "../shared/icons/loading-dots";
 import { MlbbAcc } from "@prisma/client";
 import EditPicture from "./edit-picture";
 import DialogFit from "../shared/dialog-fit";
+import { revalPath } from "@/lib/revalidate";
 
 interface ISettings {
   currentUser?: SafeUser | null;
@@ -244,10 +245,10 @@ const Settings: React.FC<ISettings> = ({ currentUser, mlbbAcc }) => {
                 setButtonDisabled(false);
               } else {
                 setLoading(false);
+                revalPath("/profile/stg");
                 toast.success(
                   "Successfully updated profile, kindly wait before making any more updates"
                 );
-                router.push(`/profile/${username}`);
               }
             }}
           >

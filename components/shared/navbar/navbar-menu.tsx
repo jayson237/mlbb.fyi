@@ -2,16 +2,15 @@
 
 import React, { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import Link from "next/link";
 import { LogOutIcon, Settings } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { SafeUser } from "@/types";
+
 import Close from "../icons/close";
 import Burger from "../icons/burger";
 import { Button } from "../button";
 import { signOut } from "next-auth/react";
-import getCurrentUser from "@/lib/actions/getCurrentUser";
 
 interface NavMenuProps {
   currentUser?: SafeUser | null;
