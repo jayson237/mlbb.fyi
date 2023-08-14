@@ -1,0 +1,482 @@
+[
+  {
+    "name": "Aamon",
+    "tier": "B"
+  },
+  {
+    "name": "Akai",
+    "tier": "A"
+  },
+  {
+    "name": "Aldous",
+    "tier": "C"
+  },
+  {
+    "name": "Alice",
+    "tier": "A"
+  },
+  {
+    "name": "Alpha",
+    "tier": "A"
+  },
+  {
+    "name": "Alucard",
+    "tier": "C"
+  },
+  {
+    "name": "Angela",
+    "tier": "S"
+  },
+  {
+    "name": "Argus",
+    "tier": "C"
+  },
+  {
+    "name": "Arlott",
+    "tier": "SS"
+  },
+  {
+    "name": "Atlas",
+    "tier": "B"
+  },
+  {
+    "name": "Aulus",
+    "tier": "C"
+  },
+  {
+    "name": "Aurora",
+    "tier": "D"
+  },
+  {
+    "name": "Badang",
+    "tier": "B"
+  },
+  {
+    "name": "Balmond",
+    "tier": "S"
+  },
+  {
+    "name": "Bane",
+    "tier": "A"
+  },
+  {
+    "name": "Barats",
+    "tier": "D"
+  },
+  {
+    "name": "Baxia",
+    "tier": "S"
+  },
+  {
+    "name": "Beatrix",
+    "tier": "SS"
+  },
+  {
+    "name": "Belerick",
+    "tier": "D"
+  },
+  {
+    "name": "Benedetta",
+    "tier": "B"
+  },
+  {
+    "name": "Brody",
+    "tier": "S"
+  },
+  {
+    "name": "Bruno",
+    "tier": "B"
+  },
+  {
+    "name": "Carmilla",
+    "tier": "D"
+  },
+  {
+    "name": "Cecilion",
+    "tier": "B"
+  },
+  {
+    "name": "Chang'e",
+    "tier": "C"
+  },
+  {
+    "name": "Chou",
+    "tier": "A"
+  },
+  {
+    "name": "Claude",
+    "tier": "SS"
+  },
+  {
+    "name": "Clint",
+    "tier": "B"
+  },
+  {
+    "name": "Cyclops",
+    "tier": "D"
+  },
+  {
+    "name": "Diggie",
+    "tier": "A"
+  },
+  {
+    "name": "Dyrroth",
+    "tier": "A"
+  },
+  {
+    "name": "Edith",
+    "tier": "S"
+  },
+  {
+    "name": "Esmeralda",
+    "tier": "B"
+  },
+  {
+    "name": "Estes",
+    "tier": "B"
+  },
+  {
+    "name": "Eudora",
+    "tier": "C"
+  },
+  {
+    "name": "Fanny",
+    "tier": "SS"
+  },
+  {
+    "name": "Faramis",
+    "tier": "S"
+  },
+  {
+    "name": "Floryn",
+    "tier": "S"
+  },
+  {
+    "name": "Franco",
+    "tier": "S"
+  },
+  {
+    "name": "Fredrinn",
+    "tier": "SS"
+  },
+  {
+    "name": "Freya",
+    "tier": "B"
+  },
+  {
+    "name": "Gatotkaca",
+    "tier": "D"
+  },
+  {
+    "name": "Gloo",
+    "tier": "A"
+  },
+  {
+    "name": "Gord",
+    "tier": "B"
+  },
+  {
+    "name": "Granger",
+    "tier": "B"
+  },
+  {
+    "name": "Grock",
+    "tier": "S"
+  },
+  {
+    "name": "Guinevere",
+    "tier": "D"
+  },
+  {
+    "name": "Gusion",
+    "tier": "C"
+  },
+  {
+    "name": "Hanabi",
+    "tier": "C"
+  },
+  {
+    "name": "Hanzo",
+    "tier": "C"
+  },
+  {
+    "name": "Harith",
+    "tier": "A"
+  },
+  {
+    "name": "Harley",
+    "tier": "B"
+  },
+  {
+    "name": "Hayabusa",
+    "tier": "A"
+  },
+  {
+    "name": "Helcurt",
+    "tier": "A"
+  },
+  {
+    "name": "Hilda",
+    "tier": "B"
+  },
+  {
+    "name": "Hylos",
+    "tier": "B"
+  },
+  {
+    "name": "Irithel",
+    "tier": "A"
+  },
+  {
+    "name": "Jawhead",
+    "tier": "C"
+  },
+  {
+    "name": "Johnson",
+    "tier": "B"
+  },
+  {
+    "name": "Joy",
+    "tier": "SS"
+  },
+  {
+    "name": "Julian",
+    "tier": "B"
+  },
+  {
+    "name": "Kadita",
+    "tier": "SS"
+  },
+  {
+    "name": "Kagura",
+    "tier": "B"
+  },
+  {
+    "name": "Kaja",
+    "tier": "SS"
+  },
+  {
+    "name": "Karina",
+    "tier": "C"
+  },
+  {
+    "name": "Karrie",
+    "tier": "A"
+  },
+  {
+    "name": "Khaleed",
+    "tier": "A"
+  },
+  {
+    "name": "Khufra",
+    "tier": "SS"
+  },
+  {
+    "name": "Kimmy",
+    "tier": "C"
+  },
+  {
+    "name": "Lancelot",
+    "tier": "A"
+  },
+  {
+    "name": "Lapu-Lapu",
+    "tier": "A"
+  },
+  {
+    "name": "Layla",
+    "tier": "D"
+  },
+  {
+    "name": "Leomord",
+    "tier": "B"
+  },
+  {
+    "name": "Lesley",
+    "tier": "S"
+  },
+  {
+    "name": "Ling",
+    "tier": "SS"
+  },
+  {
+    "name": "Lolita",
+    "tier": "A"
+  },
+  {
+    "name": "Lunox",
+    "tier": "B"
+  },
+  {
+    "name": "Luo Yi",
+    "tier": "C"
+  },
+  {
+    "name": "Lylia",
+    "tier": "B"
+  },
+  {
+    "name": "Martis",
+    "tier": "A"
+  },
+  {
+    "name": "Masha",
+    "tier": "C"
+  },
+  {
+    "name": "Mathilda",
+    "tier": "D"
+  },
+  {
+    "name": "Melissa",
+    "tier": "A"
+  },
+  {
+    "name": "Minotaur",
+    "tier": "A"
+  },
+  {
+    "name": "Minsitthar",
+    "tier": "C"
+  },
+  {
+    "name": "Miya",
+    "tier": "D"
+  },
+  {
+    "name": "Moskov",
+    "tier": "B"
+  },
+  {
+    "name": "Nana",
+    "tier": "D"
+  },
+  {
+    "name": "Natalia",
+    "tier": "B"
+  },
+  {
+    "name": "Natan",
+    "tier": "C"
+  },
+  {
+    "name": "Novaria",
+    "tier": "S"
+  },
+  {
+    "name": "Odette",
+    "tier": "C"
+  },
+  {
+    "name": "Paquito",
+    "tier": "S"
+  },
+  {
+    "name": "Pharsa",
+    "tier": "A"
+  },
+  {
+    "name": "Phoveus",
+    "tier": "C"
+  },
+  {
+    "name": "Popol and Kupa",
+    "tier": "D"
+  },
+  {
+    "name": "Rafaela",
+    "tier": "S"
+  },
+  {
+    "name": "Roger",
+    "tier": "D"
+  },
+  {
+    "name": "Ruby",
+    "tier": "B"
+  },
+  {
+    "name": "Saber",
+    "tier": "B"
+  },
+  {
+    "name": "Selena",
+    "tier": "D"
+  },
+  {
+    "name": "Silvanna",
+    "tier": "D"
+  },
+  {
+    "name": "Sun",
+    "tier": "D"
+  },
+  {
+    "name": "Terizla",
+    "tier": "S"
+  },
+  {
+    "name": "Thamuz",
+    "tier": "D"
+  },
+  {
+    "name": "Tigreal",
+    "tier": "D"
+  },
+  {
+    "name": "Uranus",
+    "tier": "S"
+  },
+  {
+    "name": "Vale",
+    "tier": "D"
+  },
+  {
+    "name": "Valentina",
+    "tier": "SS"
+  },
+  {
+    "name": "Valir",
+    "tier": "A"
+  },
+  {
+    "name": "Vexana",
+    "tier": "D"
+  },
+  {
+    "name": "Wanwan",
+    "tier": "A"
+  },
+  {
+    "name": "X.Borg",
+    "tier": "A"
+  },
+  {
+    "name": "Xavier",
+    "tier": "B"
+  },
+  {
+    "name": "Yi Sun-shin",
+    "tier": "B"
+  },
+  {
+    "name": "Yin",
+    "tier": "C"
+  },
+  {
+    "name": "Yu Zhong",
+    "tier": "A"
+  },
+  {
+    "name": "Yve",
+    "tier": "SS"
+  },
+  {
+    "name": "Zhask",
+    "tier": "C"
+  },
+  {
+    "name": "Zilong",
+    "tier": "D"
+  }
+]
