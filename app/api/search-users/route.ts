@@ -1,7 +1,10 @@
 import prisma from "@/lib/prismadb";
+import { User } from "@prisma/client";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+export async function POST(
+  req: Request
+): Promise<NextResponse<string | User[] | { message: string } | null>> {
   try {
     const { data }: { data: string } = await req.json();
 
@@ -16,10 +19,6 @@ export async function POST(req: Request) {
         createdAt: "desc",
       },
     });
-
-    if (!users) {
-      return null;
-    }
 
     if (data) {
       const filteredUsers = users?.filter((user) =>
@@ -41,6 +40,13 @@ export async function POST(req: Request) {
       status: 200,
     });
   } catch (error: any) {
-    return null;
+    return NextResponse.json(
+      {
+        message: "User not found!",
+      },
+      {
+        status: 400,
+      }
+    );
   }
 }

@@ -18,6 +18,13 @@ export async function POST(req: Request) {
       status: 200,
     });
   } catch (error) {
-    return null;
+    console.error("Error:", error);
+
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      {
+        status: 500,
+      }
+    );
   }
 }
