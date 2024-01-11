@@ -140,11 +140,11 @@ for hero_name, all_data in all_heroes.items():
 # Insert or update the hero data in the MongoDB collection
 for hero_data in combined_data:
     hero_name = hero_data['name']
-    query = {'name': hero_name}
-    update = {'$set': {'stats': {'all': hero_data['all'], 'mythic': hero_data['mythic'], 'glory': hero_data['glory']}}}
-    db.Hero.update_one(query, update)
-
-    print(hero_name)
+    if hero_name != 'Ixia':
+        query = {'name': hero_name}
+        update = {'$set': {'stats': {'all': hero_data['all'], 'mythic': hero_data['mythic'], 'glory': hero_data['glory']}}}
+        db.Hero.update_one(query, update)
+        print(hero_name)
 
 print("Hero stats updated in MongoDB")
 

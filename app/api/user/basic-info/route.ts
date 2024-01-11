@@ -1,13 +1,21 @@
 import { getServerSession } from "next-auth/next";
-
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import prisma from "@/lib/prismadb";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function GET(req: Request): Promise<
+  NextResponse<{
+    name: string | null;
+    desc: string | null;
+    username: string | null;
+    followers: string[];
+    following: string[];
+  } | null>
+> {
   try {
     const url = req.url as string;
     const username = url.split("?username=")[1];
+
     if (username) {
       return NextResponse.json(
         await prisma.user.findFirst({
@@ -24,15 +32,12 @@ export async function GET(req: Request) {
         })
       );
     }
-    const session = await getServerSession(authOptions);
 
-    if (!session?.user?.email) {
-      return null;
-    }
+    const session = await getServerSession(authOptions);
 
     const currentUser = await prisma.user.findUnique({
       where: {
-        email: session.user.email as string,
+        email: session?.user?.email as string,
       },
       select: {
         name: true,
@@ -43,19 +48,17 @@ export async function GET(req: Request) {
       },
     });
 
-    if (!currentUser) {
-      return NextResponse.json({
-        msg: "Error",
-      });
-    }
-
     return NextResponse.json(currentUser, {
       status: 200,
     });
   } catch (error) {
     return NextResponse.json(
       {
-        message: "User not found!",
+        name: null,
+        desc: null,
+        username: null,
+        followers: [],
+        following: [],
       },
       {
         status: 400,
