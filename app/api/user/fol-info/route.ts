@@ -3,8 +3,8 @@ import prisma from "@/lib/prismadb";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
   try {
-    const { searchParams } = new URL(req.url);
     const type = searchParams.get("type");
     const username = searchParams.get("username");
 

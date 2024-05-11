@@ -12,6 +12,7 @@ export async function generateMetadata({
   params: { username: string };
 }): Promise<Metadata> {
   return {
+    metadataBase: new URL("https://mlbb.fyi"),
     title: `@${params.username} - mlbb.fyi`,
     description:
       "Access hero stats, optimal builds, and connect with a community of expert players.",

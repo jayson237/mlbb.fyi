@@ -5,6 +5,7 @@ import RandomUserContainer from "@/components/explore/random-user-container";
 import PostListContainer from "@/components/explore/post/post-list-container";
 
 export const metadata = {
+  metadataBase: new URL("https://mlbb.fyi"),
   title: "Explore - mlbb.fyi",
   description:
     "Access hero stats, optimal builds, and connect with a community of expert players.",

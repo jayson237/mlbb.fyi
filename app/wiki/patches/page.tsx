@@ -6,6 +6,7 @@ import { TabsContent } from "@/components/shared/tabs";
 import PatchesContainer from "@/components/wiki/patches/patches-container";
 
 export const metadata = {
+  metadataBase: new URL("https://mlbb.fyi"),
   title: "Patches - mlbb.fyi",
   description:
     "Access hero stats, optimal builds, and connect with a community of expert players.",

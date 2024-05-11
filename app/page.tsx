@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 export const metadata = {
+  metadataBase: new URL("https://mlbb.fyi"),
   title: "mlbb.fyi - Elevate Your Mobile Legends Game",
   description:
     "Access hero stats, optimal builds, and connect with a community of expert players.",
@@ -20,7 +21,7 @@ export const metadata = {
       },
     ],
     locale: "en-US",
-    type: "website"
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
