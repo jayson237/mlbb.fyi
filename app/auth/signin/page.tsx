@@ -2,6 +2,7 @@ import { getCsrfToken } from "next-auth/react";
 import LoginForm from "@/components/login-form";
 import getCurrentUser from "@/lib/actions/getCurrentUser";
 import Redirect from "@/components/redirect";
+import { Suspense } from "react";
 
 export default async function Signin() {
   const csrfToken = await getCsrfToken();
@@ -20,7 +21,9 @@ export default async function Signin() {
         <p className="pt-3 text-[16px] md:text-[16px]">
           Join the community and dominate the battlefield!
         </p>
-        <LoginForm csrfToken={csrfToken} />
+        <Suspense>
+          <LoginForm csrfToken={csrfToken} />
+        </Suspense>
       </div>
     </main>
   );
