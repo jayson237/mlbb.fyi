@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { authOptions } from "lib/authOptions";
 import prisma from "@/lib/prismadb";
 import { NextResponse } from "next/server";
 
@@ -12,8 +12,8 @@ export async function GET(req: Request): Promise<
     following: string[];
   } | null>
 > {
+  const url = req.url as string;
   try {
-    const url = req.url as string;
     const username = url.split("?username=")[1];
 
     if (username) {

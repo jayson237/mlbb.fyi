@@ -2,8 +2,8 @@ import prisma from "@/lib/prismadb";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
+  const url = req.url as string;
   try {
-    const url = req.url as string;
     const postId = url.split("?postId=")[1];
     if (!postId) {
       return NextResponse.json(

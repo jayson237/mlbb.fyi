@@ -6,6 +6,7 @@ import { TabsContent } from "@/components/shared/tabs";
 import HeroesContainer from "@/components/wiki/heroes/heroes-container";
 
 export const metadata = {
+  metadataBase: new URL("https://mlbb.fyi"),
   title: "Heroes - mlbb.fyi",
   description:
     "Access hero stats, optimal builds, and connect with a community of expert players.",

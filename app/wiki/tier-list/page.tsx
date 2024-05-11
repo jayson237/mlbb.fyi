@@ -4,6 +4,7 @@ import { TabsContent } from "@/components/shared/tabs";
 import TierContainer from "@/components/wiki/tier-list/tier-list-container";
 
 export const metadata = {
+  metadataBase: new URL("https://mlbb.fyi"),
   title: "Tier List - mlbb.fyi",
   description:
     "Access hero stats, optimal builds, and connect with a community of expert players.",

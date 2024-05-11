@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth/next";
 
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { authOptions } from "@/lib/authOptions";
 import prisma from "@/lib/prismadb";
 
 export default async function getCurrentUser() {
@@ -15,12 +15,6 @@ export default async function getCurrentUser() {
       where: {
         email: session.user.email as string,
       },
-      // select: {
-      //   // id: true,
-      //   emailVerified: false,
-      //   updatedAt: false,
-      //   createdAt: false
-      // },
     });
 
     if (!currentUser) {
