@@ -1,6 +1,3 @@
-import getCurrentUser from "@/lib/actions/getCurrentUser";
-import { NextResponse } from "next/server";
-
 const Page = async () => {
   return (
     <div>
