@@ -47,7 +47,7 @@ export default function PatchContainer({ patches }: IPatch) {
             {groupedPatches[year].map((patch, i) => (
               <div
                 key={i}
-                onClick={() => router.push(`wiki/patches/${patch.version}`)}
+                onClick={() => router.push(`patches/${patch.version}`)}
                 className="mb-4 cursor-pointer"
               >
                 <GradiantCard

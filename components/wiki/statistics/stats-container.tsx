@@ -177,7 +177,7 @@ export default function StatsContainer({ heroes, tourneyStats }: IStats) {
                     className="flex flex-row items-center hover:cursor-pointer hover:underline"
                     onClick={() =>
                       router.push(
-                        `wiki/heroes/${
+                        `heroes/${
                           hero.name
                             ? hero.name.toLowerCase()
                             : hero.hero.toLowerCase()

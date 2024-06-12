@@ -1,5 +1,3 @@
-import { Patch } from "@prisma/client";
-
 import PatchFyi from "@/components/wiki/patches/patch-info";
 import prisma from "@/lib/prismadb";
 import Redirect from "@/components/redirect";

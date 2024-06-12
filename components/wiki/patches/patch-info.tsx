@@ -38,9 +38,7 @@ export default function PatchFyi({ patch, patches }: IPatch) {
             {previousPatch && (
               <div
                 className="flex cursor-pointer flex-row items-center"
-                onClick={() =>
-                  router.push(`wiki/patches/${previousPatch?.version}`)
-                }
+                onClick={() => router.push(`${previousPatch?.version}`)}
               >
                 <ArrowLeft className="hover:text-navy-200 hover:duration-300" />
                 <p className="text-lg ml-2 font-sat font-semibold sm:text-xl">
@@ -59,9 +57,7 @@ export default function PatchFyi({ patch, patches }: IPatch) {
             {nextPatch && (
               <div
                 className="flex cursor-pointer flex-row items-center justify-end"
-                onClick={() =>
-                  router.push(`wiki/patches/${nextPatch?.version}`)
-                }
+                onClick={() => router.push(`${nextPatch?.version}`)}
               >
                 <p className="text-lg ml-2 font-sat font-semibold sm:text-xl ">
                   {nextPatch?.version}
