@@ -36,7 +36,7 @@ export async function sendVerificationCode(payload: PayloadType) {
       },
     }
   );
-  // console.log(response);
+
   return response;
 }
 
@@ -61,20 +61,6 @@ export async function bindAcc(payload: PayloadType) {
       nickname: string;
     };
   } = await res.json();
-  // console.log(response);
-
-  // const response = await axios.post<{
-  //   message: string;
-  //   data: {
-  //     id: string;
-  //     server: string;
-  //     nickname: string;
-  //   };
-  // }>(`${process.env.BE_API_URL}/mlbbacc/sync`, {
-  //   id: payload.accId,
-  //   server: payload.accServer,
-  //   code: payload.code,
-  // });
 
   return {
     message: response.message,

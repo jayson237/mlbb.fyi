@@ -8,7 +8,6 @@ export async function GET(req: Request) {
     const type = searchParams.get("type");
     const username = searchParams.get("username");
 
-    // console.log(username)
     if (type === "following") {
       let data: {
         name: string | undefined;
@@ -22,7 +21,7 @@ export async function GET(req: Request) {
           following: true,
         },
       });
-      // console.log(user)
+
 
       for (const x of user?.following as string[]) {
         await prisma.user
@@ -42,7 +41,6 @@ export async function GET(req: Request) {
             return data.push(res);
           });
       }
-      // console.log(data)
       return NextResponse.json(data, { status: 200 });
     } else if (type === "followers") {
       let data: {

@@ -6,16 +6,12 @@ export async function POST(req: Request) {
   const currentUser = await getCurrentUser();
 
   const { username } = await req.json();
-  // console.log (username)
 
   const findUser = await prisma.user.findFirst({
     where: {
       username: username,
     },
   });
-
-  // console.log(currentUser?.username);
-  // console.log(findUser?.username);
 
   if (!currentUser) {
     return NextResponse.json(

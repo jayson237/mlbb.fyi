@@ -22,9 +22,7 @@ if (process.env.NODE_ENV === "development") {
 } else {
   try {
     clientPromise = mongoose.connect(uri, options as ConnectOptions);
-  } catch (err) {
-    // console.log(err);
-  }
+  } catch (err) {}
   clientPromise = mongoose.connect(uri, options as ConnectOptions);
 }
 

@@ -14,7 +14,6 @@ interface PostProps {
 }
 
 const Post: React.FC<PostProps> = ({ currentUser, post, user }) => {
-  // console.log(post);
   return (
     <>
       <PostContent

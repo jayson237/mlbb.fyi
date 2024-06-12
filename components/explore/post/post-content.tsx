@@ -86,22 +86,6 @@ const PostContent: React.FC<PostContentProp> = ({
     isExpandable() === true ? setExpandedable(true) : setExpandedable(false);
   }, []);
 
-  // useEffect(() => {
-  //   let handler = (event: MouseEvent) => {
-  //     if (
-  //       optionRef.current &&
-  //       !optionRef.current.contains(event.target as Node)
-  //     ) {
-  //       setIsOpen(false);
-  //     }
-  //   };
-  //   document.addEventListener("mousedown", handler);
-
-  //   return () => {
-  //     document.removeEventListener("mousedown", handler);
-  //   };
-  // });
-
   const toggleExpand = () => {
     setExpanded(!expanded);
   };

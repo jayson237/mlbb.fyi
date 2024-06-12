@@ -43,7 +43,6 @@ function getTimeDiff(
   minute1: string,
   minute2: string
 ) {
-  // console.log(hour1, hour2, minute1, minute2);
   let hourDiff = Number(hour2) - Number(hour1) - 1;
 
   // difference between minutes
@@ -68,8 +67,6 @@ function addOrSubtractOneDay(date: string[], diff: number) {
     (newDate.getMonth() + 1).toString(),
     newDate.getDate().toString(),
   ];
-
-  // console.log("new", currDate);
 
   return currDate;
 }

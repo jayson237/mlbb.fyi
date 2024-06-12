@@ -17,10 +17,6 @@ module.exports = {
     },
     extend: {
       colors: {
-        // bgblack: "#151515",
-        // bgblack: "#2a2a2a",
-        // pblack: "#232323",
-        // sblack: "#2C2C2C",
         bgblack: "#121212",
         pblack: "#1e1e1e",
         sblack: "#232323",

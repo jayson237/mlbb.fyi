@@ -16,7 +16,7 @@ const ReplyList: React.FC<ReplyListProps> = ({ userId, postId, replies }) => {
   if (!replies || replies.length === 0) {
     return null;
   }
-  // console.log(userId);
+
   if (replies) {
     return (
       <ul role="list">

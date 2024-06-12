@@ -71,10 +71,6 @@ const NewCommentForm: React.FC<CommentProps> = ({ postId, img }) => {
               setLoading(false);
               setValue("");
               toast.success(msg.message);
-              // togMut.togMut();
-              // setTimeout(() => {
-              //   togMut.clamMut();
-              // }, 1000);
             }
           }}
         >

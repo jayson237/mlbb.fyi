@@ -17,21 +17,6 @@ interface HeroFyiContainer {
   heroEmblem: Object[] | null;
   heroWeakAgainst?: Object[] | null;
   heroStrongAgainst?: Object[] | null;
-  // matches?: {
-  //   mode: string;
-  //   total: number;
-  //   winrate: number;
-  //   data: {
-  //     id: string;
-  //     total: number;
-  //     win: number;
-  //     name: string;
-  //     _id: string;
-  //   }[];
-  // }[];
-  // classicIndex?: number;
-  // rankedIndex?: number;
-  // showWR: boolean;
 }
 
 export default function HeroFyi({

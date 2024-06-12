@@ -3,8 +3,7 @@ import * as fs from "fs/promises";
 const prisma = new PrismaClient();
 
 async function main() {
-  // const heroes = await prisma.hero.findMany();
-  const fileData = await fs.readFile("tier-list.json", "utf-8"); // Read the JSON file
+  const fileData = await fs.readFile("tier-list.json", "utf-8");
   const itemsData = JSON.parse(fileData);
 
   for (const hero of itemsData) {

@@ -11,14 +11,11 @@ export default async function get(
 ): Promise<any> {
   const { method } = req;
   const { heroId } = req.query;
-  // console.log(heroId);
 
   await clientPromise;
   await CounterModel.init();
   await HeroModel.init();
 
-  // switch (method) {
-  //   case "GET":
   try {
     if (heroId) {
       res.setHeader("Access-Control-Allow-Origin", "*");
@@ -44,11 +41,4 @@ export default async function get(
       message: err.message,
     });
   }
-
-  // default:
-  //   res.setHeader("Allow", ["GET"]);
-  //   return res.status(405).json({
-  //     message: `Method ${method} Not Allowed`,
-  //   });
-  // }
 }

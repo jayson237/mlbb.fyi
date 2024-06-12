@@ -71,4 +71,4 @@ export default async function RootLayout({
     </html>
   );
 }
-// after:fixed after:inset-x-0 after:top-[-1350px] after:z-[-1] after:mx-auto after:h-[1440px] after:w-[1880px] after:rounded-full after:bg-navy-600 after:blur-[150px]
+

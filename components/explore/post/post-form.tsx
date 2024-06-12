@@ -138,7 +138,7 @@ const PostForm = ({ currUser }: { currUser?: SafeUser }) => {
             } else {
               setLoading(false);
               toast.success("Successfully posted! Please wait.");
-              // revalPath("/explore");
+
               window.location.reload();
             }
           }}

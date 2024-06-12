@@ -31,7 +31,6 @@ export default async function create(
           data: set,
         });
       } catch (err) {
-        // console.log("Error:", err);
         return res.status(400).json({
           message: err.message,
         });

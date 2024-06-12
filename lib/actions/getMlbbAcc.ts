@@ -12,13 +12,6 @@ export default async function getMlbbAcc(email?: string) {
       where: {
         userId: findUser?.id,
       },
-      // select: {
-      //   accId: true,
-      //   accServer: true,
-      //   accAvatar: true,
-      //   accLevel: true,
-      //   nickname: true,
-      // },
     });
 
     return findMlbbAcc;
